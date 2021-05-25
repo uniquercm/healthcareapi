@@ -13,6 +13,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+      with: 
+        token: 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
     - name: Setup .NET
       uses: actions/setup-dotnet@v1
       with:
