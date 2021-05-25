@@ -3,10 +3,16 @@ bin-debug/
 bin-release/
 [Oo]bj/
 [Bb]in/
+runner/
 
 # Other files and folders
 .settings/
-*.js
+.env
+.env-*
+index.js
+node_modules/
+package-lock.json
+package.json
 
 # Executables
 *.swf
