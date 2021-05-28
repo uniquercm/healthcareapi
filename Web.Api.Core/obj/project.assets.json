@@ -47,11 +47,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "d:\\Dev\\HealthCare\\HealthCare\\HealthCareService\\healthcareapi\\Web.Api.Core\\Web.Api.Core.csproj",
+      "projectUniqueName": "d:\\Dev\\HealthCare\\HealthCareAPI\\healthcareapi\\Web.Api.Core\\Web.Api.Core.csproj",
       "projectName": "Web.Api.Core",
-      "projectPath": "d:\\Dev\\HealthCare\\HealthCare\\HealthCareService\\healthcareapi\\Web.Api.Core\\Web.Api.Core.csproj",
+      "projectPath": "d:\\Dev\\HealthCare\\HealthCareAPI\\healthcareapi\\Web.Api.Core\\Web.Api.Core.csproj",
       "packagesPath": "C:\\Users\\Thanam Durai Kumar\\.nuget\\packages\\",
-      "outputPath": "d:\\Dev\\HealthCare\\HealthCare\\HealthCareService\\healthcareapi\\Web.Api.Core\\obj\\",
+      "outputPath": "d:\\Dev\\HealthCare\\HealthCareAPI\\healthcareapi\\Web.Api.Core\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Microsoft\\Xamarin\\NuGet\\"

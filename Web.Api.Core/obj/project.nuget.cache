@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "dnNux9jjAqn4We2kmKz5e7JYyEQU+2G6N4SUa1/f+sk3j94L2sDq/SYdRt3Mq5jUpnH81YFpk+bQShwaCW/gtA==",
+  "dgSpecHash": "9/5eil/B3AQlb1Yn2zhKjDLa2ni6wXGMp4xSMu80xKBV7VW4HX7iWeETX6R+HjTxMNMd3Ez558rAQ1zRbIvXSA==",
   "success": true,
-  "projectFilePath": "d:\\Dev\\HealthCare\\HealthCare\\HealthCareService\\healthcareapi\\Web.Api.Core\\Web.Api.Core.csproj",
+  "projectFilePath": "d:\\Dev\\HealthCare\\HealthCareAPI\\healthcareapi\\Web.Api.Core\\Web.Api.Core.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Thanam Durai Kumar\\.nuget\\packages\\autofac\\4.9.4\\autofac.4.9.4.nupkg.sha512",
     "C:\\Users\\Thanam Durai Kumar\\.nuget\\packages\\microsoft.netcore.app.ref\\3.0.0\\microsoft.netcore.app.ref.3.0.0.nupkg.sha512",
