@@ -1,0 +1,4 @@
+d:\Dev\HealthCare\HealthCare\With_Swagger\HealthCareService\src\Web.Api.Core\bin\Debug\netcoreapp3.0\publish\Web.Api.Core.dll
+d:\Dev\HealthCare\HealthCare\With_Swagger\HealthCareService\src\Web.Api.Core\bin\Debug\netcoreapp3.0\publish\Web.Api.Core.deps.json
+d:\Dev\HealthCare\HealthCare\With_Swagger\HealthCareService\src\Web.Api.Core\bin\Debug\netcoreapp3.0\publish\Web.Api.Core.pdb
+d:\Dev\HealthCare\HealthCare\With_Swagger\HealthCareService\src\Web.Api.Core\bin\Debug\netcoreapp3.0\publish\Autofac.dll
