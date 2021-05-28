@@ -18,7 +18,7 @@ namespace Web.Api.Core.Dto.UseCaseRequests
         public string Remarks { get; set; }//remarks – varchar(128)
         public string EMRDone { get; set; }//emr_done - enum('No','Yes')
         public string VisitStatus { get; set; }//visit_status - enum('Visited','Pending') 
-        public string VisitedDate { get; set; }//visited_date – datetime
+        public DateTime VisitedDate { get; set; }//visited_date – datetime
         public string ReallocatedTeamName { get; set; }//reallocated_team_name – varchar(128)
         public string CreatedBy { get; set; } //created_by
         public string ModifiedBy { get; set; } //modified_by
@@ -40,7 +40,7 @@ namespace Web.Api.Core.Dto.UseCaseRequests
         public string Remarks { get; set; }//remarks – varchar(128)
         public string EMRDone { get; set; }//emr_done - enum('No','Yes')
         public string VisitStatus { get; set; }//visit_status - enum('Visited','Pending') 
-        public string VisitedDate { get; set; }//visited_date – datetime
+        public DateTime VisitedDate { get; set; }//visited_date – datetime
         public string ReallocatedTeamName { get; set; }//reallocated_team_name – varchar(128)
         public string CreatedBy { get; set; } //created_by
         public string ModifiedBy { get; set; } //modified_by

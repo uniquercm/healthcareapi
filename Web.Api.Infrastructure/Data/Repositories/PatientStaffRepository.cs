@@ -27,7 +27,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                                 $"HC_Staff_Patient.patient_obj p, HC_Staff_Patient.staff_obj s";
 
                 var ColumAssign = $"psx.patient_staff_id as PatientStaffId, " +
-                                  $"psx.staff_id as StaffId, s.staff_name as StaffName" +
+                                  $"psx.staff_id as StaffId, s.staff_name as StaffName, " +
                                   $"psx.patient_id as PatientId, p.patient_name as PatientName, " +
                                   $"psx.no_of_adults as AdultsCount, psx.no_of_childrens as ChildrensCount, " +
                                   $"psx.scheduled_from_date as ScheduledFromDate, " +

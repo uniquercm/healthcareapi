@@ -4,7 +4,7 @@ namespace Web.Api.Models.Request
     {
         public string StaffId { get; set; }
         public string StaffName { get; set; }
-        public string StaffType { get; set; }
+        public int StaffType { get; set; }
         public string UserName { get; set; }
         public string Password { get; set; }
         public string Address { get; set; }

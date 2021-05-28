@@ -31,6 +31,8 @@ namespace Web.Api.Infrastructure.Data.Repositories
                                   $"psx.patient_id as PatientId, p.patient_name as PatientName," +
                                   $"psx.staff_id as StaffId, s.staff_name as StaffName," +
                                   $"sc.initial_pcr_test_date as PCRTestDate, sc.initial_pcr_test_result as PCRResult, " +
+                                  $"sc.have_vaccine as HaveVaccine, " +
+                                  $"sc.allocated_team_name as AllocatedTeamName, sc.reallocated_team_name as ReAllocatedTeamName, " +
                                   $"sc.discharge_date as DischargeDate, sc.treatment_type as TreatmentType, " +
                                   $"sc.treatment_from_date as TreatmentFromDate, sc.treatment_to_date as TreatmentToDate, " +
                                   $"sc.4day_pcr_test_date as PCR4DayTestDate, sc.4day_pcr_test_sample_date as PCR4DaySampleDate, sc.4day_pcr_test_result as PCR4DayResult, " +
@@ -138,6 +140,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 var tableName = $"HC_Treatment.scheduled_obj";
 
                 var colName = $"scheduled_id, patient_staff_id, initial_pcr_test_date, initial_pcr_test_result, " +
+                              $"have_vaccine, allocated_team_name, reallocated_team_name, " +
                               $"discharge_date, treatment_type, treatment_from_date, treatment_to_date, " +
                               $"4day_pcr_test_date, 4day_pcr_test_sample_date, 4day_pcr_test_result, " +
                               $"8day_pcr_test_date, 8day_pcr_test_sample_date, 8day_pcr_test_result, " +
@@ -145,6 +148,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                               $"9day_call_id, created_by, created_on";
 
                 var colValueName = $"@ScheduledId, @PatientStaffId, @CompanyId, @RequestId, @CRMNo, @EIDNo, " +
+                                   $"@HaveVaccine, @AllocatedTeamName, @ReAllocatedTeamName, " +
                                    $"@DateOfBirth, @Age, @Sex, @Address, @LandMark, @Area, @CityId, @NationalityId, " +
                                    $"@MobileNo, @GoogleMapLink, @StickerApplication, @StickerRemoval, " +
                                    $"@CreatedBy, @CreatedOn";
@@ -197,6 +201,9 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     PatientStaffId = scheduledRequest.PatientStaffId,
                     PCRTestDate = scheduledRequest.PCRTestDate,
                     PCRResult = scheduledRequest.PCRResult,
+                    HaveVaccine = scheduledRequest.HaveVaccine,
+                    AllocatedTeamName = scheduledRequest.AllocatedTeamName,
+                    ReAllocatedTeamName = scheduledRequest.ReAllocatedTeamName,
                     DischargeDate = scheduledRequest.DischargeDate,
                     TreatmentType = scheduledRequest.TreatmentType,
                     TreatmentFromDate = scheduledRequest.TreatmentFromDate,
@@ -289,12 +296,14 @@ namespace Web.Api.Infrastructure.Data.Repositories
 
                 var colName = $"scheduled_id = @ScheduledId, patient_staff_id = @PatientStaffId, " +
                               $"initial_pcr_test_date = @PCRTestDate, initial_pcr_test_result = @PCRResult, " +
+                              $"have_vaccine = @HaveVaccine, " +
+                              $"allocated_team_name = @AllocatedTeamName, reallocated_team_name = @ReAllocatedTeamName, " +
                               $"discharge_date = @DischargeDate, treatment_type = @TreatmentType, " +
                               $"treatment_from_date = @TreatmentFromDate, treatment_to_date = @TreatmentToDate, " +
                               $"4day_pcr_test_date = @PCR4DayTestDate, 4day_pcr_test_sample_date = @PCR4DaySampleDate, 4day_pcr_test_result = @PCR4DayResult, " +
                               $"8day_pcr_test_date = @PCR8DayTestDate, 8day_pcr_test_sample_date = @PCR8DaySampleDate, 8day_pcr_test_result = @PCR8DayResult, " +
-                              $"2day_call_id = @Day2CallId, 3day_call_id = @Day3CallId, 5day_call_id = @Day5CallId, " +
-                              $"6day_call_id = @Day6CallId, 7day_call_id = @Day7CallId, 9day_call_id = @Day9CallId, " +
+                              //$"2day_call_id = @Day2CallId, 3day_call_id = @Day3CallId, 5day_call_id = @Day5CallId, " +
+                              //$"6day_call_id = @Day6CallId, 7day_call_id = @Day7CallId, 9day_call_id = @Day9CallId, " +
                               $"modified_by = @ModifiedBy, modified_on = @ModifiedOn";
 
                 var whereCond = $" where scheduled_id = @ScheduledId";
@@ -333,6 +342,9 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     PatientStaffId = scheduledRequest.PatientStaffId,
                     PCRTestDate = scheduledRequest.PCRTestDate,
                     PCRResult = scheduledRequest.PCRResult,
+                    HaveVaccine = scheduledRequest.HaveVaccine,
+                    AllocatedTeamName = scheduledRequest.AllocatedTeamName,
+                    ReAllocatedTeamName = scheduledRequest.ReAllocatedTeamName,
                     DischargeDate = scheduledRequest.DischargeDate,
                     TreatmentType = scheduledRequest.TreatmentType,
                     TreatmentFromDate = scheduledRequest.TreatmentFromDate,

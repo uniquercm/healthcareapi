@@ -27,9 +27,9 @@ namespace Web.Api.Infrastructure.Data.Repositories
                                 $"HC_Master_Details.city_obj ci, HC_Master_Details.nationality_obj n";
 
                 var ColumAssign = $"p.patient_id as PatientId, p.patient_name as PatientName, " +
-                              $"p.company_id as CompanyId, co.company_name as Co mpanyName, " +
+                              $"p.company_id as CompanyId, co.company_name as CompanyName, " +
                               $"p.request_id as RequestId, p.crm_no as CRMNo, p.eid_no as EIDNo, " +
-                              //$"p.date_of_birth as DateOfBirth, " +
+                              $"p.date_of_birth as DateOfBirth, " +
                               $"p.age as Age, p.sex as Sex, p.address as Address, " +
                               $"p.landmark as LandMark, p.area as Area, " +
                               $"p.city_id as CityId, ci.city_name as CityName, " +

@@ -8,7 +8,10 @@ namespace Web.Api.Models.Request
         public string PatientStaffId { get; set; }
         public DateTime PCRTestDate { get; set; }
         public string PCRResult { get; set; }
+        public string HaveVaccine { get; set; }
         public DateTime DischargeDate { get; set; }
+        public string AllocatedTeamName { get; set; }
+        public string ReAllocatedTeamName { get; set; }
         public string TreatmentType { get; set; }
         public DateTime TreatmentFromDate { get; set; }
         public DateTime TreatmentToDate { get; set; }

@@ -16,7 +16,7 @@ namespace Web.Api.Models.Request
         public string Remarks { get; set; }
         public string EMRDone { get; set; }
         public string VisitStatus { get; set; }
-        public string VisitedDate { get; set; }
+        public DateTime VisitedDate { get; set; }
         public string ReallocatedTeamName { get; set; }
         public string CreatedBy { get; set; }
         public string ModifiedBy { get; set; }
