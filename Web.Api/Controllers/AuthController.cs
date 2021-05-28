@@ -9,7 +9,7 @@ using Web.Api.Presenters;
 
 namespace Web.Api.Controllers
 {
-    [Route("v1/[controller]")]
+    [Route("v1")]
     [ApiController]
     public class AuthController : ControllerBase
     {

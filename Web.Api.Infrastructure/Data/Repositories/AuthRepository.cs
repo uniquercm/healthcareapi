@@ -5,6 +5,7 @@ using Web.Api.Core.Interfaces.Gateways.Repositories;
 using Web.Api.Core.Dto.UseCaseRequests;
 using System.Security.Cryptography;
 using System.Text;
+using System.Collections.Generic;
 using Web.Api.Core.Enums;
 using Dapper;
 
@@ -95,9 +96,9 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 return null;
             }
         }
-        public async Task<UserDetails> GetUserDetails(string userId)
+        public async Task<List<UserDetails>> GetUserDetails(string userId)
         {
-            UserDetails retUserDetails = new UserDetails();
+            List<UserDetails> retUserDetailsList = new List<UserDetails>();
             try
             {
                 var tableName = $"HC_Authentication.user_obj u, HC_Master_Details.company_obj c";
@@ -110,16 +111,16 @@ namespace Web.Api.Infrastructure.Data.Repositories
 
                 if (!string.IsNullOrEmpty(userId))
                     whereCond += " and u.user_id = '" + userId + "'";
-                else
-                    whereCond += " and u.user_type = '" + UserType.SuperAdmin + "'";
+                //else
+                    //whereCond += " and u.user_type = '" + (int) UserType.SuperAdmin + "'";
 
                 var sqlSelQuery = $"select " + ColumAssign + " from " + tableName + whereCond;
                 using (var connection = _appDbContext.Connection)
                 {
                     var sqlSelResult = await connection.QueryAsync<UserDetails>(sqlSelQuery);
-                    retUserDetails = sqlSelResult.FirstOrDefault();
+                    retUserDetailsList = sqlSelResult.ToList();//.FirstOrDefault();
                 }
-                return retUserDetails;
+                return retUserDetailsList;
             }
             catch (Exception Err)
             {
@@ -169,7 +170,8 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 var sqlInsQuery = $"INSERT INTO "+ tableName + "( " + colName + " )" +
                                     $"VALUES ( " + colValueName + " )";
 
-                var encryptPassword = EncryptWithSalt(userRequest.Password, userRequest.UserName);
+                //var encryptPassword = EncryptWithSalt(userRequest.Password, userRequest.UserName);
+                var encryptPassword = userRequest.Password;
                 object colValueParam = new
                 {
                     UserId = userRequest.UserId,
@@ -214,7 +216,8 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 var whereCond = $" where user_id = @UserId";
                 var sqlUpdateQuery = $"UPDATE "+ tableName + " set " + colName + whereCond;
 
-                var encryptPassword = EncryptWithSalt(userRequest.Password, userRequest.UserName);
+                //var encryptPassword = EncryptWithSalt(userRequest.Password, userRequest.UserName);
+                var encryptPassword = userRequest.Password;
                 object colValueParam = new
                 {
                     UserId = userRequest.UserId,

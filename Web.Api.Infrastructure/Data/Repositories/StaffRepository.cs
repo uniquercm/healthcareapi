@@ -66,12 +66,14 @@ namespace Web.Api.Infrastructure.Data.Repositories
 
                 var tableName = $"HC_Staff_Patient.staff_obj";
 
-                var colName = $"staff_id, staff_name, staff_type, user_id, address, mobile_no, " +
-                              $"company_id, team_name, created_by, created_on";
+                var colName = $"staff_id, staff_name, staff_type, " +
+                              $"user_id, address, mobile_no, " +
+                              $"company_id, team_name, " +
+                              $"created_by, created_on";
 
-                var colValueName = $"@PatientId, @PatientName, @CompanyId, @RequestId, @CRMNo, @EIDNo, " +
-                                   $"@DateOfBirth, @Age, @Sex, @Address, @LandMark, @Area, @CityId, @NationalityId, " +
-                                   $"@MobileNo, @GoogleMapLink, @StickerApplication, @StickerRemoval, " +
+                var colValueName = $"@StaffId, @StaffName, @StaffType, " +
+                                   $"@UserId, @Address, @MobileNo, " +
+                                   $"@CompanyId, @TeamName, " +
                                    $"@CreatedBy, @CreatedOn";
 
                 var sqlInsQuery = $"INSERT INTO "+ tableName + "( " + colName + " )" +

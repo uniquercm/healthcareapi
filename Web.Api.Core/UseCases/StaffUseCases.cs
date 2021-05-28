@@ -38,14 +38,16 @@ namespace Web.Api.Core.UseCases
             userRequest.CompanyId = request.CompanyId;
             userRequest.CreatedBy = request.CreatedBy;
 
-            if(Enums.StaffType.Doctor.Equals(request.StaffType))
+            /*if(Enums.StaffType.Doctor.Equals(request.StaffType))
                 userRequest.UserType = (int) Enums.UserType.Doctor;
             else if(Enums.StaffType.Nurse.Equals(request.StaffType))
                 userRequest.UserType = (int) Enums.UserType.Nurse;
             else if(Enums.StaffType.Receptionist.Equals(request.StaffType))
                 userRequest.UserType = (int) Enums.UserType.Receptionist;
             else if(Enums.StaffType.Admin.Equals(request.StaffType))
-                userRequest.UserType = (int) Enums.UserType.Admin;
+                userRequest.UserType = (int) Enums.UserType.Admin;*/
+            
+            userRequest.UserType = request.StaffType;
 
 
             if(request.IsUpdate)//Edit a Staff

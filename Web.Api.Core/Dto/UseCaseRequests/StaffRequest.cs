@@ -7,7 +7,7 @@ namespace Web.Api.Core.Dto.UseCaseRequests
     {
         public string StaffId { get; set; }//staff_id – varchar(128)
         public string StaffName { get; set; }//staff_name – varchar(128)
-        public string StaffType { get; set; }//staff_type - enum('Admin','Doctor','Nurse','Receptionist')
+        public int StaffType { get; set; }//staff_type - enum('Admin','Doctor','Nurse','Receptionist')
         public string UserId { get; set; }//user_id – varchar(128)
         public string UserName { get; set; }
         public string Password { get; set; }
@@ -23,7 +23,7 @@ namespace Web.Api.Core.Dto.UseCaseRequests
     {
         public string StaffId { get; set; }//staff_id – varchar(128)
         public string StaffName { get; set; }//staff_name – varchar(128)
-        public string StaffType { get; set; }//staff_type - enum('Admin','Doctor','Nurse','Receptionist')
+        public int StaffType { get; set; }//staff_type - enum('Admin','Doctor','Nurse','Receptionist')
         public string UserId { get; set; }//user_id – varchar(128)
         public string UserName { get; set; }
         public string Password { get; set; }
