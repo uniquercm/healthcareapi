@@ -36,7 +36,8 @@ namespace Web.Api.Infrastructure.Data.Repositories
 
                 if(!string.IsNullOrEmpty(loginRequest.Password))
                 {
-                    var encryptPassword = EncryptWithSalt(loginRequest.Password, loginRequest.UserName);
+                    //var encryptPassword = EncryptWithSalt(loginRequest.Password, loginRequest.UserName);
+                    var encryptPassword = loginRequest.Password;
             
                     if(!string.IsNullOrEmpty(loginRequest.UserName))
                         whereCond += " and password = '" + encryptPassword + "'";
