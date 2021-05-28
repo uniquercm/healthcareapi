@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "d:\\Dev\\HealthCare\\HealthCareAPI\\healthcareapi\\Web.Api.Core\\Web.Api.Core.csproj": {}
+    "D:\\Dev\\HealthCare\\HealthCareAPI\\healthcareapi\\Web.Api.Core\\Web.Api.Core.csproj": {}
   },
   "projects": {
-    "d:\\Dev\\HealthCare\\HealthCareAPI\\healthcareapi\\Web.Api.Core\\Web.Api.Core.csproj": {
+    "D:\\Dev\\HealthCare\\HealthCareAPI\\healthcareapi\\Web.Api.Core\\Web.Api.Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "d:\\Dev\\HealthCare\\HealthCareAPI\\healthcareapi\\Web.Api.Core\\Web.Api.Core.csproj",
+        "projectUniqueName": "D:\\Dev\\HealthCare\\HealthCareAPI\\healthcareapi\\Web.Api.Core\\Web.Api.Core.csproj",
         "projectName": "Web.Api.Core",
-        "projectPath": "d:\\Dev\\HealthCare\\HealthCareAPI\\healthcareapi\\Web.Api.Core\\Web.Api.Core.csproj",
+        "projectPath": "D:\\Dev\\HealthCare\\HealthCareAPI\\healthcareapi\\Web.Api.Core\\Web.Api.Core.csproj",
         "packagesPath": "C:\\Users\\Thanam Durai Kumar\\.nuget\\packages\\",
-        "outputPath": "d:\\Dev\\HealthCare\\HealthCareAPI\\healthcareapi\\Web.Api.Core\\obj\\",
+        "outputPath": "D:\\Dev\\HealthCare\\HealthCareAPI\\healthcareapi\\Web.Api.Core\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Microsoft\\Xamarin\\NuGet\\"
