@@ -11,9 +11,11 @@ namespace Web.Api.Core.UseCases
     public sealed class ScheduledUseCases : IScheduledUseCases
     {
         private readonly IScheduledRepository _scheduledRepository;
-        public ScheduledUseCases(IScheduledRepository scheduledRepository)
+        private readonly IPatientRepository _patientRepository;
+        public ScheduledUseCases(IScheduledRepository scheduledRepository, IPatientRepository patientRepository)
         {
             _scheduledRepository = scheduledRepository;
+            _patientRepository = patientRepository;
         }
 
         public async Task<bool> Handle(GetDetailsRequest request, IOutputPort<GetDetailsResponse> outputPort)
@@ -23,7 +25,7 @@ namespace Web.Api.Core.UseCases
             if(request.Id == "Call")
                 getDetailsResponse = new GetDetailsResponse(await _scheduledRepository.GetCallDetails(request.Id, request.ScheduledId), true, "Data Fetched Successfully");
             else
-                getDetailsResponse = new GetDetailsResponse(await _scheduledRepository.GetScheduledDetails(request.Id, request.ScheduledId, request.PatientStaffId), true, "Data Fetched Successfully");
+                getDetailsResponse = new GetDetailsResponse(await _scheduledRepository.GetScheduledDetails(request.Id, request.ScheduledId, request.PatientStaffId, _patientRepository), true, "Data Fetched Successfully");
 
             outputPort.Handle(getDetailsResponse);
             return true;

@@ -1,4 +1,5 @@
 using System;
+//using System.Collections.Generic;
 using Web.Api.Core.Dto.UseCaseResponses;
 using Web.Api.Core.Interfaces;
 
@@ -40,8 +41,10 @@ namespace Web.Api.Core.Dto.UseCaseRequests
         public string PatientStaffId { get; set; }//patient_staff_id – varchar(128)
         public string StaffId { get; set; }
         public string StaffName { get; set; }
+        //public List<StaffDetails> StaffDetailsList { get; set; }
         public string PatientId { get; set; }
         public string PatientName { get; set; }
+        public PatientDetails PatientInformation { get; set; }
         public DateTime PCRTestDate { get; set; }//initial_pcr_test_date – datetime
         public string PCRResult { get; set; }//initial_pcr_test_result - enum('Negative','Positive')
         public DateTime DischargeDate { get; set; }//discharge_date – datetime

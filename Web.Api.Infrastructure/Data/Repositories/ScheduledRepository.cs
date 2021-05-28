@@ -18,7 +18,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
         {
             _appDbContext = appDbContext;
         }
-        public async Task<List<ScheduledDetails>> GetScheduledDetails(string companyId, string scheduledId, string patientStaffId)
+        public async Task<List<ScheduledDetails>> GetScheduledDetails(string companyId, string scheduledId, string patientStaffId, IPatientRepository patientRepository)
         {
             List<ScheduledDetails> retScheduledDetailsList = new List<ScheduledDetails>();
             try
@@ -85,6 +85,12 @@ namespace Web.Api.Infrastructure.Data.Repositories
                         callDetailsList = await GetCallDetails(singleScheduledDetails.Day9CallId, singleScheduledDetails.ScheduledId);
                         if(callDetailsList.Count > 0)
                             singleScheduledDetails.Day9CallDetails = callDetailsList[0];
+
+                        singleScheduledDetails.PatientInformation = new PatientDetails();
+                        List<PatientDetails> patientDetailsList = new List<PatientDetails>();
+                        patientDetailsList = await patientRepository.GetPatientDetails("", singleScheduledDetails.PatientId);
+                        if(patientDetailsList.Count > 0)
+                            singleScheduledDetails.PatientInformation = patientDetailsList[0];
                     }
                 }
             }
