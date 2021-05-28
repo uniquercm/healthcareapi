@@ -29,7 +29,8 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 var ColumAssign = $"p.patient_id as PatientId, p.patient_name as PatientName, " +
                               $"p.company_id as CompanyId, co.company_name as Co mpanyName, " +
                               $"p.request_id as RequestId, p.crm_no as CRMNo, p.eid_no as EIDNo, " +
-                              $"p.date_of_birth as DateOfBirth, p.age as Age, p.sex as Sex, p.address as Address, " +
+                              //$"p.date_of_birth as DateOfBirth, " +
+                              $"p.age as Age, p.sex as Sex, p.address as Address, " +
                               $"p.landmark as LandMark, p.area as Area, " +
                               $"p.city_id as CityId, ci.city_name as CityName, " +
                               $"p.nationality_id as NationalityId, n.nationality_name as NationalityName, " +
