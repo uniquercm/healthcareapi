@@ -38,4 +38,12 @@ namespace Web.Api.Models.Request
         public string ModifiedBy { get; set; }
         public bool IsUpdate { get; set; }
     }
+    public class FieldAllocationRequest
+    {
+        public string ScheduledId { get; set; }
+        public string PatientStaffId { get; set; }
+        public string AllocatedTeamName { get; set; }
+        public string ReAllocatedTeamName { get; set; }
+        public string ModifiedBy { get; set; }
+    }
 }

@@ -38,7 +38,7 @@ namespace Web.Api.Controllers
         [HttpGet("staff")]
         public async Task<ActionResult> GetPatientDetails(string companyId = "", string staffId = "")
         {
-            await _staffUseCases.Handle(new GetDetailsRequest(companyId, "", staffId, "", ""), _getDetailsPresenter);
+            await _staffUseCases.Handle(new GetDetailsRequest(companyId, "", staffId, "", "", ""), _getDetailsPresenter);
             return _getDetailsPresenter.ContentResult;
         }
 

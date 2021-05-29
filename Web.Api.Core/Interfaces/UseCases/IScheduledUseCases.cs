@@ -9,4 +9,6 @@ namespace Web.Api.Core.Interfaces.UseCases
     {   }
     public partial interface IScheduledUseCases : IUseCaseRequestHandler<CallRequest, AcknowledgementResponse>
     {   }
+    public partial interface IScheduledUseCases : IUseCaseRequestHandler<FieldAllocationRequest, AcknowledgementResponse>
+    {   }
 }

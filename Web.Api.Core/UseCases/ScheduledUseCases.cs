@@ -22,10 +22,12 @@ namespace Web.Api.Core.UseCases
         {
             GetDetailsResponse getDetailsResponse;
 
-            if(request.Id == "Call")
+            if(request.LableName == "Call")
                 getDetailsResponse = new GetDetailsResponse(await _scheduledRepository.GetCallDetails(request.Id, request.ScheduledId), true, "Data Fetched Successfully");
+            else if(request.LableName == "FieldAllocation")
+                getDetailsResponse = new GetDetailsResponse(await _scheduledRepository.GetScheduledDetails(request.Id, request.ScheduledId, request.PatientStaffId, true, _patientRepository), true, "Data Fetched Successfully");
             else
-                getDetailsResponse = new GetDetailsResponse(await _scheduledRepository.GetScheduledDetails(request.Id, request.ScheduledId, request.PatientStaffId, _patientRepository), true, "Data Fetched Successfully");
+                getDetailsResponse = new GetDetailsResponse(await _scheduledRepository.GetScheduledDetails(request.Id, request.ScheduledId, request.PatientStaffId, false, _patientRepository), true, "Data Fetched Successfully");
 
             outputPort.Handle(getDetailsResponse);
             return true;
@@ -69,6 +71,18 @@ namespace Web.Api.Core.UseCases
                 else
                     acknowledgementResponse = new AcknowledgementResponse(new[] { new Error("Error Occurred", "Error Occurred")}, false);
             }
+            outputPort.Handle(acknowledgementResponse);
+            return true;
+        }
+        public async Task<bool> Handle(FieldAllocationRequest request, IOutputPort<AcknowledgementResponse> outputPort)
+        {
+            AcknowledgementResponse acknowledgementResponse;
+
+            if(await _scheduledRepository.EditFieldAllocation(request))
+                acknowledgementResponse = new AcknowledgementResponse(true, "Field Allocation Successfully Modifyed");
+            else
+                acknowledgementResponse = new AcknowledgementResponse(new[] { new Error("Error Occurred", "Error Occurred")}, false);
+
             outputPort.Handle(acknowledgementResponse);
             return true;
         }

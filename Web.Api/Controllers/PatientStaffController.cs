@@ -39,7 +39,7 @@ namespace Web.Api.Controllers
         [HttpGet("patient-staff")]
         public async Task<ActionResult> GetPatientDetails(string patientStaffId = "", string patientId = "", string staffId = "")
         {
-            await _patientStaffUseCases.Handle(new GetDetailsRequest("", patientId, staffId, patientStaffId, ""), _getDetailsPresenter);
+            await _patientStaffUseCases.Handle(new GetDetailsRequest("", patientId, staffId, patientStaffId, "", ""), _getDetailsPresenter);
             return _getDetailsPresenter.ContentResult;
         }
 

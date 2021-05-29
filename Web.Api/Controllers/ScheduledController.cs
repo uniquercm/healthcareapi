@@ -32,13 +32,18 @@ namespace Web.Api.Controllers
         /// <summary>
         /// Getting a Scheduled Details
         /// </summary>
+        /// <param name="companyId">Company Id (optional)</param>
         /// <param name="scheduledId">Scheduled Id (optional)</param>
         /// <param name="patientstaffId">Patient Staff Id (optional)</param>
+        /// <param name="isFieldAllocation">Is Field Allocation (optional)</param>
         /// <returns>Scheduled Details</returns>
         [HttpGet("scheduled")]
-        public async Task<ActionResult> GetScheduledDetails(string scheduledId = "", string patientstaffId = "")
+        public async Task<ActionResult> GetScheduledDetails(string companyId = "", string scheduledId = "", string patientstaffId = "", bool isFieldAllocation = false)
         {
-            await _scheduledUseCases.Handle(new GetDetailsRequest(scheduledId, "", "", patientstaffId, ""), _getDetailsPresenter);
+            if(isFieldAllocation)
+                await _scheduledUseCases.Handle(new GetDetailsRequest(companyId, "", "", patientstaffId, scheduledId, ""), _getDetailsPresenter);
+            else
+                await _scheduledUseCases.Handle(new GetDetailsRequest(companyId, "", "", patientstaffId, scheduledId, "FieldAllocation"), _getDetailsPresenter);
             return _getDetailsPresenter.ContentResult;
         }
 
@@ -77,7 +82,7 @@ namespace Web.Api.Controllers
         [HttpGet("call")]
         public async Task<ActionResult> GetCallDetails(string callId = "", string scheduledId = "")
         {
-            await _scheduledUseCases.Handle(new GetDetailsRequest(callId, "Call", "", "", scheduledId), _getDetailsPresenter);
+            await _scheduledUseCases.Handle(new GetDetailsRequest(callId, "", "", "", scheduledId, "Call"), _getDetailsPresenter);
             return _getDetailsPresenter.ContentResult;
         }
 
@@ -104,6 +109,18 @@ namespace Web.Api.Controllers
         {
             request.IsUpdate = true;
             await _scheduledUseCases.Handle(_mapper.Map<CallRequest>(request), _acknowledgementPresenter);
+            return _acknowledgementPresenter.ContentResult;
+        }
+
+        /// <summary>
+        /// Modifying a Field Allocation
+        /// </summary>
+        /// <param name="request">Modifying Field Allocation Details</param>
+        /// <returns>Acknowledgement</returns>
+        [HttpPut("field-allocation")]
+        public async Task<ActionResult> EditFieldAllocation([FromBody] Models.Request.FieldAllocationRequest request)
+        {
+            await _scheduledUseCases.Handle(_mapper.Map<FieldAllocationRequest>(request), _acknowledgementPresenter);
             return _acknowledgementPresenter.ContentResult;
         }
 

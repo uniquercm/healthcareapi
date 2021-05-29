@@ -95,4 +95,12 @@ namespace Web.Api.Core.Dto.UseCaseRequests
         public string CreatedBy { get; set; } //created_by
         public string ModifiedBy { get; set; } //modified_by
     }
+    public class FieldAllocationRequest : IUseCaseRequest<AcknowledgementResponse>
+    {
+        public string ScheduledId { get; set; }//scheduled_id – varchar(128)
+        public string PatientStaffId { get; set; }//patient_staff_id – varchar(128)
+        public string AllocatedTeamName { get; set; }//allocated_team_name - varchar(100)
+        public string ReAllocatedTeamName { get; set; }//reallocated_team_name - varchar(100)
+        public string ModifiedBy { get; set; } //modified_by
+    }
 }

@@ -13,12 +13,12 @@ namespace Web.Api.Infrastructure.Data.Repositories
 {
     internal sealed class ScheduledRepository : IScheduledRepository
     {
-        private new readonly AppDbContext _appDbContext;
+        private readonly AppDbContext _appDbContext;
         public ScheduledRepository(AppDbContext appDbContext)
         {
             _appDbContext = appDbContext;
         }
-        public async Task<List<ScheduledDetails>> GetScheduledDetails(string companyId, string scheduledId, string patientStaffId, IPatientRepository patientRepository)
+        public async Task<List<ScheduledDetails>> GetScheduledDetails(string companyId, string scheduledId, string patientStaffId, bool isFieldAllocation, IPatientRepository patientRepository)
         {
             List<ScheduledDetails> retScheduledDetailsList = new List<ScheduledDetails>();
             try
@@ -87,10 +87,13 @@ namespace Web.Api.Infrastructure.Data.Repositories
                             singleScheduledDetails.Day9CallDetails = callDetailsList[0];
 
                         singleScheduledDetails.PatientInformation = new PatientDetails();
-                        List<PatientDetails> patientDetailsList = new List<PatientDetails>();
-                        patientDetailsList = await patientRepository.GetPatientDetails("", singleScheduledDetails.PatientId);
-                        if(patientDetailsList.Count > 0)
-                            singleScheduledDetails.PatientInformation = patientDetailsList[0];
+                        if(isFieldAllocation)
+                        {
+                            List<PatientDetails> patientDetailsList = new List<PatientDetails>();
+                            patientDetailsList = await patientRepository.GetPatientDetails(companyId, singleScheduledDetails.PatientId);
+                            if(patientDetailsList.Count > 0)
+                                singleScheduledDetails.PatientInformation = patientDetailsList[0];
+                        }
                     }
                 }
             }
@@ -303,7 +306,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 var colName = $"scheduled_id = @ScheduledId, patient_staff_id = @PatientStaffId, " +
                               $"initial_pcr_test_date = @PCRTestDate, initial_pcr_test_result = @PCRResult, " +
                               $"have_vaccine = @HaveVaccine, " +
-                              $"allocated_team_name = @AllocatedTeamName, reallocated_team_name = @ReAllocatedTeamName, " +
+                              //$"allocated_team_name = @AllocatedTeamName, reallocated_team_name = @ReAllocatedTeamName, " +
                               $"discharge_date = @DischargeDate, treatment_type = @TreatmentType, " +
                               $"treatment_from_date = @TreatmentFromDate, treatment_to_date = @TreatmentToDate, " +
                               $"4day_pcr_test_date = @PCR4DayTestDate, 4day_pcr_test_sample_date = @PCR4DaySampleDate, 4day_pcr_test_result = @PCR4DayResult, " +
@@ -349,8 +352,8 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     PCRTestDate = scheduledRequest.PCRTestDate,
                     PCRResult = scheduledRequest.PCRResult,
                     HaveVaccine = scheduledRequest.HaveVaccine,
-                    AllocatedTeamName = scheduledRequest.AllocatedTeamName,
-                    ReAllocatedTeamName = scheduledRequest.ReAllocatedTeamName,
+                    //AllocatedTeamName = scheduledRequest.AllocatedTeamName,
+                    //ReAllocatedTeamName = scheduledRequest.ReAllocatedTeamName,
                     DischargeDate = scheduledRequest.DischargeDate,
                     TreatmentType = scheduledRequest.TreatmentType,
                     TreatmentFromDate = scheduledRequest.TreatmentFromDate,
@@ -409,6 +412,42 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     ModifiedOn = DateTime.UtcNow
                 };
 
+                using (var connection = _appDbContext.Connection)
+                {
+                    sqlResult = Convert.ToBoolean(await connection.ExecuteAsync(sqlUpdateQuery, colValueParam));
+                    return sqlResult;
+                }
+            }
+            catch (Exception Err)
+            {
+                var Error = Err.Message.ToString();
+                return false;
+            }
+        }
+
+        public async Task<bool> EditFieldAllocation(FieldAllocationRequest fieldAllocationRequest)
+        {
+            try
+            {
+                bool sqlResult = true;
+                var tableName = $"HC_Treatment.scheduled_obj";
+
+                var colName = $"scheduled_id = @ScheduledId, patient_staff_id = @PatientStaffId, " +
+                              $"allocated_team_name = @AllocatedTeamName, reallocated_team_name = @ReAllocatedTeamName, " +
+                              $"modified_by = @ModifiedBy, modified_on = @ModifiedOn";
+
+                var whereCond = $" where scheduled_id = @ScheduledId";
+                var sqlUpdateQuery = $"UPDATE "+ tableName + " set " + colName + whereCond;
+
+                object colValueParam = new
+                {
+                    ScheduledId = fieldAllocationRequest.ScheduledId,
+                    PatientStaffId = fieldAllocationRequest.PatientStaffId,
+                    AllocatedTeamName = fieldAllocationRequest.AllocatedTeamName,
+                    ReAllocatedTeamName = fieldAllocationRequest.ReAllocatedTeamName,
+                    ModifiedBy = fieldAllocationRequest.ModifiedBy,
+                    ModifiedOn = DateTime.UtcNow
+                };
                 using (var connection = _appDbContext.Connection)
                 {
                     sqlResult = Convert.ToBoolean(await connection.ExecuteAsync(sqlUpdateQuery, colValueParam));

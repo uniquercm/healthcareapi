@@ -13,7 +13,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
 {
     internal sealed class PatientStaffRepository : IPatientStaffRepository
     {
-        private new readonly AppDbContext _appDbContext;
+        private readonly AppDbContext _appDbContext;
         public PatientStaffRepository(AppDbContext appDbContext)
         {
             _appDbContext = appDbContext;

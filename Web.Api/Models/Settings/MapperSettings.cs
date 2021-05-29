@@ -16,6 +16,7 @@ namespace Web.Api.Models.Settings
             CreateMap<Models.Request.PatientStaffRequest, PatientStaffRequest>();
             CreateMap<Models.Request.ScheduledRequest, ScheduledRequest>();
             CreateMap<Models.Request.CallRequest, CallRequest>();
+            CreateMap<Models.Request.FieldAllocationRequest, FieldAllocationRequest>();
         }
     }
 }
