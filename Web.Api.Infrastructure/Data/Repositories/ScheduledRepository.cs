@@ -271,10 +271,11 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 var tableName = $"HC_Treatment.call_obj";
 
                 var colName = $"call_id, scheduled_id, call_scheduled_date, called_date, " +
-                              $"call_status, remarks, created_by, created_on";
+                              $"call_status, remarks, emr_done, created_by, created_on";
 
                 var colValueName = $"@CallId, @ScheduledId, @CallScheduledDate, @CalledDate, " +
-                                   $"@CallStatus, @Remarks, @CreatedBy, @CreatedOn";
+                                   $"@CallStatus, @Remarks, @EMRDone, " +
+                                   $"@CreatedBy, @CreatedOn";
 
                 var sqlInsQuery = $"INSERT INTO "+ tableName + "( " + colName + " )" +
                                     $"VALUES ( " + colValueName + " )";
@@ -287,6 +288,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     CalledDate = callRequest.CalledDate,
                     CallStatus = callRequest.CallStatus,
                     Remarks = callRequest.Remarks,
+                    EMRDone = callRequest.EMRDone,
                     CreatedBy = callRequest.CreatedBy,
                     CreatedOn = DateTime.UtcNow
                 };
@@ -400,8 +402,9 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 var tableName = $"HC_Treatment.call_obj";
 
                 var colName = $"call_id = @CallId, scheduled_id = @ScheduledId, " +
-                              $"call_scheduled_date = @CallScheduledDate, called_date = @CalledDate, " +
-                              $"call_status = @CallStatus, remarks = @Remarks, " +
+                              $"call_scheduled_date = @CallScheduledDate, " +
+                              $"called_date = @CalledDate, call_status = @CallStatus, " +
+                              $"remarks = @Remarks, emr_done = @EMRDone, " +
                               $"modified_by = @ModifiedBy, modified_on = @ModifiedOn";
 
                 var whereCond = $" where call_id = @CallId";
@@ -415,7 +418,8 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     CalledDate = callRequest.CalledDate,
                     CallStatus = callRequest.CallStatus,
                     Remarks = callRequest.Remarks,
-                    ModifiedBy = callRequest.CreatedBy,
+                    EMRDone = callRequest.EMRDone,
+                    ModifiedBy = callRequest.ModifiedBy,
                     ModifiedOn = DateTime.UtcNow
                 };
 

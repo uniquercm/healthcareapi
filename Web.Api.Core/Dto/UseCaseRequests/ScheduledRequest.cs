@@ -80,6 +80,7 @@ namespace Web.Api.Core.Dto.UseCaseRequests
         public DateTime CalledDate { get; set; }//called_date – datetime
         public string CallStatus { get; set; }//call_status -  enum('Called','Pending')
         public string Remarks { get; set; }//remarks – varchar(128)
+        public string EMRDone { get; set; }//emr_done - varchar(50)
         public string CreatedBy { get; set; } //created_by
         public string ModifiedBy { get; set; } //modified_by
         public bool IsUpdate { get; set; }
@@ -92,6 +93,7 @@ namespace Web.Api.Core.Dto.UseCaseRequests
         public DateTime CalledDate { get; set; }//called_date – datetime
         public string CallStatus { get; set; }//call_status - enum('Called','Pending')
         public string Remarks { get; set; }//remarks – varchar(128)
+        public string EMRDone { get; set; }//emr_done - varchar(50)
         public string CreatedBy { get; set; } //created_by
         public string ModifiedBy { get; set; } //modified_by
     }

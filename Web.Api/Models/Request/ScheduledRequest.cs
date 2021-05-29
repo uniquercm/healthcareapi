@@ -34,6 +34,7 @@ namespace Web.Api.Models.Request
         public DateTime CalledDate { get; set; }
         public string CallStatus { get; set; }
         public string Remarks { get; set; }
+        public string EMRDone { get; set; }
         public string CreatedBy { get; set; }
         public string ModifiedBy { get; set; }
         public bool IsUpdate { get; set; }
