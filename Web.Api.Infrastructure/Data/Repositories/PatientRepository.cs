@@ -37,7 +37,8 @@ namespace Web.Api.Infrastructure.Data.Repositories
                               $"p.mobile_no as MobileNo, p.google_map_link as GoogleMapLink, p.sticker_application as StickerApplication, " +
                               $"p.sticker_removal as StickerRemoval, p.created_by as CreatedBy, p.modified_by as ModifiedBy";
 
-                var whereCond = " where p.company_id = co.company_id and p.city_id = ci.city_id" +
+                var whereCond = " where p.company_id = co.company_id" +
+                                $" and p.city_id = ci.city_id" +
                                 $" and p.nationality_id = n.nationality_id";
 
                 if (!string.IsNullOrEmpty(companyId))

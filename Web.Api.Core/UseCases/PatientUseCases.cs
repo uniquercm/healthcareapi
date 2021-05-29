@@ -21,7 +21,7 @@ namespace Web.Api.Core.UseCases
         {
             GetDetailsResponse getDetailsResponse;
 
-            getDetailsResponse = new GetDetailsResponse(await _patientRepository.GetPatientDetails(request.Id, request.PatientId), true, "Data Fetched Successfully");
+            getDetailsResponse = new GetDetailsResponse(await _patientRepository.GetPatientDetails("", request.Id), true, "Data Fetched Successfully");
 
             outputPort.Handle(getDetailsResponse);
             return true;

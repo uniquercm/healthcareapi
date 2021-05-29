@@ -41,9 +41,9 @@ namespace Web.Api.Controllers
         public async Task<ActionResult> GetScheduledDetails(string companyId = "", string scheduledId = "", string patientstaffId = "", bool isFieldAllocation = false)
         {
             if(isFieldAllocation)
-                await _scheduledUseCases.Handle(new GetDetailsRequest(companyId, "", "", patientstaffId, scheduledId, ""), _getDetailsPresenter);
-            else
                 await _scheduledUseCases.Handle(new GetDetailsRequest(companyId, "", "", patientstaffId, scheduledId, "FieldAllocation"), _getDetailsPresenter);
+            else
+                await _scheduledUseCases.Handle(new GetDetailsRequest(companyId, "", "", patientstaffId, scheduledId, ""), _getDetailsPresenter);
             return _getDetailsPresenter.ContentResult;
         }
 

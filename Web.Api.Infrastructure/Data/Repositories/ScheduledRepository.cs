@@ -156,16 +156,23 @@ namespace Web.Api.Infrastructure.Data.Repositories
                               $"2day_call_id, 3day_call_id, 5day_call_id, 6day_call_id, 7day_call_id, " +
                               $"9day_call_id, created_by, created_on";
 
-                var colValueName = $"@ScheduledId, @PatientStaffId, @CompanyId, @RequestId, @CRMNo, @EIDNo, " +
-                                   $"@HaveVaccine, @AllocatedTeamName, @ReAllocatedTeamName, " +
-                                   $"@DateOfBirth, @Age, @Sex, @Address, @LandMark, @Area, @CityId, @NationalityId, " +
-                                   $"@MobileNo, @GoogleMapLink, @StickerApplication, @StickerRemoval, " +
+                var colValueName = $"@ScheduledId, @PatientStaffId, @PCRTestDate, @PCRResult, " +
+                                   $"@HaveVaccine, @AllocatedTeamName, " +
+                                   $"@ReAllocatedTeamName, @DischargeDate, @TreatmentType, " +
+                                   $"@TreatmentFromDate, @TreatmentToDate, " +
+                                   $"@PCR4DayTestDate, @PCR4DaySampleDate, " +
+                                   $"@PCR4DayResult, @PCR8DayTestDate, " +
+                                   $"@PCR8DaySampleDate, @PCR8DayResult, " +
+                                   $"@Day2CallId, @Day3CallId, @Day5CallId , @Day6CallId, " +
+                                   $"@Day7CallId, @Day9CallId, " +
                                    $"@CreatedBy, @CreatedOn";
 
                 var sqlInsQuery = $"INSERT INTO "+ tableName + "( " + colName + " )" +
                                     $"VALUES ( " + colValueName + " )";
 
                 CallRequest callRequest = new CallRequest();
+                callRequest.ScheduledId = scheduledRequest.ScheduledId;
+                //callRequest.CallStatus = "Pending";
                 callRequest.CreatedBy = scheduledRequest.CreatedBy;
 
                 callRequest.CallScheduledDate = scheduledRequest.TreatmentFromDate.AddDays(1);
