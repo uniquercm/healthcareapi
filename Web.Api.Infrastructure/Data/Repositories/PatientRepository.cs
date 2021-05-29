@@ -24,7 +24,9 @@ namespace Web.Api.Infrastructure.Data.Repositories
             try
             {
                 var tableName = $"HC_Staff_Patient.patient_obj p, HC_Master_Details.company_obj co, " +
-                                $"HC_Master_Details.city_obj ci, HC_Master_Details.nationality_obj n";
+                                $"HC_Master_Details.city_obj ci, HC_Master_Details.nationality_obj n, " +
+                                $"HC_Staff_Patient.patient_staff_xw psx, " +
+                                $"HC_Treatment.scheduled_obj sc";
 
                 var ColumAssign = $"p.patient_id as PatientId, p.patient_name as PatientName, " +
                               $"p.company_id as CompanyId, co.company_name as CompanyName, " +
@@ -35,11 +37,15 @@ namespace Web.Api.Infrastructure.Data.Repositories
                               $"p.city_id as CityId, ci.city_name as CityName, " +
                               $"p.nationality_id as NationalityId, n.nationality_name as NationalityName, " +
                               $"p.mobile_no as MobileNo, p.google_map_link as GoogleMapLink, p.sticker_application as StickerApplication, " +
-                              $"p.sticker_removal as StickerRemoval, p.created_by as CreatedBy, p.modified_by as ModifiedBy";
+                              $"p.sticker_removal as StickerRemoval, " +
+                              $"sc.scheduled_id as ScheduledId, sc.2day_call_id as DrCallId, " +
+                              $"p.created_by as CreatedBy, p.modified_by as ModifiedBy";
 
                 var whereCond = " where p.company_id = co.company_id" +
                                 $" and p.city_id = ci.city_id" +
-                                $" and p.nationality_id = n.nationality_id";
+                                $" and p.nationality_id = n.nationality_id" +
+                                $" and p.patient_id = psx.patient_id" +
+                                $" and psx.patient_staff_id = sc.patient_staff_id";
 
                 if (!string.IsNullOrEmpty(companyId))
                     whereCond += " and p.company_id = '" + companyId + "'";

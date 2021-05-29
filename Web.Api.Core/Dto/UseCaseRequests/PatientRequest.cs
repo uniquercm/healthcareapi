@@ -52,6 +52,8 @@ namespace Web.Api.Core.Dto.UseCaseRequests
         public string GoogleMapLink { get; set; }//google_map_link – varchar(156)
         public string StickerApplication { get; set; }//sticker_application - enum('No','Yes')
         public string StickerRemoval { get; set; }//sticker_removal - enum('No','Yes')
+        public string DrCallId { get; set; }
+        public string ScheduledId { get; set; }
         public string CreatedBy { get; set; } //created_by
         public string ModifiedBy { get; set; } //modified_by
     }
