@@ -33,9 +33,10 @@ namespace Web.Api.Controllers
         /// Getting a Patient Details
         /// </summary>
         /// <param name="patientId">Patient Id (optional)</param>
+        /// <param name="isDrCall">Is Dr Call (optional)</param>
         /// <returns>Patient Details</returns>
         [HttpGet("patient")]
-        public async Task<ActionResult> GetPatientDetails(string patientId = "")
+        public async Task<ActionResult> GetPatientDetails(string patientId = "", bool isDrCall = false)
         {
             await _patientUseCases.Handle(new GetDetailsRequest(patientId), _getDetailsPresenter);
             return _getDetailsPresenter.ContentResult;

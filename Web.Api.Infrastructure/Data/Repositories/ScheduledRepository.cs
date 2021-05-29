@@ -113,15 +113,21 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 var ColumAssign = $"call_id as CallId, scheduled_id as ScheduledId, " +
                                   $"call_scheduled_date as CallScheduledDate, called_date as CalledDate, " +
                                   $"call_status as CallStatus, remarks as Remarks, " +
+                                  $"emr_done as EMRDone, " +
                                   $"created_by as CreatedBy, modified_by as ModifiedBy";
 
-                var whereCond = "";
+                var whereCond = " where";
 
                 if (!string.IsNullOrEmpty(callId))
-                    whereCond += " and call_id = '" + callId + "'";
+                    whereCond += " call_id = '" + callId + "'";
 
                 if (!string.IsNullOrEmpty(scheduledId))
-                    whereCond += " and scheduled_id = '" + scheduledId + "'";
+                {
+                    if (!string.IsNullOrEmpty(callId))
+                        whereCond += " and scheduled_id = '" + scheduledId + "'";
+                    else
+                        whereCond += " scheduled_id = '" + scheduledId + "'";
+                }
 
                 var sqlSelQuery = $"select " + ColumAssign + " from " + tableName + whereCond;
                 using (var connection = _appDbContext.Connection)
