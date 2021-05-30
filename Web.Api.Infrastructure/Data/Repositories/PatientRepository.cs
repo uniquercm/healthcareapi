@@ -34,8 +34,12 @@ namespace Web.Api.Infrastructure.Data.Repositories
                               $"p.landmark as LandMark, p.area as Area, " +
                               $"p.city_id as CityId, ci.city_name as CityName, " +
                               $"p.nationality_id as NationalityId, n.nationality_name as NationalityName, " +
-                              $"p.mobile_no as MobileNo, p.google_map_link as GoogleMapLink, p.sticker_application as StickerApplication, " +
+                              $"p.mobile_no as MobileNo, p.google_map_link as GoogleMapLink, " +
+                              $"p.no_of_adults as AdultsCount, p.no_of_childrens as ChildrensCount, p.pcr_count as PCRCount, " +
+                              $"p.sticker_application as StickerApplication, " +
+                              $"p.tracker_application as TrackerApplication, " +
                               $"p.sticker_removal as StickerRemoval, " +
+                              $"p.tracker_removal as TrackerRemoval, " +
                               $"p.created_by as CreatedBy, p.modified_by as ModifiedBy";
 
                 var whereCond = " where p.company_id = co.company_id"  +
