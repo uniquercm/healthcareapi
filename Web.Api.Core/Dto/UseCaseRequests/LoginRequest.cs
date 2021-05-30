@@ -28,6 +28,7 @@ namespace Web.Api.Core.Dto.UseCaseRequests
     public class UserRequest : IUseCaseRequest<AcknowledgementResponse>
     {
         public string UserId { get; set; }//user_id – varchar(128)
+        public string FullName { get; set; }//full_name – varchar(128)
         public string UserName { get; set; }//user_name  - Varchar(128)
         public string Password { get; set; }//password – varchar(128)
         public int UserType { get; set; }//user_type - bigint(20) – (1-SuperAdmin, 2- Admin, 3- Doctor, 4- Nurse, 5- Receptionist)
@@ -40,6 +41,7 @@ namespace Web.Api.Core.Dto.UseCaseRequests
     public class UserDetails
     {
         public string UserId { get; set; }//user_id – varchar(128)
+        public string FullName { get; set; }//full_name – varchar(128)
         public string UserName { get; set; }//user_name  - Varchar(128)
         public string Password { get; set; }//password – varchar(128)
         public int UserType { get; set; }//user_type - bigint(20) – (1-SuperAdmin, 2- Admin, 3- Doctor, 4- Nurse, 5- Receptionist)
@@ -56,6 +58,12 @@ namespace Web.Api.Core.Dto.UseCaseRequests
         public int DischargePatientNumber { get; set; }
         public int TodayPatientRegNumber { get; set; }
         public int TotalUserTypeMemberNumber { get; set; }
+        public int TotalAdminUserNumber { get; set; }
+        public int TotalDoctorUserNumber { get; set; }
+        public int TotalManagerUserNumber { get; set; }
+        public int TotalNurseUserNumber { get; set; }
+        public int TotalReceptionistUserNumber { get; set; }
+        public int TotalTeamUserNumber { get; set; }
         public int TotalTeamNumber { get; set; }
     }
 }

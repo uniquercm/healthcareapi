@@ -199,7 +199,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     StickerApplication = patientRequest.StickerApplication,
                     StickerRemoval = patientRequest.StickerRemoval,
                     CreatedBy = patientRequest.CreatedBy,
-                    CreatedOn = DateTime.UtcNow
+                    CreatedOn = DateTime.Today.ToString("yyyy-MM-dd 00:00:00.0")
                 };
                 using (var connection = _appDbContext.Connection)
                 {
@@ -260,7 +260,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     StickerApplication = patientRequest.StickerApplication,
                     StickerRemoval = patientRequest.StickerRemoval,
                     ModifiedBy = patientRequest.ModifiedBy,
-                    ModifiedOn = DateTime.UtcNow
+                    ModifiedOn = DateTime.Today.ToString("yyyy-MM-dd 00:00:00.0")
                 };
                 using (var connection = _appDbContext.Connection)
                 {

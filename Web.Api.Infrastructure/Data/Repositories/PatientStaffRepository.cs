@@ -105,7 +105,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     VisitedDate = patientStaffRequest.VisitedDate,
                     ReallocatedTeamName = patientStaffRequest.ReallocatedTeamName,
                     CreatedBy = patientStaffRequest.CreatedBy,
-                    CreatedOn = DateTime.UtcNow
+                    CreatedOn = DateTime.Today.ToString("yyyy-MM-dd 00:00:00.0")
                 };
                 using (var connection = _appDbContext.Connection)
                 {
@@ -165,7 +165,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     VisitedDate = patientStaffRequest.VisitedDate,
                     ReallocatedTeamName = patientStaffRequest.ReallocatedTeamName,
                     ModifiedBy = patientStaffRequest.ModifiedBy,
-                    ModifiedOn = DateTime.UtcNow
+                    ModifiedOn = DateTime.Today.ToString("yyyy-MM-dd 00:00:00.0")
                 };
                 using (var connection = _appDbContext.Connection)
                 {

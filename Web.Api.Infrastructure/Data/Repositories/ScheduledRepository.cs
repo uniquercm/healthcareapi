@@ -332,7 +332,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     Day7CallId = scheduledRequest.Day7CallId,
                     Day9CallId = scheduledRequest.Day9CallId,
                     CreatedBy = scheduledRequest.CreatedBy,
-                    CreatedOn = DateTime.UtcNow
+                    CreatedOn = DateTime.Today.ToString("yyyy-MM-dd 00:00:00.0")
                 };
                 using (var connection = _appDbContext.Connection)
                 {
@@ -385,7 +385,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     Remarks = callRequest.Remarks,
                     EMRDone = callRequest.EMRDone,
                     CreatedBy = callRequest.CreatedBy,
-                    CreatedOn = DateTime.UtcNow
+                    CreatedOn = DateTime.Today.ToString("yyyy-MM-dd 00:00:00.0")
                 };
                 using (var connection = _appDbContext.Connection)
                 {
@@ -477,7 +477,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     Day7CallId = day7CallId,
                     Day9CallId = day9CallId,*/
                     ModifiedBy = scheduledRequest.ModifiedBy,
-                    ModifiedOn = DateTime.UtcNow
+                    ModifiedOn = DateTime.Today.ToString("yyyy-MM-dd 00:00:00.0")
                 };
                 using (var connection = _appDbContext.Connection)
                 {
@@ -517,7 +517,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     Remarks = callRequest.Remarks,
                     EMRDone = callRequest.EMRDone,
                     ModifiedBy = callRequest.ModifiedBy,
-                    ModifiedOn = DateTime.UtcNow
+                    ModifiedOn = DateTime.Today.ToString("yyyy-MM-dd 00:00:00.0")
                 };
 
                 using (var connection = _appDbContext.Connection)
@@ -557,7 +557,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     AllocatedTeamName = fieldAllocationRequest.AllocatedTeamName,
                     ReAllocatedTeamName = fieldAllocationRequest.ReAllocatedTeamName,
                     ModifiedBy = fieldAllocationRequest.ModifiedBy,
-                    ModifiedOn = DateTime.UtcNow
+                    ModifiedOn = DateTime.Today.ToString("yyyy-MM-dd 00:00:00.0")
                 };
                 using (var connection = _appDbContext.Connection)
                 {

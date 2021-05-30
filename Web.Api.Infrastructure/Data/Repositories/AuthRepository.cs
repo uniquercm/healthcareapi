@@ -164,8 +164,8 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 bool sqlResult = true;
                 userRequest.UserId = uuid;
 
-                var colName = $"user_id, user_name, password, user_type, company_id, created_by, created_on";
-                var colValueName = $"@UserId, @UserName, @Password, @UserType, @CompanyId, @CreatedBy, @CreatedOn";
+                var colName = $"user_id, full_name, user_name, password, user_type, company_id, created_by, created_on";
+                var colValueName = $"@UserId, @FullName, @UserName, @Password, @UserType, @CompanyId, @CreatedBy, @CreatedOn";
                 var tableName = $"HC_Authentication.user_obj";
 
                 var sqlInsQuery = $"INSERT INTO "+ tableName + "( " + colName + " )" +
@@ -176,12 +176,13 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 object colValueParam = new
                 {
                     UserId = userRequest.UserId,
+                    FullName = userRequest.FullName,
                     UserName = userRequest.UserName,
                     Password = encryptPassword,
                     UserType = userRequest.UserType,
                     CompanyId = userRequest.CompanyId,
                     CreatedBy = userRequest.CreatedBy,
-                    CreatedOn = DateTime.UtcNow
+                    CreatedOn = DateTime.Today.ToString("yyyy-MM-dd 00:00:00.0")
                 };
                 using (var connection = _appDbContext.Connection)
                 {
@@ -211,7 +212,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
             {
                 bool sqlResult = true;
                 var tableName = $"HC_Authentication.user_obj";
-                var colName = $"user_id = @UserId, user_name = @UserName, password = @Password, " +
+                var colName = $"user_id = @UserId, full_name = @FullName, user_name = @UserName, password = @Password, " +
                                 $"user_type = @UserType, company_id = @CompanyId, modified_by = @ModifiedBy, modified_on = @ModifiedOn";
 
                 var whereCond = $" where user_id = @UserId";
@@ -222,12 +223,13 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 object colValueParam = new
                 {
                     UserId = userRequest.UserId,
+                    FullName = userRequest.FullName,
                     UserName = userRequest.UserName,
                     Password = encryptPassword,
                     UserType = userRequest.UserType,
                     CompanyId = userRequest.CompanyId,
                     ModifiedBy = userRequest.ModifiedBy,
-                    ModifiedOn = DateTime.UtcNow
+                    ModifiedOn = DateTime.Today.ToString("yyyy-MM-dd 00:00:00.0")
                 };
                 using (var connection = _appDbContext.Connection)
                 {

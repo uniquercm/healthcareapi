@@ -187,7 +187,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     CompanyName = companyRequest.CompanyName,
                     Address = companyRequest.Address,
                     CreatedBy = companyRequest.CreatedBy,
-                    CreatedOn = DateTime.UtcNow
+                    CreatedOn = DateTime.Today.ToString("yyyy-MM-dd 00:00:00.0")
                 };
                 using (var connection = _appDbContext.Connection)
                 {
@@ -228,7 +228,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     CompanyName = companyRequest.CompanyName,
                     Address = companyRequest.Address,
                     ModifiedBy = companyRequest.ModifiedBy,
-                    ModifiedOn = DateTime.UtcNow
+                    ModifiedOn = DateTime.Today.ToString("yyyy-MM-dd 00:00:00.0")
                 };
                 using (var connection = _appDbContext.Connection)
                 {

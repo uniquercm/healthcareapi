@@ -90,7 +90,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     CompanyId = staffRequest.CompanyId,
                     TeamName = staffRequest.TeamName,
                     CreatedBy = staffRequest.CreatedBy,
-                    CreatedOn = DateTime.UtcNow
+                    CreatedOn = DateTime.Today.ToString("yyyy-MM-dd 00:00:00.0")
                 };
                 using (var connection = _appDbContext.Connection)
                 {
@@ -139,7 +139,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     CompanyId = staffRequest.CompanyId,
                     TeamName = staffRequest.TeamName,
                     ModifiedBy = staffRequest.ModifiedBy,
-                    ModifiedOn = DateTime.UtcNow
+                    ModifiedOn = DateTime.Today.ToString("yyyy-MM-dd 00:00:00.0")
                 };
                 using (var connection = _appDbContext.Connection)
                 {
