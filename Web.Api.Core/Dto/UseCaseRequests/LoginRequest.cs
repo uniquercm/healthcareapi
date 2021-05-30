@@ -53,10 +53,11 @@ namespace Web.Api.Core.Dto.UseCaseRequests
 
     public class DashBoardDetails
     {
+        public int TodayPatientRegNumber { get; set; }
+        public int TodayScheduledPatientNumber { get; set; }
         public int TotalPatientNumber { get; set; }
         public int CurrentPatientNumber { get; set; }
         public int DischargePatientNumber { get; set; }
-        public int TodayPatientRegNumber { get; set; }
         public int TotalUserTypeMemberNumber { get; set; }
         public int TotalAdminUserNumber { get; set; }
         public int TotalDoctorUserNumber { get; set; }

@@ -19,29 +19,99 @@ namespace Web.Api.Infrastructure.Data.Repositories
             _appDbContext = appDbContext;
         }
 
-        public async Task<MasterDetails> GetMasterDetails()
+        public async Task<List<MasterDetails>> GetMasterDetails(string companyId)
         {
-            MasterDetails retMasterDetails = new MasterDetails();
+            List<MasterDetails> retMasterDetailsList = new List<MasterDetails>();
             try
             {
-                var tableName = $"HC_Master_Details.master_obj";
+                var tableName = $"HC_Master_Details.master_obj ma, " +
+                                $"HC_Master_Details.company_obj ca";
 
-                var ColumAssign = $"master_id as MasterId, team_name as TeamName, " +
-                                   $"no_of_team as NumberOfTeam, quarantine_no_of_day as QuarantineDay, " +
-                                   $"isolation_no_of_day as IsolationDay, pcr_day as PCRDay";
+                var ColumAssign = $"ma.master_id as MasterId, ma.team_name as TeamName, " +
+                                  $"ma.company_id as CompanyId, ca.company_name as CompanyName, " +
+                                  $"ma.no_of_team as NumberOfTeam, ma.quarantine_no_of_day as QuarantineDay, " +
+                                  $"ma.isolation_no_of_day as IsolationDay";// +
+                                  //$", ma.pcr_day as PCRDay";
 
-                var sqlSelQuery = $"select " + ColumAssign + " from " + tableName;
+                var whereCond = " where ma.company_id = ca.company_id";
+                if (!string.IsNullOrEmpty(companyId))
+                    whereCond = " and company_id = '" + companyId + "'";
+
+                var sqlSelQuery = $"select " + ColumAssign + " from " + tableName + whereCond;
                 using (var connection = _appDbContext.Connection)
                 {
                     var sqlSelResult = await connection.QueryAsync<MasterDetails>(sqlSelQuery);
-                    retMasterDetails = sqlSelResult.FirstOrDefault();
+                    retMasterDetailsList = sqlSelResult.ToList();
                 }
             }
             catch (Exception Err)
             {
                 var Error = Err.Message.ToString();
             }
-            return retMasterDetails;
+            return retMasterDetailsList;
+        }
+
+        public async Task<bool> CreateCompanyMasterDetails(MasterRequest masterRequest)
+        {
+            try
+            {
+                bool sqlResult = true;
+
+                var tableName = $"HC_Master_Details.master_obj";
+                var colName = $"company_id, no_of_team, team_name";
+                var colValueName = $"@CompanyId, @NumberOfTeam, @TeamName";
+
+                var sqlInsQuery = $"INSERT INTO "+ tableName + "( " + colName + " )" +
+                                    $"VALUES ( " + colValueName + " )";
+
+                object colValueParam = new
+                {
+                    CompanyId = masterRequest.CompanyId,
+                    NumberOfTeam = masterRequest.NumberOfTeam,
+                    TeamName = masterRequest.TeamName
+                };
+                using (var connection = _appDbContext.Connection)
+                {
+                    sqlResult = Convert.ToBoolean(await connection.ExecuteAsync(sqlInsQuery, colValueParam));
+                }
+                return sqlResult;
+            }
+            catch (Exception Err)
+            {
+                var Error = Err.Message.ToString();
+                return false;
+            }
+        }
+
+        public async Task<bool> EditCompanyMasterDetails(MasterRequest masterRequest)
+        {
+            try
+            {
+                bool sqlResult = true;
+                var tableName = $"HC_Master_Details.master_obj";
+                var colName = $"company_id = @CompanyId, no_of_team = @NumberOfTeam, team_name = @TeamName";
+
+                var whereCond = $" where master_id = @MasterId";
+                var sqlUpdateQuery = $"UPDATE "+ tableName + " set " + colName + whereCond;
+
+                object colValueParam = new
+                {
+                    MasterId = masterRequest.MasterId,
+                    CompanyId = masterRequest.CompanyId,
+                    NumberOfTeam = masterRequest.NumberOfTeam,
+                    TeamName = masterRequest.TeamName
+                };
+                using (var connection = _appDbContext.Connection)
+                {
+                    sqlResult = Convert.ToBoolean(await connection.ExecuteAsync(sqlUpdateQuery, colValueParam));
+                    return sqlResult;
+                }
+            }
+            catch (Exception Err)
+            {
+                var Error = Err.Message.ToString();
+                return false;
+            }
         }
 
         public async Task<List<CityDetails>> GetCityDetails()
@@ -143,7 +213,9 @@ namespace Web.Api.Infrastructure.Data.Repositories
             {
                 var tableName = $"HC_Master_Details.company_obj";
 
-                var ColumAssign = $"company_id as CompanyId, company_name as CompanyName, address as Address, " +
+                var ColumAssign = $"company_id as CompanyId, company_name as CompanyName, " +
+                                  $"no_of_team as NumberOfTeam, team_name as TeamName, " +
+                                  $"address as Address, " +
                                   $"created_by as CreatedBy, modified_by as ModifiedBy";
 
                 var whereCond = "";
@@ -174,9 +246,15 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 bool sqlResult = true;
                 companyRequest.CompanyId = uuid;
 
-                var colName = $"company_id, company_name, address, created_by, created_on";
-                var colValueName = $"@CompanyId, @CompanyName, @Address, @CreatedBy, @CreatedOn";
                 var tableName = $"HC_Master_Details.company_obj";
+
+                var colName = $"company_id, company_name, " +
+                              $"no_of_team, team_name, address, " +
+                              $"created_by, created_on";
+
+                var colValueName = $"@CompanyId, @CompanyName, " +
+                                   $"@NumberOfTeam, @TeamName, @Address, " +
+                                   $"@CreatedBy, @CreatedOn";
 
                 var sqlInsQuery = $"INSERT INTO "+ tableName + "( " + colName + " )" +
                                     $"VALUES ( " + colValueName + " )";
@@ -185,6 +263,8 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 {
                     CompanyId = companyRequest.CompanyId,
                     CompanyName = companyRequest.CompanyName,
+                    NumberOfTeam = companyRequest.NumberOfTeam,
+                    TeamName = companyRequest.TeamName,
                     Address = companyRequest.Address,
                     CreatedBy = companyRequest.CreatedBy,
                     CreatedOn = DateTime.Today.ToString("yyyy-MM-dd 00:00:00.0")
@@ -216,16 +296,22 @@ namespace Web.Api.Infrastructure.Data.Repositories
             {
                 bool sqlResult = true;
                 var tableName = $"HC_Master_Details.company_obj";
-                var colName = $"company_id = @CompanyId, company_name = @CompanyName, address = @Address, " +
+
+                var colName = $"company_id = @CompanyId, company_name = @CompanyName, " +
+                              $"no_of_team = @NumberOfTeam, team_name = @TeamName, " +
+                              $"address = @Address, " +
                               $"modified_by = @ModifiedBy, modified_on = @ModifiedOn";
 
-                var whereCond = $" where company_id = @UserId";
+                var whereCond = $" where company_id = @CompanyId";
+
                 var sqlUpdateQuery = $"UPDATE "+ tableName + " set " + colName + whereCond;
 
                 object colValueParam = new
                 {
                     CompanyId = companyRequest.CompanyId,
                     CompanyName = companyRequest.CompanyName,
+                    NumberOfTeam = companyRequest.NumberOfTeam,
+                    TeamName = companyRequest.TeamName,
                     Address = companyRequest.Address,
                     ModifiedBy = companyRequest.ModifiedBy,
                     ModifiedOn = DateTime.Today.ToString("yyyy-MM-dd 00:00:00.0")

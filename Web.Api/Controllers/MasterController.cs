@@ -32,13 +32,41 @@ namespace Web.Api.Controllers
         /// <summary>
         /// Getting a Master Details
         /// </summary>
+        /// <param name="companyId">Company Id (optional)</param>
         /// <returns>Master Details</returns>
         [HttpGet("master")]
-        public async Task<ActionResult> GetMasterDetails()
+        public async Task<ActionResult> GetMasterDetails(string companyId = "")
         {
-            await _masterUseCases.Handle(new GetDetailsRequest("Master"), _getDetailsPresenter);
+            await _masterUseCases.Handle(new GetDetailsRequest(companyId, "Master"), _getDetailsPresenter);
             return _getDetailsPresenter.ContentResult;
         }
+
+        /// <summary>
+        /// Creating a Company Master Details
+        /// </summary>
+        /// <param name="request">New Company Master Details</param>
+        /// <returns>Acknowledgement</returns>
+        [HttpPost("master")]
+        public async Task<ActionResult> CreateCompanyMasterDetails([FromBody] Models.Request.MasterRequest request)
+        {
+            request.IsUpdate = false;
+            await _masterUseCases.Handle(_mapper.Map<MasterRequest>(request), _acknowledgementPresenter);
+            return _acknowledgementPresenter.ContentResult;
+        }
+
+        /// <summary>
+        /// Modifying a Company Master Details
+        /// </summary>
+        /// <param name="request">Modifying Company Master Details</param>
+        /// <returns>Acknowledgement</returns>
+        [HttpPut("master")]
+        public async Task<ActionResult> EditCompanyMasterDetailsr([FromBody] Models.Request.MasterRequest request)
+        {
+            request.IsUpdate = true;
+            await _masterUseCases.Handle(_mapper.Map<MasterRequest>(request), _acknowledgementPresenter);
+            return _acknowledgementPresenter.ContentResult;
+        }
+
 
         /// <summary>
         /// Getting a City Details
@@ -47,7 +75,7 @@ namespace Web.Api.Controllers
         [HttpGet("city")]
         public async Task<ActionResult> GetCityDetails()
         {
-            await _masterUseCases.Handle(new GetDetailsRequest("City"), _getDetailsPresenter);
+            await _masterUseCases.Handle(new GetDetailsRequest("", "City"), _getDetailsPresenter);
             return _getDetailsPresenter.ContentResult;
         }
 
@@ -58,7 +86,7 @@ namespace Web.Api.Controllers
         [HttpGet("nationality")]
         public async Task<ActionResult> GetNationalityDetails()
         {
-            await _masterUseCases.Handle(new GetDetailsRequest("Nationality"), _getDetailsPresenter);
+            await _masterUseCases.Handle(new GetDetailsRequest("", "Nationality"), _getDetailsPresenter);
             return _getDetailsPresenter.ContentResult;
         }
 
@@ -69,7 +97,7 @@ namespace Web.Api.Controllers
         [HttpGet("section")]
         public async Task<ActionResult> GetSectionDetails()
         {
-            await _masterUseCases.Handle(new GetDetailsRequest("Section"), _getDetailsPresenter);
+            await _masterUseCases.Handle(new GetDetailsRequest("", "Section"), _getDetailsPresenter);
             return _getDetailsPresenter.ContentResult;
         }
 
@@ -80,7 +108,7 @@ namespace Web.Api.Controllers
         [HttpGet("requestCRM")]
         public async Task<ActionResult> GetRequestCRMDetails()
         {
-            await _masterUseCases.Handle(new GetDetailsRequest("RequestCRM"), _getDetailsPresenter);
+            await _masterUseCases.Handle(new GetDetailsRequest("", "RequestCRM"), _getDetailsPresenter);
             return _getDetailsPresenter.ContentResult;
         }
 
@@ -92,7 +120,7 @@ namespace Web.Api.Controllers
         [HttpGet("company")]
         public async Task<ActionResult> GetCompanyDetails(string companyId = "")
         {
-            await _masterUseCases.Handle(new GetDetailsRequest(companyId), _getDetailsPresenter);
+            await _masterUseCases.Handle(new GetDetailsRequest(companyId, "Company"), _getDetailsPresenter);
             return _getDetailsPresenter.ContentResult;
         }
 
@@ -115,7 +143,7 @@ namespace Web.Api.Controllers
         /// <param name="request">Modifying Company Details</param>
         /// <returns>Acknowledgement</returns>
         [HttpPut("company")]
-        public async Task<ActionResult> EditUser([FromBody] Models.Request.CompanyRequest request)
+        public async Task<ActionResult> EditCompany([FromBody] Models.Request.CompanyRequest request)
         {
             request.IsUpdate = true;
             await _masterUseCases.Handle(_mapper.Map<CompanyRequest>(request), _acknowledgementPresenter);

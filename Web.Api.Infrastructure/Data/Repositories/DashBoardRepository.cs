@@ -21,27 +21,63 @@ namespace Web.Api.Infrastructure.Data.Repositories
             DashBoardDetails retDashBoardDetails = new DashBoardDetails();
             try
             {
-                var tableName = $"HC_Staff_Patient.patient_obj";
-
-                var ColumAssign = $"*";
-
                 var whereCond = "";
 
                 string todayDate = DateTime.Today.ToString("yyyy-MM-dd 00:00:00.0");
 
                 if (!string.IsNullOrEmpty(companyId))
-                    whereCond += " where company_id = '" + companyId + "'";
+                    whereCond = " where company_id = '" + companyId + "'";
 
                 using (var connection = _appDbContext.Connection)
                 {
-                    var cond = "";
-                    var sqlSelQuery = $"select * from HC_Staff_Patient.patient_obj" + whereCond;
+                    var cond = $" where created_on = '" + todayDate + "'";
+                    if (!string.IsNullOrEmpty(companyId))
+                        cond += " and company_id = '" + companyId + "'";
+                    var sqlSelQuery = $"select * from HC_Staff_Patient.patient_obj" + cond;
                     var sqlSelResult = await connection.QueryAsync(sqlSelQuery);
+                    retDashBoardDetails.TodayPatientRegNumber = sqlSelResult.Count();
+
+                    cond = $" where pa.patient_id = sc.patient_id" +  
+                           $" and ca.call_scheduled_date = '" + todayDate + "'" +
+                           $" and ca.scheduled_id = sc.scheduled_id";
+                    if (!string.IsNullOrEmpty(companyId))
+                        cond += " and pa.company_id = '" + companyId + "'";
+                    sqlSelQuery = $"select * from  HC_Staff_Patient.patient_obj pa, " +
+                                  $"HC_Treatment.scheduled_obj sc, " +
+                                  $"HC_Treatment.call_obj ca" + cond;
+                    sqlSelResult = await connection.QueryAsync(sqlSelQuery);
+                    retDashBoardDetails.TodayScheduledPatientNumber = sqlSelResult.Count();
+                    cond = $" where pa.patient_id = sc.patient_id" +  
+                           $" and sc.4day_pcr_test_date = '" + todayDate + "'" +
+                           $" or sc.8day_pcr_test_date = '" + todayDate + "'";
+                    if (!string.IsNullOrEmpty(companyId))
+                        cond += " and pa.company_id = '" + companyId + "'";
+                    sqlSelQuery = $"select * from  HC_Staff_Patient.patient_obj pa, " +
+                                  $"HC_Treatment.scheduled_obj sc" + cond;
+                    sqlSelResult = await connection.QueryAsync(sqlSelQuery);
+                    retDashBoardDetails.TodayScheduledPatientNumber += sqlSelResult.Count();
+
+                    sqlSelQuery = $"select * from HC_Staff_Patient.patient_obj" + whereCond;
+                    sqlSelResult = await connection.QueryAsync(sqlSelQuery);
                     retDashBoardDetails.TotalPatientNumber = sqlSelResult.Count();
 
-                    retDashBoardDetails.DischargePatientNumber = 0;
+                    cond = $" where discharge_date < '" + todayDate + "'" + 
+                           $" and pa.patient_id = sc.patient_id";
+                    if (!string.IsNullOrEmpty(companyId))
+                        cond += " and pa.company_id = '" + companyId + "'";
+                    sqlSelQuery = $"select * from HC_Treatment.scheduled_obj sc, " + 
+                                  $"HC_Staff_Patient.patient_obj pa " + cond;
+                    sqlSelResult = await connection.QueryAsync(sqlSelQuery);
+                    retDashBoardDetails.DischargePatientNumber = sqlSelResult.Count();
 
-                    retDashBoardDetails.CurrentPatientNumber = 0;
+                    cond = $" where discharge_date >= '" + todayDate + "'" + 
+                           $" and pa.patient_id = sc.patient_id";
+                    if (!string.IsNullOrEmpty(companyId))
+                        cond += " and pa.company_id = '" + companyId + "'";
+                    sqlSelQuery = $"select * from HC_Treatment.scheduled_obj sc, " + 
+                                  $"HC_Staff_Patient.patient_obj pa " + cond;
+                    sqlSelResult = await connection.QueryAsync(sqlSelQuery);
+                    retDashBoardDetails.CurrentPatientNumber = sqlSelResult.Count();
 
                     sqlSelQuery = $"select * from HC_Authentication.user_obj" + whereCond;
                     sqlSelResult = await connection.QueryAsync(sqlSelQuery);
@@ -89,15 +125,10 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     sqlSelResult = await connection.QueryAsync(sqlSelQuery);
                     retDashBoardDetails.TotalTeamUserNumber = sqlSelResult.Count();
 
-                    cond = $" where created_on = '" + todayDate + "'";
-                    if (!string.IsNullOrEmpty(companyId))
-                        cond += " and company_id = '" + companyId + "'";
-                    sqlSelQuery = $"select * from HC_Staff_Patient.patient_obj" + cond;
-                    sqlSelResult = await connection.QueryAsync(sqlSelQuery);
-                    retDashBoardDetails.TodayPatientRegNumber = sqlSelResult.Count();
+                    sqlSelQuery = $"select no_of_team from HC_Master_Details.master_obj" + whereCond;
+                    var sqlResult = await connection.QueryAsync<int>(sqlSelQuery);
+                    retDashBoardDetails.TotalTeamNumber = sqlResult.FirstOrDefault();
                 }
-
-                retDashBoardDetails.TotalTeamNumber = 10;
             }
             catch (Exception Err)
             {
