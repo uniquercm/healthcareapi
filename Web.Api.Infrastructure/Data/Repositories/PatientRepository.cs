@@ -167,12 +167,16 @@ namespace Web.Api.Infrastructure.Data.Repositories
 
                 var colName = $"patient_id, patient_name, company_id, request_id, crm_no, eid_no, " +
                               $"date_of_birth, age, sex, address, landmark, area, city_id, nationality_id, " +
-                              $"mobile_no, google_map_link, sticker_application, sticker_removal, " +
+                              $"mobile_no, google_map_link, no_of_adults, no_of_childrens, pcr_count, " +
+                              $"sticker_application, tracker_application, " +
+                              $"sticker_removal, tracker_removal, " +
                               $"created_by, created_on";
 
                 var colValueName = $"@PatientId, @PatientName, @CompanyId, @RequestId, @CRMNo, @EIDNo, " +
                                    $"@DateOfBirth, @Age, @Sex, @Address, @LandMark, @Area, @CityId, @NationalityId, " +
-                                   $"@MobileNo, @GoogleMapLink, @StickerApplication, @StickerRemoval, " +
+                                   $"@MobileNo, @GoogleMapLink, @AdultsCount, @ChildrensCount, " +
+                                   $"@StickerApplication, @TrackerApplication, @PCRCount, " +
+                                   $"@StickerRemoval, @TrackerRemoval " +
                                    $"@CreatedBy, @CreatedOn";
 
                 var sqlInsQuery = $"INSERT INTO "+ tableName + "( " + colName + " )" +
@@ -186,7 +190,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     RequestId = patientRequest.RequestId,
                     CRMNo = patientRequest.CRMNo,
                     EIDNo = patientRequest.EIDNo,
-                    DateOfBirth = patientRequest.DateOfBirth,
+                    DateOfBirth = patientRequest.DateOfBirth.ToString("yyyy-MM-dd 00:00:00.0"),
                     Age = patientRequest.Age,
                     Sex = patientRequest.Sex,
                     Address = patientRequest.Address,
@@ -196,8 +200,13 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     NationalityId = patientRequest.NationalityId,
                     MobileNo = patientRequest.MobileNo,
                     GoogleMapLink = patientRequest.GoogleMapLink,
+                    AdultsCount = patientRequest.AdultsCount,
+                    ChildrensCount = patientRequest.ChildrensCount,
                     StickerApplication = patientRequest.StickerApplication,
+                    TrackerApplication = patientRequest.AdultsCount,
+                    PCRCount = patientRequest.AdultsCount,
                     StickerRemoval = patientRequest.StickerRemoval,
+                    TrackerRemoval = patientRequest.AdultsCount,
                     CreatedBy = patientRequest.CreatedBy,
                     CreatedOn = DateTime.Today.ToString("yyyy-MM-dd 00:00:00.0")
                 };
@@ -233,8 +242,11 @@ namespace Web.Api.Infrastructure.Data.Repositories
                               $"request_id = @RequestId, crm_no = @CRMNo, eid_no = @EIDNo, " +
                               $"date_of_birth = @DateOfBirth, age = @Age, sex = @Sex, address = @Address, " +
                               $"landmark = @LandMark, area = @Area, city_id = @CityId, nationality_id = @NationalityId, " +
-                              $"mobile_no = @MobileNo, google_map_link = @GoogleMapLink, sticker_application = @StickerApplication, " +
-                              $"sticker_removal = @StickerRemoval, modified_by = @ModifiedBy, modified_on = @ModifiedOn";
+                              $"mobile_no = @MobileNo, google_map_link = @GoogleMapLink, " +
+                              $"no_of_adults = @AdultsCount, no_of_childrens = @ChildrensCount, pcr_count = @PCRCount, " +
+                              $"sticker_application = @StickerApplication, tracker_application = @TrackerApplication, " +
+                              $"sticker_removal = @StickerRemoval, tracker_removal = @TrackerRemoval, " +
+                              $"modified_by = @ModifiedBy, modified_on = @ModifiedOn";
 
                 var whereCond = $" where patient_id = @PatientId";
                 var sqlUpdateQuery = $"UPDATE "+ tableName + " set " + colName + whereCond;
@@ -247,7 +259,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     RequestId = patientRequest.RequestId,
                     CRMNo = patientRequest.CRMNo,
                     EIDNo = patientRequest.EIDNo,
-                    DateOfBirth = patientRequest.DateOfBirth,
+                    DateOfBirth = patientRequest.DateOfBirth.ToString("yyyy-MM-dd 00:00:00.0"),
                     Age = patientRequest.Age,
                     Sex = patientRequest.Sex,
                     Address = patientRequest.Address,
@@ -257,8 +269,13 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     NationalityId = patientRequest.NationalityId,
                     MobileNo = patientRequest.MobileNo,
                     GoogleMapLink = patientRequest.GoogleMapLink,
+                    AdultsCount = patientRequest.AdultsCount,
+                    ChildrensCount = patientRequest.ChildrensCount,
                     StickerApplication = patientRequest.StickerApplication,
+                    TrackerApplication = patientRequest.TrackerApplication,
+                    PCRCount = patientRequest.PCRCount,
                     StickerRemoval = patientRequest.StickerRemoval,
+                    TrackerRemoval = patientRequest.TrackerRemoval,
                     ModifiedBy = patientRequest.ModifiedBy,
                     ModifiedOn = DateTime.Today.ToString("yyyy-MM-dd 00:00:00.0")
                 };

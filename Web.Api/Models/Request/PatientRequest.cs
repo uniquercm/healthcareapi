@@ -20,8 +20,12 @@ namespace Web.Api.Models.Request
         public int NationalityId { get; set; }
         public string MobileNo { get; set; }
         public string GoogleMapLink { get; set; }
+        public int AdultsCount { get; set; }
+        public int ChildrensCount { get; set; }
         public string StickerApplication { get; set; }
+        public int TrackerApplication { get; set; }
         public string StickerRemoval { get; set; }
+        public int TrackerRemoval { get; set; }
         public string CreatedBy { get; set; }
         public string ModifiedBy { get; set; }
         public bool IsUpdate { get; set; }

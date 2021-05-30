@@ -22,8 +22,13 @@ namespace Web.Api.Core.Dto.UseCaseRequests
         public int NationalityId { get; set; }//nationality_id – int(10)
         public string MobileNo { get; set; }//mobile_no - varchar(25)
         public string GoogleMapLink { get; set; }//google_map_link – varchar(156)
+        public int AdultsCount { get; set; }//no_of_adults – int(10)
+        public int ChildrensCount { get; set; }//no_of_childrens – int(10)
         public string StickerApplication { get; set; }//sticker_application - enum('No','Yes')
+        public int TrackerApplication { get; set; }//tracker_application – int(10)
+        public int PCRCount { get; set; }//pcr_count - int(10)
         public string StickerRemoval { get; set; }//sticker_removal - enum('No','Yes')
+        public int TrackerRemoval { get; set; }//tracker_removal – int(10)
         public string CreatedBy { get; set; } //created_by
         public string ModifiedBy { get; set; } //modified_by
         public bool IsUpdate { get; set; }
@@ -50,8 +55,12 @@ namespace Web.Api.Core.Dto.UseCaseRequests
         public string NationalityName { get; set; }
         public string MobileNo { get; set; }//mobile_no - varchar(25)
         public string GoogleMapLink { get; set; }//google_map_link – varchar(156)
+        public int AdultsCount { get; set; }//no_of_adults – int(10)
+        public int ChildrensCount { get; set; }//no_of_childrens – int(10)
         public string StickerApplication { get; set; }//sticker_application - enum('No','Yes')
+        public int TrackerApplication { get; set; }//tracker_application – int(10)
         public string StickerRemoval { get; set; }//sticker_removal - enum('No','Yes')
+        public int TrackerRemoval { get; set; }//tracker_removal – int(10)
         public string DrCallId { get; set; }
         public string ScheduledId { get; set; }
         public string CreatedBy { get; set; } //created_by
