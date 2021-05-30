@@ -18,13 +18,98 @@ namespace Web.Api.Infrastructure.Data.Repositories
         {
             _appDbContext = appDbContext;
         }
+        public async Task<List<ScheduledDetails>> GetScheduledDetails(string companyId, string scheduledId, string patientId, bool isFieldAllocation, IPatientRepository patientRepository)
+        {
+            List<ScheduledDetails> retScheduledDetailsList = new List<ScheduledDetails>();
+            try
+            {
+                var tableName = $"HC_Staff_Patient.patient_obj p, " +
+                                $"HC_Treatment.scheduled_obj sc";
+
+                var ColumAssign = $"sc.scheduled_id as ScheduledId, sc.patient_staff_id as PatientStaffId, " +
+                                  $"sc.patient_id as PatientId, p.patient_name as PatientName," +
+                                  $"sc.initial_pcr_test_date as PCRTestDate, sc.initial_pcr_test_result as PCRResult, " +
+                                  $"sc.have_vaccine as HaveVaccine, " +
+                                  $"sc.allocated_team_name as AllocatedTeamName, sc.reallocated_team_name as ReAllocatedTeamName, " +
+                                  $"sc.discharge_date as DischargeDate, sc.treatment_type as TreatmentType, " +
+                                  $"sc.treatment_from_date as TreatmentFromDate, sc.treatment_to_date as TreatmentToDate, " +
+                                  $"sc.4day_pcr_test_date as PCR4DayTestDate, sc.4day_pcr_test_sample_date as PCR4DaySampleDate, sc.4day_pcr_test_result as PCR4DayResult, " +
+                                  $"sc.8day_pcr_test_date as PCR8DayTestDate, sc.8day_pcr_test_sample_date as PCR8DaySampleDate, sc.8day_pcr_test_result as PCR8DayResult, " +
+                                  $"sc.2day_call_id as Day2CallId, sc.3day_call_id as Day3CallId, sc.5day_call_id as Day5CallId, " +
+                                  $"sc.6day_call_id as Day6CallId, sc.7day_call_id as Day7CallId, sc.9day_call_id as Day9CallId, " +
+                                  $"sc.created_by as CreatedBy, sc.modified_by as ModifiedBy";
+
+                var whereCond = $" where sc.patient_id = p.patient_id";
+                                //$"";
+
+                if (!string.IsNullOrEmpty(companyId))
+                    whereCond += " and p.company_id = '" + companyId + "'";
+
+                if (!string.IsNullOrEmpty(scheduledId))
+                    whereCond += " and sc.scheduled_id = '" + scheduledId + "'";
+
+                if (!string.IsNullOrEmpty(patientId))
+                    whereCond += " and sc.patient_id = '" + patientId + "'";
+
+                var sqlSelQuery = $"select " + ColumAssign + " from " + tableName + whereCond;
+                using (var connection = _appDbContext.Connection)
+                {
+                    var sqlSelResult = await connection.QueryAsync<ScheduledDetails>(sqlSelQuery);
+                    retScheduledDetailsList = sqlSelResult.ToList();
+                    foreach(ScheduledDetails singleScheduledDetails in retScheduledDetailsList)
+                    {
+                        List<CallDetails> callDetailsList = await GetCallDetails(singleScheduledDetails.Day2CallId, singleScheduledDetails.ScheduledId);
+                        if(callDetailsList.Count > 0)
+                            singleScheduledDetails.Day2CallDetails = callDetailsList[0];
+
+                        callDetailsList = await GetCallDetails(singleScheduledDetails.Day3CallId, singleScheduledDetails.ScheduledId);
+                        if(callDetailsList.Count > 0)
+                            singleScheduledDetails.Day3CallDetails = callDetailsList[0];
+
+                        callDetailsList = await GetCallDetails(singleScheduledDetails.Day5CallId, singleScheduledDetails.ScheduledId);
+                        if(callDetailsList.Count > 0)
+                            singleScheduledDetails.Day5CallDetails = callDetailsList[0];
+
+                        callDetailsList = await GetCallDetails(singleScheduledDetails.Day6CallId, singleScheduledDetails.ScheduledId);
+                        if(callDetailsList.Count > 0)
+                            singleScheduledDetails.Day6CallDetails = callDetailsList[0];
+
+                        callDetailsList = await GetCallDetails(singleScheduledDetails.Day7CallId, singleScheduledDetails.ScheduledId);
+                        if(callDetailsList.Count > 0)
+                            singleScheduledDetails.Day7CallDetails = callDetailsList[0];
+
+                        callDetailsList = await GetCallDetails(singleScheduledDetails.Day9CallId, singleScheduledDetails.ScheduledId);
+                        if(callDetailsList.Count > 0)
+                            singleScheduledDetails.Day9CallDetails = callDetailsList[0];
+
+                        singleScheduledDetails.PatientInformation = new PatientDetails();
+                        if(isFieldAllocation)
+                        {
+                            List<PatientDetails> patientDetailsList = new List<PatientDetails>();
+                            patientDetailsList = await patientRepository.GetPatientDetails(companyId, singleScheduledDetails.PatientId);
+                            if(patientDetailsList.Count > 0)
+                                singleScheduledDetails.PatientInformation = patientDetailsList[0];
+                        }
+                    }
+                }
+            }
+            catch (Exception Err)
+            {
+                var Error = Err.Message.ToString();
+            }
+            return retScheduledDetailsList;
+        }
+
+/*
         public async Task<List<ScheduledDetails>> GetScheduledDetails(string companyId, string scheduledId, string patientStaffId, bool isFieldAllocation, IPatientRepository patientRepository)
         {
             List<ScheduledDetails> retScheduledDetailsList = new List<ScheduledDetails>();
             try
             {
-                var tableName = $"HC_Staff_Patient.patient_obj p, HC_Staff_Patient.staff_obj s, " +
-                                $"HC_Treatment.scheduled_obj sc, HC_Treatment.call_obj c, " +
+                var tableName = $"HC_Staff_Patient.patient_obj p, " +
+                                $"HC_Staff_Patient.staff_obj s, " +
+                                $"HC_Treatment.scheduled_obj sc, " +
+                                $"HC_Treatment.call_obj c, " +
                                 $"HC_Staff_Patient.patient_staff_xw psx";
 
                 var ColumAssign = $"sc.scheduled_id as ScheduledId, sc.patient_staff_id as PatientStaffId, " +
@@ -43,7 +128,8 @@ namespace Web.Api.Infrastructure.Data.Repositories
 
                 var whereCond = $" where p.company_id = s.company_id"+
                                 $" and sc.patient_staff_id = psx.patient_staff_id" +
-                                $" and psx.patient_id = p.patient_id and psx.staff_id = s.staff_id";
+                                $" and psx.patient_id = p.patient_id" +
+                                $" and psx.staff_id = s.staff_id";
                                 //$"";
 
                 if (!string.IsNullOrEmpty(companyId))
@@ -103,6 +189,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
             }
             return retScheduledDetailsList;
         }
+*/
         public async Task<List<CallDetails>> GetCallDetails(string callId, string scheduledId)
         {
             List<CallDetails> retCallDetailsList = new List<CallDetails>();
@@ -154,7 +241,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
 
                 var tableName = $"HC_Treatment.scheduled_obj";
 
-                var colName = $"scheduled_id, patient_staff_id, initial_pcr_test_date, initial_pcr_test_result, " +
+                var colName = $"scheduled_id, patient_staff_id, patient_id, initial_pcr_test_date, initial_pcr_test_result, " +
                               $"have_vaccine, allocated_team_name, reallocated_team_name, " +
                               $"discharge_date, treatment_type, treatment_from_date, treatment_to_date, " +
                               $"4day_pcr_test_date, 4day_pcr_test_sample_date, 4day_pcr_test_result, " +
@@ -162,7 +249,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                               $"2day_call_id, 3day_call_id, 5day_call_id, 6day_call_id, 7day_call_id, " +
                               $"9day_call_id, created_by, created_on";
 
-                var colValueName = $"@ScheduledId, @PatientStaffId, @PCRTestDate, @PCRResult, " +
+                var colValueName = $"@ScheduledId, @PatientStaffId, @PatientId, @PCRTestDate, @PCRResult, " +
                                    $"@HaveVaccine, @AllocatedTeamName, " +
                                    $"@ReAllocatedTeamName, @DischargeDate, @TreatmentType, " +
                                    $"@TreatmentFromDate, @TreatmentToDate, " +
@@ -221,6 +308,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 {
                     ScheduledId = scheduledRequest.ScheduledId,
                     PatientStaffId = scheduledRequest.PatientStaffId,
+                    PatientId = scheduledRequest.PatientId,
                     PCRTestDate = scheduledRequest.PCRTestDate,
                     PCRResult = scheduledRequest.PCRResult,
                     HaveVaccine = scheduledRequest.HaveVaccine,
@@ -319,6 +407,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 var tableName = $"HC_Treatment.scheduled_obj";
 
                 var colName = $"scheduled_id = @ScheduledId, patient_staff_id = @PatientStaffId, " +
+                              $"patient_id = @PatientId, " +
                               $"initial_pcr_test_date = @PCRTestDate, initial_pcr_test_result = @PCRResult, " +
                               $"have_vaccine = @HaveVaccine, " +
                               //$"allocated_team_name = @AllocatedTeamName, reallocated_team_name = @ReAllocatedTeamName, " +
@@ -364,6 +453,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 {
                     ScheduledId = scheduledRequest.ScheduledId,
                     PatientStaffId = scheduledRequest.PatientStaffId,
+                    PatientId = scheduledRequest.PatientId,
                     PCRTestDate = scheduledRequest.PCRTestDate,
                     PCRResult = scheduledRequest.PCRResult,
                     HaveVaccine = scheduledRequest.HaveVaccine,
@@ -449,7 +539,9 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 bool sqlResult = true;
                 var tableName = $"HC_Treatment.scheduled_obj";
 
-                var colName = $"scheduled_id = @ScheduledId, patient_staff_id = @PatientStaffId, " +
+                var colName = $"scheduled_id = @ScheduledId, " +
+                              //$"patient_staff_id = @PatientStaffId, " +
+                              //$"patient_id = @PatientId, " +
                               $"allocated_team_name = @AllocatedTeamName, reallocated_team_name = @ReAllocatedTeamName, " +
                               $"modified_by = @ModifiedBy, modified_on = @ModifiedOn";
 
@@ -459,7 +551,8 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 object colValueParam = new
                 {
                     ScheduledId = fieldAllocationRequest.ScheduledId,
-                    PatientStaffId = fieldAllocationRequest.PatientStaffId,
+                    //PatientStaffId = fieldAllocationRequest.PatientStaffId,
+                    //PatientId = fieldAllocationRequest.PatientId,
                     AllocatedTeamName = fieldAllocationRequest.AllocatedTeamName,
                     ReAllocatedTeamName = fieldAllocationRequest.ReAllocatedTeamName,
                     ModifiedBy = fieldAllocationRequest.ModifiedBy,

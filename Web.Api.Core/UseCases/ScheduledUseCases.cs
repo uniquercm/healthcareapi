@@ -25,9 +25,9 @@ namespace Web.Api.Core.UseCases
             if(request.LableName == "Call")
                 getDetailsResponse = new GetDetailsResponse(await _scheduledRepository.GetCallDetails(request.Id, request.ScheduledId), true, "Data Fetched Successfully");
             else if(request.LableName == "FieldAllocation")
-                getDetailsResponse = new GetDetailsResponse(await _scheduledRepository.GetScheduledDetails(request.Id, request.ScheduledId, request.PatientStaffId, true, _patientRepository), true, "Data Fetched Successfully");
+                getDetailsResponse = new GetDetailsResponse(await _scheduledRepository.GetScheduledDetails(request.Id, request.ScheduledId, request.PatientId, true, _patientRepository), true, "Data Fetched Successfully");
             else
-                getDetailsResponse = new GetDetailsResponse(await _scheduledRepository.GetScheduledDetails(request.Id, request.ScheduledId, request.PatientStaffId, false, _patientRepository), true, "Data Fetched Successfully");
+                getDetailsResponse = new GetDetailsResponse(await _scheduledRepository.GetScheduledDetails(request.Id, request.ScheduledId, request.PatientId, false, _patientRepository), true, "Data Fetched Successfully");
 
             outputPort.Handle(getDetailsResponse);
             return true;

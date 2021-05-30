@@ -6,6 +6,7 @@ namespace Web.Api.Models.Request
     {
         public string ScheduledId { get; set; }
         public string PatientStaffId { get; set; }
+        public string PatientId { get; set; }
         public DateTime PCRTestDate { get; set; }
         public string PCRResult { get; set; }
         public string HaveVaccine { get; set; }

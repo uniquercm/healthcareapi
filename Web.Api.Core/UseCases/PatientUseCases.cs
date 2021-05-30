@@ -21,7 +21,12 @@ namespace Web.Api.Core.UseCases
         {
             GetDetailsResponse getDetailsResponse;
 
-            getDetailsResponse = new GetDetailsResponse(await _patientRepository.GetPatientDetails("", request.Id), true, "Data Fetched Successfully");
+            if(request.LableName == "DrCall")
+                getDetailsResponse = new GetDetailsResponse(await _patientRepository.GetDrNurseCallDetails(request.CompanyId, "DrCall", request.ScheduledFromDate, request.ScheduledToDate), true, "Data Fetched Successfully");
+            else if(request.LableName == "NurseCall")
+                getDetailsResponse = new GetDetailsResponse(await _patientRepository.GetDrNurseCallDetails(request.CompanyId, "NurseCall", request.ScheduledFromDate, request.ScheduledToDate), true, "Data Fetched Successfully");
+            else
+                getDetailsResponse = new GetDetailsResponse(await _patientRepository.GetPatientDetails("", request.Id), true, "Data Fetched Successfully");
 
             outputPort.Handle(getDetailsResponse);
             return true;

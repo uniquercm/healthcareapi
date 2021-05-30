@@ -34,16 +34,16 @@ namespace Web.Api.Controllers
         /// </summary>
         /// <param name="companyId">Company Id (optional)</param>
         /// <param name="scheduledId">Scheduled Id (optional)</param>
-        /// <param name="patientstaffId">Patient Staff Id (optional)</param>
+        /// <param name="patientId">Patient Id (optional)</param>
         /// <param name="isFieldAllocation">Is Field Allocation (optional)</param>
         /// <returns>Scheduled Details</returns>
         [HttpGet("scheduled")]
-        public async Task<ActionResult> GetScheduledDetails(string companyId = "", string scheduledId = "", string patientstaffId = "", bool isFieldAllocation = false)
+        public async Task<ActionResult> GetScheduledDetails(string companyId = "", string scheduledId = "", string patientId = "", bool isFieldAllocation = false)
         {
             if(isFieldAllocation)
-                await _scheduledUseCases.Handle(new GetDetailsRequest(companyId, "", "", patientstaffId, scheduledId, "FieldAllocation"), _getDetailsPresenter);
+                await _scheduledUseCases.Handle(new GetDetailsRequest(companyId, patientId, "", "", scheduledId, "FieldAllocation"), _getDetailsPresenter);
             else
-                await _scheduledUseCases.Handle(new GetDetailsRequest(companyId, "", "", patientstaffId, scheduledId, ""), _getDetailsPresenter);
+                await _scheduledUseCases.Handle(new GetDetailsRequest(companyId, patientId, "", "", scheduledId, ""), _getDetailsPresenter);
             return _getDetailsPresenter.ContentResult;
         }
 

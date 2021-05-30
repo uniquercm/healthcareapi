@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -32,13 +33,22 @@ namespace Web.Api.Controllers
         /// <summary>
         /// Getting a Patient Details
         /// </summary>
+        /// <param name="companyId">Company Id (optional)</param>
         /// <param name="patientId">Patient Id (optional)</param>
-        /// <param name="isDrCall">Is Dr Call (optional)</param>
+        /// <param name="isDoctorCall">is Doctor Call (optional)</param>
+        /// <param name="isNurseCall">is Nurse Call (optional)</param>
+        /// <param name="fromDate">Scheduled From Date (optional)</param>
+        /// <param name="toDate">Scheduled To Date (optional)</param>
         /// <returns>Patient Details</returns>
         [HttpGet("patient")]
-        public async Task<ActionResult> GetPatientDetails(string patientId = "", bool isDrCall = false)
+        public async Task<ActionResult> GetPatientDetails(DateTime fromDate, DateTime toDate, string companyId = "", string patientId = "", bool isDoctorCall = false, bool isNurseCall = false)
         {
-            await _patientUseCases.Handle(new GetDetailsRequest(patientId), _getDetailsPresenter);
+            if(isDoctorCall)
+                await _patientUseCases.Handle(new GetDetailsRequest(companyId, fromDate, toDate, "DrCall"), _getDetailsPresenter);
+            else if(isNurseCall)
+                await _patientUseCases.Handle(new GetDetailsRequest(companyId, fromDate, toDate, "NurseCall"), _getDetailsPresenter);
+            else
+                await _patientUseCases.Handle(new GetDetailsRequest(companyId, patientId), _getDetailsPresenter);
             return _getDetailsPresenter.ContentResult;
         }
 
