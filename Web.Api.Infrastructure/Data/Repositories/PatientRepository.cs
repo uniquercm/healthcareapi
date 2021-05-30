@@ -275,7 +275,6 @@ namespace Web.Api.Infrastructure.Data.Repositories
             }
         }
 
-
         public async Task<List<DrNurseCallDetails>> GetDrNurseCallDetails(string companyId, string callName, DateTime scheduledFromDate, DateTime scheduledToDate)
         {
             List<DrNurseCallDetails> retDrNurseCallDetails = new List<DrNurseCallDetails>();
