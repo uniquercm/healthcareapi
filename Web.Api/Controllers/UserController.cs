@@ -70,7 +70,7 @@ namespace Web.Api.Controllers
         /// <summary>
         /// User Name Availability
         /// </summary>
-        /// <param name="userId">Partner Id (Optional)</param>
+        /// <param name="userId">User Id (Optional)</param>
         /// <param name="userName">User Name</param>
         /// <returns></returns>
         [HttpGet("user-name-available")]
