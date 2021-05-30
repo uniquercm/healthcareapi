@@ -288,7 +288,11 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 var ColumAssign = $"p.patient_id as PatientId, p.patient_name as PatientName, " +
                                   $"p.company_id as CompanyId, co.company_name as CompanyName, " +
                                   $"p.request_id as RequestId, p.crm_no as CRMNo, p.eid_no as EIDNo, " +
-                                  $"p.mobile_no as MobileNo";
+                                  $"p.mobile_no as MobileNo, ca.call_id as CallId, " +
+                                  $"ca.called_date as CalledDate, ca.scheduled_id as ScheduledId, " +
+                                  $"ca.call_scheduled_date as CallScheduledDate, " +
+                                  $"ca.call_status as CallStatus, ca.remarks as Remarks, " +
+                                  $"ca.emr_done as EMRDone";
 
                 var whereCond = $" where p.company_id = co.company_id" +
                                 $" and p.patient_id = sc.patient_id" +
@@ -297,7 +301,8 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 string fromDate = scheduledFromDate.Date.ToString("dd-MM-yyyy");
                 if(fromDate == "01-01-0001")
                 {
-                    scheduledFromDate = DateTime.Today;//.AddDays(1);
+                    scheduledFromDate = DateTime.Today;
+                    //scheduledFromDate = DateTime.Today.AddDays(1);
                     fromDate = scheduledFromDate.ToString("yyyy-MM-dd 00:00:00.0");
                 }
 
@@ -306,18 +311,96 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 if(toDate != "01-01-0001")
                 {
                     if(fromDate != "01-01-0001")
-                        whereCond += $" and ca.call_scheduled_date >= '" + fromDate + "'";
+                        whereCond += $" and (ca.call_scheduled_date between '" + fromDate + "'";
 
                     toDate = scheduledToDate.ToString("yyyy-MM-dd 00:00:00.0");
-                    whereCond += $" and ca.call_scheduled_date <= '" + toDate + "'";
+                    whereCond += $" and '" + toDate + "'";
+
+                    /*if(callName != "DrCall")
+                    {
+                        whereCond += $" or sc.4day_pcr_test_date between '" + fromDate + "' and '" + toDate + "'" +
+                                     $" or sc.4day_pcr_test_date between '" + toDate + "' and '" + toDate + "'";
+                    }*/
+                    whereCond += $")";
+                }
+                else
+                {
+                    if(fromDate != "01-01-0001")
+                        whereCond += $" and ca.call_scheduled_date = '" + fromDate + "'";
+
+                    /*if(callName != "DrCall")
+                    {
+                        whereCond += $" and sc.4day_pcr_test_date = '" + fromDate + "'" +
+                                    $" or sc.8day_pcr_test_date = '" + fromDate + "'";
+                    }*/
+                }
+
+                if(callName == "DrCall")
+                    whereCond += $" and sc.2day_call_id = ca.call_id";
+                else if(callName == "NurseCall")
+                    whereCond += $" and sc.2day_call_id <> ca.call_id";
+
+                if (!string.IsNullOrEmpty(companyId))
+                    whereCond += " and p.company_id = '" + companyId + "'";
+
+                var sqlSelQuery = $"select " + ColumAssign + " from " + tableName + whereCond;
+                using (var connection = _appDbContext.Connection)
+                {
+                    var sqlSelResult = await connection.QueryAsync<DrNurseCallDetails>(sqlSelQuery);
+                    retDrNurseCallDetails = sqlSelResult.ToList();
+                }
+            }
+            catch (Exception Err)
+            {
+                var Error = Err.Message.ToString();
+            }
+            return retDrNurseCallDetails;
+        }
+
+
+/*
+        public async Task<List<DrNurseCallDetails>> GetDrNurseCallDetails(string companyId, string callName, DateTime scheduledFromDate, DateTime scheduledToDate)
+        {
+            List<DrNurseCallDetails> retDrNurseCallDetails = new List<DrNurseCallDetails>();
+            try
+            {
+                var tableName = $"HC_Staff_Patient.patient_obj p, " +
+                                $"HC_Master_Details.company_obj co, " +
+                                $"HC_Treatment.scheduled_obj sc, " +
+                                $"HC_Treatment.call_obj ca";
+
+                var ColumAssign = $"p.patient_id as PatientId, p.patient_name as PatientName, " +
+                                  $"p.company_id as CompanyId, co.company_name as CompanyName, " +
+                                  $"p.request_id as RequestId, p.crm_no as CRMNo, p.eid_no as EIDNo, " +
+                                  $"p.mobile_no as MobileNo, ca.call_id as CallId";
+
+                var whereCond = $" where p.company_id = co.company_id" +
+                                $" and p.patient_id = sc.patient_id" +
+                                $" and ca.scheduled_id = sc.scheduled_id";
+
+                string fromDate = scheduledFromDate.Date.ToString("dd-MM-yyyy");
+                if(fromDate == "01-01-0001")
+                {
+                    scheduledFromDate = DateTime.Today;
+                    fromDate = scheduledFromDate.ToString("yyyy-MM-dd 00:00:00.0");
+                }
+
+                //scheduledToDate = DateTime.Today.AddDays(1);
+                string toDate = scheduledToDate.Date.ToString("dd-MM-yyyy");
+                if(toDate != "01-01-0001")
+                {
+                    if(fromDate != "01-01-0001")
+                        whereCond += $" and (ca.call_scheduled_date between '" + fromDate + "'";
+
+                    toDate = scheduledToDate.ToString("yyyy-MM-dd 00:00:00.0");
+                    whereCond += $" and '" + toDate + "'";
 
                     if(callName != "DrCall")
                     {
-                        whereCond += $" and sc.4day_pcr_test_date >= '" + fromDate + "'" +
-                                     $" or sc.8day_pcr_test_date >= '" + fromDate + "'" +
-                                     $" and sc.4day_pcr_test_date <= '" + toDate + "'" +
-                                     $" or sc.8day_pcr_test_date <= '" + toDate + "'";
+                        whereCond += $" or sc.4day_pcr_test_date between '" + fromDate + "' and '" + toDate + "'" +
+                                     $" or sc.4day_pcr_test_date between '" + toDate + "' and '" + toDate + "'";
                     }
+                    whereCond += $")";
                 }
                 else
                 {
@@ -352,6 +435,6 @@ namespace Web.Api.Infrastructure.Data.Repositories
             }
             return retDrNurseCallDetails;
         }
-
+*/
     }
 }

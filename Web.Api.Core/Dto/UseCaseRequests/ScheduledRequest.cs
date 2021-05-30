@@ -107,7 +107,7 @@ namespace Web.Api.Core.Dto.UseCaseRequests
         public string ReAllocatedTeamName { get; set; }//reallocated_team_name - varchar(100)
         public string ModifiedBy { get; set; } //modified_by
     }
-    public class DrNurseCallDetails
+    public class DrNurseCallDetails : CallDetails
     {
         public string PatientId { get; set; }//patient_id – varchar(128)
         public string PatientName { get; set; }//patient_name – varchar(128)
@@ -115,7 +115,5 @@ namespace Web.Api.Core.Dto.UseCaseRequests
         public string CRMNo { get; set; }//crm_no - varchar(128)
         public string EIDNo { get; set; }//eid_no - varchar(128)
         public string MobileNo { get; set; }//mobile_no - varchar(25)
-        public string CallIdList { get; set; }
-        public CallDetails callDetails { get; set; }
     }
 }

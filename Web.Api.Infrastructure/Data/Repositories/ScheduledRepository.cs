@@ -265,6 +265,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
 
                 CallRequest callRequest = new CallRequest();
                 callRequest.ScheduledId = scheduledRequest.ScheduledId;
+                callRequest.EMRDone = "No";
                 //callRequest.CallStatus = "Pending";
                 callRequest.CreatedBy = scheduledRequest.CreatedBy;
 
