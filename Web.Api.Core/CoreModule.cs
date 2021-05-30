@@ -15,6 +15,7 @@ namespace Web.Api.Core
             builder.RegisterType<StaffUseCases>().As<IStaffUseCases>().InstancePerLifetimeScope();
             builder.RegisterType<PatientStaffUseCases>().As<IPatientStaffUseCases>().InstancePerLifetimeScope();
             builder.RegisterType<ScheduledUseCases>().As<IScheduledUseCases>().InstancePerLifetimeScope();
+            builder.RegisterType<DashBoardUseCases>().As<IDashBoardUseCases>().InstancePerLifetimeScope();
         }
     }
 }

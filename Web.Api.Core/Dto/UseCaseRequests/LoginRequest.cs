@@ -16,6 +16,7 @@ namespace Web.Api.Core.Dto.UseCaseRequests
             Password = password;
         }
     }
+
     public class LoginUserDetails
     {
         public string UserId { get; set; }
@@ -23,6 +24,7 @@ namespace Web.Api.Core.Dto.UseCaseRequests
         public string CompanyId { get; set; }
         public string CompanyName { get; set; }
     }
+
     public class UserRequest : IUseCaseRequest<AcknowledgementResponse>
     {
         public string UserId { get; set; }//user_id – varchar(128)
@@ -34,6 +36,7 @@ namespace Web.Api.Core.Dto.UseCaseRequests
         public string ModifiedBy { get; set; } //modified_by
         public bool IsUpdate { get; set; }
     }
+
     public class UserDetails
     {
         public string UserId { get; set; }//user_id – varchar(128)
@@ -44,5 +47,15 @@ namespace Web.Api.Core.Dto.UseCaseRequests
         public string CompanyName { get; set; }
         public string CreatedBy { get; set; } //created_by
         public string ModifiedBy { get; set; } //modified_by
+    }
+
+    public class DashBoardDetails
+    {
+        public int TotalPatientNumber { get; set; }
+        public int CurrentPatientNumber { get; set; }
+        public int DischargePatientNumber { get; set; }
+        public int TodayPatientRegNumber { get; set; }
+        public int TotalUserTypeMemberNumber { get; set; }
+        public int TotalTeamNumber { get; set; }
     }
 }
