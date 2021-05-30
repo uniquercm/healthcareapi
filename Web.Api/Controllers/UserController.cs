@@ -66,6 +66,18 @@ namespace Web.Api.Controllers
             await _authUseCases.Handle(_mapper.Map<UserRequest>(request), _acknowledgementPresenter);
             return _acknowledgementPresenter.ContentResult;
         }
-
+        
+        /// <summary>
+        /// User Name Availability
+        /// </summary>
+        /// <param name="userId">Partner Id (Optional)</param>
+        /// <param name="userName">User Name</param>
+        /// <returns></returns>
+        [HttpGet("user-name-available")]
+        public async Task<ActionResult> UserNameAvailable(string userId, string userName)
+        {
+            await _authUseCases.Handle(new AvailabilityRequest(userId, userName), _availabilityPresenter);
+            return _availabilityPresenter.ContentResult;
+        }
     }
 }
