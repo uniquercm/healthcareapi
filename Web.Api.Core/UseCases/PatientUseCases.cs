@@ -26,7 +26,7 @@ namespace Web.Api.Core.UseCases
             else if(request.LableName == "NurseCall")
                 getDetailsResponse = new GetDetailsResponse(await _patientRepository.GetDrNurseCallDetails(request.CompanyId, "NurseCall", request.ScheduledFromDate, request.ScheduledToDate), true, "Data Fetched Successfully");
             else
-                getDetailsResponse = new GetDetailsResponse(await _patientRepository.GetPatientDetails("", request.Id), true, "Data Fetched Successfully");
+                getDetailsResponse = new GetDetailsResponse(await _patientRepository.GetPatientDetails(request.CompanyId, request.PatientId), true, "Data Fetched Successfully");
 
             outputPort.Handle(getDetailsResponse);
             return true;
