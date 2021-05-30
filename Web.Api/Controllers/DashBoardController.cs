@@ -16,17 +16,13 @@ namespace Web.Api.Controllers
     public class DashBoardController : ControllerBase
     {
         private readonly IDashBoardUseCases _dashBoardUseCases;
-        private readonly AcknowledgementPresenter _acknowledgementPresenter;
         private readonly GetDetailsPresenter _getDetailsPresenter;
-        private readonly AvailabilityPresenter _availabilityPresenter;
         private readonly IMapper _mapper;
 
-        public DashBoardController(IDashBoardUseCases dashBoardUseCases, AcknowledgementPresenter acknowledgementPresenter, GetDetailsPresenter getDetailsPresenter, AvailabilityPresenter availabilityPresenter, IMapper mapper)
+        public DashBoardController(IDashBoardUseCases dashBoardUseCases, GetDetailsPresenter getDetailsPresenter, IMapper mapper)
         {   
             _dashBoardUseCases = dashBoardUseCases;
-            _acknowledgementPresenter = acknowledgementPresenter;
             _getDetailsPresenter = getDetailsPresenter;
-            _availabilityPresenter = availabilityPresenter;
             _mapper = mapper;
         }
         

@@ -13,6 +13,7 @@ namespace Web.Api.Infrastructure
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterType<AuthRepository>().As<IAuthRepository>().InstancePerLifetimeScope();
+            builder.RegisterType<DashBoardRepository>().As<IDashBoardRepository>().InstancePerLifetimeScope();
             builder.RegisterType<HealthRepository>().As<IHealthRepository>().InstancePerLifetimeScope();
             builder.RegisterType<MasterRepository>().As<IMasterRepository>().InstancePerLifetimeScope();
             builder.RegisterType<PatientRepository>().As<IPatientRepository>().InstancePerLifetimeScope();
