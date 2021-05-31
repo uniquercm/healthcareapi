@@ -76,6 +76,11 @@ namespace Web.Api.Core.Dto.UseCaseRequests
         public string CreatedBy { get; set; } //created_by
         public string ModifiedBy { get; set; } //modified_by
     }
+
+    public class PCRCallRequest : IUseCaseRequest<AcknowledgementResponse>
+    {
+        
+    }
     public class CallRequest : IUseCaseRequest<AcknowledgementResponse>
     {
         public string CallId { get; set; }//call_id – varchar(128)

@@ -263,53 +263,65 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 var sqlInsQuery = $"INSERT INTO "+ tableName + "( " + colName + " )" +
                                     $"VALUES ( " + colValueName + " )";
 
-                CallRequest callRequest = new CallRequest();
-                callRequest.ScheduledId = scheduledRequest.ScheduledId;
-                callRequest.EMRDone = "No";
-                //callRequest.CallStatus = "Pending";
-                callRequest.CreatedBy = scheduledRequest.CreatedBy;
+                if(!String.IsNullOrEmpty(scheduledRequest.TreatmentType) && 
+                   scheduledRequest.TreatmentType == "Isolation")
+                {
+                    CallRequest callRequest = new CallRequest();
+                    callRequest.ScheduledId = scheduledRequest.ScheduledId;
+                    callRequest.EMRDone = "No";
+                    //callRequest.CallStatus = "Pending";
+                    callRequest.CreatedBy = scheduledRequest.CreatedBy;
 
-                callRequest.CallScheduledDate = scheduledRequest.TreatmentFromDate.AddDays(1);
-                if(await CreateCall(callRequest))
-                    scheduledRequest.Day2CallId = callRequest.CallId;
+                    callRequest.CallScheduledDate = scheduledRequest.TreatmentFromDate.AddDays(1);
+                    if(await CreateCall(callRequest))
+                        scheduledRequest.Day2CallId = callRequest.CallId;
+                    else
+                        scheduledRequest.Day2CallId = "";
+
+                    callRequest.CallScheduledDate = scheduledRequest.TreatmentFromDate.AddDays(2);
+                    if(await CreateCall(callRequest))
+                        scheduledRequest.Day3CallId = callRequest.CallId;
+                    else
+                        scheduledRequest.Day3CallId = "";
+
+                    callRequest.CallScheduledDate = scheduledRequest.TreatmentFromDate.AddDays(4);
+                    if(await CreateCall(callRequest))
+                        scheduledRequest.Day5CallId = callRequest.CallId;
+                    else
+                        scheduledRequest.Day5CallId = "";
+
+                    callRequest.CallScheduledDate = scheduledRequest.TreatmentFromDate.AddDays(5);
+                    if(await CreateCall(callRequest))
+                        scheduledRequest.Day6CallId = callRequest.CallId;
+                    else
+                        scheduledRequest.Day6CallId = "";
+
+                    callRequest.CallScheduledDate = scheduledRequest.TreatmentFromDate.AddDays(6);
+                    if(await CreateCall(callRequest))
+                        scheduledRequest.Day7CallId = callRequest.CallId;
+                    else
+                        scheduledRequest.Day7CallId = "";
+
+                    callRequest.CallScheduledDate = scheduledRequest.TreatmentFromDate.AddDays(8);
+                    if(await CreateCall(callRequest))
+                        scheduledRequest.Day9CallId = callRequest.CallId;
+                    else
+                        scheduledRequest.Day9CallId = "";
+                }
                 else
+                {
                     scheduledRequest.Day2CallId = "";
-
-                callRequest.CallScheduledDate = scheduledRequest.TreatmentFromDate.AddDays(2);
-                if(await CreateCall(callRequest))
-                    scheduledRequest.Day3CallId = callRequest.CallId;
-                else
                     scheduledRequest.Day3CallId = "";
+                    scheduledRequest.Day5CallId = "";
+                    scheduledRequest.Day6CallId = "";
+                    scheduledRequest.Day7CallId = "";
+                    scheduledRequest.Day9CallId = "";
+                }
 
                 scheduledRequest.PCR4DayTestDate = scheduledRequest.TreatmentFromDate.AddDays(3);
-
-                callRequest.CallScheduledDate = scheduledRequest.TreatmentFromDate.AddDays(4);
-                if(await CreateCall(callRequest))
-                    scheduledRequest.Day5CallId = callRequest.CallId;
-                else
-                    scheduledRequest.Day5CallId = "";
-
-                callRequest.CallScheduledDate = scheduledRequest.TreatmentFromDate.AddDays(5);
-                if(await CreateCall(callRequest))
-                    scheduledRequest.Day6CallId = callRequest.CallId;
-                else
-                    scheduledRequest.Day6CallId = "";
-
-                callRequest.CallScheduledDate = scheduledRequest.TreatmentFromDate.AddDays(6);
-                if(await CreateCall(callRequest))
-                    scheduledRequest.Day7CallId = callRequest.CallId;
-                else
-                    scheduledRequest.Day7CallId = "";
-
                 scheduledRequest.PCR8DayTestDate = scheduledRequest.TreatmentFromDate.AddDays(7);
 
-                callRequest.CallScheduledDate = scheduledRequest.TreatmentFromDate.AddDays(8);
-                if(await CreateCall(callRequest))
-                    scheduledRequest.Day9CallId = callRequest.CallId;
-                else
-                    scheduledRequest.Day9CallId = "";
-
-                scheduledRequest.DischargeDate = scheduledRequest.TreatmentFromDate.AddDays(9);
+                scheduledRequest.DischargeDate = scheduledRequest.TreatmentToDate;//.TreatmentFromDate.AddDays(9);
 
                 object colValueParam = new
                 {
