@@ -381,7 +381,6 @@ namespace Web.Api.Infrastructure.Data.Repositories
             return retDrNurseCallDetails;
         }
 
-
 /*
         public async Task<List<DrNurseCallDetails>> GetDrNurseCallDetails(string companyId, string callName, DateTime scheduledFromDate, DateTime scheduledToDate)
         {
