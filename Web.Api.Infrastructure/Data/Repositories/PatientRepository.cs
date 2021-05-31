@@ -24,11 +24,13 @@ namespace Web.Api.Infrastructure.Data.Repositories
             try
             {
                 var tableName = $"HC_Staff_Patient.patient_obj p, HC_Master_Details.company_obj co, " +
-                                $"HC_Master_Details.city_obj ci, HC_Master_Details.nationality_obj n";
+                                $"HC_Master_Details.city_obj ci, HC_Master_Details.nationality_obj n, " +
+                                $"HC_Master_Details.request_crm_obj rc";
 
                 var ColumAssign = $"p.patient_id as PatientId, p.patient_name as PatientName, " +
                               $"p.company_id as CompanyId, co.company_name as CompanyName, " +
-                              $"p.request_id as RequestId, p.crm_no as CRMNo, p.eid_no as EIDNo, " +
+                              $"p.request_id as RequestId, rc.request_crm_name as RequestCrmName, " +
+                              $"p.crm_no as CRMNo, p.eid_no as EIDNo, " +
                               $"p.date_of_birth as DateOfBirth, " +
                               $"p.age as Age, p.sex as Sex, p.address as Address, " +
                               $"p.landmark as LandMark, p.area as Area, " +
@@ -44,7 +46,8 @@ namespace Web.Api.Infrastructure.Data.Repositories
 
                 var whereCond = " where p.company_id = co.company_id"  +
                                 $" and p.city_id = ci.city_id" +
-                                $" and p.nationality_id = n.nationality_id";
+                                $" and p.nationality_id = n.nationality_id" +
+                                $" and p.request_id = rc.request_crm_id";
 
                 if (!string.IsNullOrEmpty(companyId))
                     whereCond += " and p.company_id = '" + companyId + "'";

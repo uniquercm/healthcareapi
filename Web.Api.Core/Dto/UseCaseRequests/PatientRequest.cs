@@ -41,6 +41,7 @@ namespace Web.Api.Core.Dto.UseCaseRequests
         public string CompanyId { get; set; }//company_id – varchar(128)
         public string CompanyName { get; set; }
         public int RequestId { get; set; }//request_id - int(10)
+        public string RequestCrmName { get; set; }
         public string CRMNo { get; set; }//crm_no	- varchar(128)
         public string EIDNo { get; set; }//eid_no - varchar(128)
         public DateTime DateOfBirth { get; set; }//date_of_birth – datetime
