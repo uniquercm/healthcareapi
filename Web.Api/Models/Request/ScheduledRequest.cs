@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace Web.Api.Models.Request
 {
@@ -42,8 +43,11 @@ namespace Web.Api.Models.Request
     }
     public class FieldAllocationRequest
     {
+        public List<FieldAllocationDetails> FieldAllocationDetailsList { get; set; }
+    }
+    public class FieldAllocationDetails
+    {
         public string ScheduledId { get; set; }
-        public string PatientStaffId { get; set; }
         public string PatientId { get; set; }
         public string AllocatedTeamName { get; set; }
         public string ReAllocatedTeamName { get; set; }

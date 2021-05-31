@@ -1,5 +1,5 @@
 using System;
-//using System.Collections.Generic;
+using System.Collections.Generic;
 using Web.Api.Core.Dto.UseCaseResponses;
 using Web.Api.Core.Interfaces;
 
@@ -102,6 +102,10 @@ namespace Web.Api.Core.Dto.UseCaseRequests
         public string ModifiedBy { get; set; } //modified_by
     }
     public class FieldAllocationRequest : IUseCaseRequest<AcknowledgementResponse>
+    {
+        public List<FieldAllocationDetails> FieldAllocationDetailsList { get; set; }
+    }
+    public class FieldAllocationDetails
     {
         public string ScheduledId { get; set; }//scheduled_id – varchar(128)
         public string PatientStaffId { get; set; }//patient_staff_id – varchar(128)

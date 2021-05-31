@@ -18,6 +18,7 @@ namespace Web.Api.Models.Settings
             CreateMap<Models.Request.ScheduledRequest, ScheduledRequest>();
             CreateMap<Models.Request.CallRequest, CallRequest>();
             CreateMap<Models.Request.FieldAllocationRequest, FieldAllocationRequest>();
+            CreateMap<Models.Request.FieldAllocationDetails, FieldAllocationDetails>();
         }
     }
 }

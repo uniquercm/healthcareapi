@@ -281,6 +281,8 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 else
                     scheduledRequest.Day3CallId = "";
 
+                scheduledRequest.PCR4DayTestDate = scheduledRequest.TreatmentFromDate.AddDays(3);
+
                 callRequest.CallScheduledDate = scheduledRequest.TreatmentFromDate.AddDays(4);
                 if(await CreateCall(callRequest))
                     scheduledRequest.Day5CallId = callRequest.CallId;
@@ -299,11 +301,15 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 else
                     scheduledRequest.Day7CallId = "";
 
+                scheduledRequest.PCR8DayTestDate = scheduledRequest.TreatmentFromDate.AddDays(7);
+
                 callRequest.CallScheduledDate = scheduledRequest.TreatmentFromDate.AddDays(8);
                 if(await CreateCall(callRequest))
                     scheduledRequest.Day9CallId = callRequest.CallId;
                 else
                     scheduledRequest.Day9CallId = "";
+
+                scheduledRequest.DischargeDate = scheduledRequest.TreatmentFromDate.AddDays(9);
 
                 object colValueParam = new
                 {
@@ -538,32 +544,35 @@ namespace Web.Api.Infrastructure.Data.Repositories
             try
             {
                 bool sqlResult = true;
-                var tableName = $"HC_Treatment.scheduled_obj";
-
-                var colName = $"scheduled_id = @ScheduledId, " +
-                              //$"patient_staff_id = @PatientStaffId, " +
-                              //$"patient_id = @PatientId, " +
-                              $"allocated_team_name = @AllocatedTeamName, reallocated_team_name = @ReAllocatedTeamName, " +
-                              $"modified_by = @ModifiedBy, modified_on = @ModifiedOn";
-
-                var whereCond = $" where scheduled_id = @ScheduledId";
-                var sqlUpdateQuery = $"UPDATE "+ tableName + " set " + colName + whereCond;
-
-                object colValueParam = new
+                foreach(FieldAllocationDetails singleFieldAllocationDetails in fieldAllocationRequest.FieldAllocationDetailsList)
                 {
-                    ScheduledId = fieldAllocationRequest.ScheduledId,
-                    //PatientStaffId = fieldAllocationRequest.PatientStaffId,
-                    //PatientId = fieldAllocationRequest.PatientId,
-                    AllocatedTeamName = fieldAllocationRequest.AllocatedTeamName,
-                    ReAllocatedTeamName = fieldAllocationRequest.ReAllocatedTeamName,
-                    ModifiedBy = fieldAllocationRequest.ModifiedBy,
-                    ModifiedOn = DateTime.Today.ToString("yyyy-MM-dd 00:00:00.0")
-                };
-                using (var connection = _appDbContext.Connection)
-                {
-                    sqlResult = Convert.ToBoolean(await connection.ExecuteAsync(sqlUpdateQuery, colValueParam));
-                    return sqlResult;
+                    var tableName = $"HC_Treatment.scheduled_obj";
+
+                    var colName = $"scheduled_id = @ScheduledId, " +
+                                //$"patient_staff_id = @PatientStaffId, " +
+                                //$"patient_id = @PatientId, " +
+                                $"allocated_team_name = @AllocatedTeamName, reallocated_team_name = @ReAllocatedTeamName, " +
+                                $"modified_by = @ModifiedBy, modified_on = @ModifiedOn";
+
+                    var whereCond = $" where scheduled_id = @ScheduledId";
+                    var sqlUpdateQuery = $"UPDATE "+ tableName + " set " + colName + whereCond;
+
+                    object colValueParam = new
+                    {
+                        ScheduledId = singleFieldAllocationDetails.ScheduledId,
+                        //PatientStaffId = singleFieldAllocationDetails.PatientStaffId,
+                        //PatientId = singleFieldAllocationDetails.PatientId,
+                        AllocatedTeamName = singleFieldAllocationDetails.AllocatedTeamName,
+                        ReAllocatedTeamName = singleFieldAllocationDetails.ReAllocatedTeamName,
+                        ModifiedBy = singleFieldAllocationDetails.ModifiedBy,
+                        ModifiedOn = DateTime.Today.ToString("yyyy-MM-dd 00:00:00.0")
+                    };
+                    using (var connection = _appDbContext.Connection)
+                    {
+                        sqlResult = Convert.ToBoolean(await connection.ExecuteAsync(sqlUpdateQuery, colValueParam));
+                    }
                 }
+                return sqlResult;
             }
             catch (Exception Err)
             {
