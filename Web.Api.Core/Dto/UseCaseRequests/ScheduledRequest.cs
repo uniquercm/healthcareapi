@@ -48,6 +48,9 @@ namespace Web.Api.Core.Dto.UseCaseRequests
         public PatientDetails PatientInformation { get; set; }
         public DateTime PCRTestDate { get; set; }//initial_pcr_test_date – datetime
         public string PCRResult { get; set; }//initial_pcr_test_result - enum('Negative','Positive')
+        public string HaveVaccine { get; set; }//have_vaccine - varchar(64)
+        public string AllocatedTeamName { get; set; }//allocated_team_name - varchar(100)
+        public string ReAllocatedTeamName { get; set; }//reallocated_team_name - varchar(100)
         public DateTime DischargeDate { get; set; }//discharge_date – datetime
         public string TreatmentType { get; set; }//treatment_type - enum('Quarantine','Isolation')
         public DateTime TreatmentFromDate { get; set; }//treatment _from_date - datetime
