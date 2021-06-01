@@ -182,8 +182,8 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 var colValueName = $"@PatientId, @PatientName, @CompanyId, @RequestId, @CRMNo, @EIDNo, " +
                                    $"@DateOfBirth, @Age, @Sex, @Address, @LandMark, @Area, @CityId, @NationalityId, " +
                                    $"@MobileNo, @GoogleMapLink, @AdultsCount, @ChildrensCount, " +
-                                   $"@StickerApplication, @TrackerApplication, @PCRCount, " +
-                                   $"@StickerRemoval, @TrackerRemoval " +
+                                   $"@PCRCount, @StickerApplication, @TrackerApplication, " +
+                                   $"@StickerRemoval, @TrackerRemoval, " +
                                    $"@CreatedBy, @CreatedOn";
 
                 var sqlInsQuery = $"INSERT INTO "+ tableName + "( " + colName + " )" +
@@ -209,9 +209,9 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     GoogleMapLink = patientRequest.GoogleMapLink,
                     AdultsCount = patientRequest.AdultsCount,
                     ChildrensCount = patientRequest.ChildrensCount,
+                    PCRCount = patientRequest.AdultsCount,
                     StickerApplication = patientRequest.StickerApplication,
                     TrackerApplication = patientRequest.AdultsCount,
-                    PCRCount = patientRequest.AdultsCount,
                     StickerRemoval = patientRequest.StickerRemoval,
                     TrackerRemoval = patientRequest.AdultsCount,
                     CreatedBy = patientRequest.CreatedBy,
