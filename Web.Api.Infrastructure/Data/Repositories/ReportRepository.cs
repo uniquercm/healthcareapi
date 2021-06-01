@@ -72,5 +72,45 @@ namespace Web.Api.Infrastructure.Data.Repositories
             }
             return retReportDetailsList;
         }
+        public async Task<List<CallDetails>> GetCallDetails(string callId, string scheduledId)
+        {
+            List<CallDetails> retCallDetailsList = new List<CallDetails>();
+            try
+            {
+                var tableName = $"HC_Treatment.call_obj";
+
+                var ColumAssign = $"call_id as CallId, scheduled_id as ScheduledId, " +
+                                  $"call_scheduled_date as CallScheduledDate, called_date as CalledDate, " +
+                                  $"call_status as CallStatus, remarks as Remarks, " +
+                                  $"emr_done as EMRDone, " +
+                                  $"created_by as CreatedBy, modified_by as ModifiedBy";
+
+                var whereCond = " where";
+
+                if (!string.IsNullOrEmpty(callId))
+                    whereCond += " call_id = '" + callId + "'";
+
+                if (!string.IsNullOrEmpty(scheduledId))
+                {
+                    if (!string.IsNullOrEmpty(callId))
+                        whereCond += " and scheduled_id = '" + scheduledId + "'";
+                    else
+                        whereCond += " scheduled_id = '" + scheduledId + "'";
+                }
+
+                var sqlSelQuery = $"select " + ColumAssign + " from " + tableName + whereCond;
+                using (var connection = _appDbContext.Connection)
+                {
+                    var sqlSelResult = await connection.QueryAsync<CallDetails>(sqlSelQuery);
+                    retCallDetailsList = sqlSelResult.ToList();
+                }
+            }
+            catch (Exception Err)
+            {
+                var Error = Err.Message.ToString();
+            }
+            return retCallDetailsList;
+        }
+
     }
 }

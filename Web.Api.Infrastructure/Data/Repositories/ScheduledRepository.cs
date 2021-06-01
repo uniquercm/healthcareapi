@@ -265,8 +265,10 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 var colName = $"scheduled_id, patient_staff_id, patient_id, initial_pcr_test_date, initial_pcr_test_result, " +
                               $"have_vaccine, allocated_team_name, reallocated_team_name, " +
                               $"discharge_date, treatment_type, treatment_from_date, treatment_to_date, " +
-                              $"4day_pcr_test_date, 4day_pcr_test_sample_date, 4day_pcr_test_result, " +
-                              $"8day_pcr_test_date, 8day_pcr_test_sample_date, 8day_pcr_test_result, " +
+                              $"4day_pcr_test_date, 4day_pcr_test_result, " +
+                              //$"4day_pcr_test_sample_date, " +
+                              $"8day_pcr_test_date, 8day_pcr_test_result, " +
+                              //$"8day_pcr_test_sample_date, " +
                               $"2day_call_id, 3day_call_id, 5day_call_id, 6day_call_id, 7day_call_id, " +
                               $"9day_call_id, created_by, created_on";
 
@@ -274,9 +276,10 @@ namespace Web.Api.Infrastructure.Data.Repositories
                                    $"@HaveVaccine, @AllocatedTeamName, " +
                                    $"@ReAllocatedTeamName, @DischargeDate, @TreatmentType, " +
                                    $"@TreatmentFromDate, @TreatmentToDate, " +
-                                   $"@PCR4DayTestDate, @PCR4DaySampleDate, " +
-                                   $"@PCR4DayResult, @PCR8DayTestDate, " +
-                                   $"@PCR8DaySampleDate, @PCR8DayResult, " +
+                                   $"@PCR4DayTestDate, @PCR4DayResult, " + 
+                                   //$"@PCR4DaySampleDate, " +
+                                   $"@PCR8DayTestDate, @PCR8DayResult, " +
+                                   //$"@PCR8DaySampleDate, " +
                                    $"@Day2CallId, @Day3CallId, @Day5CallId , @Day6CallId, " +
                                    $"@Day7CallId, @Day9CallId, " +
                                    $"@CreatedBy, @CreatedOn";
@@ -359,10 +362,10 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     TreatmentFromDate = scheduledRequest.TreatmentFromDate.ToString("yyyy-MM-dd 00:00:00.0"),
                     TreatmentToDate = scheduledRequest.TreatmentToDate.ToString("yyyy-MM-dd 00:00:00.0"),
                     PCR4DayTestDate = scheduledRequest.PCR4DayTestDate.ToString("yyyy-MM-dd 00:00:00.0"),
-                    PCR4DaySampleDate = scheduledRequest.PCR4DaySampleDate.ToString("yyyy-MM-dd 00:00:00.0"),
+                    //PCR4DaySampleDate = scheduledRequest.PCR4DaySampleDate.ToString("yyyy-MM-dd 00:00:00.0"),
                     PCR4DayResult = scheduledRequest.PCR4DayResult,
                     PCR8DayTestDate = scheduledRequest.PCR8DayTestDate.ToString("yyyy-MM-dd 00:00:00.0"),
-                    PCR8DaySampleDate = scheduledRequest.PCR8DaySampleDate.ToString("yyyy-MM-dd 00:00:00.0"),
+                    //PCR8DaySampleDate = scheduledRequest.PCR8DaySampleDate.ToString("yyyy-MM-dd 00:00:00.0"),
                     PCR8DayResult = scheduledRequest.PCR8DayResult,
                     Day2CallId = scheduledRequest.Day2CallId,
                     Day3CallId = scheduledRequest.Day3CallId,
@@ -404,10 +407,10 @@ namespace Web.Api.Infrastructure.Data.Repositories
 
                 var tableName = $"HC_Treatment.call_obj";
 
-                var colName = $"call_id, scheduled_id, call_scheduled_date, called_date, " +
+                var colName = $"call_id, scheduled_id, call_scheduled_date, " +//called_date, " +
                               $"call_status, remarks, emr_done, created_by, created_on";
 
-                var colValueName = $"@CallId, @ScheduledId, @CallScheduledDate, @CalledDate, " +
+                var colValueName = $"@CallId, @ScheduledId, @CallScheduledDate, " +//@CalledDate, " +
                                    $"@CallStatus, @Remarks, @EMRDone, " +
                                    $"@CreatedBy, @CreatedOn";
 
@@ -419,7 +422,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     CallId = callRequest.CallId,
                     ScheduledId = callRequest.ScheduledId,
                     CallScheduledDate = callRequest.CallScheduledDate.ToString("yyyy-MM-dd 00:00:00.0"),
-                    CalledDate = callRequest.CalledDate.ToString("yyyy-MM-dd 00:00:00.0"),
+                    //CalledDate = callRequest.CalledDate.ToString("yyyy-MM-dd 00:00:00.0"),
                     CallStatus = callRequest.CallStatus,
                     Remarks = callRequest.Remarks,
                     EMRDone = callRequest.EMRDone,
@@ -537,7 +540,8 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 bool sqlResult = true;
                 var tableName = $"HC_Treatment.call_obj";
 
-                var colName = $"call_id = @CallId, scheduled_id = @ScheduledId, " +
+                var colName = $"call_id = @CallId, " +
+                              //$"scheduled_id = @ScheduledId, " +
                               $"call_scheduled_date = @CallScheduledDate, " +
                               $"called_date = @CalledDate, call_status = @CallStatus, " +
                               $"remarks = @Remarks, emr_done = @EMRDone, " +
