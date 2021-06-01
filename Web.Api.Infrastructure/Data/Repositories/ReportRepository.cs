@@ -63,7 +63,40 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 using (var connection = _appDbContext.Connection)
                 {
                     var sqlSelResult = await connection.QueryAsync<ReportDetails>(sqlSelQuery);
-                    retReportDetailsList = sqlSelResult.ToList();
+                    foreach(ReportDetails singleReportDetails in sqlSelResult.ToList())
+                    {
+                        CallDetails callDetails = new CallDetails();
+                        callDetails = await GetCallDetails(singleReportDetails.Day2CallId, singleReportDetails.ScheduledId);
+                        singleReportDetails.DrCallStatus = callDetails.CallStatus;
+                        singleReportDetails.DrCallRemarks = callDetails.Remarks;
+
+                        callDetails = new CallDetails();
+                        callDetails = await GetCallDetails(singleReportDetails.Day3CallId, singleReportDetails.ScheduledId);
+                        singleReportDetails.Day3CallStatus = callDetails.CallStatus;
+                        singleReportDetails.Day3CallRemarks = callDetails.Remarks;
+
+                        callDetails = new CallDetails();
+                        callDetails = await GetCallDetails(singleReportDetails.Day5CallId, singleReportDetails.ScheduledId);
+                        singleReportDetails.Day5CallStatus = callDetails.CallStatus;
+                        singleReportDetails.Day5CallRemarks = callDetails.Remarks;
+
+                        callDetails = new CallDetails();
+                        callDetails = await GetCallDetails(singleReportDetails.Day6CallId, singleReportDetails.ScheduledId);
+                        singleReportDetails.Day6CallStatus = callDetails.CallStatus;
+                        singleReportDetails.Day6CallRemarks = callDetails.Remarks;
+
+                        callDetails = new CallDetails();
+                        callDetails = await GetCallDetails(singleReportDetails.Day7CallId, singleReportDetails.ScheduledId);
+                        singleReportDetails.Day7CallStatus = callDetails.CallStatus;
+                        singleReportDetails.Day7CallRemarks = callDetails.Remarks;
+
+                        callDetails = new CallDetails();
+                        callDetails = await GetCallDetails(singleReportDetails.Day9CallId, singleReportDetails.ScheduledId);
+                        singleReportDetails.Day9CallStatus = callDetails.CallStatus;
+                        singleReportDetails.Day9CallRemarks = callDetails.Remarks;
+
+                        retReportDetailsList.Add(singleReportDetails);
+                    }
                 }
             }
             catch (Exception Err)
@@ -72,9 +105,9 @@ namespace Web.Api.Infrastructure.Data.Repositories
             }
             return retReportDetailsList;
         }
-        public async Task<List<CallDetails>> GetCallDetails(string callId, string scheduledId)
+        public async Task<CallDetails> GetCallDetails(string callId, string scheduledId)
         {
-            List<CallDetails> retCallDetailsList = new List<CallDetails>();
+            CallDetails retCallDetails = new CallDetails();
             try
             {
                 var tableName = $"HC_Treatment.call_obj";
@@ -102,14 +135,14 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 using (var connection = _appDbContext.Connection)
                 {
                     var sqlSelResult = await connection.QueryAsync<CallDetails>(sqlSelQuery);
-                    retCallDetailsList = sqlSelResult.ToList();
+                    retCallDetails = sqlSelResult.FirstOrDefault();
                 }
             }
             catch (Exception Err)
             {
                 var Error = Err.Message.ToString();
             }
-            return retCallDetailsList;
+            return retCallDetails;
         }
 
     }
