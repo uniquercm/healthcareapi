@@ -19,6 +19,7 @@ namespace Web.Api.Models.Settings
             CreateMap<Models.Request.CallRequest, CallRequest>();
             CreateMap<Models.Request.FieldAllocationRequest, FieldAllocationRequest>();
             CreateMap<Models.Request.FieldAllocationDetails, FieldAllocationDetails>();
+            CreateMap<Models.Request.ReportDetails, ReportDetails>();
         }
     }
 }

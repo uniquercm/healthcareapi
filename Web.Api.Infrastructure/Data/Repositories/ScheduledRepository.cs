@@ -37,6 +37,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                                   $"sc.8day_pcr_test_date as PCR8DayTestDate, sc.8day_pcr_test_sample_date as PCR8DaySampleDate, sc.8day_pcr_test_result as PCR8DayResult, " +
                                   $"sc.2day_call_id as Day2CallId, sc.3day_call_id as Day3CallId, sc.5day_call_id as Day5CallId, " +
                                   $"sc.6day_call_id as Day6CallId, sc.7day_call_id as Day7CallId, sc.9day_call_id as Day9CallId, " +
+                                  $"sc.have_treatement_extract as ExtractTreatementDate, " +
                                   $"sc.created_by as CreatedBy, sc.modified_by as ModifiedBy";
 
                 var whereCond = $" where sc.patient_id = p.patient_id";
@@ -270,7 +271,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                               $"8day_pcr_test_date, 8day_pcr_test_result, " +
                               //$"8day_pcr_test_sample_date, " +
                               $"2day_call_id, 3day_call_id, 5day_call_id, 6day_call_id, 7day_call_id, " +
-                              $"9day_call_id, created_by, created_on";
+                              $"9day_call_id, have_treatement_extract, created_by, created_on";
 
                 var colValueName = $"@ScheduledId, @PatientStaffId, @PatientId, @PCRTestDate, @PCRResult, " +
                                    $"@HaveVaccine, @AllocatedTeamName, " +
@@ -280,8 +281,9 @@ namespace Web.Api.Infrastructure.Data.Repositories
                                    //$"@PCR4DaySampleDate, " +
                                    $"@PCR8DayTestDate, @PCR8DayResult, " +
                                    //$"@PCR8DaySampleDate, " +
-                                   $"@Day2CallId, @Day3CallId, @Day5CallId , @Day6CallId, " +
-                                   $"@Day7CallId, @Day9CallId, " +
+                                   $"@Day2CallId, @Day3CallId, @Day5CallId, " +
+                                   $"@Day6CallId, @Day7CallId, @Day9CallId, " +
+                                   $"@ExtractTreatementDate, " +
                                    $"@CreatedBy, @CreatedOn";
 
                 var sqlInsQuery = $"INSERT INTO "+ tableName + "( " + colName + " )" +
@@ -373,6 +375,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     Day6CallId = scheduledRequest.Day6CallId,
                     Day7CallId = scheduledRequest.Day7CallId,
                     Day9CallId = scheduledRequest.Day9CallId,
+                    ExtractTreatementDate = "No",
                     CreatedBy = scheduledRequest.CreatedBy,
                     CreatedOn = DateTime.Today.ToString("yyyy-MM-dd 00:00:00.0")
                 };

@@ -34,16 +34,15 @@ namespace Web.Api.Infrastructure.Data.Repositories
                                   $"pa.request_id as RequestId, rc.request_crm_name as RequestCrmName, " +
                                   $"pa.crm_no as CRMNo, pa.eid_no as EIDNo, pa.mobile_no as MobileNo, " +
                                   //$", " +//Include Reception call Details
-                                  $"sc.2day_call_id as Day2CallId, " +//Include Dr Call Details
+                                  $"sc.2day_call_id as Day2CallId, " +
                                   $"sc.4day_pcr_test_date as PCR4DayTestDate, sc.4day_pcr_test_result as PCR4DayResult, " +
                                   $"sc.8day_pcr_test_date as PCR8DayTestDate, sc.8day_pcr_test_result as PCR8DayResult, " +
                                   $"sc.3day_call_id as Day3CallId, sc.5day_call_id as Day5CallId, " +
                                   $"sc.6day_call_id as Day6CallId, sc.7day_call_id as Day7CallId, " +
                                   $"sc.9day_call_id as Day9CallId, " +
-                                  //$"sc.discharge_date as DischargeDate, " +//Include the Discharge Status
-                                  $"sc.discharge_date as DischargeDate";
-                                  //$", " +//Include Extract Data
-                                  //$"";//Include Send Claim Option and Send on Date
+                                  $"sc.discharge_date as DischargeDate, sc.discharge_remarks as DischargeRemarks, " +
+                                  $"sc.have_treatement_extract as IsExtractTreatementDate, " +
+                                  $"pa.have_send_claim as IsSendClaim, sc.claim_send_date as SendingClaimDate";
 
                 var whereCond = $" where sc.patient_id = pa.patient_id" +
                                 $" and pa.company_id = co.company_id" +
@@ -143,6 +142,64 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 var Error = Err.Message.ToString();
             }
             return retCallDetails;
+        }
+        public async Task<bool> EditReportDetails(ReportDetails reportDetails)
+        {
+            try
+            {
+                bool sqlResult = true;
+                object colValueParam;
+
+                var tableName = $"HC_Treatment.scheduled_obj";
+
+                var colName = $"scheduled_id = @ScheduledId, " +
+                              $"have_treatement_extract = @IsExtractTreatementDate, " +
+                              $"claim_send_date = @SendingClaimDate, " +
+                              $"modified_by = @ModifiedBy, modified_on = @ModifiedOn";
+
+                var whereCond = $" where scheduled_id = @ScheduledId";
+                var sqlUpdateScheduleQuery = $"UPDATE "+ tableName + " set " + colName + whereCond;
+
+                string claimDate = reportDetails.SendingClaimDate.ToString("yyyy-MM-dd 00:00:00.0");
+                if(claimDate == "01-01-0001")
+                {
+                    colValueParam = new
+                    {
+                        ScheduledId = reportDetails.ScheduledId,
+                        PatientId = reportDetails.PatientId,
+                        IsExtractTreatementDate = reportDetails.IsExtractTreatementDate,
+                        SendingClaimDate = claimDate,
+                        ModifiedBy = reportDetails.ModifiedBy,
+                        ModifiedOn = DateTime.Today.ToString("yyyy-MM-dd 00:00:00.0")
+                    };
+                }
+                else
+                {
+                    colValueParam = new
+                    {
+                        ScheduledId = reportDetails.ScheduledId,
+                        PatientId = reportDetails.PatientId,
+                        IsExtractTreatementDate = reportDetails.IsExtractTreatementDate,
+                        ModifiedBy = reportDetails.ModifiedBy,
+                        ModifiedOn = DateTime.Today.ToString("yyyy-MM-dd 00:00:00.0")
+                    };
+                }
+                var sqlUpdatePatientQuery = $"UPDATE HC_Staff_Patient.patient_obj " +
+                                            $"set have_send_claim = '" + reportDetails.IsSendClaim + "' " +
+                                            $"where patient_id = '" + reportDetails.PatientId + "'";
+
+                using (var connection = _appDbContext.Connection)
+                {
+                    sqlResult = Convert.ToBoolean(await connection.ExecuteAsync(sqlUpdateScheduleQuery, colValueParam));
+                    await connection.ExecuteAsync(sqlUpdatePatientQuery);
+                }
+                return sqlResult;
+            }
+            catch (Exception Err)
+            {
+                var Error = Err.Message.ToString();
+                return false;
+            }
         }
 
     }

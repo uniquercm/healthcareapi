@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "dgSpecHash": "KGeSDTLEWsim45MxKU6qrEXB1Hb0kg8+r99RiyvVO4Wa3yw7SLH2WKh8B9GQAf3MVUuninOCKVxeksm9eolJ4w==",
+  "success": true,
+  "projectFilePath": "D:\\Dev\\HealthCare\\HealthCareAPI\\healthcareapi\\Web.Api.Core\\Web.Api.Core.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Thanam Durai Kumar\\.nuget\\packages\\autofac\\4.9.4\\autofac.4.9.4.nupkg.sha512",
+    "C:\\Users\\Thanam Durai Kumar\\.nuget\\packages\\microsoft.netcore.app.ref\\3.0.0\\microsoft.netcore.app.ref.3.0.0.nupkg.sha512",
+    "C:\\Users\\Thanam Durai Kumar\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\3.0.0\\microsoft.windowsdesktop.app.ref.3.0.0.nupkg.sha512",
+    "C:\\Users\\Thanam Durai Kumar\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\3.0.1\\microsoft.aspnetcore.app.ref.3.0.1.nupkg.sha512"
+  ],
+  "logs": []
+}

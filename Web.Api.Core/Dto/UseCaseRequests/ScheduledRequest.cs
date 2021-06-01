@@ -73,6 +73,7 @@ namespace Web.Api.Core.Dto.UseCaseRequests
         public CallDetails Day7CallDetails { get; set; }
         public string Day9CallId { get; set; }//9day_call_ id – varchar(128)
         public CallDetails Day9CallDetails { get; set; }
+        public string IsExtractTreatementDate { get; set; }//have_treatement_extract - varchar(25)
         public string CreatedBy { get; set; } //created_by
         public string ModifiedBy { get; set; } //modified_by
     }

@@ -5,7 +5,7 @@ using Web.Api.Core.Interfaces;
 
 namespace Web.Api.Core.Dto.UseCaseRequests
 {
-    public class ReportDetails
+    public class ReportDetails : IUseCaseRequest<AcknowledgementResponse>
     {
         public string ScheduledId { get; set; }//scheduled_id – varchar(128)
         public string PatientId { get; set; }//patient_id – varchar(128)
@@ -42,9 +42,10 @@ namespace Web.Api.Core.Dto.UseCaseRequests
         public string Day9CallStatus { get; set; }
         public string Day9CallRemarks { get; set; }
         public DateTime DischargeDate { get; set; }//discharge_date – datetime
-        public string DischargeStatus { get; set; }
-        public string IsExtractData { get; set; }//Yes or No
-        public string IsSentClaim { get; set; }//Yes or No
-        public DateTime SendingClaimDate { get; set; }
+        public string DischargeRemarks { get; set; }//discharge_remarks - varchar(128)
+        public string IsExtractTreatementDate { get; set; }//have_treatement_extract - varchar(25) Yes or No
+        public string IsSendClaim { get; set; }//have_send_claim - varchar(25)Yes or No
+        public DateTime SendingClaimDate { get; set; }//claim_send_date - datetime
+        public string ModifiedBy { get; set; } //modified_by
     }
 }
