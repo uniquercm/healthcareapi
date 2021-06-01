@@ -61,6 +61,9 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 string toDate = scheduledToDate.Date.ToString("dd-MM-yyyy");
                 if(fromDate != "01-01-0001" || toDate != "01-01-0001")
                 {
+                    if(fromDate == "01-01-0001")
+                        fromDate = toDate;
+                    
                     if(toDate == "01-01-0001")
                         toDate = fromDate;
 
