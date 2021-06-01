@@ -18,7 +18,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
         {
             _appDbContext = appDbContext;
         }
-        public async Task<List<ScheduledDetails>> GetScheduledDetails(string companyId, string scheduledId, string patientId, bool isFieldAllocation, IPatientRepository patientRepository)
+        public async Task<List<ScheduledDetails>> GetScheduledDetails(string companyId, string scheduledId, string patientId, bool isFieldAllocation, IPatientRepository patientRepository, DateTime scheduledFromDate, DateTime scheduledToDate)
         {
             List<ScheduledDetails> retScheduledDetailsList = new List<ScheduledDetails>();
             try
@@ -50,6 +50,24 @@ namespace Web.Api.Infrastructure.Data.Repositories
 
                 if (!string.IsNullOrEmpty(patientId))
                     whereCond += " and sc.patient_id = '" + patientId + "'";
+
+                string fromDate = scheduledFromDate.Date.ToString("dd-MM-yyyy");
+                /*if(fromDate == "01-01-0001")
+                {
+                    scheduledFromDate = DateTime.Today;
+                    //scheduledFromDate = DateTime.Today.AddDays(1);
+                    fromDate = scheduledFromDate.ToString("yyyy-MM-dd 00:00:00.0");
+                }*/
+                string toDate = scheduledToDate.Date.ToString("dd-MM-yyyy");
+                if(fromDate != "01-01-0001" || toDate != "01-01-0001")
+                {
+                    if(toDate == "01-01-0001")
+                        toDate = fromDate;
+
+                    if(fromDate != "01-01-0001")
+                        whereCond += $" and sc.treatment_from_date <= '" + fromDate + "'" +
+                                     $" and sc.treatment_to_date > '" + toDate + "'";
+                }
 
                 var sqlSelQuery = $"select " + ColumAssign + " from " + tableName + whereCond;
                 using (var connection = _appDbContext.Connection)

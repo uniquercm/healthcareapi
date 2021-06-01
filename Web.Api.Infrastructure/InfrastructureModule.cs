@@ -20,6 +20,7 @@ namespace Web.Api.Infrastructure
             builder.RegisterType<StaffRepository>().As<IStaffRepository>().InstancePerLifetimeScope();
             builder.RegisterType<PatientStaffRepository>().As<IPatientStaffRepository>().InstancePerLifetimeScope();
             builder.RegisterType<ScheduledRepository>().As<IScheduledRepository>().InstancePerLifetimeScope();
+            builder.RegisterType<ReportRepository>().As<IReportRepository>().InstancePerLifetimeScope();
             builder.RegisterType<HttpClientService>().As<IHttpClientService>().InstancePerLifetimeScope();
             builder.RegisterType<SettingRepository>().As<ISettingRepository>().InstancePerLifetimeScope();
             builder.RegisterType<Logger>().As<ILogger>().SingleInstance();

@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -36,14 +37,16 @@ namespace Web.Api.Controllers
         /// <param name="scheduledId">Scheduled Id (optional)</param>
         /// <param name="patientId">Patient Id (optional)</param>
         /// <param name="isFieldAllocation">Is Field Allocation (optional)</param>
+        /// <param name="fromDate">Scheduled From Date (optional)</param>
+        /// <param name="toDate">Scheduled To Date (optional)</param>
         /// <returns>Scheduled Details</returns>
         [HttpGet("scheduled")]
-        public async Task<ActionResult> GetScheduledDetails(string companyId = "", string scheduledId = "", string patientId = "", bool isFieldAllocation = false)
+        public async Task<ActionResult> GetScheduledDetails(DateTime fromDate, DateTime toDate, string companyId = "", string scheduledId = "", string patientId = "", bool isFieldAllocation = false)
         {
             if(isFieldAllocation)
-                await _scheduledUseCases.Handle(new GetDetailsRequest(companyId, patientId, "", "", scheduledId, "FieldAllocation"), _getDetailsPresenter);
+                await _scheduledUseCases.Handle(new GetDetailsRequest(companyId, patientId, scheduledId, fromDate, toDate, "FieldAllocation"), _getDetailsPresenter);
             else
-                await _scheduledUseCases.Handle(new GetDetailsRequest(companyId, patientId, "", "", scheduledId, ""), _getDetailsPresenter);
+                await _scheduledUseCases.Handle(new GetDetailsRequest(companyId, patientId, scheduledId, fromDate, toDate, ""), _getDetailsPresenter);
             return _getDetailsPresenter.ContentResult;
         }
 

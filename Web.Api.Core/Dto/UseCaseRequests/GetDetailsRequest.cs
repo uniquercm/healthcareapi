@@ -38,6 +38,15 @@ namespace Web.Api.Core.Dto.UseCaseRequests
             PatientId = patientId;
             LableName = lableName;
         }
+        public GetDetailsRequest(string companyId, string patientId, string scheduledId, DateTime scheduledFromDate, DateTime scheduledToDate, string lableName)
+        {
+            CompanyId = companyId;
+            PatientId = patientId;
+            ScheduledId = scheduledId;
+            ScheduledFromDate = scheduledFromDate;
+            ScheduledToDate = scheduledToDate;
+            LableName = lableName;
+        }
         public GetDetailsRequest(string id, string patientId, string staffId, string patientStaffId, string scheduledId, string lableName)
         {
             Id = id;
