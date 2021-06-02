@@ -85,7 +85,7 @@ D:\Dev\HealthCare\HealthCareAPI\healthcareapi\Web.Api\bin\Debug\netcoreapp3.0\We
 D:\Dev\HealthCare\HealthCareAPI\healthcareapi\Web.Api\bin\Debug\netcoreapp3.0\Web.Api.Infrastructure.dll
 D:\Dev\HealthCare\HealthCareAPI\healthcareapi\Web.Api\bin\Debug\netcoreapp3.0\Web.Api.Core.pdb
 D:\Dev\HealthCare\HealthCareAPI\healthcareapi\Web.Api\bin\Debug\netcoreapp3.0\Web.Api.Infrastructure.pdb
-D:\Dev\HealthCare\HealthCareAPI\healthcareapi\Web.Api\obj\Debug\netcoreapp3.0\Web.Api.csprojAssemblyReference.cache
+D:\Dev\HealthCare\HealthCareAPI\healthcareapi\Web.Api\obj\Debug\netcoreapp3.0\Web.Api.csproj.AssemblyReference.cache
 D:\Dev\HealthCare\HealthCareAPI\healthcareapi\Web.Api\obj\Debug\netcoreapp3.0\Web.Api.AssemblyInfoInputs.cache
 D:\Dev\HealthCare\HealthCareAPI\healthcareapi\Web.Api\obj\Debug\netcoreapp3.0\Web.Api.AssemblyInfo.cs
 D:\Dev\HealthCare\HealthCareAPI\healthcareapi\Web.Api\obj\Debug\netcoreapp3.0\Web.Api.csproj.CoreCompileInputs.cache

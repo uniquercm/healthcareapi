@@ -29,7 +29,7 @@ namespace Web.Api.Core.UseCases
 
             if(await _reportRepository.EditReportDetails(request))
             {
-                /*if(request.IsExtractTreatementDate == "Yes")
+                /*if(request.IsExtractTreatementDate.ToLower() == "yes")
                 {
                     //Call Schedule Post API
                     ScheduledRequest scheduledRequest = new ScheduledRequest();

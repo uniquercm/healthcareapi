@@ -18,6 +18,7 @@ namespace Web.Api.Models.Request
         public string VisitStatus { get; set; }
         public DateTime VisitedDate { get; set; }
         public string ReallocatedTeamName { get; set; }
+        public string IsSendClaim { get; set; }
         public string CreatedBy { get; set; }
         public string ModifiedBy { get; set; }
         public bool IsUpdate { get; set; }

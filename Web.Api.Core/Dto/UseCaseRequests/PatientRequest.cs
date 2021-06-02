@@ -29,6 +29,7 @@ namespace Web.Api.Core.Dto.UseCaseRequests
         public int PCRCount { get; set; }//pcr_count - int(10)
         public string StickerRemoval { get; set; }//sticker_removal - enum('No','Yes')
         public int TrackerRemoval { get; set; }//tracker_removal – int(10)
+        public string IsSendClaim { get; set; }//have_send_claim - varchar(25)Yes or No
         public string CreatedBy { get; set; } //created_by
         public string ModifiedBy { get; set; } //modified_by
         public bool IsUpdate { get; set; }
@@ -62,6 +63,7 @@ namespace Web.Api.Core.Dto.UseCaseRequests
         public int TrackerApplication { get; set; }//tracker_application – int(10)
         public string StickerRemoval { get; set; }//sticker_removal - enum('No','Yes')
         public int TrackerRemoval { get; set; }//tracker_removal – int(10)
+        public string IsSendClaim { get; set; }//have_send_claim - varchar(25)Yes or No
         public string DrCallId { get; set; }
         public string ScheduledId { get; set; }
         public string CreatedBy { get; set; } //created_by

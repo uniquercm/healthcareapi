@@ -42,6 +42,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                               $"p.tracker_application as TrackerApplication, " +
                               $"p.sticker_removal as StickerRemoval, " +
                               $"p.tracker_removal as TrackerRemoval, " +
+                              $"p.have_send_claim as IsSendClaim, " +
                               $"p.created_by as CreatedBy, p.modified_by as ModifiedBy";
 
                 var whereCond = " where p.company_id = co.company_id"  +
@@ -176,14 +177,14 @@ namespace Web.Api.Infrastructure.Data.Repositories
                               $"date_of_birth, age, sex, address, landmark, area, city_id, nationality_id, " +
                               $"mobile_no, google_map_link, no_of_adults, no_of_childrens, pcr_count, " +
                               $"sticker_application, tracker_application, " +
-                              $"sticker_removal, tracker_removal, " +
+                              $"sticker_removal, tracker_removal, have_send_claim, " +
                               $"created_by, created_on";
 
                 var colValueName = $"@PatientId, @PatientName, @CompanyId, @RequestId, @CRMNo, @EIDNo, " +
                                    $"@DateOfBirth, @Age, @Sex, @Address, @LandMark, @Area, @CityId, @NationalityId, " +
                                    $"@MobileNo, @GoogleMapLink, @AdultsCount, @ChildrensCount, " +
                                    $"@PCRCount, @StickerApplication, @TrackerApplication, " +
-                                   $"@StickerRemoval, @TrackerRemoval, " +
+                                   $"@StickerRemoval, @TrackerRemoval, @IsSendClaim, " +
                                    $"@CreatedBy, @CreatedOn";
 
                 var sqlInsQuery = $"INSERT INTO "+ tableName + "( " + colName + " )" +
@@ -214,6 +215,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     TrackerApplication = patientRequest.AdultsCount,
                     StickerRemoval = patientRequest.StickerRemoval,
                     TrackerRemoval = patientRequest.AdultsCount,
+                    IsSendClaim = patientRequest.IsSendClaim,
                     CreatedBy = patientRequest.CreatedBy,
                     CreatedOn = DateTime.Today.ToString("yyyy-MM-dd 00:00:00.0")
                 };
@@ -253,6 +255,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                               $"no_of_adults = @AdultsCount, no_of_childrens = @ChildrensCount, pcr_count = @PCRCount, " +
                               $"sticker_application = @StickerApplication, tracker_application = @TrackerApplication, " +
                               $"sticker_removal = @StickerRemoval, tracker_removal = @TrackerRemoval, " +
+                              $"have_send_claim = @IsSendClaim, " +
                               $"modified_by = @ModifiedBy, modified_on = @ModifiedOn";
 
                 var whereCond = $" where patient_id = @PatientId";
@@ -283,6 +286,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     PCRCount = patientRequest.PCRCount,
                     StickerRemoval = patientRequest.StickerRemoval,
                     TrackerRemoval = patientRequest.TrackerRemoval,
+                    IsSendClaim = patientRequest.IsSendClaim,
                     ModifiedBy = patientRequest.ModifiedBy,
                     ModifiedOn = DateTime.Today.ToString("yyyy-MM-dd 00:00:00.0")
                 };

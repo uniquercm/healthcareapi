@@ -290,11 +290,11 @@ namespace Web.Api.Infrastructure.Data.Repositories
                                     $"VALUES ( " + colValueName + " )";
 
                 if(!String.IsNullOrEmpty(scheduledRequest.TreatmentType) && 
-                   scheduledRequest.TreatmentType == "Isolation")
+                   scheduledRequest.TreatmentType.ToLower() == "isolation")
                 {
                     CallRequest callRequest = new CallRequest();
                     callRequest.ScheduledId = scheduledRequest.ScheduledId;
-                    callRequest.EMRDone = "No";
+                    callRequest.EMRDone = "no";
                     //callRequest.CallStatus = "Pending";
                     callRequest.CreatedBy = scheduledRequest.CreatedBy;
 
@@ -349,25 +349,57 @@ namespace Web.Api.Infrastructure.Data.Repositories
 
                 scheduledRequest.DischargeDate = scheduledRequest.TreatmentToDate;//.TreatmentFromDate.AddDays(9);
 
+                string pcrTestDate = scheduledRequest.PCRTestDate.ToString("yyyy-MM-dd");
+                if( pcrTestDate == "0001-01-01")
+                    pcrTestDate = "";
+
+                string dischargeDate = scheduledRequest.DischargeDate.ToString("yyyy-MM-dd");
+                if( dischargeDate == "0001-01-01")
+                    dischargeDate = "";
+
+                string treatmentFromDate = scheduledRequest.TreatmentFromDate.ToString("yyyy-MM-dd");
+                if( treatmentFromDate == "0001-01-01")
+                    treatmentFromDate = "";
+
+                string treatmentToDate = scheduledRequest.TreatmentToDate.ToString("yyyy-MM-dd");
+                if( treatmentToDate == "0001-01-01")
+                    treatmentToDate = "";
+
+                string pcr4DayTestDate = scheduledRequest.PCR4DayTestDate.ToString("yyyy-MM-dd");
+                if( treatmentFromDate == "0001-01-01")
+                    treatmentFromDate = "";
+
+                string pcr4DaySampleDate = scheduledRequest.PCR4DaySampleDate.ToString("yyyy-MM-dd");
+                if( pcr4DaySampleDate == "0001-01-01")
+                    pcr4DaySampleDate = "";
+
+                string pcr8DayTestDate = scheduledRequest.PCR8DayTestDate.ToString("yyyy-MM-dd");
+                if( pcr8DayTestDate == "0001-01-01")
+                    pcr8DayTestDate = "";
+
+                string pcr8DaySampleDate = scheduledRequest.PCR8DaySampleDate.ToString("yyyy-MM-dd");
+                if( pcr8DaySampleDate == "0001-01-01")
+                    pcr8DaySampleDate = "";
+
                 object colValueParam = new
                 {
                     ScheduledId = scheduledRequest.ScheduledId,
                     PatientStaffId = scheduledRequest.PatientStaffId,
                     PatientId = scheduledRequest.PatientId,
-                    PCRTestDate = scheduledRequest.PCRTestDate.ToString("yyyy-MM-dd 00:00:00.0"),
+                    PCRTestDate = pcrTestDate,//scheduledRequest.PCRTestDate.ToString("yyyy-MM-dd 00:00:00.0"),
                     PCRResult = scheduledRequest.PCRResult,
                     HaveVaccine = scheduledRequest.HaveVaccine,
                     AllocatedTeamName = scheduledRequest.AllocatedTeamName,
                     ReAllocatedTeamName = scheduledRequest.ReAllocatedTeamName,
-                    DischargeDate = scheduledRequest.DischargeDate.ToString("yyyy-MM-dd 00:00:00.0"),
+                    DischargeDate = dischargeDate,//scheduledRequest.DischargeDate.ToString("yyyy-MM-dd 00:00:00.0"),
                     TreatmentType = scheduledRequest.TreatmentType,
-                    TreatmentFromDate = scheduledRequest.TreatmentFromDate.ToString("yyyy-MM-dd 00:00:00.0"),
-                    TreatmentToDate = scheduledRequest.TreatmentToDate.ToString("yyyy-MM-dd 00:00:00.0"),
-                    PCR4DayTestDate = scheduledRequest.PCR4DayTestDate.ToString("yyyy-MM-dd 00:00:00.0"),
-                    //PCR4DaySampleDate = scheduledRequest.PCR4DaySampleDate.ToString("yyyy-MM-dd 00:00:00.0"),
+                    TreatmentFromDate = treatmentFromDate,//scheduledRequest.TreatmentFromDate.ToString("yyyy-MM-dd 00:00:00.0"),
+                    TreatmentToDate = treatmentToDate,//scheduledRequest.TreatmentToDate.ToString("yyyy-MM-dd 00:00:00.0"),
+                    PCR4DayTestDate = pcr4DayTestDate,//scheduledRequest.PCR4DayTestDate.ToString("yyyy-MM-dd 00:00:00.0"),
+                    //PCR4DaySampleDate = pcr4DaySampleDate,//scheduledRequest.PCR4DaySampleDate.ToString("yyyy-MM-dd 00:00:00.0"),
                     PCR4DayResult = scheduledRequest.PCR4DayResult,
-                    PCR8DayTestDate = scheduledRequest.PCR8DayTestDate.ToString("yyyy-MM-dd 00:00:00.0"),
-                    //PCR8DaySampleDate = scheduledRequest.PCR8DaySampleDate.ToString("yyyy-MM-dd 00:00:00.0"),
+                    PCR8DayTestDate = pcr8DayTestDate,//scheduledRequest.PCR8DayTestDate.ToString("yyyy-MM-dd 00:00:00.0"),
+                    //PCR8DaySampleDate = pcr8DaySampleDate,//scheduledRequest.PCR8DaySampleDate.ToString("yyyy-MM-dd 00:00:00.0"),
                     PCR8DayResult = scheduledRequest.PCR8DayResult,
                     Day2CallId = scheduledRequest.Day2CallId,
                     Day3CallId = scheduledRequest.Day3CallId,
@@ -375,7 +407,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     Day6CallId = scheduledRequest.Day6CallId,
                     Day7CallId = scheduledRequest.Day7CallId,
                     Day9CallId = scheduledRequest.Day9CallId,
-                    ExtractTreatementDate = "No",
+                    ExtractTreatementDate = "no",
                     CreatedBy = scheduledRequest.CreatedBy,
                     CreatedOn = DateTime.Today.ToString("yyyy-MM-dd 00:00:00.0")
                 };
@@ -420,12 +452,20 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 var sqlInsQuery = $"INSERT INTO "+ tableName + "( " + colName + " )" +
                                     $"VALUES ( " + colValueName + " )";
 
+                string callScheduledDate = callRequest.CallScheduledDate.ToString("yyyy-MM-dd");
+                if( callScheduledDate == "0001-01-01")
+                    callScheduledDate = "";
+
+                string calledDate = callRequest.CalledDate.ToString("yyyy-MM-dd");
+                if( calledDate == "0001-01-01")
+                    calledDate = "";
+
                 object colValueParam = new
                 {
                     CallId = callRequest.CallId,
                     ScheduledId = callRequest.ScheduledId,
-                    CallScheduledDate = callRequest.CallScheduledDate.ToString("yyyy-MM-dd 00:00:00.0"),
-                    //CalledDate = callRequest.CalledDate.ToString("yyyy-MM-dd 00:00:00.0"),
+                    CallScheduledDate = callScheduledDate,//callRequest.CallScheduledDate.ToString("yyyy-MM-dd 00:00:00.0"),
+                    //CalledDate = calledDate,//callRequest.CalledDate.ToString("yyyy-MM-dd 00:00:00.0"),
                     CallStatus = callRequest.CallStatus,
                     Remarks = callRequest.Remarks,
                     EMRDone = callRequest.EMRDone,
@@ -468,52 +508,97 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 var whereCond = $" where scheduled_id = @ScheduledId";
                 var sqlUpdateQuery = $"UPDATE "+ tableName + " set " + colName + whereCond;
 
-                CallRequest callRequest = new CallRequest();
-                callRequest.ModifiedBy = scheduledRequest.ModifiedBy;
+                if(!String.IsNullOrEmpty(scheduledRequest.TreatmentType) && 
+                   scheduledRequest.TreatmentType.ToLower() == "isolation")
+                {
+                    CallRequest callRequest = new CallRequest();
+                    callRequest.ModifiedBy = scheduledRequest.ModifiedBy;
 
-                callRequest.CallId = scheduledRequest.Day2CallId;
-                callRequest.CallScheduledDate = scheduledRequest.TreatmentFromDate.AddDays(1);
-                await EditCall(callRequest);
+                    callRequest.CallId = scheduledRequest.Day2CallId;
+                    callRequest.CallScheduledDate = scheduledRequest.TreatmentFromDate.AddDays(1);
+                    await EditCall(callRequest);
 
-                callRequest.CallId = scheduledRequest.Day3CallId;
-                callRequest.CallScheduledDate = scheduledRequest.TreatmentFromDate.AddDays(2);
-                await EditCall(callRequest);
+                    callRequest.CallId = scheduledRequest.Day3CallId;
+                    callRequest.CallScheduledDate = scheduledRequest.TreatmentFromDate.AddDays(2);
+                    await EditCall(callRequest);
 
-                callRequest.CallId = scheduledRequest.Day5CallId;
-                callRequest.CallScheduledDate = scheduledRequest.TreatmentFromDate.AddDays(4);
-                await EditCall(callRequest);
+                    callRequest.CallId = scheduledRequest.Day5CallId;
+                    callRequest.CallScheduledDate = scheduledRequest.TreatmentFromDate.AddDays(4);
+                    await EditCall(callRequest);
 
-                callRequest.CallId = scheduledRequest.Day6CallId;
-                callRequest.CallScheduledDate = scheduledRequest.TreatmentFromDate.AddDays(5);
-                await EditCall(callRequest);
+                    callRequest.CallId = scheduledRequest.Day6CallId;
+                    callRequest.CallScheduledDate = scheduledRequest.TreatmentFromDate.AddDays(5);
+                    await EditCall(callRequest);
 
-                callRequest.CallId = scheduledRequest.Day7CallId;
-                callRequest.CallScheduledDate = scheduledRequest.TreatmentFromDate.AddDays(6);
-                await EditCall(callRequest);
+                    callRequest.CallId = scheduledRequest.Day7CallId;
+                    callRequest.CallScheduledDate = scheduledRequest.TreatmentFromDate.AddDays(6);
+                    await EditCall(callRequest);
 
-                callRequest.CallId = scheduledRequest.Day9CallId;
-                callRequest.CallScheduledDate = scheduledRequest.TreatmentFromDate.AddDays(8);
-                await EditCall(callRequest);
+                    callRequest.CallId = scheduledRequest.Day9CallId;
+                    callRequest.CallScheduledDate = scheduledRequest.TreatmentFromDate.AddDays(8);
+                    await EditCall(callRequest);
+                }
+                else
+                {
+                    scheduledRequest.Day2CallId = "";
+                    scheduledRequest.Day3CallId = "";
+                    scheduledRequest.Day5CallId = "";
+                    scheduledRequest.Day6CallId = "";
+                    scheduledRequest.Day7CallId = "";
+                    scheduledRequest.Day9CallId = "";
+                }
+
+                string pcrTestDate = scheduledRequest.PCRTestDate.ToString("yyyy-MM-dd");
+                if( pcrTestDate == "0001-01-01")
+                    pcrTestDate = "";
+
+                string dischargeDate = scheduledRequest.DischargeDate.ToString("yyyy-MM-dd");
+                if( dischargeDate == "0001-01-01")
+                    dischargeDate = "";
+
+                string treatmentFromDate = scheduledRequest.TreatmentFromDate.ToString("yyyy-MM-dd");
+                if( treatmentFromDate == "0001-01-01")
+                    treatmentFromDate = "";
+
+                string treatmentToDate = scheduledRequest.TreatmentToDate.ToString("yyyy-MM-dd");
+                if( treatmentToDate == "0001-01-01")
+                    treatmentToDate = "";
+
+                string pcr4DayTestDate = scheduledRequest.PCR4DayTestDate.ToString("yyyy-MM-dd");
+                if( treatmentFromDate == "0001-01-01")
+                    treatmentFromDate = "";
+
+                string pcr4DaySampleDate = scheduledRequest.PCR4DaySampleDate.ToString("yyyy-MM-dd");
+                if( pcr4DaySampleDate == "0001-01-01")
+                    pcr4DaySampleDate = "";
+
+                string pcr8DayTestDate = scheduledRequest.PCR8DayTestDate.ToString("yyyy-MM-dd");
+                if( pcr8DayTestDate == "0001-01-01")
+                    pcr8DayTestDate = "";
+
+                string pcr8DaySampleDate = scheduledRequest.PCR8DaySampleDate.ToString("yyyy-MM-dd");
+                if( pcr8DaySampleDate == "0001-01-01")
+                    pcr8DaySampleDate = "";
 
                 object colValueParam = new
                 {
                     ScheduledId = scheduledRequest.ScheduledId,
                     PatientStaffId = scheduledRequest.PatientStaffId,
                     PatientId = scheduledRequest.PatientId,
-                    PCRTestDate = scheduledRequest.PCRTestDate.ToString("yyyy-MM-dd 00:00:00.0"),
+                    PCRTestDate = pcrTestDate,//scheduledRequest.PCRTestDate.ToString("yyyy-MM-dd 00:00:00.0"),
                     PCRResult = scheduledRequest.PCRResult,
                     HaveVaccine = scheduledRequest.HaveVaccine,
                     //AllocatedTeamName = scheduledRequest.AllocatedTeamName,
                     //ReAllocatedTeamName = scheduledRequest.ReAllocatedTeamName,
-                    DischargeDate = scheduledRequest.DischargeDate.ToString("yyyy-MM-dd 00:00:00.0"),
+                    DischargeDate = dischargeDate,//scheduledRequest.DischargeDate.ToString("yyyy-MM-dd 00:00:00.0"),
                     TreatmentType = scheduledRequest.TreatmentType,
-                    TreatmentFromDate = scheduledRequest.TreatmentFromDate.ToString("yyyy-MM-dd 00:00:00.0"),
-                    TreatmentToDate = scheduledRequest.TreatmentToDate.ToString("yyyy-MM-dd 00:00:00.0"),
-                    PCR4DayTestDate = scheduledRequest.PCR4DayTestDate.ToString("yyyy-MM-dd 00:00:00.0"),
-                    PCR4DaySampleDate = scheduledRequest.PCR4DaySampleDate.ToString("yyyy-MM-dd 00:00:00.0"),
+                    TreatmentFromDate = treatmentFromDate,//scheduledRequest.TreatmentFromDate.ToString("yyyy-MM-dd 00:00:00.0"),
+                    TreatmentToDate = treatmentToDate,//scheduledRequest.TreatmentToDate.ToString("yyyy-MM-dd 00:00:00.0"),
+                    PCR4DayTestDate = pcr4DayTestDate,//scheduledRequest.PCR4DayTestDate.ToString("yyyy-MM-dd 00:00:00.0"),
+                    //PCR4DaySampleDate = pcr4DaySampleDate,//scheduledRequest.PCR4DaySampleDate.ToString("yyyy-MM-dd 00:00:00.0"),
                     PCR4DayResult = scheduledRequest.PCR4DayResult,
-                    PCR8DayTestDate = scheduledRequest.PCR8DayTestDate.ToString("yyyy-MM-dd 00:00:00.0"),
-                    PCR8DaySampleDate = scheduledRequest.PCR8DaySampleDate.ToString("yyyy-MM-dd 00:00:00.0"),
+                    PCR8DayTestDate = pcr8DayTestDate,//scheduledRequest.PCR8DayTestDate.ToString("yyyy-MM-dd 00:00:00.0"),
+                    //PCR8DaySampleDate = pcr8DaySampleDate,//scheduledRequest.PCR8DaySampleDate.ToString("yyyy-MM-dd 00:00:00.0"),
                     PCR8DayResult = scheduledRequest.PCR8DayResult,
                     /*Day2CallId = day2CallId,
                     Day3CallId = day3CallId,
@@ -553,12 +638,20 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 var whereCond = $" where call_id = @CallId";
                 var sqlUpdateQuery = $"UPDATE "+ tableName + " set " + colName + whereCond;
 
+                string callScheduledDate = callRequest.CallScheduledDate.ToString("yyyy-MM-dd");
+                if( callScheduledDate == "0001-01-01")
+                    callScheduledDate = "";
+
+                string calledDate = callRequest.CalledDate.ToString("yyyy-MM-dd");
+                if( calledDate == "0001-01-01")
+                    calledDate = "";
+
                 object colValueParam = new
                 {
                     CallId = callRequest.CallId,
                     ScheduledId = callRequest.ScheduledId,
-                    CallScheduledDate = callRequest.CallScheduledDate.ToString("yyyy-MM-dd 00:00:00.0"),
-                    CalledDate = callRequest.CalledDate.ToString("yyyy-MM-dd 00:00:00.0"),
+                    CallScheduledDate = callScheduledDate,//callRequest.CallScheduledDate.ToString("yyyy-MM-dd 00:00:00.0"),
+                    CalledDate = calledDate,//callRequest.CalledDate.ToString("yyyy-MM-dd 00:00:00.0"),
                     CallStatus = callRequest.CallStatus,
                     Remarks = callRequest.Remarks,
                     EMRDone = callRequest.EMRDone,
