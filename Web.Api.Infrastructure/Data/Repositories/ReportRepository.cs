@@ -35,8 +35,10 @@ namespace Web.Api.Infrastructure.Data.Repositories
                                   $"pa.crm_no as CRMNo, pa.eid_no as EIDNo, pa.mobile_no as MobileNo, " +
                                   //$", " +//Include Reception call Details
                                   $"sc.2day_call_id as Day2CallId, " +
-                                  $"sc.4day_pcr_test_date as PCR4DayTestDate, sc.4day_pcr_test_result as PCR4DayResult, " +
-                                  $"sc.8day_pcr_test_date as PCR8DayTestDate, sc.8day_pcr_test_result as PCR8DayResult, " +
+                                  $"sc.4day_pcr_test_date as PCR4DayTestDate, sc.4day_pcr_test_sample_date as PCR4DaySampleDate, " +
+                                  $"sc.4day_pcr_test_result as PCR4DayResult, " +
+                                  $"sc.8day_pcr_test_date as PCR8DayTestDate, sc.8day_pcr_test_sample_date as PCR8DaySampleDate, " +
+                                  $"sc.8day_pcr_test_result as PCR8DayResult, " +
                                   $"sc.3day_call_id as Day3CallId, sc.5day_call_id as Day5CallId, " +
                                   $"sc.6day_call_id as Day6CallId, sc.7day_call_id as Day7CallId, " +
                                   $"sc.9day_call_id as Day9CallId, " +
@@ -168,7 +170,6 @@ namespace Web.Api.Infrastructure.Data.Repositories
                         ScheduledId = reportDetails.ScheduledId,
                         PatientId = reportDetails.PatientId,
                         IsExtractTreatementDate = reportDetails.IsExtractTreatementDate,
-                        SendingClaimDate = claimDate,
                         ModifiedBy = reportDetails.ModifiedBy,
                         ModifiedOn = DateTime.Today.ToString("yyyy-MM-dd 00:00:00.0")
                     };
@@ -180,6 +181,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                         ScheduledId = reportDetails.ScheduledId,
                         PatientId = reportDetails.PatientId,
                         IsExtractTreatementDate = reportDetails.IsExtractTreatementDate,
+                        SendingClaimDate = claimDate,
                         ModifiedBy = reportDetails.ModifiedBy,
                         ModifiedOn = DateTime.Today.ToString("yyyy-MM-dd 00:00:00.0")
                     };

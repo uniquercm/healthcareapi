@@ -349,37 +349,85 @@ namespace Web.Api.Infrastructure.Data.Repositories
 
                 scheduledRequest.DischargeDate = scheduledRequest.TreatmentToDate;//.TreatmentFromDate.AddDays(9);
 
-                string pcrTestDate = scheduledRequest.PCRTestDate.ToString("yyyy-MM-dd");
-                if( pcrTestDate == "0001-01-01")
+                string pcrTestDate;
+                if(scheduledRequest.PCRTestDate == null)
                     pcrTestDate = "";
+                else
+                {
+                    pcrTestDate = scheduledRequest.PCRTestDate.ToString("yyyy-MM-dd");
+                    if( pcrTestDate == "0001-01-01")
+                        pcrTestDate = "";
+                }
 
-                string dischargeDate = scheduledRequest.DischargeDate.ToString("yyyy-MM-dd");
-                if( dischargeDate == "0001-01-01")
+                string dischargeDate;
+                if(scheduledRequest.DischargeDate == null)
                     dischargeDate = "";
+                else
+                {
+                    dischargeDate = scheduledRequest.DischargeDate.ToString("yyyy-MM-dd");
+                    if( dischargeDate == "0001-01-01")
+                        dischargeDate = "";
+                }
 
-                string treatmentFromDate = scheduledRequest.TreatmentFromDate.ToString("yyyy-MM-dd");
-                if( treatmentFromDate == "0001-01-01")
+                string treatmentFromDate;
+                if(scheduledRequest.TreatmentFromDate == null)
                     treatmentFromDate = "";
+                else
+                {
+                    treatmentFromDate = scheduledRequest.TreatmentFromDate.ToString("yyyy-MM-dd");
+                    if( treatmentFromDate == "0001-01-01")
+                        treatmentFromDate = "";
+                }
 
-                string treatmentToDate = scheduledRequest.TreatmentToDate.ToString("yyyy-MM-dd");
-                if( treatmentToDate == "0001-01-01")
+                string treatmentToDate;
+                if(scheduledRequest.TreatmentToDate == null)
                     treatmentToDate = "";
+                else
+                {
+                    treatmentToDate = scheduledRequest.TreatmentToDate.ToString("yyyy-MM-dd");
+                    if( treatmentToDate == "0001-01-01")
+                        treatmentToDate = "";
+                }
 
-                string pcr4DayTestDate = scheduledRequest.PCR4DayTestDate.ToString("yyyy-MM-dd");
-                if( treatmentFromDate == "0001-01-01")
-                    treatmentFromDate = "";
+                string pcr4DayTestDate;
+                if(scheduledRequest.PCR4DayTestDate == null)
+                    pcr4DayTestDate = "";
+                else
+                {
+                    pcr4DayTestDate = scheduledRequest.PCR4DayTestDate.ToString("yyyy-MM-dd");
+                    if( treatmentFromDate == "0001-01-01")
+                        treatmentFromDate = "";
+                }
 
-                string pcr4DaySampleDate = scheduledRequest.PCR4DaySampleDate.ToString("yyyy-MM-dd");
-                if( pcr4DaySampleDate == "0001-01-01")
+                string pcr4DaySampleDate;
+                if(scheduledRequest.PCR4DaySampleDate == null)
                     pcr4DaySampleDate = "";
+                else
+                {
+                    pcr4DaySampleDate = scheduledRequest.PCR4DaySampleDate.ToString("yyyy-MM-dd");
+                    if( pcr4DaySampleDate == "0001-01-01")
+                        pcr4DaySampleDate = "";
+                }
 
-                string pcr8DayTestDate = scheduledRequest.PCR8DayTestDate.ToString("yyyy-MM-dd");
-                if( pcr8DayTestDate == "0001-01-01")
+                string pcr8DayTestDate;
+                if(scheduledRequest.PCR8DayTestDate == null)
                     pcr8DayTestDate = "";
+                else
+                {
+                    pcr8DayTestDate = scheduledRequest.PCR8DayTestDate.ToString("yyyy-MM-dd");
+                    if( pcr8DayTestDate == "0001-01-01")
+                        pcr8DayTestDate = "";
+                }
 
-                string pcr8DaySampleDate = scheduledRequest.PCR8DaySampleDate.ToString("yyyy-MM-dd");
-                if( pcr8DaySampleDate == "0001-01-01")
+                string pcr8DaySampleDate;
+                if(scheduledRequest.PCR8DaySampleDate == null)
                     pcr8DaySampleDate = "";
+                else
+                {
+                    pcr8DaySampleDate = scheduledRequest.PCR8DaySampleDate.ToString("yyyy-MM-dd");
+                    if( pcr8DaySampleDate == "0001-01-01")
+                        pcr8DaySampleDate = "";
+                }
 
                 object colValueParam = new
                 {
@@ -548,37 +596,85 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     scheduledRequest.Day9CallId = "";
                 }
 
-                string pcrTestDate = scheduledRequest.PCRTestDate.ToString("yyyy-MM-dd");
-                if( pcrTestDate == "0001-01-01")
+                string pcrTestDate;
+                if(scheduledRequest.PCRTestDate == null)
                     pcrTestDate = "";
+                else
+                {
+                    pcrTestDate = scheduledRequest.PCRTestDate.ToString("yyyy-MM-dd");
+                    if( pcrTestDate == "0001-01-01")
+                        pcrTestDate = "";
+                }
 
-                string dischargeDate = scheduledRequest.DischargeDate.ToString("yyyy-MM-dd");
-                if( dischargeDate == "0001-01-01")
+                string dischargeDate;
+                if(scheduledRequest.DischargeDate == null)
                     dischargeDate = "";
+                else
+                {
+                    dischargeDate = scheduledRequest.DischargeDate.ToString("yyyy-MM-dd");
+                    if( dischargeDate == "0001-01-01")
+                        dischargeDate = "";
+                }
 
-                string treatmentFromDate = scheduledRequest.TreatmentFromDate.ToString("yyyy-MM-dd");
-                if( treatmentFromDate == "0001-01-01")
+                string treatmentFromDate;
+                if(scheduledRequest.TreatmentFromDate == null)
                     treatmentFromDate = "";
+                else
+                {
+                    treatmentFromDate = scheduledRequest.TreatmentFromDate.ToString("yyyy-MM-dd");
+                    if( treatmentFromDate == "0001-01-01")
+                        treatmentFromDate = "";
+                }
 
-                string treatmentToDate = scheduledRequest.TreatmentToDate.ToString("yyyy-MM-dd");
-                if( treatmentToDate == "0001-01-01")
+                string treatmentToDate;
+                if(scheduledRequest.TreatmentToDate == null)
                     treatmentToDate = "";
+                else
+                {
+                    treatmentToDate = scheduledRequest.TreatmentToDate.ToString("yyyy-MM-dd");
+                    if( treatmentToDate == "0001-01-01")
+                        treatmentToDate = "";
+                }
 
-                string pcr4DayTestDate = scheduledRequest.PCR4DayTestDate.ToString("yyyy-MM-dd");
-                if( treatmentFromDate == "0001-01-01")
-                    treatmentFromDate = "";
+                string pcr4DayTestDate;
+                if(scheduledRequest.PCR4DayTestDate == null)
+                    pcr4DayTestDate = "";
+                else
+                {
+                    pcr4DayTestDate = scheduledRequest.PCR4DayTestDate.ToString("yyyy-MM-dd");
+                    if( treatmentFromDate == "0001-01-01")
+                        treatmentFromDate = "";
+                }
 
-                string pcr4DaySampleDate = scheduledRequest.PCR4DaySampleDate.ToString("yyyy-MM-dd");
-                if( pcr4DaySampleDate == "0001-01-01")
+                string pcr4DaySampleDate;
+                if(scheduledRequest.PCR4DaySampleDate == null)
                     pcr4DaySampleDate = "";
+                else
+                {
+                    pcr4DaySampleDate = scheduledRequest.PCR4DaySampleDate.ToString("yyyy-MM-dd");
+                    if( pcr4DaySampleDate == "0001-01-01")
+                        pcr4DaySampleDate = "";
+                }
 
-                string pcr8DayTestDate = scheduledRequest.PCR8DayTestDate.ToString("yyyy-MM-dd");
-                if( pcr8DayTestDate == "0001-01-01")
+                string pcr8DayTestDate;
+                if(scheduledRequest.PCR8DayTestDate == null)
                     pcr8DayTestDate = "";
+                else
+                {
+                    pcr8DayTestDate = scheduledRequest.PCR8DayTestDate.ToString("yyyy-MM-dd");
+                    if( pcr8DayTestDate == "0001-01-01")
+                        pcr8DayTestDate = "";
+                }
 
-                string pcr8DaySampleDate = scheduledRequest.PCR8DaySampleDate.ToString("yyyy-MM-dd");
-                if( pcr8DaySampleDate == "0001-01-01")
+                string pcr8DaySampleDate;
+                if(scheduledRequest.PCR8DaySampleDate == null)
                     pcr8DaySampleDate = "";
+                else
+                {
+                    pcr8DaySampleDate = scheduledRequest.PCR8DaySampleDate.ToString("yyyy-MM-dd");
+                    if( pcr8DaySampleDate == "0001-01-01")
+                        pcr8DaySampleDate = "";
+                }
 
                 object colValueParam = new
                 {
@@ -638,13 +734,25 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 var whereCond = $" where call_id = @CallId";
                 var sqlUpdateQuery = $"UPDATE "+ tableName + " set " + colName + whereCond;
 
-                string callScheduledDate = callRequest.CallScheduledDate.ToString("yyyy-MM-dd");
-                if( callScheduledDate == "0001-01-01")
+                string callScheduledDate;
+                if(callRequest.CallScheduledDate == null)
                     callScheduledDate = "";
+                else
+                {
+                    callScheduledDate = callRequest.CallScheduledDate.ToString("yyyy-MM-dd");
+                    if( callScheduledDate == "0001-01-01")
+                        callScheduledDate = "";
+                }
 
-                string calledDate = callRequest.CalledDate.ToString("yyyy-MM-dd");
-                if( calledDate == "0001-01-01")
+                string calledDate;
+                if(callRequest.CalledDate == null)
                     calledDate = "";
+                else
+                {
+                    calledDate = callRequest.CalledDate.ToString("yyyy-MM-dd");
+                    if( calledDate == "0001-01-01")
+                        calledDate = "";
+                }
 
                 object colValueParam = new
                 {
