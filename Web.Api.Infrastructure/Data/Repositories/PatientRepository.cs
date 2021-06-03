@@ -177,6 +177,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                               $"mobile_no, google_map_link, no_of_adults, no_of_childrens, pcr_count, " +
                               $"sticker_application, tracker_application, " +
                               $"sticker_removal, tracker_removal, " +
+                              $"reception_date, reception_status, reception_remarks, " +
                               $"created_by, created_on";
 
                 var colValueName = $"@PatientId, @PatientName, @CompanyId, @RequestId, @CRMNo, @EIDNo, " +
@@ -184,10 +185,21 @@ namespace Web.Api.Infrastructure.Data.Repositories
                                    $"@MobileNo, @GoogleMapLink, @AdultsCount, @ChildrensCount, " +
                                    $"@PCRCount, @StickerApplication, @TrackerApplication, " +
                                    $"@StickerRemoval, @TrackerRemoval, " +
+                                   $"@RecptionCallDate, @RecptionCallStatus, @RecptionCallRemarks, " +
                                    $"@CreatedBy, @CreatedOn";
 
                 var sqlInsQuery = $"INSERT INTO "+ tableName + "( " + colName + " )" +
                                     $"VALUES ( " + colValueName + " )";
+
+                string dateOfBirth = "";
+                dateOfBirth = patientRequest.DateOfBirth.ToString("yyyy-MM-dd");
+                if(dateOfBirth == "0001-01-01")
+                    dateOfBirth = "";
+
+                string recptionCallDate = "";
+                /*recptionCallDate = patientRequest.RecptionCallDate.ToString("yyyy-MM-dd");
+                if(recptionCallDate == "0001-01-01")
+                    recptionCallDate = "";*/
 
                 object colValueParam = new
                 {
@@ -197,7 +209,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     RequestId = patientRequest.RequestId,
                     CRMNo = patientRequest.CRMNo,
                     EIDNo = patientRequest.EIDNo,
-                    DateOfBirth = patientRequest.DateOfBirth.ToString("yyyy-MM-dd 00:00:00.0"),
+                    DateOfBirth = dateOfBirth,//patientRequest.DateOfBirth.ToString("yyyy-MM-dd 00:00:00.0"),
                     Age = patientRequest.Age,
                     Sex = patientRequest.Sex,
                     Address = patientRequest.Address,
@@ -214,6 +226,9 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     TrackerApplication = patientRequest.AdultsCount,
                     StickerRemoval = patientRequest.StickerRemoval,
                     TrackerRemoval = patientRequest.AdultsCount,
+                    RecptionCallDate = recptionCallDate,
+                    RecptionCallStatus = patientRequest.RecptionCallStatus,
+                    RecptionCallRemarks = patientRequest.RecptionCallRemarks,
                     CreatedBy = patientRequest.CreatedBy,
                     CreatedOn = DateTime.Today.ToString("yyyy-MM-dd 00:00:00.0")
                 };
@@ -241,7 +256,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
         public async Task<bool> EditPatient(PatientRequest patientRequest)
         {
             try
-            {
+            {//reception_date
                 bool sqlResult = true;
                 var tableName = $"HC_Staff_Patient.patient_obj";
 
@@ -253,10 +268,26 @@ namespace Web.Api.Infrastructure.Data.Repositories
                               $"no_of_adults = @AdultsCount, no_of_childrens = @ChildrensCount, pcr_count = @PCRCount, " +
                               $"sticker_application = @StickerApplication, tracker_application = @TrackerApplication, " +
                               $"sticker_removal = @StickerRemoval, tracker_removal = @TrackerRemoval, " +
+                              $"reception_date = @RecptionCallDate, reception_status = @RecptionCallStatus, " +
+                              $"reception_remarks = @RecptionCallRemarks, " +
                               $"modified_by = @ModifiedBy, modified_on = @ModifiedOn";
 
                 var whereCond = $" where patient_id = @PatientId";
                 var sqlUpdateQuery = $"UPDATE "+ tableName + " set " + colName + whereCond;
+
+                string dateOfBirth = "";
+                dateOfBirth = patientRequest.DateOfBirth.ToString("yyyy-MM-dd");
+                if(dateOfBirth == "0001-01-01")
+                    dateOfBirth = "";
+
+                string recptionCallDate = "";
+                if(patientRequest.RecptionCallStatus.ToLower() == "completed")
+                    recptionCallDate = DateTime.Today.ToString("yyyy-MM-dd 00:00:00.0");
+                else
+                    recptionCallDate = patientRequest.RecptionCallDate.ToString("yyyy-MM-dd");
+
+                if(recptionCallDate == "0001-01-01")
+                    recptionCallDate = "";
 
                 object colValueParam = new
                 {
@@ -283,6 +314,9 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     PCRCount = patientRequest.PCRCount,
                     StickerRemoval = patientRequest.StickerRemoval,
                     TrackerRemoval = patientRequest.TrackerRemoval,
+                    RecptionCallDate = recptionCallDate,
+                    RecptionCallStatus = patientRequest.RecptionCallStatus,
+                    RecptionCallRemarks = patientRequest.RecptionCallRemarks,
                     ModifiedBy = patientRequest.ModifiedBy,
                     ModifiedOn = DateTime.Today.ToString("yyyy-MM-dd 00:00:00.0")
                 };
@@ -322,6 +356,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                                 $" and p.patient_id = sc.patient_id" +
                                 $" and ca.scheduled_id = sc.scheduled_id";
 
+                string dateCond = "";
                 string fromDate = scheduledFromDate.Date.ToString("dd-MM-yyyy");
                 if(fromDate == "01-01-0001")
                 {
@@ -335,22 +370,22 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 if(toDate != "01-01-0001")
                 {
                     if(fromDate != "01-01-0001")
-                        whereCond += $" and (ca.call_scheduled_date between '" + fromDate + "'";
+                        dateCond = $" and (ca.call_scheduled_date between '" + fromDate + "'";
 
                     toDate = scheduledToDate.ToString("yyyy-MM-dd 00:00:00.0");
-                    whereCond += $" and '" + toDate + "'";
+                    dateCond += $" and '" + toDate + "'";
 
                     /*if(callName != "DrCall")
                     {
                         whereCond += $" or sc.4day_pcr_test_date between '" + fromDate + "' and '" + toDate + "'" +
                                      $" or sc.4day_pcr_test_date between '" + toDate + "' and '" + toDate + "'";
                     }*/
-                    whereCond += $")";
+                    dateCond += $")";
                 }
                 else
                 {
                     if(fromDate != "01-01-0001")
-                        whereCond += $" and ca.call_scheduled_date = '" + fromDate + "'";
+                        dateCond = $" and ca.call_scheduled_date = '" + fromDate + "'";
 
                     /*if(callName != "DrCall")
                     {
@@ -360,10 +395,11 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 }
 
                 if(callName == "DrCall")
-                    whereCond += $" and sc.2day_call_id = ca.call_id";
+                    dateCond += $" and sc.2day_call_id = ca.call_id";
                 else if(callName == "NurseCall")
-                    whereCond += $" and sc.2day_call_id <> ca.call_id";
+                    dateCond += $" and sc.2day_call_id <> ca.call_id";
 
+                whereCond += dateCond;
                 if (!string.IsNullOrEmpty(companyId))
                     whereCond += " and p.company_id = '" + companyId + "'";
 

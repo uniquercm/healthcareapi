@@ -26,6 +26,9 @@ namespace Web.Api.Models.Request
         public int TrackerApplication { get; set; }
         public string StickerRemoval { get; set; }
         public int TrackerRemoval { get; set; }
+        public DateTime RecptionCallDate { get; set; }
+        public string RecptionCallStatus { get; set; }
+        public string RecptionCallRemarks { get; set; }
         public string CreatedBy { get; set; }
         public string ModifiedBy { get; set; }
         public bool IsUpdate { get; set; }

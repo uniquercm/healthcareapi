@@ -90,7 +90,7 @@
             <param name="request">Modifying Company Details</param>
             <returns>Acknowledgement</returns>
         </member>
-        <member name="M:Web.Api.Controllers.PatientController.GetPatientDetails(System.DateTime,System.DateTime,System.String,System.String,System.Boolean,System.Boolean)">
+        <member name="M:Web.Api.Controllers.PatientController.GetPatientDetails(System.DateTime,System.DateTime,System.String,System.String,System.Boolean,System.Boolean,System.Boolean)">
             <summary>
             Getting a Patient Details
             </summary>
