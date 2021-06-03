@@ -94,12 +94,13 @@
             <summary>
             Getting a Patient Details
             </summary>
+            <param name="fromDate">Scheduled From Date (optional)</param>
+            <param name="toDate">Scheduled To Date (optional)</param>
             <param name="companyId">Company Id (optional)</param>
             <param name="patientId">Patient Id (optional)</param>
             <param name="isDoctorCall">is Doctor Call (optional)</param>
             <param name="isNurseCall">is Nurse Call (optional)</param>
-            <param name="fromDate">Scheduled From Date (optional)</param>
-            <param name="toDate">Scheduled To Date (optional)</param>
+            <param name="isFieldAllow">is Field Allocation (optional)</param>
             <returns>Patient Details</returns>
         </member>
         <member name="M:Web.Api.Controllers.PatientController.CreatePatient(Web.Api.Models.Request.PatientRequest)">

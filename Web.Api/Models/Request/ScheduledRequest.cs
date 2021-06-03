@@ -12,6 +12,8 @@ namespace Web.Api.Models.Request
         public string PCRResult { get; set; }
         public string HaveVaccine { get; set; }
         public DateTime DischargeDate { get; set; }
+        public string DischargeStatus { get; set; }
+        public string DischargeRemarks { get; set; }
         public string AllocatedTeamName { get; set; }
         public string ReAllocatedTeamName { get; set; }
         public string TreatmentType { get; set; }
@@ -37,6 +39,7 @@ namespace Web.Api.Models.Request
         public string CallStatus { get; set; }
         public string Remarks { get; set; }
         public string EMRDone { get; set; }
+        public bool IsPCRCall { get; set; }
         public string CreatedBy { get; set; }
         public string ModifiedBy { get; set; }
         public bool IsUpdate { get; set; }

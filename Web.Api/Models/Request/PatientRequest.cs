@@ -29,5 +29,6 @@ namespace Web.Api.Models.Request
         public string CreatedBy { get; set; }
         public string ModifiedBy { get; set; }
         public bool IsUpdate { get; set; }
+        public bool IsReception { get; set; }
     }
 }

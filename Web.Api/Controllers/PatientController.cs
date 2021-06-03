@@ -33,12 +33,13 @@ namespace Web.Api.Controllers
         /// <summary>
         /// Getting a Patient Details
         /// </summary>
+        /// <param name="fromDate">Scheduled From Date (optional)</param>
+        /// <param name="toDate">Scheduled To Date (optional)</param>
         /// <param name="companyId">Company Id (optional)</param>
         /// <param name="patientId">Patient Id (optional)</param>
         /// <param name="isDoctorCall">is Doctor Call (optional)</param>
         /// <param name="isNurseCall">is Nurse Call (optional)</param>
-        /// <param name="fromDate">Scheduled From Date (optional)</param>
-        /// <param name="toDate">Scheduled To Date (optional)</param>
+        /// <param name="isFieldAllow">is Field Allocation (optional)</param>
         /// <returns>Patient Details</returns>
         [HttpGet("patient")]
         public async Task<ActionResult> GetPatientDetails(DateTime fromDate, DateTime toDate, string companyId = "", string patientId = "", bool isDoctorCall = false, bool isNurseCall = false)
@@ -47,6 +48,8 @@ namespace Web.Api.Controllers
                 await _patientUseCases.Handle(new GetDetailsRequest(companyId, fromDate, toDate, "DrCall"), _getDetailsPresenter);
             else if(isNurseCall)
                 await _patientUseCases.Handle(new GetDetailsRequest(companyId, fromDate, toDate, "NurseCall"), _getDetailsPresenter);
+            else if(isNurseCall)
+                await _patientUseCases.Handle(new GetDetailsRequest(companyId, fromDate, toDate, "FieldAllow"), _getDetailsPresenter);
             else
                 await _patientUseCases.Handle(new GetDetailsRequest(companyId, patientId), _getDetailsPresenter);
             return _getDetailsPresenter.ContentResult;

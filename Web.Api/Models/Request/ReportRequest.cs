@@ -15,6 +15,7 @@ namespace Web.Api.Models.Request
         public string CRMNo { get; set; }
         public string EIDNo { get; set; }
         public string MobileNo { get; set; }
+        public DateTime RecptionCallDate { get; set; }
         public string RecptionCallStatus { get; set; }
         public string RecptionCallRemarks { get; set; }
         public string Day2CallId { get; set; }
@@ -42,6 +43,7 @@ namespace Web.Api.Models.Request
         public string Day9CallStatus { get; set; }
         public string Day9CallRemarks { get; set; }
         public DateTime DischargeDate { get; set; }
+        public string DischargeStatus { get; set; }
         public string DischargeRemarks { get; set; }
         public string IsExtractTreatementDate { get; set; }
         public string IsSendClaim { get; set; }

@@ -17,8 +17,9 @@ namespace Web.Api.Core.Dto.UseCaseRequests
         public string CRMNo { get; set; }//crm_no	- varchar(128)
         public string EIDNo { get; set; }//eid_no - varchar(128)
         public string MobileNo { get; set; }//mobile_no - varchar(25)
-        public string RecptionCallStatus { get; set; }
-        public string RecptionCallRemarks { get; set; }
+        public DateTime RecptionCallDate { get; set; }//reception_date - datetime
+        public string RecptionCallStatus { get; set; }//reception_status - varchar(100)
+        public string RecptionCallRemarks { get; set; }//reception_remarks - varchar(256)
         public string Day2CallId { get; set; }//2day_call_ id – varchar(128)
         public string DrCallStatus { get; set; }
         public string DrCallRemarks { get; set; }
@@ -44,6 +45,7 @@ namespace Web.Api.Core.Dto.UseCaseRequests
         public string Day9CallStatus { get; set; }
         public string Day9CallRemarks { get; set; }
         public DateTime DischargeDate { get; set; }//discharge_date – datetime
+        public string DischargeStatus { get; set; }//discharge_status - varchar(100)
         public string DischargeRemarks { get; set; }//discharge_remarks - varchar(128)
         public string IsExtractTreatementDate { get; set; }//have_treatement_extract - varchar(25) Yes or No
         public string IsSendClaim { get; set; }//have_send_claim - varchar(25)Yes or No

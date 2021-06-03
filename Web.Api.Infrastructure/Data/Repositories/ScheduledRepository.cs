@@ -289,21 +289,21 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 var sqlInsQuery = $"INSERT INTO "+ tableName + "( " + colName + " )" +
                                     $"VALUES ( " + colValueName + " )";
 
+                CallRequest callRequest = new CallRequest();
+                callRequest.ScheduledId = scheduledRequest.ScheduledId;
+                callRequest.EMRDone = "no";
+                //callRequest.CallStatus = "pending";
+                callRequest.CreatedBy = scheduledRequest.CreatedBy;
+
+                callRequest.CallScheduledDate = scheduledRequest.TreatmentFromDate.AddDays(1);
+                if(await CreateCall(callRequest))
+                    scheduledRequest.Day2CallId = callRequest.CallId;
+                else
+                    scheduledRequest.Day2CallId = "";
+
                 if(!String.IsNullOrEmpty(scheduledRequest.TreatmentType) && 
                    scheduledRequest.TreatmentType.ToLower() == "isolation")
                 {
-                    CallRequest callRequest = new CallRequest();
-                    callRequest.ScheduledId = scheduledRequest.ScheduledId;
-                    callRequest.EMRDone = "no";
-                    //callRequest.CallStatus = "Pending";
-                    callRequest.CreatedBy = scheduledRequest.CreatedBy;
-
-                    callRequest.CallScheduledDate = scheduledRequest.TreatmentFromDate.AddDays(1);
-                    if(await CreateCall(callRequest))
-                        scheduledRequest.Day2CallId = callRequest.CallId;
-                    else
-                        scheduledRequest.Day2CallId = "";
-
                     callRequest.CallScheduledDate = scheduledRequest.TreatmentFromDate.AddDays(2);
                     if(await CreateCall(callRequest))
                         scheduledRequest.Day3CallId = callRequest.CallId;
@@ -336,7 +336,6 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 }
                 else
                 {
-                    scheduledRequest.Day2CallId = "";
                     scheduledRequest.Day3CallId = "";
                     scheduledRequest.Day5CallId = "";
                     scheduledRequest.Day6CallId = "";
@@ -491,10 +490,10 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 var tableName = $"HC_Treatment.call_obj";
 
                 var colName = $"call_id, scheduled_id, call_scheduled_date, " +//called_date, " +
-                              $"call_status, remarks, emr_done, created_by, created_on";
+                              $"call_status, remarks, emr_done, is_pcr, created_by, created_on";
 
                 var colValueName = $"@CallId, @ScheduledId, @CallScheduledDate, " +//@CalledDate, " +
-                                   $"@CallStatus, @Remarks, @EMRDone, " +
+                                   $"@CallStatus, @Remarks, @EMRDone, @IsPCRCall, " +
                                    $"@CreatedBy, @CreatedOn";
 
                 var sqlInsQuery = $"INSERT INTO "+ tableName + "( " + colName + " )" +
@@ -517,6 +516,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     CallStatus = callRequest.CallStatus,
                     Remarks = callRequest.Remarks,
                     EMRDone = callRequest.EMRDone,
+                    IsPCRCall = callRequest.IsPCRCall,
                     CreatedBy = callRequest.CreatedBy,
                     CreatedOn = DateTime.Today.ToString("yyyy-MM-dd 00:00:00.0")
                 };
@@ -556,16 +556,16 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 var whereCond = $" where scheduled_id = @ScheduledId";
                 var sqlUpdateQuery = $"UPDATE "+ tableName + " set " + colName + whereCond;
 
+                CallRequest callRequest = new CallRequest();
+                callRequest.ModifiedBy = scheduledRequest.ModifiedBy;
+
+                callRequest.CallId = scheduledRequest.Day2CallId;
+                callRequest.CallScheduledDate = scheduledRequest.TreatmentFromDate.AddDays(1);
+                await EditCall(callRequest);
+
                 if(!String.IsNullOrEmpty(scheduledRequest.TreatmentType) && 
                    scheduledRequest.TreatmentType.ToLower() == "isolation")
                 {
-                    CallRequest callRequest = new CallRequest();
-                    callRequest.ModifiedBy = scheduledRequest.ModifiedBy;
-
-                    callRequest.CallId = scheduledRequest.Day2CallId;
-                    callRequest.CallScheduledDate = scheduledRequest.TreatmentFromDate.AddDays(1);
-                    await EditCall(callRequest);
-
                     callRequest.CallId = scheduledRequest.Day3CallId;
                     callRequest.CallScheduledDate = scheduledRequest.TreatmentFromDate.AddDays(2);
                     await EditCall(callRequest);
@@ -588,7 +588,6 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 }
                 else
                 {
-                    scheduledRequest.Day2CallId = "";
                     scheduledRequest.Day3CallId = "";
                     scheduledRequest.Day5CallId = "";
                     scheduledRequest.Day6CallId = "";
@@ -728,7 +727,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                               //$"scheduled_id = @ScheduledId, " +
                               $"call_scheduled_date = @CallScheduledDate, " +
                               $"called_date = @CalledDate, call_status = @CallStatus, " +
-                              $"remarks = @Remarks, emr_done = @EMRDone, " +
+                              $"remarks = @Remarks, emr_done = @EMRDone, is_pcr = @IsPCRCall," +
                               $"modified_by = @ModifiedBy, modified_on = @ModifiedOn";
 
                 var whereCond = $" where call_id = @CallId";
@@ -763,6 +762,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     CallStatus = callRequest.CallStatus,
                     Remarks = callRequest.Remarks,
                     EMRDone = callRequest.EMRDone,
+                    IsPCRCall = callRequest.IsPCRCall,
                     ModifiedBy = callRequest.ModifiedBy,
                     ModifiedOn = DateTime.Today.ToString("yyyy-MM-dd 00:00:00.0")
                 };

@@ -33,6 +33,7 @@ namespace Web.Api.Core.Dto.UseCaseRequests
         public string CreatedBy { get; set; } //created_by
         public string ModifiedBy { get; set; } //modified_by
         public bool IsUpdate { get; set; }
+        public bool IsReception { get; set; }
     }
     
     public class PatientDetails

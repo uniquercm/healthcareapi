@@ -16,6 +16,8 @@ namespace Web.Api.Core.Dto.UseCaseRequests
         public string AllocatedTeamName { get; set; }//allocated_team_name - varchar(100)
         public string ReAllocatedTeamName { get; set; }//reallocated_team_name - varchar(100)
         public DateTime DischargeDate { get; set; }//discharge_date – datetime
+        public string DischargeStatus { get; set; }//discharge_status - varchar(100)
+        public string DischargeRemarks { get; set; }//discharge_remarks - varchar(128)
         public string TreatmentType { get; set; }//treatment_type - varchar(100) enum('Quarantine','Isolation')
         public DateTime TreatmentFromDate { get; set; }//treatment_from_date - datetime
         public DateTime TreatmentToDate { get; set; }//treatment_to_date – datetime
@@ -52,6 +54,8 @@ namespace Web.Api.Core.Dto.UseCaseRequests
         public string AllocatedTeamName { get; set; }//allocated_team_name - varchar(100)
         public string ReAllocatedTeamName { get; set; }//reallocated_team_name - varchar(100)
         public DateTime DischargeDate { get; set; }//discharge_date – datetime
+        public string DischargeStatus { get; set; }//discharge_status - varchar(100)
+        public string DischargeRemarks { get; set; }//discharge_remarks - varchar(128)
         public string TreatmentType { get; set; }//treatment_type - enum('Quarantine','Isolation')
         public DateTime TreatmentFromDate { get; set; }//treatment _from_date - datetime
         public DateTime TreatmentToDate { get; set; }//treatment _to_date – datetime
@@ -91,6 +95,7 @@ namespace Web.Api.Core.Dto.UseCaseRequests
         public string CallStatus { get; set; }//call_status -  enum('Called','Pending')
         public string Remarks { get; set; }//remarks – varchar(128)
         public string EMRDone { get; set; }//emr_done - varchar(50)
+        public bool IsPCRCall { get; set; }//is_pcr - tinyint(1)/bool
         public string CreatedBy { get; set; } //created_by
         public string ModifiedBy { get; set; } //modified_by
         public bool IsUpdate { get; set; }
@@ -106,6 +111,7 @@ namespace Web.Api.Core.Dto.UseCaseRequests
         public string EMRDone { get; set; }//emr_done - varchar(50)
         public string CreatedBy { get; set; } //created_by
         public string ModifiedBy { get; set; } //modified_by
+        public bool IsPCRCall { get; set; }
     }
     public class FieldAllocationRequest : IUseCaseRequest<AcknowledgementResponse>
     {
