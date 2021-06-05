@@ -25,8 +25,6 @@ namespace Web.Api.Core.UseCases
                 getDetailsResponse = new GetDetailsResponse(await _patientRepository.GetDrNurseCallDetails(request.CompanyId, "DrCall", request.ScheduledFromDate, request.ScheduledToDate, request.CallStatus), true, "Data Fetched Successfully");
             else if(request.LableName == "NurseCall")
                 getDetailsResponse = new GetDetailsResponse(await _patientRepository.GetDrNurseCallDetails(request.CompanyId, "NurseCall", request.ScheduledFromDate, request.ScheduledToDate, request.CallStatus), true, "Data Fetched Successfully");
-            else if(request.LableName == "FieldAllow")
-                getDetailsResponse = new GetDetailsResponse(await _patientRepository.GetFieldAllowCallDetails(request.CompanyId, request.ScheduledFromDate, request.ScheduledToDate, request.CallStatus), true, "Data Fetched Successfully");
             else
                 getDetailsResponse = new GetDetailsResponse(await _patientRepository.GetPatientDetails(request.CompanyId, request.PatientId), true, "Data Fetched Successfully");
 

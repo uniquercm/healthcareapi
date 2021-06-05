@@ -103,7 +103,7 @@
             <param name="request">Modifying Company Details</param>
             <returns>Acknowledgement</returns>
         </member>
-        <member name="M:Web.Api.Controllers.PatientController.GetPatientDetails(System.DateTime,System.DateTime,System.String,System.String,System.Boolean,System.Boolean,System.String,System.Boolean)">
+        <member name="M:Web.Api.Controllers.PatientController.GetPatientDetails(System.DateTime,System.DateTime,System.String,System.String,System.Boolean,System.Boolean,System.String)">
             <summary>
             Getting a Patient Details
             </summary>
@@ -114,7 +114,6 @@
             <param name="isDoctorCall">is Doctor Call (optional)</param>
             <param name="isNurseCall">is Nurse Call (optional)</param>
             <param name="callStatus"> Call Status(all, called, pending) (optional)</param>
-            <param name="isFieldAllow">is Field Allocation (optional)</param>
             <returns>Patient Details</returns>
         </member>
         <member name="M:Web.Api.Controllers.PatientController.CreatePatient(Web.Api.Models.Request.PatientRequest)">
