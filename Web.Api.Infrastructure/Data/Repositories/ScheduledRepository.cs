@@ -18,7 +18,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
         {
             _appDbContext = appDbContext;
         }
-        public async Task<List<ScheduledDetails>> GetScheduledDetails(string companyId, string scheduledId, string patientId, bool isFieldAllocation, IPatientRepository patientRepository, DateTime scheduledFromDate, DateTime scheduledToDate)
+        public async Task<List<ScheduledDetails>> GetScheduledDetails(string companyId, string scheduledId, string patientId, bool isFieldAllocation, IPatientRepository patientRepository, DateTime scheduledFromDate, DateTime scheduledToDate, string searchAllowTeamType)
         {
             List<ScheduledDetails> retScheduledDetailsList = new List<ScheduledDetails>();
             try
@@ -51,6 +51,13 @@ namespace Web.Api.Infrastructure.Data.Repositories
 
                 if (!string.IsNullOrEmpty(patientId))
                     whereCond += " and sc.patient_id = '" + patientId + "'";
+                
+                if(searchAllowTeamType.ToLower().Equals("allowed"))
+                    whereCond += " and ((sc.allocated_team_name != null or sc.reallocated_team_name != null) " + 
+                                 " or (sc.allocated_team_name != '' or sc.reallocated_team_name != '')) ";
+                else if(searchAllowTeamType.ToLower().Equals("notallowed"))
+                    whereCond += " and ((sc.allocated_team_name = null and sc.reallocated_team_name = null) " + 
+                                 " or (sc.allocated_team_name = '' and sc.reallocated_team_name = '')) ";
 
                 string fromDate = scheduledFromDate.Date.ToString("dd-MM-yyyy");
                 /*if(fromDate == "01-01-0001")

@@ -15,6 +15,7 @@ namespace Web.Api.Core.Dto.UseCaseRequests
         public string LableName { get; set; }
         public DateTime ScheduledFromDate { get; set; }
         public DateTime ScheduledToDate { get; set; }
+        public string SearchLableName { get; set; }
 
         public GetDetailsRequest(string id)
         {
@@ -46,6 +47,16 @@ namespace Web.Api.Core.Dto.UseCaseRequests
             ScheduledFromDate = scheduledFromDate;
             ScheduledToDate = scheduledToDate;
             LableName = lableName;
+        }
+        public GetDetailsRequest(string companyId, string patientId, string scheduledId, DateTime scheduledFromDate, DateTime scheduledToDate, string lableName, string searchLableName)
+        {
+            CompanyId = companyId;
+            PatientId = patientId;
+            ScheduledId = scheduledId;
+            ScheduledFromDate = scheduledFromDate;
+            ScheduledToDate = scheduledToDate;
+            LableName = lableName;
+            SearchLableName = searchLableName;
         }
         public GetDetailsRequest(string id, string patientId, string staffId, string patientStaffId, string scheduledId, string lableName)
         {

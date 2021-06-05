@@ -84,7 +84,9 @@ namespace Web.Api.Core.Dto.UseCaseRequests
 
     public class PCRCallRequest : IUseCaseRequest<AcknowledgementResponse>
     {
-        
+        public string ScheduledId { get; set; }//scheduled_id – varchar(128)
+        public string Remarks { get; set; }//remarks – varchar(128)
+        public string EMRDone { get; set; }//emr_done - varchar(50)
     }
     public class CallRequest : IUseCaseRequest<AcknowledgementResponse>
     {

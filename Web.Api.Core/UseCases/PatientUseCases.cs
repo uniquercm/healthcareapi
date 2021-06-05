@@ -26,7 +26,7 @@ namespace Web.Api.Core.UseCases
             else if(request.LableName == "NurseCall")
                 getDetailsResponse = new GetDetailsResponse(await _patientRepository.GetDrNurseCallDetails(request.CompanyId, "NurseCall", request.ScheduledFromDate, request.ScheduledToDate), true, "Data Fetched Successfully");
             else if(request.LableName == "FieldAllow")
-                getDetailsResponse = new GetDetailsResponse(await _patientRepository.GetDrNurseCallDetails(request.CompanyId, "FieldAllow", request.ScheduledFromDate, request.ScheduledToDate), true, "Data Fetched Successfully");
+                getDetailsResponse = new GetDetailsResponse(await _patientRepository.GetFieldAllowCallDetails(request.CompanyId, request.ScheduledFromDate, request.ScheduledToDate), true, "Data Fetched Successfully");
             else
                 getDetailsResponse = new GetDetailsResponse(await _patientRepository.GetPatientDetails(request.CompanyId, request.PatientId), true, "Data Fetched Successfully");
 
@@ -47,13 +47,12 @@ namespace Web.Api.Core.UseCases
             else//Create a Patient
             {
                 if(await _patientRepository.CreatePatient(request))
-                    acknowledgementResponse = new AcknowledgementResponse(true, "Patient Created Successfully");
+                    acknowledgementResponse = new AcknowledgementResponse(request.PatientId, true, "Patient Created Successfully");
                 else
                     acknowledgementResponse = new AcknowledgementResponse(new[] { new Error("Error Occurred", "Error Occurred")}, false);
             }
             outputPort.Handle(acknowledgementResponse);
             return true;
         }
-
     }
 }

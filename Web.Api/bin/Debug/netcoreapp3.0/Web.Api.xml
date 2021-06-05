@@ -156,16 +156,17 @@
             <param name="request">Modifying Report Details</param>
             <returns>Acknowledgement</returns>
         </member>
-        <member name="M:Web.Api.Controllers.ScheduledController.GetScheduledDetails(System.DateTime,System.DateTime,System.String,System.String,System.String,System.Boolean)">
+        <member name="M:Web.Api.Controllers.ScheduledController.GetScheduledDetails(System.DateTime,System.DateTime,System.String,System.String,System.String,System.Boolean,System.String)">
             <summary>
             Getting a Scheduled Details
             </summary>
+            <param name="fromDate">Scheduled From Date (optional)</param>
+            <param name="toDate">Scheduled To Date (optional)</param>
             <param name="companyId">Company Id (optional)</param>
             <param name="scheduledId">Scheduled Id (optional)</param>
             <param name="patientId">Patient Id (optional)</param>
             <param name="isFieldAllocation">Is Field Allocation (optional)</param>
-            <param name="fromDate">Scheduled From Date (optional)</param>
-            <param name="toDate">Scheduled To Date (optional)</param>
+            <param name="searchFieldAllowName"> Search Field Allocation Name(all, allowed, notallowed) (optional)</param>
             <returns>Scheduled Details</returns>
         </member>
         <member name="M:Web.Api.Controllers.ScheduledController.CreateScheduled(Web.Api.Models.Request.ScheduledRequest)">
