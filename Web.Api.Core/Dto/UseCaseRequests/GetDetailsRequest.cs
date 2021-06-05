@@ -15,9 +15,11 @@ namespace Web.Api.Core.Dto.UseCaseRequests
         public string LableName { get; set; }
         public DateTime ScheduledFromDate { get; set; }
         public DateTime ScheduledToDate { get; set; }
-        public string SearchLableName { get; set; }
+        //public string SearchLableName { get; set; }
         public string ExtractData { get; set; }//all, no, yes
         public string SendClaim { get; set; }//all, no, yes
+        public string CallStatus { get; set; }//all, called, pending
+        public string FieldAllocationStatus { get; set; }//all, allowed, notallowed
 
         public GetDetailsRequest(string id)
         {
@@ -28,17 +30,27 @@ namespace Web.Api.Core.Dto.UseCaseRequests
             CompanyId = companyId;
             PatientId = patientId;
         }
-        public GetDetailsRequest(string companyId, DateTime scheduledFromDate, DateTime scheduledToDate, string lableName)
+        public GetDetailsRequest(string companyId, string patientId, string lableName)
+        {
+            CompanyId = companyId;
+            PatientId = patientId;
+            LableName = lableName;
+        }
+        public GetDetailsRequest(string companyId, DateTime scheduledFromDate, DateTime scheduledToDate, string lableName, string callStatus)
         {
             CompanyId = companyId;
             ScheduledFromDate = scheduledFromDate;
             ScheduledToDate = scheduledToDate;
             LableName = lableName;
+            CallStatus = callStatus;
         }
-        public GetDetailsRequest(string companyId, string patientId, string lableName)
+        public GetDetailsRequest(string id, string patientId, string staffId, string patientStaffId, string scheduledId, string lableName)
         {
-            CompanyId = companyId;
+            Id = id;
             PatientId = patientId;
+            StaffId = staffId;
+            PatientStaffId = patientStaffId;
+            ScheduledId = scheduledId;
             LableName = lableName;
         }
         public GetDetailsRequest(string companyId, string patientId, string scheduledId, DateTime scheduledFromDate, DateTime scheduledToDate, string lableName)
@@ -49,6 +61,16 @@ namespace Web.Api.Core.Dto.UseCaseRequests
             ScheduledFromDate = scheduledFromDate;
             ScheduledToDate = scheduledToDate;
             LableName = lableName;
+        }
+        public GetDetailsRequest(string companyId, string patientId, string scheduledId, DateTime scheduledFromDate, DateTime scheduledToDate, string lableName, string fieldAllocationStatus)
+        {
+            CompanyId = companyId;
+            PatientId = patientId;
+            ScheduledId = scheduledId;
+            ScheduledFromDate = scheduledFromDate;
+            ScheduledToDate = scheduledToDate;
+            LableName = lableName;
+            FieldAllocationStatus = fieldAllocationStatus;
         }
         public GetDetailsRequest(string companyId, string patientId, string scheduledId, DateTime scheduledFromDate, DateTime scheduledToDate, string lableName, string extractData, string sendClaim)
         {
@@ -61,24 +83,6 @@ namespace Web.Api.Core.Dto.UseCaseRequests
             ExtractData = extractData;
             SendClaim = sendClaim;
         }
-        public GetDetailsRequest(string companyId, string patientId, string scheduledId, DateTime scheduledFromDate, DateTime scheduledToDate, string lableName, string searchLableName)
-        {
-            CompanyId = companyId;
-            PatientId = patientId;
-            ScheduledId = scheduledId;
-            ScheduledFromDate = scheduledFromDate;
-            ScheduledToDate = scheduledToDate;
-            LableName = lableName;
-            SearchLableName = searchLableName;
-        }
-        public GetDetailsRequest(string id, string patientId, string staffId, string patientStaffId, string scheduledId, string lableName)
-        {
-            Id = id;
-            PatientId = patientId;
-            StaffId = staffId;
-            PatientStaffId = patientStaffId;
-            ScheduledId = scheduledId;
-            LableName = lableName;
-        }
+
     }
 }

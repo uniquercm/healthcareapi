@@ -39,17 +39,18 @@ namespace Web.Api.Controllers
         /// <param name="patientId">Patient Id (optional)</param>
         /// <param name="isDoctorCall">is Doctor Call (optional)</param>
         /// <param name="isNurseCall">is Nurse Call (optional)</param>
+        /// <param name="callStatus"> Call Status(all, called, pending) (optional)</param>
         /// <param name="isFieldAllow">is Field Allocation (optional)</param>
         /// <returns>Patient Details</returns>
         [HttpGet("patient")]
-        public async Task<ActionResult> GetPatientDetails(DateTime fromDate, DateTime toDate, string companyId = "", string patientId = "", bool isDoctorCall = false, bool isNurseCall = false, bool isFieldAllow = false)
+        public async Task<ActionResult> GetPatientDetails(DateTime fromDate, DateTime toDate, string companyId = "", string patientId = "", bool isDoctorCall = false, bool isNurseCall = false, string callStatus = "all", bool isFieldAllow = false)
         {
             if(isDoctorCall)
-                await _patientUseCases.Handle(new GetDetailsRequest(companyId, fromDate, toDate, "DrCall"), _getDetailsPresenter);
+                await _patientUseCases.Handle(new GetDetailsRequest(companyId, fromDate, toDate, "DrCall", callStatus), _getDetailsPresenter);
             else if(isNurseCall)
-                await _patientUseCases.Handle(new GetDetailsRequest(companyId, fromDate, toDate, "NurseCall"), _getDetailsPresenter);
+                await _patientUseCases.Handle(new GetDetailsRequest(companyId, fromDate, toDate, "NurseCall", callStatus), _getDetailsPresenter);
             else if(isFieldAllow)
-                await _patientUseCases.Handle(new GetDetailsRequest(companyId, fromDate, toDate, "FieldAllow"), _getDetailsPresenter);
+                await _patientUseCases.Handle(new GetDetailsRequest(companyId, fromDate, toDate, "FieldAllow", callStatus), _getDetailsPresenter);
             else
                 await _patientUseCases.Handle(new GetDetailsRequest(companyId, patientId), _getDetailsPresenter);
             return _getDetailsPresenter.ContentResult;

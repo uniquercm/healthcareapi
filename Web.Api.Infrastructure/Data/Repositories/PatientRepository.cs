@@ -334,13 +334,13 @@ namespace Web.Api.Infrastructure.Data.Repositories
             }
         }
 
-        public async Task<List<DrNurseCallDetails>> GetFieldAllowCallDetails(string companyId, DateTime scheduledFromDate, DateTime scheduledToDate)
+        public async Task<List<DrNurseCallDetails>> GetFieldAllowCallDetails(string companyId, DateTime scheduledFromDate, DateTime scheduledToDate, string callStatus)
         {
             List<DrNurseCallDetails> retDrNurseCallDetails = new List<DrNurseCallDetails>();
             List<DrNurseCallDetails> dayCallDetails = new List<DrNurseCallDetails>();
             try
             {
-                retDrNurseCallDetails = await GetDrNurseCallDetails(companyId, "NurseCall", scheduledFromDate, scheduledToDate);
+                retDrNurseCallDetails = await GetDrNurseCallDetails(companyId, "NurseCall", scheduledFromDate, scheduledToDate, callStatus);
 
                 dayCallDetails = await GetPCRCallDetails(companyId, true, scheduledFromDate, scheduledToDate);
                 if(retDrNurseCallDetails.Count > 0)
@@ -366,7 +366,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
             }
             return retDrNurseCallDetails;
         }
-        public async Task<List<DrNurseCallDetails>> GetDrNurseCallDetails(string companyId, string callName, DateTime scheduledFromDate, DateTime scheduledToDate)
+        public async Task<List<DrNurseCallDetails>> GetDrNurseCallDetails(string companyId, string callName, DateTime scheduledFromDate, DateTime scheduledToDate, string callStatus)
         {
             List<DrNurseCallDetails> retDrNurseCallDetails = new List<DrNurseCallDetails>();
             try
@@ -422,6 +422,12 @@ namespace Web.Api.Infrastructure.Data.Repositories
 
                 if (!string.IsNullOrEmpty(companyId))
                     whereCond += " and p.company_id = '" + companyId + "'";
+
+                if (!string.IsNullOrEmpty(callStatus))
+                {
+                    if (!callStatus.ToLower().Equals("all"))
+                        whereCond += " and ca.call_status = '" + callStatus + "'";
+                }
 
                 var sqlSelQuery = $"select " + ColumAssign + " from " + tableName + whereCond;
                 using (var connection = _appDbContext.Connection)

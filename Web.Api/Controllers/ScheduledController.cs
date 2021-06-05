@@ -39,13 +39,13 @@ namespace Web.Api.Controllers
         /// <param name="scheduledId">Scheduled Id (optional)</param>
         /// <param name="patientId">Patient Id (optional)</param>
         /// <param name="isFieldAllocation">Is Field Allocation (optional)</param>
-        /// <param name="searchFieldAllowName"> Search Field Allocation Name(all, allowed, notallowed) (optional)</param>
+        /// <param name="fieldAllocationStatus"> Field Allocation Status(all, allowed, notallowed) (optional)</param>
         /// <returns>Scheduled Details</returns>
         [HttpGet("scheduled")]
-        public async Task<ActionResult> GetScheduledDetails(DateTime fromDate, DateTime toDate, string companyId = "", string scheduledId = "", string patientId = "", bool isFieldAllocation = false, string searchFieldAllowName = "all")
+        public async Task<ActionResult> GetScheduledDetails(DateTime fromDate, DateTime toDate, string companyId = "", string scheduledId = "", string patientId = "", bool isFieldAllocation = false, string fieldAllocationStatus = "all")
         {
             if(isFieldAllocation)
-                await _scheduledUseCases.Handle(new GetDetailsRequest(companyId, patientId, scheduledId, fromDate, toDate, "FieldAllocation", searchFieldAllowName), _getDetailsPresenter);
+                await _scheduledUseCases.Handle(new GetDetailsRequest(companyId, patientId, scheduledId, fromDate, toDate, "FieldAllocation", fieldAllocationStatus), _getDetailsPresenter);
             else
                 await _scheduledUseCases.Handle(new GetDetailsRequest(companyId, patientId, scheduledId, fromDate, toDate, ""), _getDetailsPresenter);
             return _getDetailsPresenter.ContentResult;
