@@ -13,6 +13,7 @@
         public string Password { get; set; }
         public int UserType { get; set; }
         public string CompanyId { get; set; }
+        public string AreaList { get; set; }
         public string CreatedBy { get; set; }
         public string ModifiedBy { get; set; }
         public bool IsUpdate { get; set; }

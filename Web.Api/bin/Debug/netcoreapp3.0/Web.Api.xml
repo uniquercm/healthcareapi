@@ -18,6 +18,19 @@
             <param name="companyId">Company Id (optional)</param>
             <returns>Dash Board Details</returns>
         </member>
+        <member name="M:Web.Api.Controllers.DrNurseCallFieldAllocationController.GetPatientDetails(System.DateTime,System.DateTime,System.String,System.Boolean,System.Boolean,System.String,System.Boolean)">
+            <summary>
+            Getting a Doctor Nurse and Team Field Allocation Call Details
+            </summary>
+            <param name="fromDate">Scheduled From Date (optional)</param>
+            <param name="toDate">Scheduled To Date (optional)</param>
+            <param name="companyId">Company Id (optional)</param>
+            <param name="isDoctorCall">is Doctor Call (optional)</param>
+            <param name="isNurseCall">is Nurse Call (optional)</param>
+            <param name="callStatus"> Call Status(all, called, pending) (optional)</param>
+            <param name="isFieldAllow">is Field Allocation (optional)</param>
+            <returns>Patient Details</returns>
+        </member>
         <member name="M:Web.Api.Controllers.HealthController.Health">
             <summary>
             Health Check
@@ -118,29 +131,6 @@
             <param name="request">Modifying Patient Details</param>
             <returns>Acknowledgement</returns>
         </member>
-        <member name="M:Web.Api.Controllers.PatientStaffController.GetPatientDetails(System.String,System.String,System.String)">
-            <summary>
-            Getting a Patient Staff Details
-            </summary>
-            <param name="patientStaffId">Patient Staff Id (optional)</param>
-            <param name="patientId">Patient Id (optional)</param>
-            <param name="staffId">Staff Id (optional)</param>
-            <returns>Patient Staff Details</returns>
-        </member>
-        <member name="M:Web.Api.Controllers.PatientStaffController.CreatePatient(Web.Api.Models.Request.PatientStaffRequest)">
-            <summary>
-            Creating a Patient Staff
-            </summary>
-            <param name="request">New Patient Staff Details</param>
-            <returns>Acknowledgement</returns>
-        </member>
-        <member name="M:Web.Api.Controllers.PatientStaffController.EditPatient(Web.Api.Models.Request.PatientStaffRequest)">
-            <summary>
-            Modifying a Patient Staff
-            </summary>
-            <param name="request">Modifying Patient Staff Details</param>
-            <returns>Acknowledgement</returns>
-        </member>
         <member name="M:Web.Api.Controllers.ReportController.GetScheduledDetails(System.DateTime,System.DateTime,System.String,System.String,System.String,System.String,System.String)">
             <summary>
             Getting a Report Details
@@ -215,28 +205,6 @@
             Modifying a Field Allocation
             </summary>
             <param name="request">Modifying Field Allocation Details</param>
-            <returns>Acknowledgement</returns>
-        </member>
-        <member name="M:Web.Api.Controllers.StaffController.GetStaffDetails(System.String,System.String)">
-            <summary>
-            Getting a Staff Details
-            </summary>
-            <param name="companyId">Company Id (optional)</param>
-            <param name="staffId">Staff Id (optional)</param>
-            <returns>Staff Details</returns>
-        </member>
-        <member name="M:Web.Api.Controllers.StaffController.CreatePatient(Web.Api.Models.Request.StaffRequest)">
-            <summary>
-            Creating a Staff
-            </summary>
-            <param name="request">New Staff Details</param>
-            <returns>Acknowledgement</returns>
-        </member>
-        <member name="M:Web.Api.Controllers.StaffController.EditPatient(Web.Api.Models.Request.StaffRequest)">
-            <summary>
-            Modifying a Staff
-            </summary>
-            <param name="request">Modifying Staff Details</param>
             <returns>Acknowledgement</returns>
         </member>
         <member name="M:Web.Api.Controllers.UserController.GetUserDetails(System.String)">

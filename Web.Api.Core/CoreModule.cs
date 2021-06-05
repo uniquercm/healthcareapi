@@ -12,11 +12,10 @@ namespace Web.Api.Core
             builder.RegisterType<HealthUseCases>().As<IHealthUseCases>().InstancePerLifetimeScope();
             builder.RegisterType<MasterUseCases>().As<IMasterUseCases>().InstancePerLifetimeScope();
             builder.RegisterType<PatientUseCases>().As<IPatientUseCases>().InstancePerLifetimeScope();
-            builder.RegisterType<StaffUseCases>().As<IStaffUseCases>().InstancePerLifetimeScope();
-            builder.RegisterType<PatientStaffUseCases>().As<IPatientStaffUseCases>().InstancePerLifetimeScope();
             builder.RegisterType<ScheduledUseCases>().As<IScheduledUseCases>().InstancePerLifetimeScope();
             builder.RegisterType<ReportUseCases>().As<IReportUseCases>().InstancePerLifetimeScope();
             builder.RegisterType<DashBoardUseCases>().As<IDashBoardUseCases>().InstancePerLifetimeScope();
+            builder.RegisterType<DrNurseCallFieldAllocationUseCases>().As<IDrNurseCallFieldAllocationUseCases>().InstancePerLifetimeScope();
         }
     }
 }

@@ -13,8 +13,6 @@ namespace Web.Api.Models.Settings
             CreateMap<Models.Request.MasterRequest, MasterRequest>();
             CreateMap<Models.Request.CompanyRequest, CompanyRequest>();
             CreateMap<Models.Request.PatientRequest, PatientRequest>();
-            CreateMap<Models.Request.StaffRequest, StaffRequest>();
-            CreateMap<Models.Request.PatientStaffRequest, PatientStaffRequest>();
             CreateMap<Models.Request.ScheduledRequest, ScheduledRequest>();
             CreateMap<Models.Request.CallRequest, CallRequest>();
             CreateMap<Models.Request.FieldAllocationRequest, FieldAllocationRequest>();

@@ -17,9 +17,8 @@ namespace Web.Api.Infrastructure
             builder.RegisterType<HealthRepository>().As<IHealthRepository>().InstancePerLifetimeScope();
             builder.RegisterType<MasterRepository>().As<IMasterRepository>().InstancePerLifetimeScope();
             builder.RegisterType<PatientRepository>().As<IPatientRepository>().InstancePerLifetimeScope();
-            builder.RegisterType<StaffRepository>().As<IStaffRepository>().InstancePerLifetimeScope();
-            builder.RegisterType<PatientStaffRepository>().As<IPatientStaffRepository>().InstancePerLifetimeScope();
             builder.RegisterType<ScheduledRepository>().As<IScheduledRepository>().InstancePerLifetimeScope();
+            builder.RegisterType<DrNurseCallFieldAllocationRepository>().As<IDrNurseCallFieldAllocationRepository>().InstancePerLifetimeScope();
             builder.RegisterType<ReportRepository>().As<IReportRepository>().InstancePerLifetimeScope();
             builder.RegisterType<HttpClientService>().As<IHttpClientService>().InstancePerLifetimeScope();
             builder.RegisterType<SettingRepository>().As<ISettingRepository>().InstancePerLifetimeScope();

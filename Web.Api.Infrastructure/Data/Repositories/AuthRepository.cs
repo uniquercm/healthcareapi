@@ -164,8 +164,8 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 bool sqlResult = true;
                 userRequest.UserId = uuid;
 
-                var colName = $"user_id, full_name, user_name, password, user_type, company_id, created_by, created_on";
-                var colValueName = $"@UserId, @FullName, @UserName, @Password, @UserType, @CompanyId, @CreatedBy, @CreatedOn";
+                var colName = $"user_id, full_name, user_name, password, user_type, company_id, area_list, created_by, created_on";
+                var colValueName = $"@UserId, @FullName, @UserName, @Password, @UserType, @CompanyId, @AreaList, @CreatedBy, @CreatedOn";
                 var tableName = $"HC_Authentication.user_obj";
 
                 var sqlInsQuery = $"INSERT INTO "+ tableName + "( " + colName + " )" +
@@ -181,6 +181,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     Password = encryptPassword,
                     UserType = userRequest.UserType,
                     CompanyId = userRequest.CompanyId,
+                    AreaList = userRequest.AreaList,
                     CreatedBy = userRequest.CreatedBy,
                     CreatedOn = DateTime.Today.ToString("yyyy-MM-dd 00:00:00.0")
                 };
@@ -213,7 +214,8 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 bool sqlResult = true;
                 var tableName = $"HC_Authentication.user_obj";
                 var colName = $"user_id = @UserId, full_name = @FullName, user_name = @UserName, password = @Password, " +
-                                $"user_type = @UserType, company_id = @CompanyId, modified_by = @ModifiedBy, modified_on = @ModifiedOn";
+                                $"user_type = @UserType, company_id = @CompanyId, area_list = @AreaList, " +
+                                $"modified_by = @ModifiedBy, modified_on = @ModifiedOn";
 
                 var whereCond = $" where user_id = @UserId";
                 var sqlUpdateQuery = $"UPDATE "+ tableName + " set " + colName + whereCond;
@@ -228,6 +230,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     Password = encryptPassword,
                     UserType = userRequest.UserType,
                     CompanyId = userRequest.CompanyId,
+                    AreaList = userRequest.AreaList,
                     ModifiedBy = userRequest.ModifiedBy,
                     ModifiedOn = DateTime.Today.ToString("yyyy-MM-dd 00:00:00.0")
                 };

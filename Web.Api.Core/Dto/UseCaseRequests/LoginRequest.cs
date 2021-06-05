@@ -1,5 +1,6 @@
 ﻿using Web.Api.Core.Dto.UseCaseResponses;
 using Web.Api.Core.Interfaces;
+using System.Collections.Generic;
 
 using Web.Api.Core.Enums;
 
@@ -33,6 +34,7 @@ namespace Web.Api.Core.Dto.UseCaseRequests
         public string Password { get; set; }//password – varchar(128)
         public int UserType { get; set; }//user_type - bigint(20) – (1-SuperAdmin, 2- Admin, 3- Doctor, 4- Nurse, 5- Receptionist)
         public string CompanyId { get; set; }//company_id – varchar(128)
+        public string AreaList { get; set; }//area_list - varchar(500)
         public string CreatedBy { get; set; } //created_by
         public string ModifiedBy { get; set; } //modified_by
         public bool IsUpdate { get; set; }
@@ -47,6 +49,7 @@ namespace Web.Api.Core.Dto.UseCaseRequests
         public int UserType { get; set; }//user_type - bigint(20) – (1-SuperAdmin, 2- Admin, 3- Doctor, 4- Nurse, 5- Receptionist)
         public string CompanyId { get; set; }//company_id – varchar(128)
         public string CompanyName { get; set; }
+        public string AreaList { get; set; }//area_list - varchar(500)
         public string CreatedBy { get; set; } //created_by
         public string ModifiedBy { get; set; } //modified_by
     }
@@ -66,5 +69,13 @@ namespace Web.Api.Core.Dto.UseCaseRequests
         public int TotalReceptionistUserNumber { get; set; }
         public int TotalTeamUserNumber { get; set; }
         public int TotalTeamNumber { get; set; }
+        public List<TeamStatusDetails> TeamStatusDetailsList { get; set; }
+    }
+    public class TeamStatusDetails
+    {
+        public string TeamName { get; set; }
+        public string TeamUserName{ get; set; }
+        public int CallStatusCalledCount { get; set; }
+        public int CallStatusPendingCount { get; set; }
     }
 }

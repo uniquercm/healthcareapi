@@ -11,7 +11,6 @@ namespace Web.Api.Core.Interfaces.Gateways.Repositories
         Task<bool> CreatePatient(PatientRequest patientRequest);
         string GenerateUUID();
         Task<bool> EditPatient(PatientRequest patientRequest);
-        Task<List<DrNurseCallDetails>> GetFieldAllowCallDetails(string companyId, DateTime scheduledFromDate, DateTime scheduledToDate, string callStatus);
         Task<List<DrNurseCallDetails>> GetDrNurseCallDetails(string companyId, string callName, DateTime scheduledFromDate, DateTime scheduledToDate, string callStatus);
     }
 }

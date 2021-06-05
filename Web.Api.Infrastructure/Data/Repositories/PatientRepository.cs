@@ -333,39 +333,6 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 return false;
             }
         }
-
-        public async Task<List<DrNurseCallDetails>> GetFieldAllowCallDetails(string companyId, DateTime scheduledFromDate, DateTime scheduledToDate, string callStatus)
-        {
-            List<DrNurseCallDetails> retDrNurseCallDetails = new List<DrNurseCallDetails>();
-            List<DrNurseCallDetails> dayCallDetails = new List<DrNurseCallDetails>();
-            try
-            {
-                retDrNurseCallDetails = await GetDrNurseCallDetails(companyId, "NurseCall", scheduledFromDate, scheduledToDate, callStatus);
-
-                dayCallDetails = await GetPCRCallDetails(companyId, true, scheduledFromDate, scheduledToDate);
-                if(retDrNurseCallDetails.Count > 0)
-                {
-                    foreach(DrNurseCallDetails singleDrNurseCallDetails in dayCallDetails)
-                        retDrNurseCallDetails.Add(singleDrNurseCallDetails);
-                }
-                else
-                    retDrNurseCallDetails = dayCallDetails;
-
-                dayCallDetails = await GetPCRCallDetails(companyId, false, scheduledFromDate, scheduledToDate);
-                if(retDrNurseCallDetails.Count > 0)
-                {
-                    foreach(DrNurseCallDetails singleDrNurseCallDetails in dayCallDetails)
-                        retDrNurseCallDetails.Add(singleDrNurseCallDetails);
-                }
-                else
-                    retDrNurseCallDetails = dayCallDetails;
-            }
-            catch (Exception Err)
-            {
-                var Error = Err.Message.ToString();
-            }
-            return retDrNurseCallDetails;
-        }
         public async Task<List<DrNurseCallDetails>> GetDrNurseCallDetails(string companyId, string callName, DateTime scheduledFromDate, DateTime scheduledToDate, string callStatus)
         {
             List<DrNurseCallDetails> retDrNurseCallDetails = new List<DrNurseCallDetails>();
@@ -428,71 +395,6 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     if (!callStatus.ToLower().Equals("all"))
                         whereCond += " and ca.call_status = '" + callStatus + "'";
                 }
-
-                var sqlSelQuery = $"select " + ColumAssign + " from " + tableName + whereCond;
-                using (var connection = _appDbContext.Connection)
-                {
-                    var sqlSelResult = await connection.QueryAsync<DrNurseCallDetails>(sqlSelQuery);
-                    retDrNurseCallDetails = sqlSelResult.ToList();
-                }
-            }
-            catch (Exception Err)
-            {
-                var Error = Err.Message.ToString();
-            }
-            return retDrNurseCallDetails;
-        }
-
-        async Task<List<DrNurseCallDetails>> GetPCRCallDetails(string companyId, bool is4thDay, DateTime scheduledFromDate, DateTime scheduledToDate)
-        {
-            List<DrNurseCallDetails> retDrNurseCallDetails = new List<DrNurseCallDetails>();
-            try
-            {
-                var tableName = $"HC_Staff_Patient.patient_obj p, " +
-                                $"HC_Master_Details.company_obj co, " +
-                                $"HC_Treatment.scheduled_obj sc";
-
-                var ColumAssign = $"p.patient_id as PatientId, p.patient_name as PatientName, " +
-                                  $"p.company_id as CompanyId, co.company_name as CompanyName, " +
-                                  $"p.request_id as RequestId, p.crm_no as CRMNo, p.eid_no as EIDNo, " +
-                                  $"p.mobile_no as MobileNo, sc.scheduled_id as ScheduledId, " +
-                                  $"true as IsPCRCall, ";
-                if(is4thDay)
-                    ColumAssign += "'4thday' as CallId, sc.4day_pcr_test_date as CallScheduledDate, " +
-                                  $"sc.4day_pcr_test_sample_date as CalledDate, "+
-                                  $"sc.4day_pcr_test_result as CallStatus";
-                else
-                    ColumAssign += "'8thday' as CallId, sc.8day_pcr_test_date as CallScheduledDate, " +
-                                  $"sc.8day_pcr_test_sample_date as CalledDate, "+
-                                  $"sc.8day_pcr_test_result as CallStatus";
-
-                var whereCond = $" where p.company_id = co.company_id" +
-                                $" and p.patient_id = sc.patient_id";
-
-                string fromDate = scheduledFromDate.Date.ToString("dd-MM-yyyy");
-                if(fromDate == "01-01-0001")
-                {
-                    scheduledFromDate = DateTime.Today;
-                    //scheduledFromDate = DateTime.Today.AddDays(1);
-                    fromDate = scheduledFromDate.ToString("yyyy-MM-dd 00:00:00.0");
-                }
-
-                //scheduledToDate = DateTime.Today.AddDays(1);
-                string toDate = scheduledToDate.Date.ToString("dd-MM-yyyy");
-                if(toDate != "01-01-0001")
-                {
-                    if(is4thDay)
-                        whereCond += $" and sc.4day_pcr_test_date between '" + fromDate + "' and '" + toDate + "'";
-                    else
-                        whereCond += $" and sc.8day_pcr_test_date between '" + fromDate + "' and '" + toDate + "'";
-                }
-                else if(is4thDay)
-                    whereCond += $" and sc.4day_pcr_test_date = '" + fromDate + "'";
-                else
-                    whereCond += $" and sc.8day_pcr_test_date = '" + fromDate + "'";
-
-                if (!string.IsNullOrEmpty(companyId))
-                    whereCond += " and p.company_id = '" + companyId + "'";
 
                 var sqlSelQuery = $"select " + ColumAssign + " from " + tableName + whereCond;
                 using (var connection = _appDbContext.Connection)
