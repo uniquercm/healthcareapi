@@ -140,13 +140,17 @@
             <param name="request">Modifying Patient Staff Details</param>
             <returns>Acknowledgement</returns>
         </member>
-        <member name="M:Web.Api.Controllers.ReportController.GetScheduledDetails(System.String,System.String,System.String)">
+        <member name="M:Web.Api.Controllers.ReportController.GetScheduledDetails(System.DateTime,System.DateTime,System.String,System.String,System.String,System.String,System.String)">
             <summary>
             Getting a Report Details
             </summary>
+            <param name="sendOnFromDate">SendOn From Date (optional)</param>
+            <param name="sendOnToDate">SendOn To Date (optional)</param>
             <param name="companyId">Company Id (optional)</param>
             <param name="patientId">Patient Id (optional)</param>
             <param name="scheduledId">Scheduled Id (optional)</param>
+            <param name="extractData">Extract Data (all, yes, no) (optional)</param>
+            <param name="sendClaim">Send Claim (all, yes, no) (optional)</param>
             <returns>Report Details</returns>
         </member>
         <member name="M:Web.Api.Controllers.ReportController.EditReportDetails(Web.Api.Models.Request.ReportDetails)">

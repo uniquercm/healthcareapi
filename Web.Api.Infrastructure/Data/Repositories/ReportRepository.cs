@@ -18,7 +18,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
         {
             _appDbContext = appDbContext;
         }
-        public async Task<List<ReportDetails>> GetReportDetails(string companyId, string patientId, string scheduledId)
+        public async Task<List<ReportDetails>> GetReportDetails(string companyId, string patientId, string scheduledId, string extractData, string sendClaim, DateTime sendClaimOnFromDate, DateTime sendClaimOnToDate)
         {
             List<ReportDetails> retReportDetailsList = new List<ReportDetails>();
             try
@@ -59,6 +59,35 @@ namespace Web.Api.Infrastructure.Data.Repositories
 
                 if (!string.IsNullOrEmpty(scheduledId))
                     whereCond += " and sc.scheduled_id = '" + scheduledId + "'";
+
+                if (!string.IsNullOrEmpty(sendClaim))
+                {
+                    if (!sendClaim.ToLower().Equals("all"))
+                        whereCond += " and sc.have_send_claim = '" + sendClaim + "'";
+                }
+
+                string minits = " 00:00:00.0'";
+                string sendingFromDate = "0001-01-01";
+                if(sendClaimOnFromDate != null)
+                    sendingFromDate = sendClaimOnFromDate.ToString("yyyy-MM-dd");
+
+                string sendingToDate = "0001-01-01";
+                if(sendClaimOnToDate != null)
+                    sendingToDate = sendClaimOnToDate.ToString("yyyy-MM-dd");
+
+                if(sendingFromDate != "0001-01-01" && sendingToDate != "0001-01-01")
+                    whereCond += " and sc.claim_send_date between '" + sendingFromDate + minits +
+                                $" and '" + sendingToDate + minits;
+                else if(sendingFromDate != "0001-01-01")
+                    whereCond += " and sc.claim_send_date = '" + sendingFromDate + minits;
+                else if(sendingToDate != "0001-01-01")
+                    whereCond += " and sc.claim_send_date = '" + sendingToDate + minits;
+
+                if (!string.IsNullOrEmpty(extractData))
+                {
+                    if (!extractData.ToLower().Equals("all"))
+                        whereCond += " and sc.have_treatement_extract = '" + extractData + "'";
+                }
 
                 var sqlSelQuery = $"select " + ColumAssign + " from " + tableName + whereCond;
                 using (var connection = _appDbContext.Connection)

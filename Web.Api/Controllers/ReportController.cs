@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Web.Api.Core.Dto.UseCaseRequests;
@@ -27,14 +28,18 @@ namespace Web.Api.Controllers
         /// <summary>
         /// Getting a Report Details
         /// </summary>
+        /// <param name="sendOnFromDate">SendOn From Date (optional)</param>
+        /// <param name="sendOnToDate">SendOn To Date (optional)</param>
         /// <param name="companyId">Company Id (optional)</param>
         /// <param name="patientId">Patient Id (optional)</param>
         /// <param name="scheduledId">Scheduled Id (optional)</param>
+        /// <param name="extractData">Extract Data (all, yes, no) (optional)</param>
+        /// <param name="sendClaim">Send Claim (all, yes, no) (optional)</param>
         /// <returns>Report Details</returns>
         [HttpGet("report")]
-        public async Task<ActionResult> GetScheduledDetails(string companyId = "", string patientId = "", string scheduledId = "")
+        public async Task<ActionResult> GetScheduledDetails(DateTime sendOnFromDate, DateTime sendOnToDate, string companyId = "", string patientId = "", string scheduledId = "", string extractData = "all", string sendClaim = "all")
         {
-            await _reportUseCases.Handle(new GetDetailsRequest(companyId, patientId, "", "", scheduledId, ""), _getDetailsPresenter);
+            await _reportUseCases.Handle(new GetDetailsRequest(companyId, patientId, scheduledId, sendOnFromDate, sendOnToDate, "", extractData, sendClaim), _getDetailsPresenter);
             return _getDetailsPresenter.ContentResult;
         }
 
