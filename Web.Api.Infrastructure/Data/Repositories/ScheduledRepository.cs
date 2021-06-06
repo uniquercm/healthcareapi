@@ -117,7 +117,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                         if(isFieldAllocation)
                         {
                             List<PatientDetails> patientDetailsList = new List<PatientDetails>();
-                            patientDetailsList = await patientRepository.GetPatientDetails(companyId, singleScheduledDetails.PatientId);
+                            patientDetailsList = await patientRepository.GetPatientDetails(companyId, singleScheduledDetails.PatientId, "all");
                             if(patientDetailsList.Count > 0)
                                 singleScheduledDetails.PatientInformation = patientDetailsList[0];
                         }

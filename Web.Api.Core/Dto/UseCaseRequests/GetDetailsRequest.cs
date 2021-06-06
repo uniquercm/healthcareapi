@@ -20,6 +20,7 @@ namespace Web.Api.Core.Dto.UseCaseRequests
         public string SendClaim { get; set; }//all, no, yes
         public string CallStatus { get; set; }//all, called, pending
         public string FieldAllocationStatus { get; set; }//all, allowed, notallowed
+        //public string GMapLinkStatus { get; set; }//all, yes, no
 
         public GetDetailsRequest()
         {   }
@@ -27,10 +28,11 @@ namespace Web.Api.Core.Dto.UseCaseRequests
         {
             Id = id;
         }
-        public GetDetailsRequest(string companyId, string patientId)
+        public GetDetailsRequest(string companyId, string patientId)//, string gmapSatus)
         {
             CompanyId = companyId;
             PatientId = patientId;
+            //GMapLinkStatus = gmapSatus;
         }
         public GetDetailsRequest(string companyId, string patientId, string lableName)
         {

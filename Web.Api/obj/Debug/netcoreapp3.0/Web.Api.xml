@@ -109,12 +109,13 @@
             <param name="request">Modifying Company Details</param>
             <returns>Acknowledgement</returns>
         </member>
-        <member name="M:Web.Api.Controllers.PatientController.GetPatientDetails(System.String,System.String)">
+        <member name="M:Web.Api.Controllers.PatientController.GetPatientDetails(System.String,System.String,System.String)">
             <summary>
             Getting a Patient Details
             </summary>
             <param name="companyId">Company Id (optional)</param>
             <param name="patientId">Patient Id (optional)</param>
+            <param name="gMapLinkSatus"> Google Map Link (all, yes, no) (optional)</param>
             <returns>Patient Details</returns>
         </member>
         <member name="M:Web.Api.Controllers.PatientController.CreatePatient(Web.Api.Models.Request.PatientRequest)">

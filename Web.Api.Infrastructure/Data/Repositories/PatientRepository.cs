@@ -18,7 +18,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
         {
             _appDbContext = appDbContext;
         }
-        public async Task<List<PatientDetails>> GetPatientDetails(string companyId, string patientId)
+        public async Task<List<PatientDetails>> GetPatientDetails(string companyId, string patientId, string gMapLinkSatus)
         {
             List<PatientDetails> retPatientDetailsList = new List<PatientDetails>();
             try
@@ -54,6 +54,14 @@ namespace Web.Api.Infrastructure.Data.Repositories
 
                 if (!string.IsNullOrEmpty(patientId))
                     whereCond += " and p.patient_id = '" + patientId + "'";
+
+                if (!string.IsNullOrEmpty(gMapLinkSatus))
+                {
+                    if(gMapLinkSatus.Equals("no"))
+                        whereCond += " and p.google_map_link = ''";
+                    else if(gMapLinkSatus.Equals("yes"))
+                        whereCond += " and p.google_map_link != ''";
+                }
 
                 var orderCond = $" order by p.created_on DESC ";
 
@@ -203,6 +211,9 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 if(recptionCallDate == "0001-01-01")
                     recptionCallDate = "";*/
 
+                if(String.IsNullOrEmpty(patientRequest.GoogleMapLink))
+                    patientRequest.GoogleMapLink = "";
+
                 object colValueParam = new
                 {
                     PatientId = patientRequest.PatientId,
@@ -291,6 +302,9 @@ namespace Web.Api.Infrastructure.Data.Repositories
 
                 if(recptionCallDate == "0001-01-01")
                     recptionCallDate = "";
+
+                if(String.IsNullOrEmpty(patientRequest.GoogleMapLink))
+                    patientRequest.GoogleMapLink = "";
 
                 object colValueParam = new
                 {
