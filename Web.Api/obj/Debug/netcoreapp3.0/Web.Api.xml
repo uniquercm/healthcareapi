@@ -31,6 +31,13 @@
             <param name="isFieldAllow">is Field Allocation (optional)</param>
             <returns>Patient Details</returns>
         </member>
+        <member name="M:Web.Api.Controllers.DrNurseCallFieldAllocationController.EditCall(Web.Api.Models.Request.CallRequest)">
+            <summary>
+            Modifying a Call
+            </summary>
+            <param name="request">Modifying Call Details</param>
+            <returns>Acknowledgement</returns>
+        </member>
         <member name="M:Web.Api.Controllers.HealthController.Health">
             <summary>
             Health Check

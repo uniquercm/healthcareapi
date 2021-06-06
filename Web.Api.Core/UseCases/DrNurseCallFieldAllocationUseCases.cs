@@ -36,5 +36,29 @@ namespace Web.Api.Core.UseCases
             outputPort.Handle(getDetailsResponse);
             return true;
         }
+        public async Task<bool> Handle(CallRequest request, IOutputPort<AcknowledgementResponse> outputPort)
+        {
+            AcknowledgementResponse acknowledgementResponse;
+
+            bool isUpdated = false;
+
+            if(request.IsPCRCall)
+                isUpdated = await _drNurseCallFieldAllocationRepository.EditPCRCall(request);
+            else
+                isUpdated = await _scheduledRepository.EditCall(request);
+
+            if(isUpdated)
+            {
+                if(request.IsPCRCall)
+                    acknowledgementResponse = new AcknowledgementResponse(true, "PCR Call Successfully Modifyed");
+                else
+                    acknowledgementResponse = new AcknowledgementResponse(true, "Call Successfully Modifyed");
+            }
+            else
+                acknowledgementResponse = new AcknowledgementResponse(new[] { new Error("Error Occurred", "Error Occurred")}, false);
+
+            outputPort.Handle(acknowledgementResponse);
+            return true;
+        }
     }
 }

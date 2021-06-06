@@ -47,7 +47,7 @@ namespace Web.Api.Controllers
             if(isFieldAllocation)
                 await _scheduledUseCases.Handle(new GetDetailsRequest(companyId, patientId, scheduledId, fromDate, toDate, "FieldAllocation", fieldAllocationStatus), _getDetailsPresenter);
             else
-                await _scheduledUseCases.Handle(new GetDetailsRequest(companyId, patientId, scheduledId, fromDate, toDate, ""), _getDetailsPresenter);
+                await _scheduledUseCases.Handle(new GetDetailsRequest(companyId, patientId, scheduledId, fromDate, toDate, "", fieldAllocationStatus), _getDetailsPresenter);
             return _getDetailsPresenter.ContentResult;
         }
 

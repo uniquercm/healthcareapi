@@ -15,15 +15,15 @@ namespace Web.Api.Controllers
     [ApiController]
     public class DrNurseCallFieldAllocationController : ControllerBase
     {
-        private readonly IPatientUseCases _patientUseCases;
+        private readonly IDrNurseCallFieldAllocationUseCases _drNurseCallFieldAllocationUseCases;
         private readonly AcknowledgementPresenter _acknowledgementPresenter;
         private readonly GetDetailsPresenter _getDetailsPresenter;
         private readonly AvailabilityPresenter _availabilityPresenter;
         private readonly IMapper _mapper;
 
-        public DrNurseCallFieldAllocationController(IPatientUseCases patientUseCases, AcknowledgementPresenter acknowledgementPresenter, GetDetailsPresenter getDetailsPresenter, AvailabilityPresenter availabilityPresenter, IMapper mapper)
+        public DrNurseCallFieldAllocationController(IDrNurseCallFieldAllocationUseCases drNurseCallFieldAllocationUseCases, AcknowledgementPresenter acknowledgementPresenter, GetDetailsPresenter getDetailsPresenter, AvailabilityPresenter availabilityPresenter, IMapper mapper)
         {   
-            _patientUseCases = patientUseCases;
+            _drNurseCallFieldAllocationUseCases = drNurseCallFieldAllocationUseCases;
             _acknowledgementPresenter = acknowledgementPresenter;
             _getDetailsPresenter = getDetailsPresenter;
             _availabilityPresenter = availabilityPresenter;
@@ -45,12 +45,25 @@ namespace Web.Api.Controllers
         public async Task<ActionResult> GetPatientDetails(DateTime fromDate, DateTime toDate, string companyId = "", bool isDoctorCall = false, bool isNurseCall = false, string callStatus = "all", bool isFieldAllow = false)
         {
             if(isDoctorCall)
-                await _patientUseCases.Handle(new GetDetailsRequest(companyId, fromDate, toDate, "DrCall", callStatus), _getDetailsPresenter);
+                await _drNurseCallFieldAllocationUseCases.Handle(new GetDetailsRequest(companyId, fromDate, toDate, "DrCall", callStatus), _getDetailsPresenter);
             else if(isNurseCall)
-                await _patientUseCases.Handle(new GetDetailsRequest(companyId, fromDate, toDate, "NurseCall", callStatus), _getDetailsPresenter);
+                await _drNurseCallFieldAllocationUseCases.Handle(new GetDetailsRequest(companyId, fromDate, toDate, "NurseCall", callStatus), _getDetailsPresenter);
             else
-                await _patientUseCases.Handle(new GetDetailsRequest(companyId, fromDate, toDate, "FieldAllow", callStatus), _getDetailsPresenter);
+                await _drNurseCallFieldAllocationUseCases.Handle(new GetDetailsRequest(companyId, fromDate, toDate, "FieldAllow", callStatus), _getDetailsPresenter);
             return _getDetailsPresenter.ContentResult;
+        }
+
+        /// <summary>
+        /// Modifying a Call
+        /// </summary>
+        /// <param name="request">Modifying Call Details</param>
+        /// <returns>Acknowledgement</returns>
+        [HttpPut("doctor-nurse-team-call")]
+        public async Task<ActionResult> EditCall([FromBody] Models.Request.CallRequest request)
+        {
+            request.IsUpdate = true;
+            await _drNurseCallFieldAllocationUseCases.Handle(_mapper.Map<CallRequest>(request), _acknowledgementPresenter);
+            return _acknowledgementPresenter.ContentResult;
         }
 
     }

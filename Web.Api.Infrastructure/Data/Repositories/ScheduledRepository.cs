@@ -748,6 +748,8 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     callScheduledDate = callRequest.CallScheduledDate.ToString("yyyy-MM-dd");
                     if( callScheduledDate == "0001-01-01")
                         callScheduledDate = "";
+                    else
+                        callScheduledDate = callRequest.CallScheduledDate.ToString("yyyy-MM-dd 00:00:00.0");
                 }
 
                 string calledDate;
@@ -758,6 +760,8 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     calledDate = callRequest.CalledDate.ToString("yyyy-MM-dd");
                     if( calledDate == "0001-01-01")
                         calledDate = "";
+                    else
+                        calledDate = callRequest.CalledDate.ToString("yyyy-MM-dd 00:00:00.0");
                 }
 
                 object colValueParam = new

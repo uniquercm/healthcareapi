@@ -269,5 +269,86 @@ namespace Web.Api.Infrastructure.Data.Repositories
             return retDrNurseCallDetails;
         }
 
+        /*public async Task<bool> EditTeamFieldAllowCallDetails(CallRequest callRequest)
+        {
+            try
+            {
+                bool sqlResult = true;
+                //if(callRequest)
+            }
+            catch (Exception Err)
+            {
+                var Error = Err.Message.ToString();
+                return false;
+            }
+        }*/
+        public async Task<bool> EditPCRCall(CallRequest callRequest)
+        {
+            try
+            {
+                bool sqlResult = true;
+                var tableName = $"HC_Treatment.scheduled_obj";
+
+                var colName = $"scheduled_id = @ScheduledId, " +
+                              //$"remarks = @Remarks, emr_done = @EMRDone, is_pcr = @IsPCRCall," +
+                              $"modified_by = @ModifiedBy, modified_on = @ModifiedOn";
+
+                if(!String.IsNullOrEmpty(callRequest.CallId))
+                {
+                    if(callRequest.CallId.ToLower().Equals("4thday"))
+                    {
+                        colName += $", 4day_pcr_test_sample_date = @CalledDate, " +
+                                   $"4day_pcr_test_result = @CallStatus";
+                    }
+                    else if(callRequest.CallId.ToLower().Equals("8thday"))
+                    {
+                        colName += $", 8day_pcr_test_sample_date = @CalledDate, " +
+                                   $"8day_pcr_test_result = @CallStatus";
+                    }
+                }
+                else
+                    return false;
+
+                var whereCond = $" where scheduled_id = @ScheduledId";
+
+                var sqlUpdateQuery = $"UPDATE "+ tableName + " set " + colName + whereCond;
+
+                string calledDate;
+                if(callRequest.CalledDate == null)
+                    calledDate = "";
+                else
+                {
+                    calledDate = callRequest.CalledDate.ToString("yyyy-MM-dd");
+                    if( calledDate == "0001-01-01")
+                        calledDate = "";
+                    else
+                        calledDate = callRequest.CalledDate.ToString("yyyy-MM-dd 00:00:00.0");
+                }
+
+                object colValueParam = new
+                {
+                    ScheduledId = callRequest.ScheduledId,
+                    CalledDate = calledDate,
+                    CallStatus = callRequest.CallStatus,
+                    //Remarks = callRequest.Remarks,
+                    //EMRDone = callRequest.EMRDone,
+                    //IsPCRCall = callRequest.IsPCRCall,
+                    ModifiedBy = callRequest.ModifiedBy,
+                    ModifiedOn = DateTime.Today.ToString("yyyy-MM-dd 00:00:00.0")
+                };
+
+                using (var connection = _appDbContext.Connection)
+                {
+                    sqlResult = Convert.ToBoolean(await connection.ExecuteAsync(sqlUpdateQuery, colValueParam));
+                    return sqlResult;
+                }
+            }
+            catch (Exception Err)
+            {
+                var Error = Err.Message.ToString();
+                return false;
+            }
+        }
+
     }
 }
