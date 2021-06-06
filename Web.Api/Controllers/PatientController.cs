@@ -56,13 +56,11 @@ namespace Web.Api.Controllers
         /// <summary>
         /// Getting a Patient Details
         /// </summary>
-        /// <param name="fromDate">Scheduled From Date (optional)</param>
-        /// <param name="toDate">Scheduled To Date (optional)</param>
         /// <param name="companyId">Company Id (optional)</param>
         /// <param name="patientId">Patient Id (optional)</param>
         /// <returns>Patient Details</returns>
         [HttpGet("patient")]
-        public async Task<ActionResult> GetPatientDetails(DateTime fromDate, DateTime toDate, string companyId = "", string patientId = "")
+        public async Task<ActionResult> GetPatientDetails(string companyId = "", string patientId = "")
         {
             await _patientUseCases.Handle(new GetDetailsRequest(companyId, patientId), _getDetailsPresenter);
             return _getDetailsPresenter.ContentResult;

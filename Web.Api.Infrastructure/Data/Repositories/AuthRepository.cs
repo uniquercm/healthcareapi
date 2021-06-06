@@ -78,7 +78,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
 
                 var ColumAssign = $"u.user_id  as UserId, u.user_name as UserName, " +
                                    $"u.user_type as UserType, u.company_id as CompanyId, " +
-                                   $"c.company_name as CompanyName";
+                                   $"c.company_name as CompanyName, u.area_list as AreaList";
 
                 var whereCond = $" where u.company_id = c.company_id";
                 if (!string.IsNullOrEmpty(userId))
@@ -106,7 +106,8 @@ namespace Web.Api.Infrastructure.Data.Repositories
 
                 var ColumAssign = $"u.user_id  as UserId, u.user_name as UserName, " +
                                    $"u.password as Password, u.user_type as UserType, " +
-                                   $"u.company_id as CompanyId, c.company_name as CompanyName";
+                                   $"u.company_id as CompanyId, c.company_name as CompanyName, " +
+                                   $"u.area_list as AreaList";
 
                 var whereCond = $" where u.company_id = c.company_id";
 

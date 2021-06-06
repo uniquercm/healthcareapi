@@ -21,6 +21,7 @@ namespace Web.Api.Core.Dto.UseCaseRequests
     public class LoginUserDetails
     {
         public string UserId { get; set; }
+        public string UserName { get; set; }
         public int UserType { get; set; }
         public string CompanyId { get; set; }
         public string CompanyName { get; set; }

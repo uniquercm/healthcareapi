@@ -81,6 +81,8 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     //scheduledFromDate = DateTime.Today.AddDays(1);
                     fromDate = scheduledFromDate.ToString("yyyy-MM-dd 00:00:00.0");
                 }
+                else
+                    fromDate = scheduledFromDate.ToString("yyyy-MM-dd 00:00:00.0");
 
                 //scheduledToDate = DateTime.Today.AddDays(1);
                 string toDate = scheduledToDate.Date.ToString("dd-MM-yyyy");
@@ -157,6 +159,8 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     //scheduledFromDate = DateTime.Today.AddDays(1);
                     fromDate = scheduledFromDate.ToString("yyyy-MM-dd 00:00:00.0");
                 }
+                else
+                    fromDate = scheduledFromDate.ToString("yyyy-MM-dd 00:00:00.0");
 
                 //scheduledToDate = DateTime.Today.AddDays(1);
                 string toDate = scheduledToDate.Date.ToString("dd-MM-yyyy");
@@ -178,10 +182,6 @@ namespace Web.Api.Infrastructure.Data.Repositories
 
                 whereCond += $" and sc.2day_call_id <> ca.call_id";
 
-                if(!string.IsNullOrEmpty(teamUserName))
-                    whereCond += " and ((sc.allocated_team_name = '" + teamUserName + "' and sc.reallocated_team_name = '')" +
-                                 " or (sc.allocated_team_name != '' and sc.reallocated_team_name = '" + teamUserName + "'))";
-
                 if (!string.IsNullOrEmpty(companyId))
                     whereCond += " and p.company_id = '" + companyId + "'";
 
@@ -190,6 +190,11 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     if (!callStatus.ToLower().Equals("all"))
                         whereCond += " and ca.call_status = '" + callStatus + "'";
                 }
+
+                if(!string.IsNullOrEmpty(teamUserName))
+                    whereCond += " and ((sc.allocated_team_name = '" + teamUserName + "' and sc.reallocated_team_name = '')" +
+                                 " or (sc.allocated_team_name != '' and sc.reallocated_team_name = '" + teamUserName + "'))";
+
 
                 var sqlSelQuery = $"select " + ColumAssign + " from " + tableName + whereCond;
                 using (var connection = _appDbContext.Connection)
@@ -238,11 +243,14 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     //scheduledFromDate = DateTime.Today.AddDays(1);
                     fromDate = scheduledFromDate.ToString("yyyy-MM-dd 00:00:00.0");
                 }
+                else
+                    fromDate = scheduledFromDate.ToString("yyyy-MM-dd 00:00:00.0");
 
                 //scheduledToDate = DateTime.Today.AddDays(1);
                 string toDate = scheduledToDate.Date.ToString("dd-MM-yyyy");
                 if(toDate != "01-01-0001")
                 {
+                    toDate = scheduledToDate.ToString("yyyy-MM-dd 00:00:00.0");
                     if(is4thDay)
                         whereCond += $" and sc.4day_pcr_test_date between '" + fromDate + "' and '" + toDate + "'";
                     else
