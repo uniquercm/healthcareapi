@@ -29,7 +29,7 @@ namespace Web.Api.Core.UseCases
             else if(request.LableName == "NurseCall")
                 getDetailsResponse = new GetDetailsResponse(await _drNurseCallFieldAllocationRepository.GetDrNurseCallDetails(request.CompanyId, "NurseCall", request.ScheduledFromDate, request.ScheduledToDate, request.CallStatus), true, "Data Fetched Successfully");
             else if(request.LableName == "TeamCall")
-                getDetailsResponse = new GetDetailsResponse(await _drNurseCallFieldAllocationRepository.GetTeamFieldAllowCallDetails(request.CompanyId, "TeamCall", request.ScheduledFromDate, request.ScheduledToDate, request.CallStatus), true, "Data Fetched Successfully");
+                getDetailsResponse = new GetDetailsResponse(await _drNurseCallFieldAllocationRepository.GetTeamFieldAllowCallDetails(request.CompanyId, request.TeamUserName, request.ScheduledFromDate, request.ScheduledToDate, request.CallStatus), true, "Data Fetched Successfully");
             else
                 getDetailsResponse = new GetDetailsResponse(await _drNurseCallFieldAllocationRepository.GetFieldAllowCallDetails(request.CompanyId, request.ScheduledFromDate, request.ScheduledToDate, request.CallStatus), true, "Data Fetched Successfully");
 

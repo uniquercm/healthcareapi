@@ -30,7 +30,7 @@ namespace Web.Api.Controllers
             _mapper = mapper;
         }
 
-        /// <summary>
+/*        /// <summary>
         /// Getting a Patient Details
         /// </summary>
         /// <param name="fromDate">Scheduled From Date (optional)</param>
@@ -45,13 +45,29 @@ namespace Web.Api.Controllers
         public async Task<ActionResult> GetPatientDetails(DateTime fromDate, DateTime toDate, string companyId = "", string patientId = "", bool isDoctorCall = false, bool isNurseCall = false, string callStatus = "all")
         {
             if(isDoctorCall)
-                await _patientUseCases.Handle(new GetDetailsRequest(companyId, fromDate, toDate, "DrCall", callStatus), _getDetailsPresenter);
+                await _patientUseCases.Handle(new GetDetailsRequest(companyId, fromDate, toDate, "DrCall", callStatus, ""), _getDetailsPresenter);
             else if(isNurseCall)
-                await _patientUseCases.Handle(new GetDetailsRequest(companyId, fromDate, toDate, "NurseCall", callStatus), _getDetailsPresenter);
+                await _patientUseCases.Handle(new GetDetailsRequest(companyId, fromDate, toDate, "NurseCall", callStatus, ""), _getDetailsPresenter);
             else
                 await _patientUseCases.Handle(new GetDetailsRequest(companyId, patientId), _getDetailsPresenter);
             return _getDetailsPresenter.ContentResult;
+        }*/
+
+        /// <summary>
+        /// Getting a Patient Details
+        /// </summary>
+        /// <param name="fromDate">Scheduled From Date (optional)</param>
+        /// <param name="toDate">Scheduled To Date (optional)</param>
+        /// <param name="companyId">Company Id (optional)</param>
+        /// <param name="patientId">Patient Id (optional)</param>
+        /// <returns>Patient Details</returns>
+        [HttpGet("patient")]
+        public async Task<ActionResult> GetPatientDetails(DateTime fromDate, DateTime toDate, string companyId = "", string patientId = "")
+        {
+            await _patientUseCases.Handle(new GetDetailsRequest(companyId, patientId), _getDetailsPresenter);
+            return _getDetailsPresenter.ContentResult;
         }
+
 
         /// <summary>
         /// Creating a Patient

@@ -127,7 +127,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
             }
             return retDrNurseCallDetails;
         }
-        public async Task<List<DrNurseCallDetails>> GetTeamFieldAllowCallDetails(string companyId, string callName, DateTime scheduledFromDate, DateTime scheduledToDate, string callStatus)
+        public async Task<List<DrNurseCallDetails>> GetTeamFieldAllowCallDetails(string companyId, string teamUserName, DateTime scheduledFromDate, DateTime scheduledToDate, string callStatus)
         {
             List<DrNurseCallDetails> retDrNurseCallDetails = new List<DrNurseCallDetails>();
             try
@@ -176,10 +176,11 @@ namespace Web.Api.Infrastructure.Data.Repositories
                         whereCond += $" and ca.call_scheduled_date = '" + fromDate + "'";
                 }
 
-                if(callName == "DrCall")
-                    whereCond += $" and sc.2day_call_id = ca.call_id";
-                else if(callName == "NurseCall")
-                    whereCond += $" and sc.2day_call_id <> ca.call_id";
+                whereCond += $" and sc.2day_call_id <> ca.call_id";
+
+                if(!string.IsNullOrEmpty(teamUserName))
+                    whereCond += " and ((sc.allocated_team_name = '" + teamUserName + "' and sc.reallocated_team_name = '')" +
+                                 " or (sc.allocated_team_name != '' and sc.reallocated_team_name = '" + teamUserName + "'))";
 
                 if (!string.IsNullOrEmpty(companyId))
                     whereCond += " and p.company_id = '" + companyId + "'";
