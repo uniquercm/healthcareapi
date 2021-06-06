@@ -253,7 +253,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
             List<KeyValuePair<string,string>> retAreaList = new List<KeyValuePair<string, string>>();
             try
             {
-                var tableName = $"HC_Authentication.area_obj";
+                var tableName = $"HC_Master_Details.area_obj";
 
                 var ColumAssign = $"area_id as `Key`, area_name as `Value` " ;
 
@@ -280,7 +280,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 if(areaId <= 0)
                     areaId = 1;
 
-                var tableName = $"HC_Authentication.area_obj";
+                var tableName = $"HC_Master_Details.area_obj";
 
                 var colName = $"area_id, area_name";
                 var colValueName = $"@AreaId, @AreaName";
@@ -289,7 +289,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                                     $"VALUES ( " + colValueName + " )";
                 object colValueParam = new
                 {
-                    AreaId = areaId -1,
+                    AreaId = areaId,
                     AreaName = areaName
                 };
 

@@ -10,6 +10,7 @@ namespace Web.Api.Models.Settings
         {
             CreateMap<Models.Request.LoginRequest, LoginRequest>();
             CreateMap<Models.Request.UserRequest, UserRequest>();
+            CreateMap<Models.Request.AreaRequest, AreaRequest>();
             CreateMap<Models.Request.MasterRequest, MasterRequest>();
             CreateMap<Models.Request.CompanyRequest, CompanyRequest>();
             CreateMap<Models.Request.PatientRequest, PatientRequest>();

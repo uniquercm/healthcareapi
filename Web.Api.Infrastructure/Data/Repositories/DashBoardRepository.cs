@@ -47,6 +47,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                                   $"HC_Treatment.call_obj ca" + cond;
                     sqlSelResult = await connection.QueryAsync(sqlSelQuery);
                     retDashBoardDetails.TodayScheduledPatientNumber = sqlSelResult.Count();
+
                     cond = $" where pa.patient_id = sc.patient_id" +  
                            $" and sc.4day_pcr_test_date = '" + todayDate + "'" +
                            $" or sc.8day_pcr_test_date = '" + todayDate + "'";
@@ -125,7 +126,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     sqlSelResult = await connection.QueryAsync(sqlSelQuery);
                     retDashBoardDetails.TotalTeamUserNumber = sqlSelResult.Count();
 
-                    sqlSelQuery = $"select no_of_team from HC_Master_Details.master_obj" + whereCond;
+                    sqlSelQuery = $"select no_of_team from HC_Master_Details.company_obj" + whereCond;
                     var sqlResult = await connection.QueryAsync<int>(sqlSelQuery);
                     retDashBoardDetails.TotalTeamNumber = sqlResult.FirstOrDefault();
                 }
