@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Web.Api.Core.Dto;
 using Web.Api.Core.Dto.UseCaseRequests;
 using Web.Api.Core.Dto.UseCaseResponses;
@@ -40,7 +41,10 @@ namespace Web.Api.Core.UseCases
         public async Task<bool> Handle(GetDetailsRequest request, IOutputPort<GetDetailsResponse> outputPort)
         {
             GetDetailsResponse getDetailsResponse;
-            getDetailsResponse = new GetDetailsResponse(await _authRepository.GetUserDetails(request.Id), true, "Data Fetched Successfully");
+            if(String.IsNullOrEmpty(request.Id))
+                getDetailsResponse = new GetDetailsResponse(await _authRepository.GetAreaDetails(), true, "Data Fetched Successfully");
+            else
+                getDetailsResponse = new GetDetailsResponse(await _authRepository.GetUserDetails(request.Id), true, "Data Fetched Successfully");
             outputPort.Handle(getDetailsResponse);
             return true;
         }
@@ -79,6 +83,19 @@ namespace Web.Api.Core.UseCases
             availabilityResponse = new AvailabilityResponse(retVal, "User Name", true);
 
             outputPort.Handle(availabilityResponse);
+            return true;
+        }
+
+        public async Task<bool> Handle(AreaRequest request, IOutputPort<AcknowledgementResponse> outputPort)
+        {
+            AcknowledgementResponse acknowledgementResponse;
+
+            if(await _authRepository.AddArea(request.AreaId, request.AreaName))
+                acknowledgementResponse = new AcknowledgementResponse(true, "Area Name Successfully Added");
+            else
+                acknowledgementResponse = new AcknowledgementResponse(new[] { new Error("Error Occurred", "Error Occurred")}, false);
+
+            outputPort.Handle(acknowledgementResponse);
             return true;
         }
 

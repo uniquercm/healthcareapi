@@ -21,6 +21,8 @@ namespace Web.Api.Core.Dto.UseCaseRequests
         public string CallStatus { get; set; }//all, called, pending
         public string FieldAllocationStatus { get; set; }//all, allowed, notallowed
 
+        public GetDetailsRequest()
+        {   }
         public GetDetailsRequest(string id)
         {
             Id = id;

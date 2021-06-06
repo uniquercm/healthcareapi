@@ -247,5 +247,64 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 return false;
             }
         }
+
+        public async Task<List<KeyValuePair<string,string>>> GetAreaDetails()
+        {
+            List<KeyValuePair<string,string>> retAreaList = new List<KeyValuePair<string, string>>();
+            try
+            {
+                var tableName = $"HC_Authentication.area_obj";
+
+                var ColumAssign = $"area_id as `Key`, area_name as `Value` " ;
+
+                var sqlQuery = $"select " + ColumAssign + " from " + tableName;
+
+                using (var connection = _appDbContext.Connection)
+                {
+                    Dictionary<string, string> data = connection.Query<KeyValuePair<string, string>>(sqlQuery).ToDictionary(pair => pair.Key, pair => pair.Value);
+                    retAreaList = data.ToList();
+                }
+            }
+            catch (Exception Err)
+            {
+                var Error = Err.Message.ToString();
+            }
+            return retAreaList;
+        }
+        public async Task<bool> AddArea(int areaCount, string areaName)
+        {
+            try
+            {
+                bool sqlResult = true;
+                int areaId = areaCount -1;
+                if(areaId <= 0)
+                    areaId = 1;
+
+                var tableName = $"HC_Authentication.area_obj";
+
+                var colName = $"area_id, area_name";
+                var colValueName = $"@AreaId, @AreaName";
+
+                var sqlInsQuery = $"INSERT INTO "+ tableName + "( " + colName + " )" +
+                                    $"VALUES ( " + colValueName + " )";
+                object colValueParam = new
+                {
+                    AreaId = areaId -1,
+                    AreaName = areaName
+                };
+
+                using (var connection = _appDbContext.Connection)
+                {
+                    sqlResult = Convert.ToBoolean(await connection.ExecuteAsync(sqlInsQuery, colValueParam));
+                }
+                return sqlResult;
+            }
+            catch (Exception Err)
+            {
+                var Error = Err.Message.ToString();
+                return false;
+            }
+        }
+
     }
 }

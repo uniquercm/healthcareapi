@@ -21,11 +21,11 @@ namespace Web.Api.Core.UseCases
         {
             GetDetailsResponse getDetailsResponse;
 
-            if(request.LableName == "DrCall")
+            /*if(request.LableName == "DrCall")
                 getDetailsResponse = new GetDetailsResponse(await _patientRepository.GetDrNurseCallDetails(request.CompanyId, "DrCall", request.ScheduledFromDate, request.ScheduledToDate, request.CallStatus), true, "Data Fetched Successfully");
             else if(request.LableName == "NurseCall")
                 getDetailsResponse = new GetDetailsResponse(await _patientRepository.GetDrNurseCallDetails(request.CompanyId, "NurseCall", request.ScheduledFromDate, request.ScheduledToDate, request.CallStatus), true, "Data Fetched Successfully");
-            else
+            else*/
                 getDetailsResponse = new GetDetailsResponse(await _patientRepository.GetPatientDetails(request.CompanyId, request.PatientId), true, "Data Fetched Successfully");
 
             outputPort.Handle(getDetailsResponse);

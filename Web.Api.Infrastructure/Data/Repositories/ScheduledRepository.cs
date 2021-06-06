@@ -80,7 +80,9 @@ namespace Web.Api.Infrastructure.Data.Repositories
                                      $" and sc.treatment_to_date > '" + toDate + "'";
                 }
 
-                var sqlSelQuery = $"select " + ColumAssign + " from " + tableName + whereCond;
+                var orderCond = $" order by sc.created_on DESC ";
+
+                var sqlSelQuery = $"select " + ColumAssign + " from " + tableName + whereCond + orderCond;
                 using (var connection = _appDbContext.Connection)
                 {
                     var sqlSelResult = await connection.QueryAsync<ScheduledDetails>(sqlSelQuery);

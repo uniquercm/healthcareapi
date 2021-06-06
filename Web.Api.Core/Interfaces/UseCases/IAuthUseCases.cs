@@ -11,4 +11,6 @@ namespace Web.Api.Core.Interfaces.UseCases
     {   }
     public partial interface IAuthUseCases : IUseCaseRequestHandler<UserRequest, AcknowledgementResponse>
     {   }
+    public partial interface IAuthUseCases : IUseCaseRequestHandler<AreaRequest, AcknowledgementResponse>
+    {   }
 }

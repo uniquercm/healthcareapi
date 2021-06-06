@@ -116,7 +116,9 @@ namespace Web.Api.Infrastructure.Data.Repositories
                         whereCond += " and ca.call_status = '" + callStatus + "'";
                 }
 
-                var sqlSelQuery = $"select " + ColumAssign + " from " + tableName + whereCond;
+                var orderCond = $" order by s.created_on DESC ";
+
+                var sqlSelQuery = $"select " + ColumAssign + " from " + tableName + whereCond + orderCond;
                 using (var connection = _appDbContext.Connection)
                 {
                     var sqlSelResult = await connection.QueryAsync<DrNurseCallDetails>(sqlSelQuery);
@@ -196,7 +198,9 @@ namespace Web.Api.Infrastructure.Data.Repositories
                                  " or (sc.allocated_team_name != '' and sc.reallocated_team_name = '" + teamUserName + "'))";
 
 
-                var sqlSelQuery = $"select " + ColumAssign + " from " + tableName + whereCond;
+                var orderCond = $" order by sc.created_on DESC ";
+
+                var sqlSelQuery = $"select " + ColumAssign + " from " + tableName + whereCond + orderCond;
                 using (var connection = _appDbContext.Connection)
                 {
                     var sqlSelResult = await connection.QueryAsync<DrNurseCallDetails>(sqlSelQuery);
@@ -264,7 +268,9 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 if (!string.IsNullOrEmpty(companyId))
                     whereCond += " and p.company_id = '" + companyId + "'";
 
-                var sqlSelQuery = $"select " + ColumAssign + " from " + tableName + whereCond;
+                var orderCond = $" order by sc.created_on DESC ";
+
+                var sqlSelQuery = $"select " + ColumAssign + " from " + tableName + whereCond + orderCond;
                 using (var connection = _appDbContext.Connection)
                 {
                     var sqlSelResult = await connection.QueryAsync<DrNurseCallDetails>(sqlSelQuery);

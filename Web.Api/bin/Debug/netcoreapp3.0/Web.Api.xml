@@ -214,6 +214,19 @@
             <param name="userId">User Id (optional)</param>
             <returns>User Details</returns>
         </member>
+        <member name="M:Web.Api.Controllers.UserController.GetAreaList">
+            <summary>
+            Getting a all Area
+            </summary>
+            <returns>List of Areas</returns>
+        </member>
+        <member name="M:Web.Api.Controllers.UserController.CreateArea(Web.Api.Models.Request.AreaRequest)">
+            <summary>
+            Creating a Area
+            </summary>
+            <param name="request">Area Details</param>
+            <returns>Acknowledgement</returns>
+        </member>
         <member name="M:Web.Api.Controllers.UserController.CreateUser(Web.Api.Models.Request.UserRequest)">
             <summary>
             Creating a User

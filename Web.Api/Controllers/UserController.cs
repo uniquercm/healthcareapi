@@ -19,7 +19,6 @@ namespace Web.Api.Controllers
         private readonly GetDetailsPresenter _getDetailsPresenter;
         private readonly AvailabilityPresenter _availabilityPresenter;
         private readonly IMapper _mapper;
-
         public UserController(IAuthUseCases authUseCases, AcknowledgementPresenter acknowledgementPresenter, GetDetailsPresenter getDetailsPresenter, AvailabilityPresenter availabilityPresenter, IMapper mapper)
         {   
             _authUseCases = authUseCases;
@@ -28,7 +27,7 @@ namespace Web.Api.Controllers
              _availabilityPresenter = availabilityPresenter;
             _mapper = mapper;
         }
-        
+
         /// <summary>
         /// Getting a User Details
         /// </summary>
@@ -40,6 +39,30 @@ namespace Web.Api.Controllers
             await _authUseCases.Handle(new GetDetailsRequest(userId), _getDetailsPresenter);
             return _getDetailsPresenter.ContentResult;
         }
+
+        /// <summary>
+        /// Getting a all Area
+        /// </summary>
+        /// <returns>List of Areas</returns>
+        [HttpGet("area")]
+        public async Task<ActionResult> GetAreaList()
+        {
+            await _authUseCases.Handle(new GetDetailsRequest(), _getDetailsPresenter);
+            return _getDetailsPresenter.ContentResult;
+        }
+
+        /// <summary>
+        /// Creating a Area
+        /// </summary>
+        /// <param name="request">Area Details</param>
+        /// <returns>Acknowledgement</returns>
+        [HttpPost("area")]
+        public async Task<ActionResult> CreateArea([FromBody] Models.Request.AreaRequest request)
+        {
+            await _authUseCases.Handle(_mapper.Map<AreaRequest>(request), _acknowledgementPresenter);
+            return _acknowledgementPresenter.ContentResult;
+        }
+
 
         /// <summary>
         /// Creating a User

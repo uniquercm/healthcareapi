@@ -55,7 +55,9 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 if (!string.IsNullOrEmpty(patientId))
                     whereCond += " and p.patient_id = '" + patientId + "'";
 
-                var sqlSelQuery = $"select " + ColumAssign + " from " + tableName + whereCond;
+                var orderCond = $" order by p.created_on DESC ";
+
+                var sqlSelQuery = $"select " + ColumAssign + " from " + tableName + whereCond + orderCond;
                 using (var connection = _appDbContext.Connection)
                 {
                     var sqlSelResult = await connection.QueryAsync<PatientDetails>(sqlSelQuery);

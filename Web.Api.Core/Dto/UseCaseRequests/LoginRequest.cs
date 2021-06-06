@@ -17,6 +17,11 @@ namespace Web.Api.Core.Dto.UseCaseRequests
             Password = password;
         }
     }
+    public class AreaRequest : IUseCaseRequest<AcknowledgementResponse>
+    {
+        public int AreaId { get; set; }
+        public string AreaName { get; set; }
+    }
 
     public class LoginUserDetails
     {

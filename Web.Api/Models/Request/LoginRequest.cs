@@ -5,6 +5,11 @@
         public string UserName { get; set; }
         public string Password { get; set; }
     }
+    public class AreaRequest
+    {
+        public int AreaId { get; set; }
+        public string AreaName { get; set; }
+    }
     public class UserRequest
     {
         public string UserId { get; set; }
