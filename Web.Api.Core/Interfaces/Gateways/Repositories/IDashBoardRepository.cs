@@ -6,6 +6,6 @@ namespace Web.Api.Core.Interfaces.Gateways.Repositories
 {
     public interface IDashBoardRepository 
     {
-        Task<DashBoardDetails> GetDashBoardDetails(string companyId);
+        Task<DashBoardDetails> GetDashBoardDetails(string companyId, IDrNurseCallFieldAllocationRepository drNurseCallFieldAllocationRepository);
     }
 }

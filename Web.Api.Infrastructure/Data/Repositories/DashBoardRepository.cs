@@ -16,7 +16,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
             _appDbContext = appDbContext;
         }
 
-        public async Task<DashBoardDetails> GetDashBoardDetails(string companyId)
+        public async Task<DashBoardDetails> GetDashBoardDetails(string companyId, IDrNurseCallFieldAllocationRepository drNurseCallFieldAllocationRepository)
         {
             DashBoardDetails retDashBoardDetails = new DashBoardDetails();
             try
@@ -129,6 +129,8 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     sqlSelQuery = $"select no_of_team from HC_Master_Details.company_obj" + whereCond;
                     var sqlResult = await connection.QueryAsync<int>(sqlSelQuery);
                     retDashBoardDetails.TotalTeamNumber = sqlResult.FirstOrDefault();
+
+                    retDashBoardDetails.TeamStatusDetailsList = await GetTeamDetails(companyId, drNurseCallFieldAllocationRepository);
                 }
             }
             catch (Exception Err)
@@ -136,6 +138,50 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 var Error = Err.Message.ToString();
             }
             return retDashBoardDetails;
+        }
+
+        async Task<List<TeamStatusDetails>> GetTeamDetails(string companyId, IDrNurseCallFieldAllocationRepository drNurseCallFieldAllocationRepository)
+        {
+            List<TeamStatusDetails> retTeamStatusDetails = new List<TeamStatusDetails>();
+            try
+            {
+                var tableName = $"HC_Authentication.user_obj u, HC_Master_Details.company_obj co";
+
+                var ColumAssign = $"u.company_id as CompanyId, co.company_name as CompanyName, " +
+                                  $"u.full_name as TeamName, u.user_name as TeamUserName";
+
+                var whereCond = $" where user_type = 7";
+
+                string todayDate = DateTime.Today.ToString("yyyy-MM-dd 00:00:00.0");
+
+                if (!string.IsNullOrEmpty(companyId))
+                    whereCond += " and u.company_id = '" + companyId + "'";
+
+                using (var connection = _appDbContext.Connection)
+                {
+                    var sqlSelQuery = $"select " + ColumAssign + " from " + tableName + whereCond;
+                    var sqlSelResult = await connection.QueryAsync<TeamStatusDetails>(sqlSelQuery);
+
+                    foreach(TeamStatusDetails singleTeamStatusDetails in sqlSelResult.ToList())
+                    {//called , pending, visited
+                        List<DrNurseCallDetails> tmpDrNurseCallDetails = await drNurseCallFieldAllocationRepository.GetTeamFieldAllowCallDetails(companyId, singleTeamStatusDetails.TeamUserName, DateTime.Today, DateTime.Today, "pending");
+                        singleTeamStatusDetails.CallStatusPendingCount = tmpDrNurseCallDetails.Count();
+
+                        tmpDrNurseCallDetails = await drNurseCallFieldAllocationRepository.GetTeamFieldAllowCallDetails(companyId, singleTeamStatusDetails.TeamUserName, DateTime.Today, DateTime.Today, "called");
+                        singleTeamStatusDetails.CallStatusCalledCount = tmpDrNurseCallDetails.Count();
+
+                        tmpDrNurseCallDetails = await drNurseCallFieldAllocationRepository.GetTeamFieldAllowCallDetails(companyId, singleTeamStatusDetails.TeamUserName, DateTime.Today, DateTime.Today, "visited");
+                        singleTeamStatusDetails.CallStatusCalledCount = tmpDrNurseCallDetails.Count();
+
+                        retTeamStatusDetails.Add(singleTeamStatusDetails);
+                    }
+                }
+            }
+            catch (Exception Err)
+            {
+                var Error = Err.Message.ToString();
+            }
+            return retTeamStatusDetails;
         }
     }
 }

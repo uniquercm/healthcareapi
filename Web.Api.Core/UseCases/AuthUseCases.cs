@@ -15,7 +15,6 @@ namespace Web.Api.Core.UseCases
         public AuthUseCases(IAuthRepository authRepository)
         {
             _authRepository = authRepository;
-           
         }
 
         public async Task<bool> Handle(LoginRequest message, IOutputPort<LoginResponse> outputPort)

@@ -79,6 +79,8 @@ namespace Web.Api.Core.Dto.UseCaseRequests
     }
     public class TeamStatusDetails
     {
+        public string CompanyId { get; set; }
+        public string CompanyName { get; set; }
         public string TeamName { get; set; }
         public string TeamUserName{ get; set; }
         public int CallStatusCalledCount { get; set; }
