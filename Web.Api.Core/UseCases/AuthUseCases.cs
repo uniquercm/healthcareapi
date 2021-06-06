@@ -15,7 +15,7 @@ namespace Web.Api.Core.UseCases
         public AuthUseCases(IAuthRepository authRepository)
         {
             _authRepository = authRepository;
-        }
+        }//
 
         public async Task<bool> Handle(LoginRequest message, IOutputPort<LoginResponse> outputPort)
         {
@@ -40,7 +40,7 @@ namespace Web.Api.Core.UseCases
         public async Task<bool> Handle(GetDetailsRequest request, IOutputPort<GetDetailsResponse> outputPort)
         {
             GetDetailsResponse getDetailsResponse;
-            if(String.IsNullOrEmpty(request.Id))
+            if(request.Id == "area")
                 getDetailsResponse = new GetDetailsResponse(await _authRepository.GetAreaDetails(), true, "Data Fetched Successfully");
             else
                 getDetailsResponse = new GetDetailsResponse(await _authRepository.GetUserDetails(request.Id), true, "Data Fetched Successfully");

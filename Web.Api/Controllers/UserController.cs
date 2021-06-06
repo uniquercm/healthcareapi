@@ -47,7 +47,7 @@ namespace Web.Api.Controllers
         [HttpGet("area")]
         public async Task<ActionResult> GetAreaList()
         {
-            await _authUseCases.Handle(new GetDetailsRequest(), _getDetailsPresenter);
+            await _authUseCases.Handle(new GetDetailsRequest("area"), _getDetailsPresenter);
             return _getDetailsPresenter.ContentResult;
         }
 
