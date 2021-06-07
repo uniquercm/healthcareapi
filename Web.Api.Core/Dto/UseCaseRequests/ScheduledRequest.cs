@@ -47,6 +47,7 @@ namespace Web.Api.Core.Dto.UseCaseRequests
         //public List<StaffDetails> StaffDetailsList { get; set; }
         public string PatientId { get; set; }
         public string PatientName { get; set; }
+        public int Age { get; set; }
         public PatientDetails PatientInformation { get; set; }
         public DateTime PCRTestDate { get; set; }//initial_pcr_test_date – datetime
         public string PCRResult { get; set; }//initial_pcr_test_result - enum('Negative','Positive')

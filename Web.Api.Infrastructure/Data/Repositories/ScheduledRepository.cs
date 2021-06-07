@@ -27,7 +27,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                                 $"HC_Treatment.scheduled_obj sc";
 
                 var ColumAssign = $"sc.scheduled_id as ScheduledId, sc.patient_staff_id as PatientStaffId, " +
-                                  $"sc.patient_id as PatientId, p.patient_name as PatientName," +
+                                  $"sc.patient_id as PatientId, p.patient_name as PatientName, p.age as Age, " +
                                   $"sc.initial_pcr_test_date as PCRTestDate, sc.initial_pcr_test_result as PCRResult, " +
                                   $"sc.have_vaccine as HaveVaccine, " +
                                   $"sc.allocated_team_name as AllocatedTeamName, sc.reallocated_team_name as ReAllocatedTeamName, " +
