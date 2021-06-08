@@ -76,7 +76,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
             {
                 var tableName = $"HC_Authentication.user_obj u, HC_Master_Details.company_obj c";
 
-                var ColumAssign = $"u.user_id  as UserId, u.user_name as UserName, " +
+                var ColumAssign = $"u.user_id as UserId, u.user_name as UserName, " +
                                    $"u.user_type as UserType, u.company_id as CompanyId, " +
                                    $"c.company_name as CompanyName, u.area_list as AreaList";
 
@@ -248,49 +248,52 @@ namespace Web.Api.Infrastructure.Data.Repositories
             }
         }
 
-        public async Task<List<KeyValuePair<string,string>>> GetAreaDetails()
+        public async Task<List<AreaRequest>> GetAreaDetails()
         {
-            List<KeyValuePair<string,string>> retAreaList = new List<KeyValuePair<string, string>>();
+            List<AreaRequest> retAreaRequestList = new List<AreaRequest>();
             try
             {
                 var tableName = $"HC_Master_Details.area_obj";
 
-                var ColumAssign = $"area_id as `Key`, area_name as `Value` " ;
+                var ColumAssign = $"area_id as AreaId, area_name as AreaName, " +
+                                  $"region_id as RegionId, region_name as RegionName" ;
 
-                var sqlQuery = $"select " + ColumAssign + " from " + tableName;
+                var sqlSelQuery = $"select " + ColumAssign + " from " + tableName;
 
                 using (var connection = _appDbContext.Connection)
                 {
-                    Dictionary<string, string> data = connection.Query<KeyValuePair<string, string>>(sqlQuery).ToDictionary(pair => pair.Key, pair => pair.Value);
-                    retAreaList = data.ToList();
+                    var sqlSelResult = await connection.QueryAsync<AreaRequest>(sqlSelQuery);
+                    retAreaRequestList = sqlSelResult.ToList();
                 }
             }
             catch (Exception Err)
             {
                 var Error = Err.Message.ToString();
             }
-            return retAreaList;
+            return retAreaRequestList;
         }
-        public async Task<bool> AddArea(int areaCount, string areaName)
+        public async Task<bool> AddArea(AreaRequest areaRequest)
         {
             try
             {
                 bool sqlResult = true;
-                int areaId = areaCount -1;
+                int areaId = areaRequest.AreaId -1;
                 if(areaId <= 0)
                     areaId = 1;
 
                 var tableName = $"HC_Master_Details.area_obj";
 
-                var colName = $"area_id, area_name";
-                var colValueName = $"@AreaId, @AreaName";
+                var colName = $"area_id, area_name, region_id, region_name";
+                var colValueName = $"@AreaId, @AreaName, @RegionId, @RegionName";
 
                 var sqlInsQuery = $"INSERT INTO "+ tableName + "( " + colName + " )" +
                                     $"VALUES ( " + colValueName + " )";
                 object colValueParam = new
                 {
                     AreaId = areaId,
-                    AreaName = areaName
+                    RegionId = areaRequest.RegionId,
+                    RegionName = areaRequest.RegionName,
+                    AreaName = areaRequest.AreaName
                 };
 
                 using (var connection = _appDbContext.Connection)

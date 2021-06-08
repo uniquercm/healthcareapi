@@ -89,7 +89,7 @@ namespace Web.Api.Core.UseCases
         {
             AcknowledgementResponse acknowledgementResponse;
 
-            if(await _authRepository.AddArea(request.AreaId, request.AreaName))
+            if(await _authRepository.AddArea(request))
                 acknowledgementResponse = new AcknowledgementResponse(true, "Area Name Successfully Added");
             else
                 acknowledgementResponse = new AcknowledgementResponse(new[] { new Error("Error Occurred", "Error Occurred")}, false);

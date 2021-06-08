@@ -20,6 +20,8 @@ namespace Web.Api.Core.Dto.UseCaseRequests
     public class AreaRequest : IUseCaseRequest<AcknowledgementResponse>
     {
         public int AreaId { get; set; }
+        public int RegionId { get; set;}
+        public string RegionName { get; set; }
         public string AreaName { get; set; }
     }
 

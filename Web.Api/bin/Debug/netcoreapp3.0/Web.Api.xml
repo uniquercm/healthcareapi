@@ -28,7 +28,7 @@
             <param name="callName">Call Name (doctor, nurse, team, field) (optional)</param>
             <param name="callStatus">Call Status(all, called, pending, visited) (optional)</param>
             <param name="teamUserName">Team User Name (optional)</param>
-            <param name="serviceStatus">Service Status(all, tracker, sticker, 4pcr, 8pcr, discharge) (optional)</param>
+            <param name="serviceStatus">Service Status(all, sticker, 4pcr, 8pcr, discharge) (optional)</param>
             <returns>Doctor Nurse Team Field Allocation Call Details</returns>
         </member>
         <member name="M:Web.Api.Controllers.DrNurseCallFieldAllocationController.EditCall(Web.Api.Models.Request.CallRequest)">

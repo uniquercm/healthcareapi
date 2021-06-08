@@ -14,7 +14,7 @@ namespace Web.Api.Core.Interfaces.Gateways.Repositories
         Task<bool> CreateUser(UserRequest userRequest);
         string GenerateUUID();
         Task<bool> EditUser(UserRequest userRequest);
-        Task<List<KeyValuePair<string,string>>> GetAreaDetails();
-        Task<bool> AddArea(int areaCount, string areaName);
+        Task<List<AreaRequest>> GetAreaDetails();
+        Task<bool> AddArea(AreaRequest areaRequest);
     }
 }
