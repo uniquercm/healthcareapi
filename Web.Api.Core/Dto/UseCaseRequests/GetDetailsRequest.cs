@@ -20,7 +20,7 @@ namespace Web.Api.Core.Dto.UseCaseRequests
         public string SendClaim { get; set; }//all, no, yes
         public string CallStatus { get; set; }//all, called, pending
         public string FieldAllocationStatus { get; set; }//all, allowed, notallowed
-        //public string GMapLinkStatus { get; set; }//all, yes, no
+        public string ServiceStatus { get; set; }//all, tracker, sticker, 4pcr, 8pcr, discharge
 
         public GetDetailsRequest()
         {   }
@@ -40,7 +40,7 @@ namespace Web.Api.Core.Dto.UseCaseRequests
             PatientId = patientId;
             LableName = lableName;
         }
-        public GetDetailsRequest(string companyId, DateTime scheduledFromDate, DateTime scheduledToDate, string lableName, string callStatus, string teamUserName)
+        public GetDetailsRequest(string companyId, DateTime scheduledFromDate, DateTime scheduledToDate, string lableName, string callStatus, string teamUserName, string serviceStatus)
         {
             CompanyId = companyId;
             ScheduledFromDate = scheduledFromDate;
@@ -48,6 +48,7 @@ namespace Web.Api.Core.Dto.UseCaseRequests
             LableName = lableName;
             CallStatus = callStatus;
             TeamUserName = teamUserName;
+            ServiceStatus = serviceStatus;
         }
         public GetDetailsRequest(string id, string patientId, string staffId, string patientStaffId, string scheduledId, string lableName)
         {

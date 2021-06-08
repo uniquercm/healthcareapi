@@ -67,6 +67,7 @@ namespace Web.Api.Core.Dto.UseCaseRequests
         public int TotalPatientNumber { get; set; }
         public int CurrentPatientNumber { get; set; }
         public int DischargePatientNumber { get; set; }
+        public int ActivePatientNumber { get; set; }
         public int TotalUserTypeMemberNumber { get; set; }
         public int TotalAdminUserNumber { get; set; }
         public int TotalDoctorUserNumber { get; set; }
@@ -83,7 +84,9 @@ namespace Web.Api.Core.Dto.UseCaseRequests
         public string CompanyName { get; set; }
         public string TeamName { get; set; }
         public string TeamUserName{ get; set; }
+        public int AllocatedCount { get; set; }
         public int CallStatusCalledCount { get; set; }
+        public int CallStatusVisitedCount { get; set; }
         public int CallStatusPendingCount { get; set; }
     }
 }

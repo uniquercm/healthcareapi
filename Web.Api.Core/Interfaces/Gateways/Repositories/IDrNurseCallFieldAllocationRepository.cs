@@ -7,9 +7,9 @@ namespace Web.Api.Core.Interfaces.Gateways.Repositories
 {
     public interface IDrNurseCallFieldAllocationRepository 
     {
-        Task<List<DrNurseCallDetails>> GetFieldAllowCallDetails(string companyId, DateTime scheduledFromDate, DateTime scheduledToDate, string callStatus);
-        Task<List<DrNurseCallDetails>> GetDrNurseCallDetails(string companyId, string callName, DateTime scheduledFromDate, DateTime scheduledToDate, string callStatus);
-        Task<List<DrNurseCallDetails>> GetTeamFieldAllowCallDetails(string companyId, string teamUserName, DateTime scheduledFromDate, DateTime scheduledToDate, string callStatus);
+        Task<List<DrNurseCallDetails>> GetFieldAllowCallDetails(string companyId, string teamUserName, string callName, DateTime scheduledFromDate, DateTime scheduledToDate, string callStatus, string serviceStatus);
+        Task<List<DrNurseCallDetails>> GetDrNurseCallDetails(string companyId, string teamUserName, string callName, DateTime scheduledFromDate, DateTime scheduledToDate, string callStatus, string serviceStatus);
+        Task<List<DrNurseCallDetails>> GetTeamFieldAllowCallDetails1(string companyId, string teamUserName, DateTime scheduledFromDate, DateTime scheduledToDate, string callStatus, string serviceStatus);
         Task<bool> EditPCRCall(CallRequest callRequest);
 
     }

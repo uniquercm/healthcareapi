@@ -71,6 +71,8 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     sqlSelResult = await connection.QueryAsync(sqlSelQuery);
                     retDashBoardDetails.DischargePatientNumber = sqlSelResult.Count();
 
+                    retDashBoardDetails.ActivePatientNumber = retDashBoardDetails.TotalPatientNumber - retDashBoardDetails.DischargePatientNumber;
+
                     cond = $" where discharge_date >= '" + todayDate + "'" + 
                            $" and pa.patient_id = sc.patient_id";
                     if (!string.IsNullOrEmpty(companyId))
@@ -164,14 +166,17 @@ namespace Web.Api.Infrastructure.Data.Repositories
 
                     foreach(TeamStatusDetails singleTeamStatusDetails in sqlSelResult.ToList())
                     {//called , pending, visited
-                        List<DrNurseCallDetails> tmpDrNurseCallDetails = await drNurseCallFieldAllocationRepository.GetTeamFieldAllowCallDetails(companyId, singleTeamStatusDetails.TeamUserName, DateTime.Today, DateTime.Today, "pending");
+                        List<DrNurseCallDetails> tmpDrNurseCallDetails = await drNurseCallFieldAllocationRepository.GetFieldAllowCallDetails(companyId, singleTeamStatusDetails.TeamUserName, "TeamCall", DateTime.Today, DateTime.Today, "all", "all");
+                        singleTeamStatusDetails.AllocatedCount = tmpDrNurseCallDetails.Count();
+
+                        tmpDrNurseCallDetails = await drNurseCallFieldAllocationRepository.GetFieldAllowCallDetails(companyId, singleTeamStatusDetails.TeamUserName, "TeamCall", DateTime.Today, DateTime.Today, "pending", "all");
                         singleTeamStatusDetails.CallStatusPendingCount = tmpDrNurseCallDetails.Count();
 
-                        tmpDrNurseCallDetails = await drNurseCallFieldAllocationRepository.GetTeamFieldAllowCallDetails(companyId, singleTeamStatusDetails.TeamUserName, DateTime.Today, DateTime.Today, "called");
+                        tmpDrNurseCallDetails = await drNurseCallFieldAllocationRepository.GetFieldAllowCallDetails(companyId, singleTeamStatusDetails.TeamUserName, "TeamCall", DateTime.Today, DateTime.Today, "called", "all");
                         singleTeamStatusDetails.CallStatusCalledCount = tmpDrNurseCallDetails.Count();
 
-                        tmpDrNurseCallDetails = await drNurseCallFieldAllocationRepository.GetTeamFieldAllowCallDetails(companyId, singleTeamStatusDetails.TeamUserName, DateTime.Today, DateTime.Today, "visited");
-                        singleTeamStatusDetails.CallStatusCalledCount = tmpDrNurseCallDetails.Count();
+                        tmpDrNurseCallDetails = await drNurseCallFieldAllocationRepository.GetFieldAllowCallDetails(companyId, singleTeamStatusDetails.TeamUserName, "TeamCall", DateTime.Today, DateTime.Today, "visited", "all");
+                        singleTeamStatusDetails.CallStatusVisitedCount = tmpDrNurseCallDetails.Count();
 
                         retTeamStatusDetails.Add(singleTeamStatusDetails);
                     }

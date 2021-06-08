@@ -19,31 +19,45 @@ namespace Web.Api.Infrastructure.Data.Repositories
             _appDbContext = appDbContext;
         }
 
-        public async Task<List<DrNurseCallDetails>> GetFieldAllowCallDetails(string companyId, DateTime scheduledFromDate, DateTime scheduledToDate, string callStatus)
+        public async Task<List<DrNurseCallDetails>> GetFieldAllowCallDetails(string companyId, string teamUserName, string callName, DateTime scheduledFromDate, DateTime scheduledToDate, string callStatus, string serviceStatus)
         {
             List<DrNurseCallDetails> retDrNurseCallDetails = new List<DrNurseCallDetails>();
             List<DrNurseCallDetails> dayCallDetails = new List<DrNurseCallDetails>();
             try
             {
-                retDrNurseCallDetails = await GetDrNurseCallDetails(companyId, "NurseCall", scheduledFromDate, scheduledToDate, callStatus);
-
-                dayCallDetails = await GetPCRCallDetails(companyId, true, scheduledFromDate, scheduledToDate);
-                if(retDrNurseCallDetails.Count > 0)
+                if(!String.IsNullOrEmpty(serviceStatus))
                 {
-                    foreach(DrNurseCallDetails singleDrNurseCallDetails in dayCallDetails)
-                        retDrNurseCallDetails.Add(singleDrNurseCallDetails);
-                }
-                else
-                    retDrNurseCallDetails = dayCallDetails;
+                    if((!callName.Equals("DrCall")) && (serviceStatus.Equals("all") || !serviceStatus.Equals("4pcr") 
+                    || !serviceStatus.Equals("8pcr")))
+                        retDrNurseCallDetails = await GetDrNurseCallDetails(companyId, teamUserName, "NurseCall", scheduledFromDate, scheduledToDate, callStatus, serviceStatus);
 
-                dayCallDetails = await GetPCRCallDetails(companyId, false, scheduledFromDate, scheduledToDate);
-                if(retDrNurseCallDetails.Count > 0)
-                {
-                    foreach(DrNurseCallDetails singleDrNurseCallDetails in dayCallDetails)
-                        retDrNurseCallDetails.Add(singleDrNurseCallDetails);
+                    if(serviceStatus.Equals("4pcr") || serviceStatus.Equals("all"))
+                    {
+                        dayCallDetails = await GetPCRCallDetails(companyId, teamUserName, true, scheduledFromDate, scheduledToDate, serviceStatus);
+                        if(retDrNurseCallDetails.Count > 0)
+                        {
+                            foreach(DrNurseCallDetails singleDrNurseCallDetails in dayCallDetails)
+                                retDrNurseCallDetails.Add(singleDrNurseCallDetails);
+                        }
+                        else
+                            retDrNurseCallDetails = dayCallDetails;
+                    }
+                /*}
+
+                 if(!String.IsNullOrEmpty(serviceStatus))
+                {*/
+                    if(serviceStatus.Equals("8pcr") || serviceStatus.Equals("all"))
+                    {
+                        dayCallDetails = await GetPCRCallDetails(companyId, teamUserName, false, scheduledFromDate, scheduledToDate, serviceStatus);
+                        if(retDrNurseCallDetails.Count > 0)
+                        {
+                            foreach(DrNurseCallDetails singleDrNurseCallDetails in dayCallDetails)
+                                retDrNurseCallDetails.Add(singleDrNurseCallDetails);
+                        }
+                        else
+                            retDrNurseCallDetails = dayCallDetails;
+                    }
                 }
-                else
-                    retDrNurseCallDetails = dayCallDetails;
             }
             catch (Exception Err)
             {
@@ -51,7 +65,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
             }
             return retDrNurseCallDetails;
         }
-        public async Task<List<DrNurseCallDetails>> GetDrNurseCallDetails(string companyId, string callName, DateTime scheduledFromDate, DateTime scheduledToDate, string callStatus)
+        public async Task<List<DrNurseCallDetails>> GetDrNurseCallDetails(string companyId, string teamUserName, string callName, DateTime scheduledFromDate, DateTime scheduledToDate, string callStatus, string serviceStatus)
         {
             List<DrNurseCallDetails> retDrNurseCallDetails = new List<DrNurseCallDetails>();
             try
@@ -116,7 +130,21 @@ namespace Web.Api.Infrastructure.Data.Repositories
                         whereCond += " and ca.call_status = '" + callStatus + "'";
                 }
 
-                var orderCond = $" order by s.created_on DESC ";
+                if(!string.IsNullOrEmpty(teamUserName) && callName != "DrCall")
+                    whereCond += " and ((sc.allocated_team_name = '" + teamUserName + "' and sc.reallocated_team_name = '')" +
+                                 " or (sc.allocated_team_name != '' and sc.reallocated_team_name = '" + teamUserName + "'))";
+
+                if(!String.IsNullOrEmpty(serviceStatus) && callName != "DrCall")
+                {//all, tracker, sticker, 4pcr, 8pcr, discharge
+                    /*if(serviceStatus.Equals("tracker"))
+                    whereCond += $" and sc.sticker_application = 'yes'";
+                    else */if(serviceStatus.Equals("sticker"))
+                        whereCond += $" and p.sticker_application = 'yes'";
+                    else if(serviceStatus.Equals("discharge"))
+                        whereCond += $" and sc.discharge_date = '" + fromDate + "'";
+                }
+
+                var orderCond = $" order by sc.created_on DESC ";
 
                 var sqlSelQuery = $"select " + ColumAssign + " from " + tableName + whereCond + orderCond;
                 using (var connection = _appDbContext.Connection)
@@ -131,7 +159,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
             }
             return retDrNurseCallDetails;
         }
-        public async Task<List<DrNurseCallDetails>> GetTeamFieldAllowCallDetails(string companyId, string teamUserName, DateTime scheduledFromDate, DateTime scheduledToDate, string callStatus)
+        public async Task<List<DrNurseCallDetails>> GetTeamFieldAllowCallDetails1(string companyId, string teamUserName, DateTime scheduledFromDate, DateTime scheduledToDate, string callStatus, string serviceStatus)
         {
             List<DrNurseCallDetails> retDrNurseCallDetails = new List<DrNurseCallDetails>();
             try
@@ -193,10 +221,17 @@ namespace Web.Api.Infrastructure.Data.Repositories
                         whereCond += " and ca.call_status = '" + callStatus + "'";
                 }
 
+                if(!String.IsNullOrEmpty(serviceStatus))
+                {//all, tracker, sticker, 4pcr, 8pcr, discharge
+                    if(serviceStatus.Equals("sticker"))
+                        whereCond += $" and p.sticker_application = 'yes'";
+                    else if(serviceStatus.Equals("discharge"))
+                        whereCond += $" and sc.discharge_date = '" + fromDate + "'";
+                }
+
                 if(!string.IsNullOrEmpty(teamUserName))
                     whereCond += " and ((sc.allocated_team_name = '" + teamUserName + "' and sc.reallocated_team_name = '')" +
                                  " or (sc.allocated_team_name != '' and sc.reallocated_team_name = '" + teamUserName + "'))";
-
 
                 var orderCond = $" order by sc.created_on DESC ";
 
@@ -214,7 +249,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
             return retDrNurseCallDetails;
         }
 
-        async Task<List<DrNurseCallDetails>> GetPCRCallDetails(string companyId, bool is4thDay, DateTime scheduledFromDate, DateTime scheduledToDate)
+        async Task<List<DrNurseCallDetails>> GetPCRCallDetails(string companyId, string teamUserName, bool is4thDay, DateTime scheduledFromDate, DateTime scheduledToDate, string serviceStatus)
         {
             List<DrNurseCallDetails> retDrNurseCallDetails = new List<DrNurseCallDetails>();
             try
@@ -267,6 +302,10 @@ namespace Web.Api.Infrastructure.Data.Repositories
 
                 if (!string.IsNullOrEmpty(companyId))
                     whereCond += " and p.company_id = '" + companyId + "'";
+
+                if(!string.IsNullOrEmpty(teamUserName))
+                    whereCond += " and ((sc.allocated_team_name = '" + teamUserName + "' and sc.reallocated_team_name = '')" +
+                                 " or (sc.allocated_team_name != '' and sc.reallocated_team_name = '" + teamUserName + "'))";
 
                 var orderCond = $" order by sc.created_on DESC ";
 
