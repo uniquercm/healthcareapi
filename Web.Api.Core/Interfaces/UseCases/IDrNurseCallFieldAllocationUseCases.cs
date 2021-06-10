@@ -7,4 +7,6 @@ namespace Web.Api.Core.Interfaces.UseCases
     {   }
     public partial interface IDrNurseCallFieldAllocationUseCases : IUseCaseRequestHandler<CallRequest, AcknowledgementResponse>
     {   }
+    public partial interface IDrNurseCallFieldAllocationUseCases : IUseCaseRequestHandler<ServicePlanRequest, AcknowledgementResponse>
+    {   }
 }

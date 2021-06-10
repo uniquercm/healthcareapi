@@ -404,5 +404,46 @@ namespace Web.Api.Infrastructure.Data.Repositories
             }
         }
 
+        public async Task<bool> EditServicePlan(ServicePlanRequest servicePlanRequest)
+        {
+            try
+            {
+                bool sqlResult = true;
+                var tableName = $"HC_Staff_Patient.patient_obj";
+
+                var colName = $"enrolled_count = @EnrolledCount, enrolled_details = @EnrolledDetails, " +
+                              $"sticker_application = @StickerApplication, tracker_application = @TrackerApplication, " +
+                              $"sticker_removal = @StickerRemoval, tracker_removal = @TrackerRemoval, " +
+                              $"modified_by = @ModifiedBy, modified_on = @ModifiedOn";
+
+                var whereCond = $" where patient_id = @PatientId";
+                var sqlUpdateQuery = $"UPDATE "+ tableName + " set " + colName + whereCond;
+
+                object colValueParam = new
+                {
+                    PatientId = servicePlanRequest.PatientId,
+                    EnrolledCount = servicePlanRequest.EnrolledCount,
+                    EnrolledDetails = servicePlanRequest.EnrolledDetails,
+                    StickerApplication = servicePlanRequest.StickerApplication,
+                    TrackerApplication = servicePlanRequest.TrackerApplication,
+                    StickerRemoval = servicePlanRequest.StickerRemoval,
+                    TrackerRemoval = servicePlanRequest.TrackerRemoval,
+                    ModifiedBy = servicePlanRequest.ModifiedBy,
+                    ModifiedOn = DateTime.Today.ToString("yyyy-MM-dd 00:00:00.0")
+                };
+
+                using (var connection = _appDbContext.Connection)
+                {
+                    sqlResult = Convert.ToBoolean(await connection.ExecuteAsync(sqlUpdateQuery, colValueParam));
+                    return sqlResult;
+                }
+            }
+            catch (Exception Err)
+            {
+                var Error = Err.Message.ToString();
+                return false;
+            }
+        }
+
     }
 }

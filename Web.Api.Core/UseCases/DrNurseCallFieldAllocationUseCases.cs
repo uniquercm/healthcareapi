@@ -60,5 +60,17 @@ namespace Web.Api.Core.UseCases
             outputPort.Handle(acknowledgementResponse);
             return true;
         }
+        public async Task<bool> Handle(ServicePlanRequest request, IOutputPort<AcknowledgementResponse> outputPort)
+        {
+            AcknowledgementResponse acknowledgementResponse;
+
+            if(await _drNurseCallFieldAllocationRepository.EditServicePlan(request))
+                acknowledgementResponse = new AcknowledgementResponse(true, "Service Plan Details Successfully Modifyed");
+            else
+                acknowledgementResponse = new AcknowledgementResponse(new[] { new Error("Error Occurred", "Error Occurred")}, false);
+
+            outputPort.Handle(acknowledgementResponse);
+            return true;
+        }
     }
 }

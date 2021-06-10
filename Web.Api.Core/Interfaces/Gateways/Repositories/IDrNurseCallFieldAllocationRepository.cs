@@ -11,6 +11,7 @@ namespace Web.Api.Core.Interfaces.Gateways.Repositories
         Task<List<DrNurseCallDetails>> GetDrNurseCallDetails(string companyId, string teamUserName, string callName, DateTime scheduledFromDate, DateTime scheduledToDate, string callStatus, string serviceStatus);
         Task<List<DrNurseCallDetails>> GetTeamFieldAllowCallDetails1(string companyId, string teamUserName, DateTime scheduledFromDate, DateTime scheduledToDate, string callStatus, string serviceStatus);
         Task<bool> EditPCRCall(CallRequest callRequest);
+        Task<bool> EditServicePlan(ServicePlanRequest servicePlanRequest);
 
     }
 }

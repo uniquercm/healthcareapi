@@ -37,4 +37,26 @@ namespace Web.Api.Models.Request
         public bool IsUpdate { get; set; }
         public bool IsReception { get; set; }
     }
+    
+    public class ServicePlanRequest
+    {
+        public string PatientId { get; set; }//patient_id – varchar(128)
+        public string CompanyId { get; set; }//company_id – varchar(128)
+        public string ScheduledId { get; set; }//scheduled_id - varchar(128)
+        public DateTime TrackerScheduleDate { get; set; }//tracker_schedule_date - datetime
+        public DateTime TrackerAppliedDate { get; set; }//tracker_applied_date - datetime
+        public DateTime StickerScheduleDate { get; set; }//sticker_schedule_date - datetime
+        public DateTime StickerRemovedDate { get; set; }//sticker_removed_date - datetime
+        public string StickerTrackerNumber { get; set; }//sticker_tracker_no - varchar(50)
+        public DateTime TrackerReplacedDate { get; set; }//tracker_replace_date - datatime
+        public string TrackerReplaceNumber { get; set; }//tracker_replace_no - varchar(50)
+        public string StickerTrackerResult { get; set; }//sticker_tracker_result - varchar(50)
+        public int EnrolledCount { get; set; }//enrolled_count - int(25)
+        public string EnrolledDetails { get; set; }//enrolled_details - int(25)
+        public string StickerApplication { get; set; }//sticker_application - enum('No','Yes')
+        public int TrackerApplication { get; set; }//tracker_application – int(10)
+        public string StickerRemoval { get; set; }//sticker_removal - enum('No','Yes')
+        public int TrackerRemoval { get; set; }//tracker_removal – int(10)
+        public string ModifiedBy { get; set; } //modified_by
+    }
 }

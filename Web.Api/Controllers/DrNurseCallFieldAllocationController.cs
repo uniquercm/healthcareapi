@@ -68,5 +68,18 @@ namespace Web.Api.Controllers
             return _acknowledgementPresenter.ContentResult;
         }
 
+        /// <summary>
+        /// Modifying a Service Plan
+        /// </summary>
+        /// <param name="request">Modifying Service Plan Details</param>
+        /// <returns>Acknowledgement</returns>
+        [HttpPut("serviceplan")]
+        public async Task<ActionResult> EditServicePlan([FromBody] Models.Request.ServicePlanRequest request)
+        {
+            //request.IsUpdate = true;
+            await _drNurseCallFieldAllocationUseCases.Handle(_mapper.Map<ServicePlanRequest>(request), _acknowledgementPresenter);
+            return _acknowledgementPresenter.ContentResult;
+        }
+
     }
 }

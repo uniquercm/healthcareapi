@@ -38,6 +38,13 @@
             <param name="request">Modifying Call Details</param>
             <returns>Acknowledgement</returns>
         </member>
+        <member name="M:Web.Api.Controllers.DrNurseCallFieldAllocationController.EditServicePlan(Web.Api.Models.Request.ServicePlanRequest)">
+            <summary>
+            Modifying a Service Plan
+            </summary>
+            <param name="request">Modifying Service Plan Details</param>
+            <returns>Acknowledgement</returns>
+        </member>
         <member name="M:Web.Api.Controllers.HealthController.Health">
             <summary>
             Health Check
