@@ -408,6 +408,20 @@ namespace Web.Api.Infrastructure.Data.Repositories
         {
             try
             {
+                await EditPatientEnrollmentDetails(servicePlanRequest);
+                await EditScheduleStickerTrackerDetails(servicePlanRequest);
+                return true;
+            }
+            catch (Exception Err)
+            {
+                var Error = Err.Message.ToString();
+                return false;
+            }
+        }
+        async Task<bool> EditPatientEnrollmentDetails(ServicePlanRequest servicePlanRequest)
+        {
+            try
+            {
                 bool sqlResult = true;
                 var tableName = $"HC_Staff_Patient.patient_obj";
 
@@ -428,6 +442,84 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     TrackerApplication = servicePlanRequest.TrackerApplication,
                     StickerRemoval = servicePlanRequest.StickerRemoval,
                     TrackerRemoval = servicePlanRequest.TrackerRemoval,
+                    ModifiedBy = servicePlanRequest.ModifiedBy,
+                    ModifiedOn = DateTime.Today.ToString("yyyy-MM-dd 00:00:00.0")
+                };
+
+                using (var connection = _appDbContext.Connection)
+                {
+                    sqlResult = Convert.ToBoolean(await connection.ExecuteAsync(sqlUpdateQuery, colValueParam));
+                    return sqlResult;
+                }
+            }
+            catch (Exception Err)
+            {
+                var Error = Err.Message.ToString();
+                return false;
+            }
+        }
+
+        async Task<bool> EditScheduleStickerTrackerDetails(ServicePlanRequest servicePlanRequest)
+        {
+            try
+            {
+                bool sqlResult = true;
+                var tableName = $"HC_Staff_Patient.scheduled_obj";
+
+                var colName = $"tracker_applied_date = @TrackerAppliedDate, sticker_removed_date = @StickerRemovedDate, " +
+                              $"sticker_tracker_no = @StickerTrackerNumber, sticker_tracker_result = @StickerTrackerResult, " +
+                              $"tracker_replace_date = @TrackerReplacedDate, tracker_replace_no = @TrackerReplaceNumber, " +
+                              $"modified_by = @ModifiedBy, modified_on = @ModifiedOn";
+
+                var whereCond = $" where patient_id = @PatientId and scheduled_id = @ScheduledId";
+                var sqlUpdateQuery = $"UPDATE "+ tableName + " set " + colName + whereCond;
+
+                string appliedDate = "";
+                if(servicePlanRequest.TrackerAppliedDate == null)
+                    appliedDate = "";
+                else
+                {
+                    appliedDate = servicePlanRequest.TrackerAppliedDate.ToString("yyyy-MM-dd");
+                    if( appliedDate == "0001-01-01")
+                        appliedDate = "";
+                    else
+                        appliedDate = servicePlanRequest.TrackerAppliedDate.ToString("yyyy-MM-dd 00:00:00.0");
+                }
+
+                string removedDate = "";
+                if(servicePlanRequest.StickerRemovedDate == null)
+                    removedDate = "";
+                else
+                {
+                    removedDate = servicePlanRequest.StickerRemovedDate.ToString("yyyy-MM-dd");
+                    if( removedDate == "0001-01-01")
+                        removedDate = "";
+                    else
+                        removedDate = servicePlanRequest.StickerRemovedDate.ToString("yyyy-MM-dd 00:00:00.0");
+                } 
+
+                string replacedDate = "";
+                if(servicePlanRequest.TrackerReplacedDate == null)
+                    replacedDate = "";
+                else
+                {
+                    replacedDate = servicePlanRequest.TrackerReplacedDate.ToString("yyyy-MM-dd");
+                    if( replacedDate == "0001-01-01")
+                        replacedDate = "";
+                    else
+                        replacedDate = servicePlanRequest.TrackerReplacedDate.ToString("yyyy-MM-dd 00:00:00.0");
+                }
+
+                object colValueParam = new
+                {
+                    PatientId = servicePlanRequest.PatientId,
+                    ScheduledId = servicePlanRequest.ScheduledId,
+                    TrackerAppliedDate = appliedDate,//
+                    StickerRemovedDate = removedDate,//
+                    StickerTrackerNumber = servicePlanRequest.StickerTrackerNumber,//
+                    TrackerReplacedDate = replacedDate,//
+                    TrackerReplaceNumber = servicePlanRequest.TrackerReplaceNumber,//
+                    StickerTrackerResult = servicePlanRequest.StickerTrackerResult,//
                     ModifiedBy = servicePlanRequest.ModifiedBy,
                     ModifiedOn = DateTime.Today.ToString("yyyy-MM-dd 00:00:00.0")
                 };
