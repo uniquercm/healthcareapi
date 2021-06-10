@@ -27,6 +27,10 @@ namespace Web.Api.Core.Dto.UseCaseRequests
         public DateTime PCR8DayTestDate { get; set; }//8day_pcr_test_date - datetime
         public DateTime PCR8DaySampleDate { get; set; }//8day_pcr_test_sample_date – datetime
         public string PCR8DayResult { get; set; }//8day_pcr_test_result - varchar(100) enum('Negative','Positive')
+        public DateTime StickerTrackerScheduleDate { get; set; }//sticker_tracker_schedule_date - datetime
+        public DateTime StickerTrackerAppliedDate { get; set; }//sticker_tracker_applied_date – datetime
+        public string StickerTrackerAppliedResult { get; set; }//sticker_tracker_result - enum('Applied','Remove','Replace')
+        public string StickerTrackerAppliedNumber { get; set; }//sticker_tracker_applied_no - varchar(50)
         public DateTime FirstCallScheduledDate { get; set; }
         public string Day2CallId { get; set; }//2day_call_id – varchar(128)
         public string Day3CallId { get; set; }//3day_call_id – varchar(128)
@@ -66,6 +70,10 @@ namespace Web.Api.Core.Dto.UseCaseRequests
         public DateTime PCR8DayTestDate { get; set; }//8day_pcr_test_date - datetime
         public DateTime PCR8DaySampleDate { get; set; }//8day_pcr_test_sample_date – datetime
         public string PCR8DayResult { get; set; }//8day_pcr_test_result - enum('Negative','Positive')
+        public DateTime StickerTrackerScheduleDate { get; set; }//sticker_tracker_schedule_date - datetime
+        public DateTime StickerTrackerAppliedDate { get; set; }//sticker_tracker_applied_date – datetime
+        public string StickerTrackerAppliedResult { get; set; }//sticker_tracker_result - enum('Applied','Remove','Replace')
+        public string StickerTrackerAppliedNumber { get; set; }//sticker_tracker_applied_no - varchar(50)
         public string Day2CallId { get; set; }//2day_call_ id – varchar(128)
         public CallDetails Day2CallDetails { get; set; }
         public string Day3CallId { get; set; }//3day_call_ id – varchar(128)

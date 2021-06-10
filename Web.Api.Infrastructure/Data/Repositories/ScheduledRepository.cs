@@ -342,6 +342,8 @@ namespace Web.Api.Infrastructure.Data.Repositories
                         scheduledRequest.Day9CallId = callRequest.CallId;
                     else
                         scheduledRequest.Day9CallId = "";
+
+                    scheduledRequest.DischargeDate = scheduledRequest.TreatmentToDate;
                 }
                 else
                 {
@@ -350,12 +352,14 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     scheduledRequest.Day6CallId = "";
                     scheduledRequest.Day7CallId = "";
                     scheduledRequest.Day9CallId = "";
+
+                    scheduledRequest.DischargeDate = scheduledRequest.TreatmentFromDate.AddDays(3);
                 }
 
                 scheduledRequest.PCR4DayTestDate = scheduledRequest.TreatmentFromDate.AddDays(3);
                 scheduledRequest.PCR8DayTestDate = scheduledRequest.TreatmentFromDate.AddDays(7);
 
-                scheduledRequest.DischargeDate = scheduledRequest.TreatmentToDate;//.TreatmentFromDate.AddDays(9);
+                //scheduledRequest.DischargeDate = scheduledRequest.TreatmentToDate;//.TreatmentFromDate.AddDays(9);
 
                 string pcrTestDate;
                 if(scheduledRequest.PCRTestDate == null)

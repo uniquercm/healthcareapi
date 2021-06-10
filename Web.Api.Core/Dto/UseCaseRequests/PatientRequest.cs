@@ -24,6 +24,8 @@ namespace Web.Api.Core.Dto.UseCaseRequests
         public string GoogleMapLink { get; set; }//google_map_link – varchar(156)
         public int AdultsCount { get; set; }//no_of_adults – int(10)
         public int ChildrensCount { get; set; }//no_of_childrens – int(10)
+        public int EnrolledCount { get; set; }//enrolled_count - int(25)
+        public string EnrolledDetails { get; set; }//enrolled_details - int(25)
         public string StickerApplication { get; set; }//sticker_application - enum('No','Yes')
         public int TrackerApplication { get; set; }//tracker_application – int(10)
         public int PCRCount { get; set; }//pcr_count - int(10)
@@ -62,14 +64,39 @@ namespace Web.Api.Core.Dto.UseCaseRequests
         public string GoogleMapLink { get; set; }//google_map_link – varchar(156)
         public int AdultsCount { get; set; }//no_of_adults – int(10)
         public int ChildrensCount { get; set; }//no_of_childrens – int(10)
+        public int EnrolledCount { get; set; }//enrolled_count - int(25)
+        public string EnrolledDetails { get; set; }//enrolled_details - int(25)
         public string StickerApplication { get; set; }//sticker_application - enum('No','Yes')
         public int TrackerApplication { get; set; }//tracker_application – int(10)
         public string StickerRemoval { get; set; }//sticker_removal - enum('No','Yes')
         public int TrackerRemoval { get; set; }//tracker_removal – int(10)
+        public string StickerTrackerAppliedNumber { get; set; }//sticker_tracker_applied_no - varchar(50)
         public string IsSendClaim { get; set; }//have_send_claim - varchar(25)Yes or No
         public string DrCallId { get; set; }
         public string ScheduledId { get; set; }
         public string CreatedBy { get; set; } //created_by
+        public string ModifiedBy { get; set; } //modified_by
+    }
+
+    public class ServicePlanRequest
+    {
+        public string PatientId { get; set; }//patient_id – varchar(128)
+        public string CompanyId { get; set; }//company_id – varchar(128)
+        public string ScheduledId { get; set; }//scheduled_id - varchar(128)
+        public DateTime TrackerScheduleDate { get; set; }//
+        public DateTime TrackerAppliedDate { get; set; }//sticker_tracker_applied_date - datetime
+        public DateTime StickerScheduleDate { get; set; }//
+        public DateTime StickerRemovedDate { get; set; }//sticker_tracker_removed_date - datetime
+        public string StickerTrackerAppliedNumber { get; set; }//sticker_tracker_applied_no - varchar(50)
+        public DateTime TrackerReplacedDate { get; set; }//sticker_tracker_replace_date - datatime
+        public string TrackerReplaceNumber { get; set; }//
+        public string StickerTrackerResult { get; set; }//
+        public int EnrolledCount { get; set; }//enrolled_count - int(25)
+        public string EnrolledDetails { get; set; }//enrolled_details - int(25)
+        public string StickerApplication { get; set; }//sticker_application - enum('No','Yes')
+        public int TrackerApplication { get; set; }//tracker_application – int(10)
+        public string StickerRemoval { get; set; }//sticker_removal - enum('No','Yes')
+        public int TrackerRemoval { get; set; }//tracker_removal – int(10)
         public string ModifiedBy { get; set; } //modified_by
     }
 

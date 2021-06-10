@@ -30,107 +30,17 @@ namespace Web.Api.Infrastructure.Data.Repositories
 
                 using (var connection = _appDbContext.Connection)
                 {
-                    var cond = $" where created_on = '" + todayDate + "'";
-                    if (!string.IsNullOrEmpty(companyId))
-                        cond += " and company_id = '" + companyId + "'";
-                    var sqlSelQuery = $"select * from HC_Staff_Patient.patient_obj" + cond;
-                    var sqlSelResult = await connection.QueryAsync(sqlSelQuery);
-                    retDashBoardDetails.TodayPatientRegNumber = sqlSelResult.Count();
+                    retDashBoardDetails.TodayPatientStatusDetails = await GetTodayPatientDetails(companyId);
 
-                    cond = $" where pa.patient_id = sc.patient_id" +  
-                           $" and ca.call_scheduled_date = '" + todayDate + "'" +
-                           $" and ca.scheduled_id = sc.scheduled_id";
-                    if (!string.IsNullOrEmpty(companyId))
-                        cond += " and pa.company_id = '" + companyId + "'";
-                    sqlSelQuery = $"select * from  HC_Staff_Patient.patient_obj pa, " +
-                                  $"HC_Treatment.scheduled_obj sc, " +
-                                  $"HC_Treatment.call_obj ca" + cond;
-                    sqlSelResult = await connection.QueryAsync(sqlSelQuery);
-                    retDashBoardDetails.TodayScheduledPatientNumber = sqlSelResult.Count();
+                    retDashBoardDetails.AllUserTypeDetails = await GetUserTypeDetails(companyId);
 
-                    cond = $" where pa.patient_id = sc.patient_id" +  
-                           $" and sc.4day_pcr_test_date = '" + todayDate + "'" +
-                           $" or sc.8day_pcr_test_date = '" + todayDate + "'";
-                    if (!string.IsNullOrEmpty(companyId))
-                        cond += " and pa.company_id = '" + companyId + "'";
-                    sqlSelQuery = $"select * from  HC_Staff_Patient.patient_obj pa, " +
-                                  $"HC_Treatment.scheduled_obj sc" + cond;
-                    sqlSelResult = await connection.QueryAsync(sqlSelQuery);
-                    retDashBoardDetails.TodayScheduledPatientNumber += sqlSelResult.Count();
+                    retDashBoardDetails.PatientStatusDetails = await GetPatientDetails(companyId);
 
-                    sqlSelQuery = $"select * from HC_Staff_Patient.patient_obj" + whereCond;
-                    sqlSelResult = await connection.QueryAsync(sqlSelQuery);
-                    retDashBoardDetails.TotalPatientNumber = sqlSelResult.Count();
+                    retDashBoardDetails.ReceptionStatusDetails = await GetReceptionDetails(companyId);
 
-                    cond = $" where discharge_date < '" + todayDate + "'" + 
-                           $" and pa.patient_id = sc.patient_id";
-                    if (!string.IsNullOrEmpty(companyId))
-                        cond += " and pa.company_id = '" + companyId + "'";
-                    sqlSelQuery = $"select * from HC_Treatment.scheduled_obj sc, " + 
-                                  $"HC_Staff_Patient.patient_obj pa " + cond;
-                    sqlSelResult = await connection.QueryAsync(sqlSelQuery);
-                    retDashBoardDetails.DischargePatientNumber = sqlSelResult.Count();
+                    retDashBoardDetails.DoctorStatusDetails = await GetDoctorDetails(companyId, drNurseCallFieldAllocationRepository);
 
-                    retDashBoardDetails.ActivePatientNumber = retDashBoardDetails.TotalPatientNumber - retDashBoardDetails.DischargePatientNumber;
-
-                    cond = $" where discharge_date >= '" + todayDate + "'" + 
-                           $" and pa.patient_id = sc.patient_id";
-                    if (!string.IsNullOrEmpty(companyId))
-                        cond += " and pa.company_id = '" + companyId + "'";
-                    sqlSelQuery = $"select * from HC_Treatment.scheduled_obj sc, " + 
-                                  $"HC_Staff_Patient.patient_obj pa " + cond;
-                    sqlSelResult = await connection.QueryAsync(sqlSelQuery);
-                    retDashBoardDetails.CurrentPatientNumber = sqlSelResult.Count();
-
-                    sqlSelQuery = $"select * from HC_Authentication.user_obj" + whereCond;
-                    sqlSelResult = await connection.QueryAsync(sqlSelQuery);
-                    retDashBoardDetails.TotalUserTypeMemberNumber = sqlSelResult.Count();
-
-                    cond = $" where user_type = 2";
-                    if (!string.IsNullOrEmpty(companyId))
-                        cond += " and company_id = '" + companyId + "'";
-                    sqlSelQuery = $"select * from HC_Authentication.user_obj" + cond;
-                    sqlSelResult = await connection.QueryAsync(sqlSelQuery);
-                    retDashBoardDetails.TotalAdminUserNumber = sqlSelResult.Count();
-
-                    cond = $" where user_type = 3";
-                    if (!string.IsNullOrEmpty(companyId))
-                        cond += " and company_id = '" + companyId + "'";
-                    sqlSelQuery = $"select * from HC_Authentication.user_obj" + cond;
-                    sqlSelResult = await connection.QueryAsync(sqlSelQuery);
-                    retDashBoardDetails.TotalDoctorUserNumber = sqlSelResult.Count();
-
-                    cond = $" where user_type = 4";
-                    if (!string.IsNullOrEmpty(companyId))
-                        cond += " and company_id = '" + companyId + "'";
-                    sqlSelQuery = $"select * from HC_Authentication.user_obj" + cond;
-                    sqlSelResult = await connection.QueryAsync(sqlSelQuery);
-                    retDashBoardDetails.TotalManagerUserNumber = sqlSelResult.Count();
-
-                    cond = $" where user_type = 5";
-                    if (!string.IsNullOrEmpty(companyId))
-                        cond += " and company_id = '" + companyId + "'";
-                    sqlSelQuery = $"select * from HC_Authentication.user_obj" + cond;
-                    sqlSelResult = await connection.QueryAsync(sqlSelQuery);
-                    retDashBoardDetails.TotalNurseUserNumber = sqlSelResult.Count();
-
-                    cond = $" where user_type = 6";
-                    if (!string.IsNullOrEmpty(companyId))
-                        cond += " and company_id = '" + companyId + "'";
-                    sqlSelQuery = $"select * from HC_Authentication.user_obj" + cond;
-                    sqlSelResult = await connection.QueryAsync(sqlSelQuery);
-                    retDashBoardDetails.TotalReceptionistUserNumber = sqlSelResult.Count();
-
-                    cond = $" where user_type = 7";
-                    if (!string.IsNullOrEmpty(companyId))
-                        cond += " and company_id = '" + companyId + "'";
-                    sqlSelQuery = $"select * from HC_Authentication.user_obj" + cond;
-                    sqlSelResult = await connection.QueryAsync(sqlSelQuery);
-                    retDashBoardDetails.TotalTeamUserNumber = sqlSelResult.Count();
-
-                    sqlSelQuery = $"select no_of_team from HC_Master_Details.company_obj" + whereCond;
-                    var sqlResult = await connection.QueryAsync<int>(sqlSelQuery);
-                    retDashBoardDetails.TotalTeamNumber = sqlResult.FirstOrDefault();
+                    retDashBoardDetails.NurseStatusDetails = await GetNurseDetails(companyId, drNurseCallFieldAllocationRepository);
 
                     retDashBoardDetails.TeamStatusDetailsList = await GetTeamDetails(companyId, drNurseCallFieldAllocationRepository);
                 }
@@ -140,6 +50,259 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 var Error = Err.Message.ToString();
             }
             return retDashBoardDetails;
+        }
+
+        async Task<TodayPatientStatusDetails> GetTodayPatientDetails(string companyId)
+        {
+            TodayPatientStatusDetails retTodayPatientStatusDetails = new TodayPatientStatusDetails();
+            try
+            {
+                string todayDate = DateTime.Today.ToString("yyyy-MM-dd 00:00:00.0");
+
+                using (var connection = _appDbContext.Connection)
+                {
+                    var cond = $" where created_on = '" + todayDate + "'";
+                    if (!string.IsNullOrEmpty(companyId))
+                        cond += " and company_id = '" + companyId + "'";
+                    var sqlSelQuery = $"select * from HC_Staff_Patient.patient_obj" + cond;
+                    var sqlSelResult = await connection.QueryAsync(sqlSelQuery);
+                    retTodayPatientStatusDetails.TodayPatientRegNumber = sqlSelResult.Count();
+
+                    cond = $" where pa.patient_id = sc.patient_id" +
+                           $" and ca.call_scheduled_date = '" + todayDate + "'" +
+                           $" and ca.scheduled_id = sc.scheduled_id";
+                    if (!string.IsNullOrEmpty(companyId))
+                        cond += " and pa.company_id = '" + companyId + "'";
+                    sqlSelQuery = $"select * from  HC_Staff_Patient.patient_obj pa, " +
+                                  $"HC_Treatment.scheduled_obj sc, " +
+                                  $"HC_Treatment.call_obj ca" + cond;
+                    sqlSelResult = await connection.QueryAsync(sqlSelQuery);
+                    retTodayPatientStatusDetails.TodayScheduledPatientNumber = sqlSelResult.Count();
+
+                    cond = $" where pa.patient_id = sc.patient_id" +  
+                           $" and sc.4day_pcr_test_date = '" + todayDate + "'" +
+                           $" or sc.8day_pcr_test_date = '" + todayDate + "'";
+                    if (!string.IsNullOrEmpty(companyId))
+                        cond += " and pa.company_id = '" + companyId + "'";
+                    sqlSelQuery = $"select * from  HC_Staff_Patient.patient_obj pa, " +
+                                  $"HC_Treatment.scheduled_obj sc" + cond;
+                    sqlSelResult = await connection.QueryAsync(sqlSelQuery);
+                    retTodayPatientStatusDetails.TodayScheduledPatientNumber += sqlSelResult.Count();
+                }
+            }
+            catch(Exception Err)
+            {
+                string error = Err.Message.ToString();
+            }
+            return retTodayPatientStatusDetails;
+        }//
+
+        async Task<AllUserTypeDetails> GetUserTypeDetails(string companyId)
+        {
+            AllUserTypeDetails retAllUserTypeDetails = new AllUserTypeDetails();
+            try
+            {
+                var tableName = "HC_Authentication.user_obj";
+                var whereCond = "";
+
+                string todayDate = DateTime.Today.ToString("yyyy-MM-dd 00:00:00.0");
+
+                if (!string.IsNullOrEmpty(companyId))
+                    whereCond = " where company_id = '" + companyId + "'";
+
+                using (var connection = _appDbContext.Connection)
+                {
+                    var sqlSelQuery = $"select * from " + tableName + whereCond;
+                    var sqlSelResult = await connection.QueryAsync(sqlSelQuery);
+                    retAllUserTypeDetails.TotalUserTypeMemberNumber = sqlSelResult.Count();
+
+                    var cond = $" where user_type = 2";
+                    if (!string.IsNullOrEmpty(companyId))
+                        cond += " and company_id = '" + companyId + "'";
+                    sqlSelQuery = $"select * from " + tableName + cond;
+                    sqlSelResult = await connection.QueryAsync(sqlSelQuery);
+                    retAllUserTypeDetails.TotalAdminUserNumber = sqlSelResult.Count();
+
+                    cond = $" where user_type = 3";
+                    if (!string.IsNullOrEmpty(companyId))
+                        cond += " and company_id = '" + companyId + "'";
+                    sqlSelQuery = $"select * from " + tableName + cond;
+                    sqlSelResult = await connection.QueryAsync(sqlSelQuery);
+                    retAllUserTypeDetails.TotalDoctorUserNumber = sqlSelResult.Count();
+
+                    cond = $" where user_type = 4";
+                    if (!string.IsNullOrEmpty(companyId))
+                        cond += " and company_id = '" + companyId + "'";
+                    sqlSelQuery = $"select * from " + tableName + cond;
+                    sqlSelResult = await connection.QueryAsync(sqlSelQuery);
+                    retAllUserTypeDetails.TotalManagerUserNumber = sqlSelResult.Count();
+
+                    cond = $" where user_type = 5";
+                    if (!string.IsNullOrEmpty(companyId))
+                        cond += " and company_id = '" + companyId + "'";
+                    sqlSelQuery = $"select * from " + tableName + cond;
+                    sqlSelResult = await connection.QueryAsync(sqlSelQuery);
+                    retAllUserTypeDetails.TotalNurseUserNumber = sqlSelResult.Count();
+
+                    cond = $" where user_type = 6";
+                    if (!string.IsNullOrEmpty(companyId))
+                        cond += " and company_id = '" + companyId + "'";
+                    sqlSelQuery = $"select * from " + tableName + cond;
+                    sqlSelResult = await connection.QueryAsync(sqlSelQuery);
+                    retAllUserTypeDetails.TotalReceptionistUserNumber = sqlSelResult.Count();
+
+                    cond = $" where user_type = 7";
+                    if (!string.IsNullOrEmpty(companyId))
+                        cond += " and company_id = '" + companyId + "'";
+                    sqlSelQuery = $"select * from " + tableName + cond;
+                    sqlSelResult = await connection.QueryAsync(sqlSelQuery);
+                    retAllUserTypeDetails.TotalTeamUserNumber = sqlSelResult.Count();
+
+                    sqlSelQuery = $"select no_of_team from HC_Master_Details.company_obj" + whereCond;
+                    var sqlResult = await connection.QueryAsync<int>(sqlSelQuery);
+                    retAllUserTypeDetails.TotalTeamNumber = sqlResult.FirstOrDefault();
+                }
+            }
+            catch(Exception Err)
+            {
+                string error = Err.Message.ToString();
+            }
+            return retAllUserTypeDetails;
+        }
+
+        async Task<PatientStatusDetails> GetPatientDetails(string companyId)
+        {
+            PatientStatusDetails retPatientStatusDetails = new PatientStatusDetails();
+            try
+            {
+                var whereCond = "";
+
+                string todayDate = DateTime.Today.ToString("yyyy-MM-dd 00:00:00.0");
+
+                if (!string.IsNullOrEmpty(companyId))
+                    whereCond = " where company_id = '" + companyId + "'";
+
+                using (var connection = _appDbContext.Connection)
+                {
+                    var sqlSelQuery = $"select * from HC_Staff_Patient.patient_obj" + whereCond;
+                    var sqlSelResult = await connection.QueryAsync(sqlSelQuery);
+                    retPatientStatusDetails.TotalPatientNumber = sqlSelResult.Count();
+
+                    var cond = $" where discharge_date < '" + todayDate + "'" + 
+                            $" and pa.patient_id = sc.patient_id";
+                    if (!string.IsNullOrEmpty(companyId))
+                        cond += " and pa.company_id = '" + companyId + "'";
+                    sqlSelQuery = $"select * from HC_Treatment.scheduled_obj sc, " + 
+                                    $"HC_Staff_Patient.patient_obj pa " + cond;
+                    sqlSelResult = await connection.QueryAsync(sqlSelQuery);
+                    retPatientStatusDetails.DischargePatientNumber = sqlSelResult.Count();
+
+                    retPatientStatusDetails.ActivePatientNumber = retPatientStatusDetails.TotalPatientNumber - retPatientStatusDetails.DischargePatientNumber;
+
+                    cond = $" where discharge_date >= '" + todayDate + "'" + 
+                            $" and pa.patient_id = sc.patient_id";
+                    if (!string.IsNullOrEmpty(companyId))
+                        cond += " and pa.company_id = '" + companyId + "'";
+                    sqlSelQuery = $"select * from HC_Treatment.scheduled_obj sc, " + 
+                                    $"HC_Staff_Patient.patient_obj pa " + cond;
+                    sqlSelResult = await connection.QueryAsync(sqlSelQuery);
+                    retPatientStatusDetails.CurrentPatientNumber = sqlSelResult.Count();
+                }
+            }
+            catch(Exception Err)
+            {
+                string error = Err.Message.ToString();
+            }
+            return retPatientStatusDetails;
+        }//
+
+        async Task<ReceptionStatusDetails> GetReceptionDetails(string companyId)
+        {
+            ReceptionStatusDetails retReceptionStatusDetails = new ReceptionStatusDetails();
+            try
+            {
+                var tableName = $"HC_Staff_Patient.patient_obj";
+                var whereCond = "";
+
+                string todayDate = DateTime.Today.ToString("yyyy-MM-dd 00:00:00.0");
+
+                if (!string.IsNullOrEmpty(companyId))
+                    whereCond = " where company_id = '" + companyId + "'";
+
+                using (var connection = _appDbContext.Connection)//
+                {
+                    var cond = $" where modified_on = '" + todayDate + "'";
+                    if (!string.IsNullOrEmpty(companyId))
+                        cond += " and company_id = '" + companyId + "'";
+
+                    var sqlSelQuery = $"select * from " + tableName + cond;
+                    var sqlSelResult = await connection.QueryAsync(sqlSelQuery);
+                    retReceptionStatusDetails.ReceptionTotalCount = sqlSelResult.Count();
+
+                    cond = $" where modified_on = '" + todayDate + "'" +
+                           $" and reception_status = 'completed'";
+                    if (!string.IsNullOrEmpty(companyId))
+                        cond += " and company_id = '" + companyId + "'";
+                    sqlSelQuery = $"select * from " + tableName + cond;
+                    sqlSelResult = await connection.QueryAsync(sqlSelQuery);
+                    retReceptionStatusDetails.ReceptionCompletedCount = sqlSelResult.Count();
+
+                    cond = $" where modified_on = '" + todayDate + "'" +
+                           $" and reception_status = 'pending'";
+                    if (!string.IsNullOrEmpty(companyId))
+                        cond += " and company_id = '" + companyId + "'";
+                    sqlSelQuery = $"select * from " + tableName + cond;
+                    sqlSelResult = await connection.QueryAsync(sqlSelQuery);
+                    retReceptionStatusDetails.ReceptionCompletedCount = sqlSelResult.Count();
+                }
+            }
+            catch(Exception Err)
+            {
+                string error = Err.Message.ToString();
+            }
+            return retReceptionStatusDetails;
+        }
+
+        async Task<DoctorStatusDetails> GetDoctorDetails(string companyId, IDrNurseCallFieldAllocationRepository drNurseCallFieldAllocationRepository)
+        {
+            DoctorStatusDetails retDoctorStatusDetails = new DoctorStatusDetails();
+            try
+            {
+                List<DrNurseCallDetails> tmpDrNurseCallDetails = await drNurseCallFieldAllocationRepository.GetDrNurseCallDetails(companyId, "", "DrCall", DateTime.Today, DateTime.Today, "all", "all");
+                retDoctorStatusDetails.DoctorCallTotalCount = tmpDrNurseCallDetails.Count();
+
+                tmpDrNurseCallDetails = await drNurseCallFieldAllocationRepository.GetDrNurseCallDetails(companyId, "", "DrCall", DateTime.Today, DateTime.Today, "called", "all");
+                retDoctorStatusDetails.DoctorCalledCount = tmpDrNurseCallDetails.Count();
+
+                tmpDrNurseCallDetails = await drNurseCallFieldAllocationRepository.GetDrNurseCallDetails(companyId, "", "DrCall", DateTime.Today, DateTime.Today, "pending", "all");
+                retDoctorStatusDetails.DoctorPendingCount = tmpDrNurseCallDetails.Count();
+            }
+            catch(Exception Err)
+            {
+                string error = Err.Message.ToString();
+            }
+            return retDoctorStatusDetails;
+        }
+
+        async Task<NurseStatusDetails> GetNurseDetails(string companyId, IDrNurseCallFieldAllocationRepository drNurseCallFieldAllocationRepository)
+        {
+            NurseStatusDetails retNurseStatusDetails = new NurseStatusDetails();
+            try
+            {
+                List<DrNurseCallDetails> tmpDrNurseCallDetails = await drNurseCallFieldAllocationRepository.GetDrNurseCallDetails(companyId, "", "NurseCall", DateTime.Today, DateTime.Today, "all", "all");
+                retNurseStatusDetails.NurseCallTotalCount = tmpDrNurseCallDetails.Count();
+
+                tmpDrNurseCallDetails = await drNurseCallFieldAllocationRepository.GetDrNurseCallDetails(companyId, "", "NurseCall", DateTime.Today, DateTime.Today, "called", "all");
+                retNurseStatusDetails.NurseCalledCount = tmpDrNurseCallDetails.Count();
+
+                tmpDrNurseCallDetails = await drNurseCallFieldAllocationRepository.GetDrNurseCallDetails(companyId, "", "NurseCall", DateTime.Today, DateTime.Today, "pending", "all");
+                retNurseStatusDetails.NursePendingCount = tmpDrNurseCallDetails.Count();
+            }
+            catch(Exception Err)
+            {
+                string error = Err.Message.ToString();
+            }
+            return retNurseStatusDetails;
         }
 
         async Task<List<TeamStatusDetails>> GetTeamDetails(string companyId, IDrNurseCallFieldAllocationRepository drNurseCallFieldAllocationRepository)
@@ -172,8 +335,8 @@ namespace Web.Api.Infrastructure.Data.Repositories
                         tmpDrNurseCallDetails = await drNurseCallFieldAllocationRepository.GetFieldAllowCallDetails(companyId, singleTeamStatusDetails.TeamUserName, "TeamCall", DateTime.Today, DateTime.Today, "pending", "all");
                         singleTeamStatusDetails.CallStatusPendingCount = tmpDrNurseCallDetails.Count();
 
-                        tmpDrNurseCallDetails = await drNurseCallFieldAllocationRepository.GetFieldAllowCallDetails(companyId, singleTeamStatusDetails.TeamUserName, "TeamCall", DateTime.Today, DateTime.Today, "called", "all");
-                        singleTeamStatusDetails.CallStatusCalledCount = tmpDrNurseCallDetails.Count();
+                        //tmpDrNurseCallDetails = await drNurseCallFieldAllocationRepository.GetFieldAllowCallDetails(companyId, singleTeamStatusDetails.TeamUserName, "TeamCall", DateTime.Today, DateTime.Today, "called", "all");
+                        //singleTeamStatusDetails.CallStatusCalledCount = tmpDrNurseCallDetails.Count();
 
                         tmpDrNurseCallDetails = await drNurseCallFieldAllocationRepository.GetFieldAllowCallDetails(companyId, singleTeamStatusDetails.TeamUserName, "TeamCall", DateTime.Today, DateTime.Today, "visited", "all");
                         singleTeamStatusDetails.CallStatusVisitedCount = tmpDrNurseCallDetails.Count();

@@ -25,6 +25,10 @@ namespace Web.Api.Models.Request
         public DateTime PCR8DayTestDate { get; set; }
         public DateTime PCR8DaySampleDate { get; set; }
         public string PCR8DayResult { get; set; }
+        public DateTime StickerTrackerScheduleDate { get; set; }
+        public DateTime StickerTrackerAppliedDate { get; set; }
+        public string StickerTrackerAppliedResult { get; set; }
+        public string StickerTrackerAppliedNumber { get; set; }
         public DateTime FirstCallScheduledDate { get; set; }
         public string CreatedBy { get; set; }
         public string ModifiedBy { get; set; }

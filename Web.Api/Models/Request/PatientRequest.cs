@@ -22,10 +22,13 @@ namespace Web.Api.Models.Request
         public string GoogleMapLink { get; set; }
         public int AdultsCount { get; set; }
         public int ChildrensCount { get; set; }
+        public int EnrolledCount { get; set; }
+        public string EnrolledDetails { get; set; }
         public string StickerApplication { get; set; }
         public int TrackerApplication { get; set; }
         public string StickerRemoval { get; set; }
         public int TrackerRemoval { get; set; }
+        public string StickerTrackerAppliedNumber { get; set; }
         public DateTime RecptionCallDate { get; set; }
         public string RecptionCallStatus { get; set; }
         public string RecptionCallRemarks { get; set; }

@@ -38,6 +38,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                               $"p.nationality_id as NationalityId, n.nationality_name as NationalityName, " +
                               $"p.mobile_no as MobileNo, p.google_map_link as GoogleMapLink, " +
                               $"p.no_of_adults as AdultsCount, p.no_of_childrens as ChildrensCount, p.pcr_count as PCRCount, " +
+                              $"p.enrolled_count as EnrolledCount, p.enrolled_details as EnrolledDetails, " +
                               $"p.sticker_application as StickerApplication, " +
                               $"p.tracker_application as TrackerApplication, " +
                               $"p.sticker_removal as StickerRemoval, " +
@@ -184,8 +185,9 @@ namespace Web.Api.Infrastructure.Data.Repositories
 
                 var colName = $"patient_id, patient_name, company_id, request_id, crm_no, eid_no, " +
                               $"date_of_birth, age, sex, address, landmark, area, city_id, nationality_id, " +
-                              $"mobile_no, google_map_link, no_of_adults, no_of_childrens, pcr_count, " +
-                              $"sticker_application, tracker_application, " +
+                              $"mobile_no, google_map_link, no_of_adults, no_of_childrens, " +
+                              $"enrolled_count, enrolled_details, " +
+                              $"pcr_count, sticker_application, tracker_application, " +
                               $"sticker_removal, tracker_removal, " +
                               $"reception_date, reception_status, reception_remarks, " +
                               $"created_by, created_on";
@@ -193,6 +195,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 var colValueName = $"@PatientId, @PatientName, @CompanyId, @RequestId, @CRMNo, @EIDNo, " +
                                    $"@DateOfBirth, @Age, @Sex, @Address, @LandMark, @Area, @CityId, @NationalityId, " +
                                    $"@MobileNo, @GoogleMapLink, @AdultsCount, @ChildrensCount, " +
+                                   $"@EnrolledCount, @EnrolledDetails, " +
                                    $"@PCRCount, @StickerApplication, @TrackerApplication, " +
                                    $"@StickerRemoval, @TrackerRemoval, " +
                                    $"@RecptionCallDate, @RecptionCallStatus, @RecptionCallRemarks, " +
@@ -234,6 +237,8 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     GoogleMapLink = patientRequest.GoogleMapLink,
                     AdultsCount = patientRequest.AdultsCount,
                     ChildrensCount = patientRequest.ChildrensCount,
+                    EnrolledCount = patientRequest.EnrolledCount,
+                    EnrolledDetails = patientRequest.EnrolledDetails,
                     PCRCount = patientRequest.AdultsCount,
                     StickerApplication = patientRequest.StickerApplication,
                     TrackerApplication = patientRequest.AdultsCount,
@@ -278,7 +283,9 @@ namespace Web.Api.Infrastructure.Data.Repositories
                               $"date_of_birth = @DateOfBirth, age = @Age, sex = @Sex, address = @Address, " +
                               $"landmark = @LandMark, area = @Area, city_id = @CityId, nationality_id = @NationalityId, " +
                               $"mobile_no = @MobileNo, google_map_link = @GoogleMapLink, " +
-                              $"no_of_adults = @AdultsCount, no_of_childrens = @ChildrensCount, pcr_count = @PCRCount, " +
+                              $"no_of_adults = @AdultsCount, no_of_childrens = @ChildrensCount, " +
+                              $"enrolled_count = @EnrolledCount, enrolled_details = @EnrolledDetails, " +
+                              $"pcr_count = @PCRCount, " +
                               $"sticker_application = @StickerApplication, tracker_application = @TrackerApplication, " +
                               $"sticker_removal = @StickerRemoval, tracker_removal = @TrackerRemoval, " +
                               $"reception_date = @RecptionCallDate, reception_status = @RecptionCallStatus, " +
@@ -326,6 +333,8 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     GoogleMapLink = patientRequest.GoogleMapLink,
                     AdultsCount = patientRequest.AdultsCount,
                     ChildrensCount = patientRequest.ChildrensCount,
+                    EnrolledCount = patientRequest.EnrolledCount,
+                    EnrolledDetails = patientRequest.EnrolledDetails,
                     StickerApplication = patientRequest.StickerApplication,
                     TrackerApplication = patientRequest.TrackerApplication,
                     PCRCount = patientRequest.PCRCount,
@@ -349,160 +358,45 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 return false;
             }
         }
-        public async Task<List<DrNurseCallDetails>> GetDrNurseCallDetails(string companyId, string callName, DateTime scheduledFromDate, DateTime scheduledToDate, string callStatus)
+        public async Task<bool> EditServicePlan(ServicePlanRequest servicePlanRequest)
         {
-            List<DrNurseCallDetails> retDrNurseCallDetails = new List<DrNurseCallDetails>();
             try
             {
-                var tableName = $"HC_Staff_Patient.patient_obj p, " +
-                                $"HC_Master_Details.company_obj co, " +
-                                $"HC_Treatment.scheduled_obj sc, " +
-                                $"HC_Treatment.call_obj ca";
+                bool sqlResult = true;
+                var tableName = $"HC_Staff_Patient.patient_obj";
 
-                var ColumAssign = $"p.patient_id as PatientId, p.patient_name as PatientName, " +
-                                  $"p.company_id as CompanyId, co.company_name as CompanyName, " +
-                                  $"p.request_id as RequestId, p.crm_no as CRMNo, p.eid_no as EIDNo, " +
-                                  $"p.mobile_no as MobileNo, ca.call_id as CallId, " +
-                                  $"ca.called_date as CalledDate, ca.scheduled_id as ScheduledId, " +
-                                  $"ca.call_scheduled_date as CallScheduledDate, " +
-                                  $"ca.call_status as CallStatus, ca.remarks as Remarks, " +
-                                  $"ca.emr_done as EMRDone, ca.is_pcr as IsPCRCall";
+                var colName = $"enrolled_count = @EnrolledCount, enrolled_details = @EnrolledDetails, " +
+                              $"sticker_application = @StickerApplication, tracker_application = @TrackerApplication, " +
+                              $"sticker_removal = @StickerRemoval, tracker_removal = @TrackerRemoval, " +
+                              $"modified_by = @ModifiedBy, modified_on = @ModifiedOn";
 
-                var whereCond = $" where p.company_id = co.company_id" +
-                                $" and p.patient_id = sc.patient_id" +
-                                $" and ca.scheduled_id = sc.scheduled_id";
+                var whereCond = $" where patient_id = @PatientId";
+                var sqlUpdateQuery = $"UPDATE "+ tableName + " set " + colName + whereCond;
 
-                string fromDate = scheduledFromDate.Date.ToString("dd-MM-yyyy");
-                if(fromDate == "01-01-0001")
+                object colValueParam = new
                 {
-                    scheduledFromDate = DateTime.Today;
-                    //scheduledFromDate = DateTime.Today.AddDays(1);
-                    fromDate = scheduledFromDate.ToString("yyyy-MM-dd 00:00:00.0");
-                }
+                    PatientId = servicePlanRequest.PatientId,
+                    EnrolledCount = servicePlanRequest.EnrolledCount,
+                    EnrolledDetails = servicePlanRequest.EnrolledDetails,
+                    StickerApplication = servicePlanRequest.StickerApplication,
+                    TrackerApplication = servicePlanRequest.TrackerApplication,
+                    StickerRemoval = servicePlanRequest.StickerRemoval,
+                    TrackerRemoval = servicePlanRequest.TrackerRemoval,
+                    ModifiedBy = servicePlanRequest.ModifiedBy,
+                    ModifiedOn = DateTime.Today.ToString("yyyy-MM-dd 00:00:00.0")
+                };
 
-                //scheduledToDate = DateTime.Today.AddDays(1);
-                string toDate = scheduledToDate.Date.ToString("dd-MM-yyyy");
-                if(toDate != "01-01-0001")
-                {
-                    if(fromDate != "01-01-0001")
-                        whereCond += $" and (ca.call_scheduled_date between '" + fromDate + "'";
-
-                    toDate = scheduledToDate.ToString("yyyy-MM-dd 00:00:00.0");
-                    whereCond += $" and '" + toDate + "'";
-
-                    whereCond += $")";
-                }
-                else
-                {
-                    if(fromDate != "01-01-0001")
-                        whereCond += $" and ca.call_scheduled_date = '" + fromDate + "'";
-                }
-
-                if(callName == "DrCall")
-                    whereCond += $" and sc.2day_call_id = ca.call_id";
-                else if(callName == "NurseCall")
-                    whereCond += $" and sc.2day_call_id <> ca.call_id";
-
-                if (!string.IsNullOrEmpty(companyId))
-                    whereCond += " and p.company_id = '" + companyId + "'";
-
-                if (!string.IsNullOrEmpty(callStatus))
-                {
-                    if (!callStatus.ToLower().Equals("all"))
-                        whereCond += " and ca.call_status = '" + callStatus + "'";
-                }
-
-                var sqlSelQuery = $"select " + ColumAssign + " from " + tableName + whereCond;
                 using (var connection = _appDbContext.Connection)
                 {
-                    var sqlSelResult = await connection.QueryAsync<DrNurseCallDetails>(sqlSelQuery);
-                    retDrNurseCallDetails = sqlSelResult.ToList();
+                    sqlResult = Convert.ToBoolean(await connection.ExecuteAsync(sqlUpdateQuery, colValueParam));
+                    return sqlResult;
                 }
             }
             catch (Exception Err)
             {
                 var Error = Err.Message.ToString();
+                return false;
             }
-            return retDrNurseCallDetails;
         }
-
-/*
-        public async Task<List<DrNurseCallDetails>> GetDrNurseCallDetails(string companyId, string callName, DateTime scheduledFromDate, DateTime scheduledToDate)
-        {
-            List<DrNurseCallDetails> retDrNurseCallDetails = new List<DrNurseCallDetails>();
-            try
-            {
-                var tableName = $"HC_Staff_Patient.patient_obj p, " +
-                                $"HC_Master_Details.company_obj co, " +
-                                $"HC_Treatment.scheduled_obj sc, " +
-                                $"HC_Treatment.call_obj ca";
-
-                var ColumAssign = $"p.patient_id as PatientId, p.patient_name as PatientName, " +
-                                  $"p.company_id as CompanyId, co.company_name as CompanyName, " +
-                                  $"p.request_id as RequestId, p.crm_no as CRMNo, p.eid_no as EIDNo, " +
-                                  $"p.mobile_no as MobileNo, ca.call_id as CallId";
-
-                var whereCond = $" where p.company_id = co.company_id" +
-                                $" and p.patient_id = sc.patient_id" +
-                                $" and ca.scheduled_id = sc.scheduled_id";
-
-                string fromDate = scheduledFromDate.Date.ToString("dd-MM-yyyy");
-                if(fromDate == "01-01-0001")
-                {
-                    scheduledFromDate = DateTime.Today;
-                    fromDate = scheduledFromDate.ToString("yyyy-MM-dd 00:00:00.0");
-                }
-
-                //scheduledToDate = DateTime.Today.AddDays(1);
-                string toDate = scheduledToDate.Date.ToString("dd-MM-yyyy");
-                if(toDate != "01-01-0001")
-                {
-                    if(fromDate != "01-01-0001")
-                        whereCond += $" and (ca.call_scheduled_date between '" + fromDate + "'";
-
-                    toDate = scheduledToDate.ToString("yyyy-MM-dd 00:00:00.0");
-                    whereCond += $" and '" + toDate + "'";
-
-                    if(callName != "DrCall")
-                    {
-                        whereCond += $" or sc.4day_pcr_test_date between '" + fromDate + "' and '" + toDate + "'" +
-                                     $" or sc.4day_pcr_test_date between '" + toDate + "' and '" + toDate + "'";
-                    }
-                    whereCond += $")";
-                }
-                else
-                {
-                    if(fromDate != "01-01-0001")
-                        whereCond += $" and ca.call_scheduled_date = '" + fromDate + "'";
-
-                    if(callName != "DrCall")
-                    {
-                        whereCond += $" and sc.4day_pcr_test_date = '" + fromDate + "'" +
-                                    $" or sc.8day_pcr_test_date = '" + fromDate + "'";
-                    }
-                }
-
-                if(callName == "DrCall")
-                    whereCond += $" and sc.2day_call_id = ca.call_id";
-                else if(callName == "NurseCall")
-                    whereCond += $" and sc.2day_call_id <> ca.call_id";
-
-                if (!string.IsNullOrEmpty(companyId))
-                    whereCond += " and p.company_id = '" + companyId + "'";
-
-                var sqlSelQuery = $"select " + ColumAssign + " from " + tableName + whereCond;
-                using (var connection = _appDbContext.Connection)
-                {
-                    var sqlSelResult = await connection.QueryAsync<DrNurseCallDetails>(sqlSelQuery);
-                    retDrNurseCallDetails = sqlSelResult.ToList();
-                }
-            }
-            catch (Exception Err)
-            {
-                var Error = Err.Message.ToString();
-            }
-            return retDrNurseCallDetails;
-        }
-*/
     }
 }

@@ -64,21 +64,55 @@ namespace Web.Api.Core.Dto.UseCaseRequests
 
     public class DashBoardDetails
     {
+        public TodayPatientStatusDetails TodayPatientStatusDetails { get; set; }
+        public AllUserTypeDetails AllUserTypeDetails { get; set; }
+        public PatientStatusDetails PatientStatusDetails { get; set; }
+        public ReceptionStatusDetails ReceptionStatusDetails { get; set; }
+        public DoctorStatusDetails DoctorStatusDetails { get; set; }
+        public NurseStatusDetails NurseStatusDetails { get; set; }
+        public List<TeamStatusDetails> TeamStatusDetailsList { get; set; }
+    }
+    public class TodayPatientStatusDetails
+    {
         public int TodayPatientRegNumber { get; set; }
         public int TodayScheduledPatientNumber { get; set; }
-        public int TotalPatientNumber { get; set; }
-        public int CurrentPatientNumber { get; set; }
-        public int DischargePatientNumber { get; set; }
-        public int ActivePatientNumber { get; set; }
+    }
+    public class AllUserTypeDetails
+    {
         public int TotalUserTypeMemberNumber { get; set; }
+        public int TotalTeamNumber { get; set; }
         public int TotalAdminUserNumber { get; set; }
         public int TotalDoctorUserNumber { get; set; }
         public int TotalManagerUserNumber { get; set; }
         public int TotalNurseUserNumber { get; set; }
         public int TotalReceptionistUserNumber { get; set; }
         public int TotalTeamUserNumber { get; set; }
-        public int TotalTeamNumber { get; set; }
-        public List<TeamStatusDetails> TeamStatusDetailsList { get; set; }
+    }
+    public class PatientStatusDetails
+    {
+        public int TotalPatientNumber { get; set; }
+        public int TotalEnrolledPatientNumber { get; set; }
+        public int CurrentPatientNumber { get; set; }
+        public int DischargePatientNumber { get; set; }
+        public int ActivePatientNumber { get; set; }
+    }
+    public class ReceptionStatusDetails
+    {
+        public int ReceptionTotalCount { get; set; }
+        public int ReceptionCompletedCount { get; set; }
+        public int ReceptionPendingCount { get; set; }
+    }
+    public class DoctorStatusDetails
+    {
+        public int DoctorCallTotalCount { get; set; }
+        public int DoctorCalledCount { get; set; }
+        public int DoctorPendingCount { get; set; }
+    }
+    public class NurseStatusDetails
+    {
+        public int NurseCallTotalCount { get; set; }
+        public int NurseCalledCount { get; set; }
+        public int NursePendingCount { get; set; }
     }
     public class TeamStatusDetails
     {
@@ -87,7 +121,7 @@ namespace Web.Api.Core.Dto.UseCaseRequests
         public string TeamName { get; set; }
         public string TeamUserName{ get; set; }
         public int AllocatedCount { get; set; }
-        public int CallStatusCalledCount { get; set; }
+        //public int CallStatusCalledCount { get; set; }
         public int CallStatusVisitedCount { get; set; }
         public int CallStatusPendingCount { get; set; }
     }
