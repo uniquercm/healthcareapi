@@ -73,46 +73,47 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     whereCond += " and ((sc.allocated_team_name = null and sc.reallocated_team_name = null) " + 
                                  " or (sc.allocated_team_name = '' and sc.reallocated_team_name = '')) ";
 
-                string fromDate = scheduledFromDate.Date.ToString("dd-MM-yyyy");
-                /*if(fromDate == "01-01-0001")
+                string fromDate = scheduledFromDate.Date.ToString("yyyy-MM-dd");
+                /*if(fromDate == "0001-01-01")
                 {
                     scheduledFromDate = DateTime.Today;
                     //scheduledFromDate = DateTime.Today.AddDays(1);
                     fromDate = scheduledFromDate.ToString("yyyy-MM-dd 00:00:00.0");
                 }*/
-                string toDate = scheduledToDate.Date.ToString("dd-MM-yyyy");
-                if(fromDate != "01-01-0001" || toDate != "01-01-0001")
+                string toDate = scheduledToDate.Date.ToString("yyyy-MM-dd");
+                if(fromDate != "0001-01-01" || toDate != "0001-01-01")
                 {
-                    if(fromDate == "01-01-0001")
+                    if(fromDate == "0001-01-01")
                         fromDate = toDate;
                     
-                    if(toDate == "01-01-0001")
+                    if(toDate == "0001-01-01")
                         toDate = fromDate;
 
-                    //if(fromDate != "01-01-0001")
+                    //if(fromDate != "0001-01-01")
                         //whereCond += $" and sc.treatment_from_date <= '" + fromDate + "'" +
                                      //$" and sc.treatment_to_date > '" + toDate + "'";
                 }
 
-                if(!String.IsNullOrEmpty(serviceName) && fromDate != "01-01-0001")
+                string timeMin = " 00:00:00.0";
+                if(!String.IsNullOrEmpty(serviceName) && fromDate != "0001-01-01")
                 {//all, tracker, sticker, 4pcr, 8pcr, discharge
                     if(serviceName.Equals("tracker"))
-                        whereCond += $" and sc.tracker_schedule_date between '" + fromDate + "' and '" + toDate + "'";
+                        whereCond += $" and sc.tracker_schedule_date between '" + fromDate + timeMin + "' and '" + toDate + timeMin + "'";
                     else if(serviceName.Equals("sticker"))
-                        whereCond += $" and sc.sticker_schedule_date between '" + fromDate + "' and '" + toDate + "'";
+                        whereCond += $" and sc.sticker_schedule_date between '" + fromDate + timeMin + "' and '" + toDate + timeMin + "'";
                     else if(serviceName.Equals("4pcr"))
-                        whereCond += $" and sc.4day_pcr_test_date between '" + fromDate + "' and '" + toDate + "'";
+                        whereCond += $" and sc.4day_pcr_test_date between '" + fromDate + timeMin + "' and '" + toDate + timeMin + "'";
                     else if(serviceName.Equals("8pcr"))
-                        whereCond += $" and sc.8day_pcr_test_date between '" + fromDate + "' and '" + toDate + "'";
+                        whereCond += $" and sc.8day_pcr_test_date between '" + fromDate + timeMin + "' and '" + toDate + timeMin + "'";
                     else if(serviceName.Equals("discharge"))
-                        whereCond += $" and sc.discharge_date between '" + fromDate + "' and '" + toDate + "'";
+                        whereCond += $" and sc.discharge_date between '" + fromDate + timeMin + "' and '" + toDate + timeMin + "'";
                     else
-                        whereCond += $" and sc.treatment_from_date <= '" + fromDate + "'" +
-                                     $" and sc.treatment_to_date > '" + toDate + "'";
+                        whereCond += $" and sc.treatment_from_date >= '" + fromDate + timeMin + "'" +
+                                     $" and sc.treatment_to_date <= '" + toDate + timeMin + "'";
                 }
-                else if(fromDate != "01-01-0001")
-                        whereCond += $" and sc.treatment_from_date <= '" + fromDate + "'" +
-                                     $" and sc.treatment_to_date > '" + toDate + "'";
+                else if(fromDate != "0001-01-01")
+                        whereCond += $" and sc.treatment_from_date >= '" + fromDate + timeMin + "'" +
+                                     $" and sc.treatment_to_date <= '" + toDate + timeMin + "'";
 
                 if(!String.IsNullOrEmpty(serviceStatus)  && serviceStatus != "all")
                 {//all, tracker, sticker, 4pcr, 8pcr, discharge
