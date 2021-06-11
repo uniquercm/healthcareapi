@@ -55,9 +55,18 @@ namespace Web.Api.Core.UseCases
             if(isUpdated)
             {
                 if(request.IsPCRCall)
-                    acknowledgementResponse = new AcknowledgementResponse(true, "PCR Call Successfully Modifyed");
+                    acknowledgementResponse = new AcknowledgementResponse(true, "PCR Call Details Successfully Modifyed");
                 else
-                    acknowledgementResponse = new AcknowledgementResponse(true, "Call Successfully Modifyed");
+                {
+                    if(request.CallId.Equals("tracker"))
+                        acknowledgementResponse = new AcknowledgementResponse(true, "Tracker Applied Details Successfully Modifyed");
+                    else if(request.CallId.Equals("sticker"))
+                        acknowledgementResponse = new AcknowledgementResponse(true, "Sticker Removed Details Successfully Modifyed");
+                    else if(request.CallId.Equals("discharge"))
+                        acknowledgementResponse = new AcknowledgementResponse(true, "Discharge Details Successfully Modifyed");
+                    else
+                        acknowledgementResponse = new AcknowledgementResponse(true, "Call Details Successfully Modifyed");
+                }
             }
             else
                 acknowledgementResponse = new AcknowledgementResponse(new[] { new Error("Error Occurred", "Error Occurred")}, false);
