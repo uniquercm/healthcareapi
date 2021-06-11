@@ -188,9 +188,9 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     var sqlSelResult = await connection.QueryAsync(sqlSelQuery);
                     retPatientStatusDetails.TotalPatientNumber = sqlSelResult.Count();
 
-                    sqlSelQuery = $"select * from HC_Staff_Patient.patient_obj" + whereCond;
-                    sqlSelResult = await connection.QueryAsync(sqlSelQuery);
-                    retPatientStatusDetails.TotalEnrolledPatientNumber = 0;// sqlSelResult.Count();
+                    sqlSelQuery = $"select sum(enrolled_count) from HC_Staff_Patient.patient_obj" + whereCond;
+                    var sqlResult = await connection.QueryAsync<int>(sqlSelQuery);
+                    retPatientStatusDetails.TotalEnrolledPatientNumber = sqlResult.FirstOrDefault();
 
                     var cond = $" where discharge_date < '" + todayDate + "'" + 
                             $" and pa.patient_id = sc.patient_id";
