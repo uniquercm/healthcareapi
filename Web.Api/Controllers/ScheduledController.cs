@@ -40,14 +40,16 @@ namespace Web.Api.Controllers
         /// <param name="patientId">Patient Id (optional)</param>
         /// <param name="isFieldAllocation">Is Field Allocation (optional)</param>
         /// <param name="fieldAllocationStatus"> Field Allocation Status(all, allowed, notallowed) (optional)</param>
+        /// <param name="serviceName">Service Name(all, tracker, sticker, 4pcr, 8pcr, discharge) (optional)</param>
+        /// <param name="serviceStatus">Service Status(all, applied, removed, replaced, visited, discharged, pending, others) (optional)</param>
         /// <returns>Scheduled Details</returns>
         [HttpGet("scheduled")]
-        public async Task<ActionResult> GetScheduledDetails(DateTime fromDate, DateTime toDate, string companyId = "", string scheduledId = "", string patientId = "", bool isFieldAllocation = false, string fieldAllocationStatus = "all")
+        public async Task<ActionResult> GetScheduledDetails(DateTime fromDate, DateTime toDate, string companyId = "", string scheduledId = "", string patientId = "", bool isFieldAllocation = false, string fieldAllocationStatus = "all", string serviceName = "all", string serviceStatus = "all")
         {
             if(isFieldAllocation)
-                await _scheduledUseCases.Handle(new GetDetailsRequest(companyId, patientId, scheduledId, fromDate, toDate, "FieldAllocation", fieldAllocationStatus), _getDetailsPresenter);
+                await _scheduledUseCases.Handle(new GetDetailsRequest(companyId, patientId, scheduledId, fromDate, toDate, "FieldAllocation", fieldAllocationStatus, serviceName, serviceStatus), _getDetailsPresenter);
             else
-                await _scheduledUseCases.Handle(new GetDetailsRequest(companyId, patientId, scheduledId, fromDate, toDate, "", fieldAllocationStatus), _getDetailsPresenter);
+                await _scheduledUseCases.Handle(new GetDetailsRequest(companyId, patientId, scheduledId, fromDate, toDate, "", fieldAllocationStatus, serviceName, serviceStatus), _getDetailsPresenter);
             return _getDetailsPresenter.ContentResult;
         }
 

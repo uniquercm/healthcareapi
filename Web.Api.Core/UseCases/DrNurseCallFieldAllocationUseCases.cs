@@ -25,13 +25,13 @@ namespace Web.Api.Core.UseCases
             GetDetailsResponse getDetailsResponse;
 
             if(request.LableName == "DrCall")
-                getDetailsResponse = new GetDetailsResponse(await _drNurseCallFieldAllocationRepository.GetDrNurseCallDetails(request.CompanyId, "", "DrCall", request.ScheduledFromDate, request.ScheduledToDate, request.CallStatus, request.ServiceStatus), true, "Data Fetched Successfully");
+                getDetailsResponse = new GetDetailsResponse(await _drNurseCallFieldAllocationRepository.GetDrNurseCallDetails(request.CompanyId, "", "DrCall", request.ScheduledFromDate, request.ScheduledToDate, request.CallStatus, request.ServiceName), true, "Data Fetched Successfully");
             else if(request.LableName == "NurseCall")
-                getDetailsResponse = new GetDetailsResponse(await _drNurseCallFieldAllocationRepository.GetDrNurseCallDetails(request.CompanyId, "", "NurseCall", request.ScheduledFromDate, request.ScheduledToDate, request.CallStatus, request.ServiceStatus), true, "Data Fetched Successfully");
+                getDetailsResponse = new GetDetailsResponse(await _drNurseCallFieldAllocationRepository.GetDrNurseCallDetails(request.CompanyId, "", "NurseCall", request.ScheduledFromDate, request.ScheduledToDate, request.CallStatus, request.ServiceName), true, "Data Fetched Successfully");
             else if(request.LableName == "TeamCall")
-                getDetailsResponse = new GetDetailsResponse(await _drNurseCallFieldAllocationRepository.GetFieldAllowCallDetails(request.CompanyId, request.TeamUserName, "TeamCall", request.ScheduledFromDate, request.ScheduledToDate, request.CallStatus, request.ServiceStatus), true, "Data Fetched Successfully");
+                getDetailsResponse = new GetDetailsResponse(await _drNurseCallFieldAllocationRepository.GetFieldAllowCallDetails(request.CompanyId, request.TeamUserName, "TeamCall", request.ScheduledFromDate, request.ScheduledToDate, request.CallStatus, request.ServiceName, request.ServiceStatus), true, "Data Fetched Successfully");
             else
-                getDetailsResponse = new GetDetailsResponse(await _drNurseCallFieldAllocationRepository.GetFieldAllowCallDetails(request.CompanyId, request.TeamUserName, "field", request.ScheduledFromDate, request.ScheduledToDate, request.CallStatus, request.ServiceStatus), true, "Data Fetched Successfully");
+                getDetailsResponse = new GetDetailsResponse(await _drNurseCallFieldAllocationRepository.GetFieldAllowCallDetails(request.CompanyId, request.TeamUserName, "field", request.ScheduledFromDate, request.ScheduledToDate, request.CallStatus, request.ServiceName, request.ServiceStatus), true, "Data Fetched Successfully");
 
             outputPort.Handle(getDetailsResponse);
             return true;
@@ -45,7 +45,12 @@ namespace Web.Api.Core.UseCases
             if(request.IsPCRCall)
                 isUpdated = await _drNurseCallFieldAllocationRepository.EditPCRCall(request);
             else
-                isUpdated = await _scheduledRepository.EditCall(request);
+            {
+                if(request.CallId.Equals("tracker") || request.CallId.Equals("sticker") || request.CallId.Equals("discharge")  )
+                    isUpdated = await _drNurseCallFieldAllocationRepository.EditStickerTrackerDischargeCall(request);
+                else 
+                    isUpdated = await _scheduledRepository.EditCall(request);
+            }
 
             if(isUpdated)
             {

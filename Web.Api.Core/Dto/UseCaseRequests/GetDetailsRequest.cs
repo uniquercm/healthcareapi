@@ -20,7 +20,8 @@ namespace Web.Api.Core.Dto.UseCaseRequests
         public string SendClaim { get; set; }//all, no, yes
         public string CallStatus { get; set; }//all, called, pending
         public string FieldAllocationStatus { get; set; }//all, allowed, notallowed
-        public string ServiceStatus { get; set; }//all, tracker, sticker, 4pcr, 8pcr, discharge
+        public string ServiceName { get; set; }//all, tracker, sticker, 4pcr, 8pcr, discharge
+        public string ServiceStatus { get; set; }//all, applied, removed, replaced, visited, discharged, pending, others
 
         public GetDetailsRequest()
         {   }
@@ -40,7 +41,7 @@ namespace Web.Api.Core.Dto.UseCaseRequests
             PatientId = patientId;
             LableName = lableName;
         }
-        public GetDetailsRequest(string companyId, DateTime scheduledFromDate, DateTime scheduledToDate, string lableName, string callStatus, string teamUserName, string serviceStatus)
+        public GetDetailsRequest(string companyId, DateTime scheduledFromDate, DateTime scheduledToDate, string lableName, string callStatus, string teamUserName, string serviceName)
         {
             CompanyId = companyId;
             ScheduledFromDate = scheduledFromDate;
@@ -48,7 +49,7 @@ namespace Web.Api.Core.Dto.UseCaseRequests
             LableName = lableName;
             CallStatus = callStatus;
             TeamUserName = teamUserName;
-            ServiceStatus = serviceStatus;
+            ServiceName = serviceName;
         }
         public GetDetailsRequest(string id, string patientId, string staffId, string patientStaffId, string scheduledId, string lableName)
         {
@@ -68,7 +69,7 @@ namespace Web.Api.Core.Dto.UseCaseRequests
             ScheduledToDate = scheduledToDate;
             LableName = lableName;
         }
-        public GetDetailsRequest(string companyId, string patientId, string scheduledId, DateTime scheduledFromDate, DateTime scheduledToDate, string lableName, string fieldAllocationStatus)
+        public GetDetailsRequest(string companyId, string patientId, string scheduledId, DateTime scheduledFromDate, DateTime scheduledToDate, string lableName, string fieldAllocationStatus, string serviceName, string serviceStatus)
         {
             CompanyId = companyId;
             PatientId = patientId;
@@ -77,6 +78,8 @@ namespace Web.Api.Core.Dto.UseCaseRequests
             ScheduledToDate = scheduledToDate;
             LableName = lableName;
             FieldAllocationStatus = fieldAllocationStatus;
+            ServiceName = serviceName;
+            ServiceStatus = serviceStatus;
         }
         public GetDetailsRequest(string companyId, string patientId, string scheduledId, DateTime scheduledFromDate, DateTime scheduledToDate, string lableName, string extractData, string sendClaim)
         {

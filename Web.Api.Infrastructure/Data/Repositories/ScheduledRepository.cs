@@ -18,7 +18,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
         {
             _appDbContext = appDbContext;
         }
-        public async Task<List<ScheduledDetails>> GetScheduledDetails(string companyId, string scheduledId, string patientId, bool isFieldAllocation, IPatientRepository patientRepository, DateTime scheduledFromDate, DateTime scheduledToDate, string searchAllowTeamType)
+        public async Task<List<ScheduledDetails>> GetScheduledDetails(string companyId, string scheduledId, string patientId, bool isFieldAllocation, IPatientRepository patientRepository, DateTime scheduledFromDate, DateTime scheduledToDate, string searchAllowTeamType, string serviceName, string serviceStatus)
         {
             List<ScheduledDetails> retScheduledDetailsList = new List<ScheduledDetails>();
             try
@@ -30,13 +30,27 @@ namespace Web.Api.Infrastructure.Data.Repositories
                                   $"sc.patient_id as PatientId, p.patient_name as PatientName, p.age as Age, " +
                                   $"sc.initial_pcr_test_date as PCRTestDate, sc.initial_pcr_test_result as PCRResult, " +
                                   $"sc.have_vaccine as HaveVaccine, " +
+
                                   $"sc.allocated_team_name as AllocatedTeamName, sc.reallocated_team_name as ReAllocatedTeamName, " +
-                                  $"sc.discharge_date as DischargeDate, sc.treatment_type as TreatmentType, " +
+
+                                  $"sc.treatment_type as TreatmentType, " +
+
                                   $"sc.treatment_from_date as TreatmentFromDate, sc.treatment_to_date as TreatmentToDate, " +
+
+                                  $"sc.discharge_date as DischargeDate, sc.discharge_status as DischargeStatus, " +
+                                  $"sc.discharge_remarks as DischargeRemarks, " +
+
+                                  $"sc.tracker_schedule_date as TrackerScheduleDate, sc.tracker_applied_date as TrackerAppliedDate, " +
+                                  $"sc.sticker_schedule_date as StickerScheduleDate, sc.sticker_removed_date as StickerRemovedDate, " +
+                                  $"sc.tracker_replace_date as TrackerReplacedDate, sc.tracker_replace_no as TrackerReplaceNumber, " +
+                                  $"sc.sticker_tracker_no as StickerTrackerNumber, sc.sticker_tracker_result as StickerTrackerResult, " +
+                                  
                                   $"sc.4day_pcr_test_date as PCR4DayTestDate, sc.4day_pcr_test_sample_date as PCR4DaySampleDate, sc.4day_pcr_test_result as PCR4DayResult, " +
                                   $"sc.8day_pcr_test_date as PCR8DayTestDate, sc.8day_pcr_test_sample_date as PCR8DaySampleDate, sc.8day_pcr_test_result as PCR8DayResult, " +
+
                                   $"sc.2day_call_id as Day2CallId, sc.3day_call_id as Day3CallId, sc.5day_call_id as Day5CallId, " +
                                   $"sc.6day_call_id as Day6CallId, sc.7day_call_id as Day7CallId, sc.9day_call_id as Day9CallId, " +
+
                                   $"sc.have_treatement_extract as ExtractTreatementDate, " +
                                   $"sc.created_by as CreatedBy, sc.modified_by as ModifiedBy";
 
@@ -75,9 +89,41 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     if(toDate == "01-01-0001")
                         toDate = fromDate;
 
-                    if(fromDate != "01-01-0001")
+                    //if(fromDate != "01-01-0001")
+                        //whereCond += $" and sc.treatment_from_date <= '" + fromDate + "'" +
+                                     //$" and sc.treatment_to_date > '" + toDate + "'";
+                }
+
+                if(!String.IsNullOrEmpty(serviceName) && fromDate != "01-01-0001")
+                {//all, tracker, sticker, 4pcr, 8pcr, discharge
+                    if(serviceName.Equals("tracker"))
+                        whereCond += $" and sc.tracker_schedule_date between '" + fromDate + "' and '" + toDate + "'";
+                    else if(serviceName.Equals("sticker"))
+                        whereCond += $" and sc.sticker_schedule_date between '" + fromDate + "' and '" + toDate + "'";
+                    else if(serviceName.Equals("4pcr"))
+                        whereCond += $" and sc.4day_pcr_test_date between '" + fromDate + "' and '" + toDate + "'";
+                    else if(serviceName.Equals("8pcr"))
+                        whereCond += $" and sc.8day_pcr_test_date between '" + fromDate + "' and '" + toDate + "'";
+                    else if(serviceName.Equals("discharge"))
+                        whereCond += $" and sc.discharge_date between '" + fromDate + "' and '" + toDate + "'";
+                    else
                         whereCond += $" and sc.treatment_from_date <= '" + fromDate + "'" +
                                      $" and sc.treatment_to_date > '" + toDate + "'";
+                }
+                else if(fromDate != "01-01-0001")
+                        whereCond += $" and sc.treatment_from_date <= '" + fromDate + "'" +
+                                     $" and sc.treatment_to_date > '" + toDate + "'";
+
+                if(!String.IsNullOrEmpty(serviceStatus)  && serviceStatus != "all")
+                {//all, tracker, sticker, 4pcr, 8pcr, discharge
+                    if(serviceName.Equals("tracker") || serviceName.Equals("sticker"))
+                        whereCond += " and sc.sticker_tracker_result = '" + serviceStatus + "'";
+                    else if(serviceName.Equals("4pcr"))
+                        whereCond += " and sc.4day_pcr_test_result = '" + serviceStatus + "'";
+                    else if(serviceName.Equals("8pcr"))
+                        whereCond += " and sc.8day_pcr_test_result = '" + serviceStatus + "'";
+                    else if(serviceName.Equals("discharge"))
+                        whereCond += " and p.discharge_status = '" + serviceStatus + "'";
                 }
 
                 var orderCond = $" order by sc.created_on DESC ";
@@ -275,6 +321,9 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 var colName = $"scheduled_id, patient_staff_id, patient_id, initial_pcr_test_date, initial_pcr_test_result, " +
                               $"have_vaccine, allocated_team_name, reallocated_team_name, " +
                               $"discharge_date, treatment_type, treatment_from_date, treatment_to_date, " +
+
+                              $"sc.tracker_schedule_date, sc.sticker_schedule_date, " +
+
                               $"4day_pcr_test_date, 4day_pcr_test_result, " +
                               //$"4day_pcr_test_sample_date, " +
                               $"8day_pcr_test_date, 8day_pcr_test_result, " +
@@ -286,6 +335,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                                    $"@HaveVaccine, @AllocatedTeamName, " +
                                    $"@ReAllocatedTeamName, @DischargeDate, @TreatmentType, " +
                                    $"@TreatmentFromDate, @TreatmentToDate, " +
+                                   $"@TrackerScheduleDate, @StickerScheduleDate, " +
                                    $"@PCR4DayTestDate, @PCR4DayResult, " + 
                                    //$"@PCR4DaySampleDate, " +
                                    $"@PCR8DayTestDate, @PCR8DayResult, " +
@@ -361,6 +411,9 @@ namespace Web.Api.Infrastructure.Data.Repositories
 
                 //scheduledRequest.DischargeDate = scheduledRequest.TreatmentToDate;//.TreatmentFromDate.AddDays(9);
 
+                scheduledRequest.TrackerScheduleDate = scheduledRequest.TreatmentFromDate.AddDays(1);
+                scheduledRequest.StickerScheduleDate = scheduledRequest.DischargeDate;
+
                 string pcrTestDate;
                 if(scheduledRequest.PCRTestDate == null)
                     pcrTestDate = "";
@@ -382,7 +435,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     if( dischargeDate == "0001-01-01")
                         dischargeDate = "";
                     else
-                        pcrTestDate = scheduledRequest.DischargeDate.ToString("yyyy-MM-dd 00:00:00.0");
+                        dischargeDate = scheduledRequest.DischargeDate.ToString("yyyy-MM-dd 00:00:00.0");
                 }
 
                 string treatmentFromDate;
@@ -394,7 +447,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     if( treatmentFromDate == "0001-01-01")
                         treatmentFromDate = "";
                     else
-                        pcrTestDate = scheduledRequest.TreatmentFromDate.ToString("yyyy-MM-dd 00:00:00.0");
+                        treatmentFromDate = scheduledRequest.TreatmentFromDate.ToString("yyyy-MM-dd 00:00:00.0");
                 }
 
                 string treatmentToDate;
@@ -406,7 +459,31 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     if( treatmentToDate == "0001-01-01")
                         treatmentToDate = "";
                     else
-                        pcrTestDate = scheduledRequest.TreatmentToDate.ToString("yyyy-MM-dd 00:00:00.0");
+                        treatmentToDate = scheduledRequest.TreatmentToDate.ToString("yyyy-MM-dd 00:00:00.0");
+                }
+
+                string trackerDate;
+                if(scheduledRequest.TrackerScheduleDate == null)
+                    trackerDate = "";
+                else
+                {
+                    trackerDate = scheduledRequest.TrackerScheduleDate.ToString("yyyy-MM-dd");
+                    if( trackerDate == "0001-01-01")
+                        trackerDate = "";
+                    else
+                        trackerDate = scheduledRequest.TrackerScheduleDate.ToString("yyyy-MM-dd 00:00:00.0");
+                }
+
+                string stickerDate;
+                if(scheduledRequest.StickerScheduleDate == null)
+                    stickerDate = "";
+                else
+                {
+                    stickerDate = scheduledRequest.StickerScheduleDate.ToString("yyyy-MM-dd");
+                    if( stickerDate == "0001-01-01")
+                        stickerDate = "";
+                    else
+                        stickerDate = scheduledRequest.StickerScheduleDate.ToString("yyyy-MM-dd 00:00:00.0");
                 }
 
                 string pcr4DayTestDate;
@@ -415,10 +492,10 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 else
                 {
                     pcr4DayTestDate = scheduledRequest.PCR4DayTestDate.ToString("yyyy-MM-dd");
-                    if( treatmentFromDate == "0001-01-01")
-                        treatmentFromDate = "";
+                    if( pcr4DayTestDate == "0001-01-01")
+                        pcr4DayTestDate = "";
                     else
-                        pcrTestDate = scheduledRequest.PCR4DayTestDate.ToString("yyyy-MM-dd 00:00:00.0");
+                        pcr4DayTestDate = scheduledRequest.PCR4DayTestDate.ToString("yyyy-MM-dd 00:00:00.0");
                 }
 
                 string pcr4DaySampleDate;
@@ -430,7 +507,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     if( pcr4DaySampleDate == "0001-01-01")
                         pcr4DaySampleDate = "";
                     else
-                        pcrTestDate = scheduledRequest.PCR4DaySampleDate.ToString("yyyy-MM-dd 00:00:00.0");
+                        pcr4DaySampleDate = scheduledRequest.PCR4DaySampleDate.ToString("yyyy-MM-dd 00:00:00.0");
                 }
 
                 string pcr8DayTestDate;
@@ -442,7 +519,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     if( pcr8DayTestDate == "0001-01-01")
                         pcr8DayTestDate = "";
                     else
-                        pcrTestDate = scheduledRequest.PCR8DayTestDate.ToString("yyyy-MM-dd 00:00:00.0");
+                        pcr8DayTestDate = scheduledRequest.PCR8DayTestDate.ToString("yyyy-MM-dd 00:00:00.0");
                 }
 
                 string pcr8DaySampleDate;
@@ -454,7 +531,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     if( pcr8DaySampleDate == "0001-01-01")
                         pcr8DaySampleDate = "";
                     else
-                        pcrTestDate = scheduledRequest.PCR8DaySampleDate.ToString("yyyy-MM-dd 00:00:00.0");
+                        pcr8DaySampleDate = scheduledRequest.PCR8DaySampleDate.ToString("yyyy-MM-dd 00:00:00.0");
                 }
 
                 object colValueParam = new
@@ -468,6 +545,8 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     AllocatedTeamName = scheduledRequest.AllocatedTeamName,
                     ReAllocatedTeamName = scheduledRequest.ReAllocatedTeamName,
                     DischargeDate = dischargeDate,//scheduledRequest.DischargeDate.ToString("yyyy-MM-dd 00:00:00.0"),
+                    TrackerScheduleDate = trackerDate,//scheduledRequest.TrackerScheduleDate.ToString("yyyy-MM-dd 00:00:00.0"),
+                    StickerScheduleDate = stickerDate,//scheduledRequest.StickerScheduleDate.ToString("yyyy-MM-dd 00:00:00.0"),
                     TreatmentType = scheduledRequest.TreatmentType,
                     TreatmentFromDate = treatmentFromDate,//scheduledRequest.TreatmentFromDate.ToString("yyyy-MM-dd 00:00:00.0"),
                     TreatmentToDate = treatmentToDate,//scheduledRequest.TreatmentToDate.ToString("yyyy-MM-dd 00:00:00.0"),
@@ -580,6 +659,9 @@ namespace Web.Api.Infrastructure.Data.Repositories
                               //$"allocated_team_name = @AllocatedTeamName, reallocated_team_name = @ReAllocatedTeamName, " +
                               $"discharge_date = @DischargeDate, treatment_type = @TreatmentType, " +
                               $"treatment_from_date = @TreatmentFromDate, treatment_to_date = @TreatmentToDate, " +
+
+                              $"tracker_schedule_date = @TrackerScheduleDate, sticker_schedule_date = @StickerScheduleDate, " +
+
                               $"4day_pcr_test_date = @PCR4DayTestDate, " +
                               //$"4day_pcr_test_sample_date = @PCR4DaySampleDate, 4day_pcr_test_result = @PCR4DayResult, " +
                               $"8day_pcr_test_date = @PCR8DayTestDate, " +
@@ -618,6 +700,8 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     callRequest.CallId = scheduledRequest.Day9CallId;
                     callRequest.CallScheduledDate = scheduledRequest.TreatmentFromDate.AddDays(8);
                     await EditCall(callRequest);
+
+                    scheduledRequest.DischargeDate = scheduledRequest.TreatmentToDate;
                 }
                 else
                 {
@@ -626,7 +710,17 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     scheduledRequest.Day6CallId = "";
                     scheduledRequest.Day7CallId = "";
                     scheduledRequest.Day9CallId = "";
+
+                    scheduledRequest.DischargeDate = scheduledRequest.TreatmentFromDate.AddDays(3);
                 }
+
+                scheduledRequest.PCR4DayTestDate = scheduledRequest.TreatmentFromDate.AddDays(3);
+                scheduledRequest.PCR8DayTestDate = scheduledRequest.TreatmentFromDate.AddDays(7);
+
+                //scheduledRequest.DischargeDate = scheduledRequest.TreatmentToDate;//.TreatmentFromDate.AddDays(9);
+
+                scheduledRequest.TrackerScheduleDate = scheduledRequest.TreatmentFromDate.AddDays(1);
+                scheduledRequest.StickerScheduleDate = scheduledRequest.DischargeDate;
 
                 string pcrTestDate;
                 if(scheduledRequest.PCRTestDate == null)
@@ -649,7 +743,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     if( dischargeDate == "0001-01-01")
                         dischargeDate = "";
                     else
-                        pcrTestDate = scheduledRequest.DischargeDate.ToString("yyyy-MM-dd 00:00:00.0");
+                        dischargeDate = scheduledRequest.DischargeDate.ToString("yyyy-MM-dd 00:00:00.0");
                 }
 
                 string treatmentFromDate;
@@ -661,7 +755,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     if( treatmentFromDate == "0001-01-01")
                         treatmentFromDate = "";
                     else
-                        pcrTestDate = scheduledRequest.TreatmentFromDate.ToString("yyyy-MM-dd 00:00:00.0");
+                        treatmentFromDate = scheduledRequest.TreatmentFromDate.ToString("yyyy-MM-dd 00:00:00.0");
                 }
 
                 string treatmentToDate;
@@ -673,7 +767,31 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     if( treatmentToDate == "0001-01-01")
                         treatmentToDate = "";
                     else
-                        pcrTestDate = scheduledRequest.TreatmentToDate.ToString("yyyy-MM-dd 00:00:00.0");
+                        treatmentToDate = scheduledRequest.TreatmentToDate.ToString("yyyy-MM-dd 00:00:00.0");
+                }
+
+                string trackerDate;
+                if(scheduledRequest.TrackerScheduleDate == null)
+                    trackerDate = "";
+                else
+                {
+                    trackerDate = scheduledRequest.TrackerScheduleDate.ToString("yyyy-MM-dd");
+                    if( trackerDate == "0001-01-01")
+                        trackerDate = "";
+                    else
+                        trackerDate = scheduledRequest.TrackerScheduleDate.ToString("yyyy-MM-dd 00:00:00.0");
+                }
+
+                string stickerDate;
+                if(scheduledRequest.StickerScheduleDate == null)
+                    stickerDate = "";
+                else
+                {
+                    stickerDate = scheduledRequest.StickerScheduleDate.ToString("yyyy-MM-dd");
+                    if( stickerDate == "0001-01-01")
+                        stickerDate = "";
+                    else
+                        stickerDate = scheduledRequest.StickerScheduleDate.ToString("yyyy-MM-dd 00:00:00.0");
                 }
 
                 string pcr4DayTestDate;
@@ -682,22 +800,10 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 else
                 {
                     pcr4DayTestDate = scheduledRequest.PCR4DayTestDate.ToString("yyyy-MM-dd");
-                    if( treatmentFromDate == "0001-01-01")
-                        treatmentFromDate = "";
+                    if( pcr4DayTestDate == "0001-01-01")
+                        pcr4DayTestDate = "";
                     else
-                        pcrTestDate = scheduledRequest.PCR4DayTestDate.ToString("yyyy-MM-dd 00:00:00.0");
-                }
-
-                string pcr4DaySampleDate;
-                if(scheduledRequest.PCR4DaySampleDate == null)
-                    pcr4DaySampleDate = "";
-                else
-                {
-                    pcr4DaySampleDate = scheduledRequest.PCR4DaySampleDate.ToString("yyyy-MM-dd");
-                    if( pcr4DaySampleDate == "0001-01-01")
-                        pcr4DaySampleDate = "";
-                    else
-                        pcrTestDate = scheduledRequest.PCR4DaySampleDate.ToString("yyyy-MM-dd 00:00:00.0");
+                        pcr4DayTestDate = scheduledRequest.PCR4DayTestDate.ToString("yyyy-MM-dd 00:00:00.0");
                 }
 
                 string pcr8DayTestDate;
@@ -709,19 +815,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     if( pcr8DayTestDate == "0001-01-01")
                         pcr8DayTestDate = "";
                     else
-                        pcrTestDate = scheduledRequest.PCR8DayTestDate.ToString("yyyy-MM-dd 00:00:00.0");
-                }
-
-                string pcr8DaySampleDate;
-                if(scheduledRequest.PCR8DaySampleDate == null)
-                    pcr8DaySampleDate = "";
-                else
-                {
-                    pcr8DaySampleDate = scheduledRequest.PCR8DaySampleDate.ToString("yyyy-MM-dd");
-                    if( pcr8DaySampleDate == "0001-01-01")
-                        pcr8DaySampleDate = "";
-                    else
-                        pcrTestDate = scheduledRequest.PCR8DaySampleDate.ToString("yyyy-MM-dd 00:00:00.0");
+                        pcr8DayTestDate = scheduledRequest.PCR8DayTestDate.ToString("yyyy-MM-dd 00:00:00.0");
                 }
 
                 object colValueParam = new
@@ -735,6 +829,8 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     //AllocatedTeamName = scheduledRequest.AllocatedTeamName,
                     //ReAllocatedTeamName = scheduledRequest.ReAllocatedTeamName,
                     DischargeDate = dischargeDate,//scheduledRequest.DischargeDate.ToString("yyyy-MM-dd 00:00:00.0"),
+                    TrackerScheduleDate = trackerDate,//scheduledRequest.TrackerScheduleDate.ToString("yyyy-MM-dd 00:00:00.0"),
+                    StickerScheduleDate = stickerDate,//scheduledRequest.StickerScheduleDate.ToString("yyyy-MM-dd 00:00:00.0"),
                     TreatmentType = scheduledRequest.TreatmentType,
                     TreatmentFromDate = treatmentFromDate,//scheduledRequest.TreatmentFromDate.ToString("yyyy-MM-dd 00:00:00.0"),
                     TreatmentToDate = treatmentToDate,//scheduledRequest.TreatmentToDate.ToString("yyyy-MM-dd 00:00:00.0"),

@@ -18,7 +18,7 @@
             <param name="companyId">Company Id (optional)</param>
             <returns>Dash Board Details</returns>
         </member>
-        <member name="M:Web.Api.Controllers.DrNurseCallFieldAllocationController.GetDrNurseCallFieldAllocationCallDetails(System.DateTime,System.DateTime,System.String,System.String,System.String,System.String,System.String)">
+        <member name="M:Web.Api.Controllers.DrNurseCallFieldAllocationController.GetDrNurseCallFieldAllocationCallDetails(System.DateTime,System.DateTime,System.String,System.String,System.String,System.String,System.String,System.String)">
             <summary>
             Getting a Doctor Nurse and Team Field Allocation Call Details
             </summary>
@@ -28,7 +28,8 @@
             <param name="callName">Call Name (doctor, nurse, team, field) (optional)</param>
             <param name="callStatus">Call Status(all, called, pending, visited) (optional)</param>
             <param name="teamUserName">Team User Name (optional)</param>
-            <param name="serviceStatus">Service Status(all, sticker, 4pcr, 8pcr, discharge) (optional)</param>
+            <param name="serviceName">Service Name(all, tracker, sticker, 4pcr, 8pcr, discharge) (optional)</param>
+            <param name="serviceStatus">Service Status(all, applied, removed, replaced, visited, discharged, pending, others) (optional)</param>
             <returns>Doctor Nurse Team Field Allocation Call Details</returns>
         </member>
         <member name="M:Web.Api.Controllers.DrNurseCallFieldAllocationController.EditCall(Web.Api.Models.Request.CallRequest)">
@@ -160,7 +161,7 @@
             <param name="request">Modifying Report Details</param>
             <returns>Acknowledgement</returns>
         </member>
-        <member name="M:Web.Api.Controllers.ScheduledController.GetScheduledDetails(System.DateTime,System.DateTime,System.String,System.String,System.String,System.Boolean,System.String)">
+        <member name="M:Web.Api.Controllers.ScheduledController.GetScheduledDetails(System.DateTime,System.DateTime,System.String,System.String,System.String,System.Boolean,System.String,System.String,System.String)">
             <summary>
             Getting a Scheduled Details
             </summary>
@@ -171,6 +172,8 @@
             <param name="patientId">Patient Id (optional)</param>
             <param name="isFieldAllocation">Is Field Allocation (optional)</param>
             <param name="fieldAllocationStatus"> Field Allocation Status(all, allowed, notallowed) (optional)</param>
+            <param name="serviceName">Service Name(all, tracker, sticker, 4pcr, 8pcr, discharge) (optional)</param>
+            <param name="serviceStatus">Service Status(all, applied, removed, replaced, visited, discharged, pending, others) (optional)</param>
             <returns>Scheduled Details</returns>
         </member>
         <member name="M:Web.Api.Controllers.ScheduledController.CreateScheduled(Web.Api.Models.Request.ScheduledRequest)">
