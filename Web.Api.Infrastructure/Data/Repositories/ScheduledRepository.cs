@@ -322,7 +322,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                               $"have_vaccine, allocated_team_name, reallocated_team_name, " +
                               $"discharge_date, treatment_type, treatment_from_date, treatment_to_date, " +
 
-                              $"sc.tracker_schedule_date, sc.sticker_schedule_date, " +
+                              $"tracker_schedule_date, sticker_schedule_date, " +
 
                               $"4day_pcr_test_date, 4day_pcr_test_result, " +
                               //$"4day_pcr_test_sample_date, " +
