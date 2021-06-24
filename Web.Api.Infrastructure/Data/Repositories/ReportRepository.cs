@@ -219,7 +219,11 @@ namespace Web.Api.Infrastructure.Data.Repositories
                         ModifiedOn = DateTime.Today.ToString("yyyy-MM-dd 00:00:00.0")
                     };
                 }
-                return sqlResult;
+                using (var connection = _appDbContext.Connection)
+                {
+                    sqlResult = Convert.ToBoolean(await connection.ExecuteAsync(sqlUpdateScheduleQuery, colValueParam));
+                    return sqlResult;
+                }
             }
             catch (Exception Err)
             {
