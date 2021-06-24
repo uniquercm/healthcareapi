@@ -51,18 +51,18 @@ namespace Web.Api.Core.UseCases
         {
             AcknowledgementResponse acknowledgementResponse;
 
-            if(request.IsUpdate)//Edit a User
+            if(await _authRepository.CheckUserNameAvailability(request.UserId, request.UserName))
+                acknowledgementResponse = new AcknowledgementResponse(new[] { new Error("Already Exist", "The User Name already available")}, false);
+            else
             {
-                if(await _authRepository.EditUser(request))
-                    acknowledgementResponse = new AcknowledgementResponse(true, "User Successfully Modifyed");
-                else
-                    acknowledgementResponse = new AcknowledgementResponse(new[] { new Error("Error Occurred", "Error Occurred")}, false);
-            }
-            else//Create a User
-            {
-                if(await _authRepository.CheckUserNameAvailability(request.UserId, request.UserName))
-                    acknowledgementResponse = new AcknowledgementResponse(new[] { new Error("Already Exist", "The User Name already available")}, false);
-                else
+                if(request.IsUpdate)//Edit a User
+                {
+                    if(await _authRepository.EditUser(request))
+                        acknowledgementResponse = new AcknowledgementResponse(true, "User Successfully Modifyed");
+                    else
+                        acknowledgementResponse = new AcknowledgementResponse(new[] { new Error("Error Occurred", "Error Occurred")}, false);
+                }
+                else//Create a User
                 {
                     if(await _authRepository.CreateUser(request))
                         acknowledgementResponse = new AcknowledgementResponse(request.UserId, true, "User Created Successfully");
