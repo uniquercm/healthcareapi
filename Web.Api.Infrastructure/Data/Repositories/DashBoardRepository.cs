@@ -319,7 +319,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 var ColumAssign = $"u.company_id as CompanyId, co.company_name as CompanyName, " +
                                   $"u.full_name as TeamName, u.user_name as TeamUserName";
 
-                var whereCond = $" where user_type = 7";
+                var whereCond = $" where u.user_type = 7 and u.company_id = co.company_id";
 
                 string todayDate = DateTime.Today.ToString("yyyy-MM-dd 00:00:00.0");
 
