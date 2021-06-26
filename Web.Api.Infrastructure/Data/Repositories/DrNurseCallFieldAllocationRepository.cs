@@ -31,6 +31,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     || !serviceName.Equals("8pcr")))
                         retDrNurseCallDetails = await GetDrNurseCallDetails(companyId, teamUserName, "NurseCall", scheduledFromDate, scheduledToDate, callStatus, serviceName);
 */
+                    /*comminted for 4 th PCR
                     if(serviceName.Equals("4pcr") || serviceName.Equals("all"))
                     {
                         dayCallDetails = await GetPCRCallDetails(companyId, teamUserName, true, scheduledFromDate, scheduledToDate, serviceStatus);
@@ -41,7 +42,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                         }
                         else
                             retDrNurseCallDetails = dayCallDetails;
-                    }
+                    }*/
 
                     if(serviceName.Equals("8pcr") || serviceName.Equals("all"))
                     {
@@ -307,11 +308,11 @@ namespace Web.Api.Infrastructure.Data.Repositories
                                   $"true as IsPCRCall, ";
                 if(is4thDay)
                     ColumAssign += $"'4thday' as CallId, sc.4day_pcr_test_date as CallScheduledDate, " +
-                                  $"sc.4day_pcr_test_sample_date as CalledDate, "+
+                                  $"sc.4day_pcr_test_sample_date as CalledDate, " +
                                   $"sc.4day_pcr_test_result as CallStatus";
                 else
                     ColumAssign += $"'8thday' as CallId, sc.8day_pcr_test_date as CallScheduledDate, " +
-                                  $"sc.8day_pcr_test_sample_date as CalledDate, "+
+                                  $"sc.8day_pcr_test_sample_date as CalledDate, " +
                                   $"sc.8day_pcr_test_result as CallStatus";
 
                 var whereCond = $" where p.company_id = co.company_id" +

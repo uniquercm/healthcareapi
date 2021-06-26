@@ -42,6 +42,7 @@ namespace Web.Api.Core.Dto.UseCaseRequests
         public DateTime FirstCallScheduledDate { get; set; }
         public string Day2CallId { get; set; }//2day_call_id – varchar(128)
         public string Day3CallId { get; set; }//3day_call_id – varchar(128)
+        public string Day4CallId { get; set; }//4day_call_id – varchar(128)
         public string Day5CallId { get; set; }//5day_call_id – varchar(128)
         public string Day6CallId { get; set; }//6day_call_id – varchar(128)
         public string Day7CallId { get; set; }//7day_call_id – varchar(128)
@@ -93,17 +94,19 @@ namespace Web.Api.Core.Dto.UseCaseRequests
         public string TrackerReplaceNumber { get; set; }//tracker_replace_no - varchar(50)
         public string StickerTrackerResult { get; set; }//sticker_tracker_result - varchar(50)
        
-        public string Day2CallId { get; set; }//2day_call_ id – varchar(128)
+        public string Day2CallId { get; set; }//2day_call_id – varchar(128)
         public CallDetails Day2CallDetails { get; set; }
-        public string Day3CallId { get; set; }//3day_call_ id – varchar(128)
+        public string Day3CallId { get; set; }//3day_call_id – varchar(128)
         public CallDetails Day3CallDetails { get; set; }
-        public string Day5CallId { get; set; }//5day_call_ id – varchar(128)
+        public string Day4CallId { get; set; }//4day_call_id – varchar(128)
+        public CallDetails Day4CallDetails { get; set; }
+        public string Day5CallId { get; set; }//5day_call_id – varchar(128)
         public CallDetails Day5CallDetails { get; set; }
-        public string Day6CallId { get; set; }//6day_call_ id – varchar(128)
+        public string Day6CallId { get; set; }//6day_call_id – varchar(128)
         public CallDetails Day6CallDetails { get; set; }
-        public string Day7CallId { get; set; }//7day_call_ id – varchar(128)
+        public string Day7CallId { get; set; }//7day_call_id – varchar(128)
         public CallDetails Day7CallDetails { get; set; }
-        public string Day9CallId { get; set; }//9day_call_ id – varchar(128)
+        public string Day9CallId { get; set; }//9day_call_id – varchar(128)
         public CallDetails Day9CallDetails { get; set; }
         public string IsExtractTreatementDate { get; set; }//have_treatement_extract - varchar(25)
         public string CreatedBy { get; set; } //created_by

@@ -39,9 +39,9 @@ namespace Web.Api.Infrastructure.Data.Repositories
                                   $"sc.4day_pcr_test_result as PCR4DayResult, " +
                                   $"sc.8day_pcr_test_date as PCR8DayTestDate, sc.8day_pcr_test_sample_date as PCR8DaySampleDate, " +
                                   $"sc.8day_pcr_test_result as PCR8DayResult, " +
-                                  $"sc.3day_call_id as Day3CallId, sc.5day_call_id as Day5CallId, " +
-                                  $"sc.6day_call_id as Day6CallId, sc.7day_call_id as Day7CallId, " +
-                                  $"sc.9day_call_id as Day9CallId, " +
+                                  $"sc.3day_call_id as Day3CallId, sc.4day_call_id as Day4CallId, " +
+                                  $"sc.5day_call_id as Day5CallId, sc.6day_call_id as Day6CallId, " +
+                                  $"sc.7day_call_id as Day7CallId, sc.9day_call_id as Day9CallId, " +
                                   $"sc.discharge_date as DischargeDate, sc.discharge_status as DischargeStatus, sc.discharge_remarks as DischargeRemarks, " +
                                   $"sc.have_treatement_extract as IsExtractTreatementDate, " +
                                   $"sc.have_send_claim as IsSendClaim, sc.claim_send_date as SendingClaimDate";
@@ -106,6 +106,11 @@ namespace Web.Api.Infrastructure.Data.Repositories
                         callDetails = await GetCallDetails(singleReportDetails.Day3CallId, singleReportDetails.ScheduledId);
                         singleReportDetails.Day3CallStatus = callDetails.CallStatus;
                         singleReportDetails.Day3CallRemarks = callDetails.Remarks;
+
+                        callDetails = new CallDetails();
+                        callDetails = await GetCallDetails(singleReportDetails.Day4CallId, singleReportDetails.ScheduledId);
+                        singleReportDetails.Day4CallStatus = callDetails.CallStatus;
+                        singleReportDetails.Day4CallRemarks = callDetails.Remarks;
 
                         callDetails = new CallDetails();
                         callDetails = await GetCallDetails(singleReportDetails.Day5CallId, singleReportDetails.ScheduledId);

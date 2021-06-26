@@ -20,7 +20,7 @@ namespace Web.Api.Core.Dto.UseCaseRequests
         public DateTime RecptionCallDate { get; set; }//reception_date - datetime
         public string RecptionCallStatus { get; set; }//reception_status - varchar(100)
         public string RecptionCallRemarks { get; set; }//reception_remarks - varchar(256)
-        public string Day2CallId { get; set; }//2day_call_ id – varchar(128)
+        public string Day2CallId { get; set; }//2day_call_id – varchar(128)
         public string DrCallStatus { get; set; }
         public string DrCallRemarks { get; set; }
         public DateTime PCR4DayTestDate { get; set; }//4day_pcr_test_date - datetime
@@ -29,19 +29,22 @@ namespace Web.Api.Core.Dto.UseCaseRequests
         public DateTime PCR8DayTestDate { get; set; }//8day_pcr_test_date - datetime
         public DateTime PCR8DaySampleDate { get; set; }//8day_pcr_test_sample_date – datetime
         public string PCR8DayResult { get; set; }//8day_pcr_test_result - enum('Negative','Positive')
-        public string Day3CallId { get; set; }//3day_call_ id – varchar(128)
+        public string Day3CallId { get; set; }//3day_call_id – varchar(128)
         public string Day3CallStatus { get; set; }
         public string Day3CallRemarks { get; set; }
-        public string Day5CallId { get; set; }//5day_call_ id – varchar(128)
+        public string Day4CallId { get; set; }//4day_call_id – varchar(128)
+        public string Day4CallStatus { get; set; }
+        public string Day4CallRemarks { get; set; }
+        public string Day5CallId { get; set; }//5day_call_id – varchar(128)
         public string Day5CallStatus { get; set; }
         public string Day5CallRemarks { get; set; }
-        public string Day6CallId { get; set; }//6day_call_ id – varchar(128)
+        public string Day6CallId { get; set; }//6day_call_id – varchar(128)
         public string Day6CallStatus { get; set; }
         public string Day6CallRemarks { get; set; }
         public string Day7CallId { get; set; }//7day_call_ id – varchar(128)
         public string Day7CallStatus { get; set; }
         public string Day7CallRemarks { get; set; }
-        public string Day9CallId { get; set; }//9day_call_ id – varchar(128)
+        public string Day9CallId { get; set; }//9day_call_id – varchar(128)
         public string Day9CallStatus { get; set; }
         public string Day9CallRemarks { get; set; }
         public DateTime DischargeDate { get; set; }//discharge_date – datetime

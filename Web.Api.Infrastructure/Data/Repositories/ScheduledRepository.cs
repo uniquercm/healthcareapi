@@ -48,8 +48,10 @@ namespace Web.Api.Infrastructure.Data.Repositories
                                   $"sc.4day_pcr_test_date as PCR4DayTestDate, sc.4day_pcr_test_sample_date as PCR4DaySampleDate, sc.4day_pcr_test_result as PCR4DayResult, " +
                                   $"sc.8day_pcr_test_date as PCR8DayTestDate, sc.8day_pcr_test_sample_date as PCR8DaySampleDate, sc.8day_pcr_test_result as PCR8DayResult, " +
 
-                                  $"sc.2day_call_id as Day2CallId, sc.3day_call_id as Day3CallId, sc.5day_call_id as Day5CallId, " +
-                                  $"sc.6day_call_id as Day6CallId, sc.7day_call_id as Day7CallId, sc.9day_call_id as Day9CallId, " +
+                                  $"sc.2day_call_id as Day2CallId, sc.3day_call_id as Day3CallId, " +
+                                  $"sc.4day_call_id as Day4CallId, sc.5day_call_id as Day5CallId, " +
+                                  $"sc.6day_call_id as Day6CallId, sc.7day_call_id as Day7CallId, " +
+                                  $"sc.9day_call_id as Day9CallId, " +
 
                                   $"sc.have_treatement_extract as ExtractTreatementDate, " +
                                   $"sc.created_by as CreatedBy, sc.modified_by as ModifiedBy";
@@ -143,6 +145,10 @@ namespace Web.Api.Infrastructure.Data.Repositories
                         callDetailsList = await GetCallDetails(singleScheduledDetails.Day3CallId, singleScheduledDetails.ScheduledId);
                         if(callDetailsList.Count > 0)
                             singleScheduledDetails.Day3CallDetails = callDetailsList[0];
+
+                        callDetailsList = await GetCallDetails(singleScheduledDetails.Day4CallId, singleScheduledDetails.ScheduledId);
+                        if(callDetailsList.Count > 0)
+                            singleScheduledDetails.Day4CallDetails = callDetailsList[0];
 
                         callDetailsList = await GetCallDetails(singleScheduledDetails.Day5CallId, singleScheduledDetails.ScheduledId);
                         if(callDetailsList.Count > 0)
@@ -329,7 +335,8 @@ namespace Web.Api.Infrastructure.Data.Repositories
                               //$"4day_pcr_test_sample_date, " +
                               $"8day_pcr_test_date, 8day_pcr_test_result, " +
                               //$"8day_pcr_test_sample_date, " +
-                              $"2day_call_id, 3day_call_id, 5day_call_id, 6day_call_id, 7day_call_id, " +
+                              $"2day_call_id, 3day_call_id, 4day_call_id, " +
+                              $"5day_call_id, 6day_call_id, 7day_call_id, " +
                               $"9day_call_id, have_treatement_extract, created_by, created_on";
 
                 var colValueName = $"@ScheduledId, @PatientStaffId, @PatientId, @PCRTestDate, @PCRResult, " +
@@ -341,8 +348,10 @@ namespace Web.Api.Infrastructure.Data.Repositories
                                    //$"@PCR4DaySampleDate, " +
                                    $"@PCR8DayTestDate, @PCR8DayResult, " +
                                    //$"@PCR8DaySampleDate, " +
-                                   $"@Day2CallId, @Day3CallId, @Day5CallId, " +
-                                   $"@Day6CallId, @Day7CallId, @Day9CallId, " +
+                                   $"@Day2CallId, @Day3CallId, " +
+                                   $"@Day4CallId, @Day5CallId, " +
+                                   $"@Day6CallId, @Day7CallId, " +
+                                   $"@Day9CallId, " +
                                    $"@ExtractTreatementDate, " +
                                    $"@CreatedBy, @CreatedOn";
 
@@ -369,6 +378,12 @@ namespace Web.Api.Infrastructure.Data.Repositories
                         scheduledRequest.Day3CallId = callRequest.CallId;
                     else
                         scheduledRequest.Day3CallId = "";
+
+                    callRequest.CallScheduledDate = scheduledRequest.TreatmentFromDate.AddDays(3);
+                    if(await CreateCall(callRequest))
+                        scheduledRequest.Day4CallId = callRequest.CallId;
+                    else
+                        scheduledRequest.Day4CallId = "";
 
                     callRequest.CallScheduledDate = scheduledRequest.TreatmentFromDate.AddDays(4);
                     if(await CreateCall(callRequest))
@@ -399,6 +414,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 else
                 {
                     scheduledRequest.Day3CallId = "";
+                    scheduledRequest.Day4CallId = "";
                     scheduledRequest.Day5CallId = "";
                     scheduledRequest.Day6CallId = "";
                     scheduledRequest.Day7CallId = "";
@@ -559,6 +575,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     PCR8DayResult = scheduledRequest.PCR8DayResult,
                     Day2CallId = scheduledRequest.Day2CallId,
                     Day3CallId = scheduledRequest.Day3CallId,
+                    Day4CallId = scheduledRequest.Day4CallId,
                     Day5CallId = scheduledRequest.Day5CallId,
                     Day6CallId = scheduledRequest.Day6CallId,
                     Day7CallId = scheduledRequest.Day7CallId,
@@ -686,6 +703,10 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     callRequest.CallScheduledDate = scheduledRequest.TreatmentFromDate.AddDays(2);
                     await EditCall(callRequest);
 
+                    callRequest.CallId = scheduledRequest.Day4CallId;
+                    callRequest.CallScheduledDate = scheduledRequest.TreatmentFromDate.AddDays(3);
+                    await EditCall(callRequest);
+
                     callRequest.CallId = scheduledRequest.Day5CallId;
                     callRequest.CallScheduledDate = scheduledRequest.TreatmentFromDate.AddDays(4);
                     await EditCall(callRequest);
@@ -707,6 +728,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 else
                 {
                     scheduledRequest.Day3CallId = "";
+                    scheduledRequest.Day4CallId = "";
                     scheduledRequest.Day5CallId = "";
                     scheduledRequest.Day6CallId = "";
                     scheduledRequest.Day7CallId = "";

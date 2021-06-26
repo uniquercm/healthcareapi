@@ -30,6 +30,9 @@ namespace Web.Api.Models.Request
         public string Day3CallId { get; set; }
         public string Day3CallStatus { get; set; }
         public string Day3CallRemarks { get; set; }
+        public string Day4CallId { get; set; }
+        public string Day4CallStatus { get; set; }
+        public string Day4CallRemarks { get; set; }
         public string Day5CallId { get; set; }
         public string Day5CallStatus { get; set; }
         public string Day5CallRemarks { get; set; }
