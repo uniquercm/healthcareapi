@@ -82,6 +82,18 @@ namespace Web.Api.Controllers
         }
 
         /// <summary>
+        /// Creating a List Of Patient
+        /// </summary>
+        /// <param name="request">New Patient Details List</param>
+        /// <returns>Acknowledgement</returns>
+        [HttpPost("patient-file")]
+        public async Task<ActionResult> CreateListOfPatient([FromBody] Models.Request.FilePatientRequest request)
+        {
+            await _patientUseCases.Handle(_mapper.Map<FilePatientRequest>(request), _acknowledgementPresenter);
+            return _acknowledgementPresenter.ContentResult;
+        }
+
+        /// <summary>
         /// Modifying a Patient
         /// </summary>
         /// <param name="request">Modifying Patient Details</param>

@@ -175,6 +175,38 @@ namespace Web.Api.Infrastructure.Data.Repositories
             return retPatientDetailsList;
         }
 */
+        public async Task<bool> CreateFilePatient(FilePatientRequest filePatientRequest)
+        {
+            //try
+            //{
+            bool sqlResult = true;
+            filePatientRequest.CreatedPatientIdList = new List<string>();
+            filePatientRequest.ErroredPatientRequestList = new List<PatientRequest>();
+            foreach(PatientRequest singlePatientRequest in filePatientRequest.PatientRequestList)
+            {
+                try
+                {
+                    sqlResult = await CreatePatient(singlePatientRequest);
+                    if(sqlResult)
+                        filePatientRequest.CreatedPatientIdList.Add(singlePatientRequest.PatientId);
+                    else
+                        filePatientRequest.ErroredPatientRequestList.Add(singlePatientRequest);
+                }
+                catch (Exception Err)
+                {
+                    var Error = Err.Message.ToString();
+                    singlePatientRequest.ErrorMsg = Err.Message.ToString();
+                    filePatientRequest.ErroredPatientRequestList.Add(singlePatientRequest);
+                }
+            }
+            /*}
+            catch (Exception Err)
+            {
+                var Error = Err.Message.ToString();
+                return false;
+            }*/
+            return sqlResult;
+        }
         public async Task<bool> CreatePatient(PatientRequest patientRequest)
         {
             try
@@ -261,6 +293,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
             catch (Exception Err)
             {
                 var Error = Err.Message.ToString();
+                patientRequest.ErrorMsg = Err.Message.ToString();
                 return false;
             }
         }

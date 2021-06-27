@@ -47,8 +47,20 @@ namespace Web.Api.Core.UseCases
                 if(await _patientRepository.CreatePatient(request))
                     acknowledgementResponse = new AcknowledgementResponse(request.PatientId, true, "Patient Created Successfully");
                 else
-                    acknowledgementResponse = new AcknowledgementResponse(new[] { new Error("Error Occurred", "Error Occurred")}, false);
+                    acknowledgementResponse = new AcknowledgementResponse(new[] { new Error("Error Occurred", request.ErrorMsg)}, false);
             }
+            outputPort.Handle(acknowledgementResponse);
+            return true;
+        }
+        public async Task<bool> Handle(FilePatientRequest request, IOutputPort<AcknowledgementResponse> outputPort)
+        {
+            AcknowledgementResponse acknowledgementResponse;
+
+            if(await _patientRepository.CreateFilePatient(request))
+                acknowledgementResponse = new AcknowledgementResponse(request.CreatedPatientIdList, request.ErroredPatientRequestList, true, "All Patient Created Successfully");
+            else
+                acknowledgementResponse = new AcknowledgementResponse(new[] { new Error("Error Occurred", "Error Occurred")}, false);
+
             outputPort.Handle(acknowledgementResponse);
             return true;
         }

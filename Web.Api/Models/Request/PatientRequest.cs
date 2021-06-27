@@ -1,7 +1,12 @@
 using System;
+using System.Collections.Generic;
 
 namespace Web.Api.Models.Request
 {
+    public class FilePatientRequest
+    {
+        public List<PatientRequest> PatientRequestList { get; set; }
+    }
     public class PatientRequest
     {
         public string PatientId { get; set; }

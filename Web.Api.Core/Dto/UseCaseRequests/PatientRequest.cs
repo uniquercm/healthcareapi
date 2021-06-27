@@ -1,9 +1,16 @@
 using System;
+using System.Collections.Generic;
 using Web.Api.Core.Dto.UseCaseResponses;
 using Web.Api.Core.Interfaces;
 
 namespace Web.Api.Core.Dto.UseCaseRequests
 {
+    public class FilePatientRequest : IUseCaseRequest<AcknowledgementResponse>
+    {
+        public List<PatientRequest> PatientRequestList { get; set; }
+        public List<string> CreatedPatientIdList { get; set; }
+        public List<PatientRequest> ErroredPatientRequestList { get; set; }
+    }
     public class PatientRequest : IUseCaseRequest<AcknowledgementResponse>
     {
         public string PatientId { get; set; }//patient_id – varchar(128)
@@ -38,6 +45,7 @@ namespace Web.Api.Core.Dto.UseCaseRequests
         public string ModifiedBy { get; set; } //modified_by
         public bool IsUpdate { get; set; }
         public bool IsReception { get; set; }
+        public string ErrorMsg { get; set; }
     }
     
     public class PatientDetails

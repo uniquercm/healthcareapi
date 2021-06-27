@@ -9,6 +9,7 @@ namespace Web.Api.Core.Interfaces.Gateways.Repositories
     {
         Task<List<PatientDetails>> GetPatientDetails(string companyId, string patientId, string gMapLinkSatus);
         Task<bool> CreatePatient(PatientRequest patientRequest);
+        Task<bool> CreateFilePatient(FilePatientRequest filePatientRequest);
         string GenerateUUID();
         Task<bool> EditPatient(PatientRequest patientRequest);
         Task<bool> DeletePatient(DeleteRequest request);
