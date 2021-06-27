@@ -72,6 +72,16 @@ namespace Web.Api.Core.Dto.UseCaseRequests
         public DoctorStatusDetails DoctorStatusDetails { get; set; }
         public NurseStatusDetails NurseStatusDetails { get; set; }
         public List<TeamStatusDetails> TeamStatusDetailsList { get; set; }
+        public DashBoardDetails()
+        {
+            TodayPatientStatusDetails = new TodayPatientStatusDetails();
+            AllUserTypeDetails = new AllUserTypeDetails();
+            PatientStatusDetails = new PatientStatusDetails();
+            ReceptionStatusDetails = new ReceptionStatusDetails();
+            DoctorStatusDetails = new DoctorStatusDetails();
+            NurseStatusDetails = new NurseStatusDetails();
+            TeamStatusDetailsList = new List<TeamStatusDetails>();
+        }
     }
     public class TodayPatientStatusDetails
     {
