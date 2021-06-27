@@ -29,6 +29,11 @@ namespace Web.Api.Core.Dto.UseCaseRequests
         {
             Id = id;
         }
+        public GetDetailsRequest(string id, string companyId, bool isUser)
+        {
+            Id = id;
+            CompanyId = companyId;
+        }
         public GetDetailsRequest(string companyId, string patientId)//, string gmapSatus)
         {
             CompanyId = companyId;

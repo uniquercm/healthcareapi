@@ -97,7 +97,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 return null;
             }
         }
-        public async Task<List<UserDetails>> GetUserDetails(string userId)
+        public async Task<List<UserDetails>> GetUserDetails(string userId, string companyId)
         {
             List<UserDetails> retUserDetailsList = new List<UserDetails>();
             try
@@ -117,6 +117,9 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     whereCond += " and u.user_id = '" + userId + "'";
                 //else
                     //whereCond += " and u.user_type = '" + (int) UserType.SuperAdmin + "'";
+
+                if (!string.IsNullOrEmpty(companyId))
+                    whereCond += " and u.company_id = '" + companyId + "'";
 
                 var sqlSelQuery = $"select " + ColumAssign + " from " + tableName + whereCond;
                 using (var connection = _appDbContext.Connection)

@@ -43,7 +43,7 @@ namespace Web.Api.Core.UseCases
             if(request.Id == "area")
                 getDetailsResponse = new GetDetailsResponse(await _authRepository.GetAreaDetails(), true, "Data Fetched Successfully");
             else
-                getDetailsResponse = new GetDetailsResponse(await _authRepository.GetUserDetails(request.Id), true, "Data Fetched Successfully");
+                getDetailsResponse = new GetDetailsResponse(await _authRepository.GetUserDetails(request.Id, request.CompanyId), true, "Data Fetched Successfully");
             outputPort.Handle(getDetailsResponse);
             return true;
         }

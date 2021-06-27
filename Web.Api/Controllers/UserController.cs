@@ -32,11 +32,12 @@ namespace Web.Api.Controllers
         /// Getting a User Details
         /// </summary>
         /// <param name="userId">User Id (optional)</param>
+        /// <param name="companyId">Company Id (optional)</param>
         /// <returns>User Details</returns>
         [HttpGet("user")]
-        public async Task<ActionResult> GetUserDetails(string userId = "")
+        public async Task<ActionResult> GetUserDetails(string userId = "", string companyId = "")
         {
-            await _authUseCases.Handle(new GetDetailsRequest(userId), _getDetailsPresenter);
+            await _authUseCases.Handle(new GetDetailsRequest(userId, companyId, true), _getDetailsPresenter);
             return _getDetailsPresenter.ContentResult;
         }
 
@@ -97,7 +98,7 @@ namespace Web.Api.Controllers
         /// <param name="request">Delete User Details</param>
         /// <returns>Acknowledgement</returns>
         [HttpDelete("user")]
-        public async Task<ActionResult> DeletePatient([FromBody] Models.Request.DeleteRequest request)
+        public async Task<ActionResult> DeleteUser([FromBody] Models.Request.DeleteRequest request)
         {
             await _authUseCases.Handle(_mapper.Map<DeleteRequest>(request), _acknowledgementPresenter);
             return _acknowledgementPresenter.ContentResult;
