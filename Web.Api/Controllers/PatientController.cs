@@ -94,5 +94,17 @@ namespace Web.Api.Controllers
             return _acknowledgementPresenter.ContentResult;
         }
 
+        /// <summary>
+        /// Deleting a Patient
+        /// </summary>
+        /// <param name="request">Delete Patient Details</param>
+        /// <returns>Acknowledgement</returns>
+        [HttpDelete("patient")]
+        public async Task<ActionResult> DeletePatient([FromBody] Models.Request.DeleteRequest request)
+        {
+            await _patientUseCases.Handle(_mapper.Map<DeleteRequest>(request), _acknowledgementPresenter);
+            return _acknowledgementPresenter.ContentResult;
+        }
+
     }
 }

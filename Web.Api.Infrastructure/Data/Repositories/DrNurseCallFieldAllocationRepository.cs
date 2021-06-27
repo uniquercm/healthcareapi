@@ -124,6 +124,8 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 var whereCond = $" where p.company_id = co.company_id" +
                                 $" and p.patient_id = sc.patient_id" +
                                 $" and ca.scheduled_id = sc.scheduled_id" +
+                                $" and p.status = 'Active'" +
+                                $" and sc.status = 'Active'" +
                                 $" and p.request_id = rc.request_crm_id";
 
                 string fromDate = scheduledFromDate.Date.ToString("dd-MM-yyyy");
@@ -221,6 +223,8 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 var whereCond = $" where p.company_id = co.company_id" +
                                 $" and p.patient_id = sc.patient_id" +
                                 $" and ca.scheduled_id = sc.scheduled_id" +
+                                $" and p.status = 'Active'" +
+                                $" and sc.status = 'Active'" +
                                 $" and p.request_id = rc.request_crm_id";
 
                 string fromDate = scheduledFromDate.Date.ToString("dd-MM-yyyy");
@@ -317,6 +321,8 @@ namespace Web.Api.Infrastructure.Data.Repositories
 
                 var whereCond = $" where p.company_id = co.company_id" +
                                 $" and p.patient_id = sc.patient_id" +
+                                $" and p.status = 'Active'" +
+                                $" and sc.status = 'Active'" +
                                 $" and p.request_id = rc.request_crm_id";
 
                 string fromDate = scheduledFromDate.Date.ToString("dd-MM-yyyy");
@@ -403,6 +409,8 @@ namespace Web.Api.Infrastructure.Data.Repositories
 
                 var whereCond = $" where p.company_id = co.company_id" +
                                 $" and p.patient_id = sc.patient_id" +
+                                $" and p.status = 'Active'" +
+                                $" and sc.status = 'Active'" +
                                 $" and p.request_id = rc.request_crm_id";
 
                 string fromDate = scheduledFromDate.Date.ToString("dd-MM-yyyy");
@@ -476,6 +484,8 @@ namespace Web.Api.Infrastructure.Data.Repositories
 
                 var whereCond = $" where p.company_id = co.company_id" +
                                 $" and p.patient_id = sc.patient_id" +
+                                $" and p.status = 'Active'" +
+                                $" and sc.status = 'Active'" +
                                 $" and p.request_id = rc.request_crm_id";
 
                 string fromDate = scheduledFromDate.Date.ToString("dd-MM-yyyy");

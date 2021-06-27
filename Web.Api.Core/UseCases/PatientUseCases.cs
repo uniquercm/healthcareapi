@@ -52,5 +52,16 @@ namespace Web.Api.Core.UseCases
             outputPort.Handle(acknowledgementResponse);
             return true;
         }
+        public async Task<bool> Handle(DeleteRequest request, IOutputPort<AcknowledgementResponse> outputPort)
+        {
+            AcknowledgementResponse acknowledgementResponse;
+            if (await _patientRepository.DeletePatient(request))
+                acknowledgementResponse = new AcknowledgementResponse(true, "Patient Deleted Successfully");
+            else
+                acknowledgementResponse = new AcknowledgementResponse(new[] { new Error("Error Occurred", "Error Occurred") }, false);
+            outputPort.Handle(acknowledgementResponse);
+            return true;
+        }
+
     }
 }

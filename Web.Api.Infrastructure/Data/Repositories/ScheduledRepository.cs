@@ -54,10 +54,12 @@ namespace Web.Api.Infrastructure.Data.Repositories
                                   $"sc.9day_call_id as Day9CallId, " +
 
                                   $"sc.have_treatement_extract as ExtractTreatementDate, " +
+                                  $"sc.status as Status, " +
                                   $"sc.created_by as CreatedBy, sc.modified_by as ModifiedBy";
 
-                var whereCond = $" where sc.patient_id = p.patient_id";
-                                //$"";
+                var whereCond = $" where sc.patient_id = p.patient_id" +
+                                $" and sc.status = 'Active'" +
+                                $" and p.status = 'Active'";
 
                 if (!string.IsNullOrEmpty(companyId))
                     whereCond += " and p.company_id = '" + companyId + "'";
@@ -988,5 +990,35 @@ namespace Web.Api.Infrastructure.Data.Repositories
             }
         }
 
+
+        /*public async Task<bool> DeleteSchedule(DeleteRequest request)
+        {
+            try
+            {
+                var tableName = $"HC_Treatment.scheduled_obj";
+                var colName = $"status = @Status, modified_by = @ModifiedBy, modified_on = @ModifiedOn";
+
+                var whereCond = $" where patient_id = @PatientId";
+                var sqlUpdateQuery = $"UPDATE "+ tableName + " set " + colName + whereCond;
+
+                object colValueParam = new
+                {
+                    PatientId = request.Id,
+                    Status = Status.InActive,
+                    ModifiedBy = request.DeletedBy,
+                    ModifiedOn = DateTime.UtcNow
+                };
+                using (var connection = _appDbContext.Connection)
+                {
+                    var sqlResult = await connection.ExecuteAsync(sqlUpdateQuery, colValueParam);
+                    return true;
+                }
+            }
+            catch (Exception Err)
+            {
+                var Error = Err.Message.ToString();
+                return false;
+            }
+        }*/
     }
 }

@@ -16,5 +16,6 @@ namespace Web.Api.Core.Interfaces.Gateways.Repositories
         Task<bool> EditUser(UserRequest userRequest);
         Task<List<AreaRequest>> GetAreaDetails();
         Task<bool> AddArea(AreaRequest areaRequest);
+        Task<bool> DeleteUser(DeleteRequest request);
     }
 }

@@ -57,6 +57,7 @@ namespace Web.Api.Core.Dto.UseCaseRequests
         public int UserType { get; set; }//user_type - bigint(20) – (1-SuperAdmin, 2- Admin, 3- Doctor, 4- Nurse, 5- Receptionist)
         public string CompanyId { get; set; }//company_id – varchar(128)
         public string CompanyName { get; set; }
+        public string Status { get; set; }//ststus - enum('Active','InActive')
         public string AreaList { get; set; }//area_list - varchar(500)
         public string CreatedBy { get; set; } //created_by
         public string ModifiedBy { get; set; } //modified_by

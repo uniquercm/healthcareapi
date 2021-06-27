@@ -89,7 +89,20 @@ namespace Web.Api.Controllers
             await _authUseCases.Handle(_mapper.Map<UserRequest>(request), _acknowledgementPresenter);
             return _acknowledgementPresenter.ContentResult;
         }
-        
+
+
+        /// <summary>
+        /// Deleting a User
+        /// </summary>
+        /// <param name="request">Delete User Details</param>
+        /// <returns>Acknowledgement</returns>
+        [HttpDelete("user")]
+        public async Task<ActionResult> DeletePatient([FromBody] Models.Request.DeleteRequest request)
+        {
+            await _authUseCases.Handle(_mapper.Map<DeleteRequest>(request), _acknowledgementPresenter);
+            return _acknowledgementPresenter.ContentResult;
+        }
+
         /// <summary>
         /// User Name Availability
         /// </summary>

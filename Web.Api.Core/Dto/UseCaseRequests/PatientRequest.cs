@@ -74,6 +74,7 @@ namespace Web.Api.Core.Dto.UseCaseRequests
         public string IsSendClaim { get; set; }//have_send_claim - varchar(25)Yes or No
         public string DrCallId { get; set; }
         public string ScheduledId { get; set; }
+        public string Status { get; set; } //status - enum('Active','InActive')
         public string CreatedBy { get; set; } //created_by
         public string ModifiedBy { get; set; } //modified_by
     }

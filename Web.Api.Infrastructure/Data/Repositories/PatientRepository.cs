@@ -43,11 +43,13 @@ namespace Web.Api.Infrastructure.Data.Repositories
                               $"p.tracker_application as TrackerApplication, " +
                               $"p.sticker_removal as StickerRemoval, " +
                               $"p.tracker_removal as TrackerRemoval, " +
+                              $"p.status as Status, " +
                               $"p.created_by as CreatedBy, p.modified_by as ModifiedBy";
 
                 var whereCond = " where p.company_id = co.company_id"  +
                                 $" and p.city_id = ci.city_id" +
                                 $" and p.nationality_id = n.nationality_id" +
+                                $" and p.status = 'Active'" +
                                 $" and p.request_id = rc.request_crm_id";
 
                 if (!string.IsNullOrEmpty(companyId))
@@ -358,5 +360,68 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 return false;
             }
         }
+
+        public async Task<bool> DeletePatient(DeleteRequest request)
+        {
+            try
+            {
+                var tableName = $"HC_Staff_Patient.patient_obj";
+                var colName = $"status = @Status, modified_by = @ModifiedBy, modified_on = @ModifiedOn";
+
+                var whereCond = $" where patient_id = @PatientId";
+                var sqlUpdateQuery = $"UPDATE "+ tableName + " set " + colName + whereCond;
+
+                object colValueParam = new
+                {
+                    PatientId = request.Id,
+                    Status = Status.InActive,
+                    ModifiedBy = request.DeletedBy,
+                    ModifiedOn = DateTime.UtcNow
+                };
+                using (var connection = _appDbContext.Connection)
+                {
+                    var sqlResult = Convert.ToBoolean(await connection.ExecuteAsync(sqlUpdateQuery, colValueParam));
+                    if(sqlResult)
+                        sqlResult = Convert.ToBoolean(await DeleteSchedule(request));
+                    return sqlResult;
+                }
+            }
+            catch (Exception Err)
+            {
+                var Error = Err.Message.ToString();
+                return false;
+            }
+        }
+
+        async Task<bool> DeleteSchedule(DeleteRequest request)
+        {
+            try
+            {
+                var tableName = $"HC_Treatment.scheduled_obj";
+                var colName = $"status = @Status, modified_by = @ModifiedBy, modified_on = @ModifiedOn";
+
+                var whereCond = $" where patient_id = @PatientId";
+                var sqlUpdateQuery = $"UPDATE "+ tableName + " set " + colName + whereCond;
+
+                object colValueParam = new
+                {
+                    PatientId = request.Id,
+                    Status = Status.InActive,
+                    ModifiedBy = request.DeletedBy,
+                    ModifiedOn = DateTime.UtcNow
+                };
+                using (var connection = _appDbContext.Connection)
+                {
+                    var sqlResult = await connection.ExecuteAsync(sqlUpdateQuery, colValueParam);
+                    return true;
+                }
+            }
+            catch (Exception Err)
+            {
+                var Error = Err.Message.ToString();
+                return false;
+            }
+        }
+
     }
 }

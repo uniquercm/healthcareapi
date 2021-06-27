@@ -49,7 +49,8 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 var whereCond = $" where sc.patient_id = pa.patient_id" +
                                 $" and pa.company_id = co.company_id" +
                                 $" and pa.request_id = rc.request_crm_id" +
-                                $"";
+                                $" and pa.status = 'Active'" +
+                                $" and sc.status = 'Active'";
 
                 if (!string.IsNullOrEmpty(companyId))
                     whereCond += " and pa.company_id = '" + companyId + "'";

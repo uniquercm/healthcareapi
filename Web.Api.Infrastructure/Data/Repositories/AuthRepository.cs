@@ -105,11 +105,13 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 var tableName = $"HC_Authentication.user_obj u, HC_Master_Details.company_obj c";
 
                 var ColumAssign = $"u.user_id  as UserId, u.user_name as UserName, " +
+                                   $"u.full_name as FullName, " +
                                    $"u.password as Password, u.user_type as UserType, " +
                                    $"u.company_id as CompanyId, c.company_name as CompanyName, " +
-                                   $"u.area_list as AreaList";
+                                   $"u.area_list as AreaList, u.status as Status";
 
-                var whereCond = $" where u.company_id = c.company_id";
+                var whereCond = $" where u.company_id = c.company_id" + 
+                                $" and u.status = 'Active'";
 
                 if (!string.IsNullOrEmpty(userId))
                     whereCond += " and u.user_id = '" + userId + "'";
@@ -136,15 +138,13 @@ namespace Web.Api.Infrastructure.Data.Repositories
             using (var connection = _appDbContext.Connection)
             {
                 var tableName = $"HC_Authentication.user_obj";
-                var whereCond = $" where ";
+                var whereCond = $" where status = 'Active'";
 
                 if(!string.IsNullOrEmpty(userName))
-                    whereCond += $"user_name = @UserName";
+                    whereCond += $" and user_name = @UserName";
 
-                if(!string.IsNullOrEmpty(userId) && !string.IsNullOrEmpty(userName))
+                if(!string.IsNullOrEmpty(userId))
                     whereCond += $" and user_id != @UserId";
-                else if(!string.IsNullOrEmpty(userId))
-                    whereCond += $"user_id != @UserId";
 
                 object colValueParam = new
                 {
@@ -301,6 +301,36 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     sqlResult = Convert.ToBoolean(await connection.ExecuteAsync(sqlInsQuery, colValueParam));
                 }
                 return sqlResult;
+            }
+            catch (Exception Err)
+            {
+                var Error = Err.Message.ToString();
+                return false;
+            }
+        }
+
+        public async Task<bool> DeleteUser(DeleteRequest request)
+        {
+            try
+            {
+                var tableName = $"HC_Authentication.user_obj";
+                var colName = $"status = @Status, modified_by = @ModifiedBy, modified_on = @ModifiedOn";
+
+                var whereCond = $" where user_id = @UserId";
+                var sqlUpdateQuery = $"UPDATE "+ tableName + " set " + colName + whereCond;
+
+                object colValueParam = new
+                {
+                    UserId = request.Id,
+                    Status = Status.InActive,
+                    ModifiedBy = request.DeletedBy,
+                    ModifiedOn = DateTime.UtcNow
+                };
+                using (var connection = _appDbContext.Connection)
+                {
+                    var sqlResult = await connection.ExecuteAsync(sqlUpdateQuery, colValueParam);
+                    return true;
+                }
             }
             catch (Exception Err)
             {

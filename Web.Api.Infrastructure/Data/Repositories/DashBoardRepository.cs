@@ -175,12 +175,12 @@ namespace Web.Api.Infrastructure.Data.Repositories
             PatientStatusDetails retPatientStatusDetails = new PatientStatusDetails();
             try
             {
-                var whereCond = "";
+                var whereCond = "where status = 'Active'";
 
                 string todayDate = DateTime.Today.ToString("yyyy-MM-dd 00:00:00.0");
 
                 if (!string.IsNullOrEmpty(companyId))
-                    whereCond = " where company_id = '" + companyId + "'";
+                    whereCond = " and company_id = '" + companyId + "'";
 
                 using (var connection = _appDbContext.Connection)
                 {
@@ -226,16 +226,17 @@ namespace Web.Api.Infrastructure.Data.Repositories
             try
             {
                 var tableName = $"HC_Staff_Patient.patient_obj";
-                var whereCond = "";
+                var whereCond = " where status = 'Active'";
 
                 string todayDate = DateTime.Today.ToString("yyyy-MM-dd 00:00:00.0");
 
                 if (!string.IsNullOrEmpty(companyId))
-                    whereCond = " where company_id = '" + companyId + "'";
+                    whereCond = " and company_id = '" + companyId + "'";
 
                 using (var connection = _appDbContext.Connection)//
                 {
-                    var cond = $" where modified_on = '" + todayDate + "'";
+                    var cond = $" where modified_on = '" + todayDate + "'" +
+                               $" and status = 'Active'";
                     if (!string.IsNullOrEmpty(companyId))
                         cond += " and company_id = '" + companyId + "'";
 
@@ -244,7 +245,8 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     retReceptionStatusDetails.ReceptionTotalCount = sqlSelResult.Count();
 
                     cond = $" where modified_on = '" + todayDate + "'" +
-                           $" and reception_status = 'completed'";
+                           $" and reception_status = 'completed'" +
+                           $" and status = 'Active'";
                     if (!string.IsNullOrEmpty(companyId))
                         cond += " and company_id = '" + companyId + "'";
                     sqlSelQuery = $"select * from " + tableName + cond;
@@ -252,7 +254,8 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     retReceptionStatusDetails.ReceptionCompletedCount = sqlSelResult.Count();
 
                     cond = $" where modified_on = '" + todayDate + "'" +
-                           $" and reception_status = 'pending'";
+                           $" and reception_status = 'pending'" +
+                           $" and status = 'Active'";
                     if (!string.IsNullOrEmpty(companyId))
                         cond += " and company_id = '" + companyId + "'";
                     sqlSelQuery = $"select * from " + tableName + cond;
@@ -319,7 +322,9 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 var ColumAssign = $"u.company_id as CompanyId, co.company_name as CompanyName, " +
                                   $"u.full_name as TeamName, u.user_name as TeamUserName";
 
-                var whereCond = $" where u.user_type = 7 and u.company_id = co.company_id";
+                var whereCond = $" where u.user_type = 7 and u.company_id = co.company_id" +
+                                $" and u.status = 'Active'" +
+                                $" and co.status = 'Active'";
 
                 string todayDate = DateTime.Today.ToString("yyyy-MM-dd 00:00:00.0");
 
