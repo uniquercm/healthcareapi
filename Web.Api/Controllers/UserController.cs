@@ -36,7 +36,7 @@ namespace Web.Api.Controllers
         /// <param name="userType">User Type (optional)</param>
         /// <returns>User Details</returns>
         [HttpGet("user")]
-        public async Task<ActionResult> GetUserDetails(string userId = "", string companyId = "", int userType = 7)
+        public async Task<ActionResult> GetUserDetails(string userId = "", string companyId = "", int userType = 0)
         {
             await _authUseCases.Handle(new GetDetailsRequest(userId, companyId, userType), _getDetailsPresenter);
             return _getDetailsPresenter.ContentResult;
