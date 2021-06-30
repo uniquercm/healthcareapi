@@ -222,6 +222,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
 
                 var colName = $"patient_id, patient_name, company_id, request_id, crm_no, eid_no, " +
                               $"date_of_birth, age, sex, address, landmark, area, city_id, nationality_id, " +
+                              $"assigned_date, " +
                               $"mobile_no, google_map_link, no_of_adults, no_of_childrens, " +
                               $"enrolled_count, enrolled_details, " +
                               $"pcr_count, sticker_application, tracker_application, " +
@@ -231,6 +232,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
 
                 var colValueName = $"@PatientId, @PatientName, @CompanyId, @RequestId, @CRMNo, @EIDNo, " +
                                    $"@DateOfBirth, @Age, @Sex, @Address, @LandMark, @Area, @CityId, @NationalityId, " +
+                                   $"@AssignedDate, " +
                                    $"@MobileNo, @GoogleMapLink, @AdultsCount, @ChildrensCount, " +
                                    $"@EnrolledCount, @EnrolledDetails, " +
                                    $"@PCRCount, @StickerApplication, @TrackerApplication, " +
@@ -251,6 +253,13 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 if(recptionCallDate == "0001-01-01")
                     recptionCallDate = "";*/
 
+                string assignedDate = "";
+                assignedDate = patientRequest.AssignedDate.ToString("yyyy-MM-dd");
+                if(assignedDate == "0001-01-01")
+                    assignedDate = "";
+                else
+                    assignedDate = patientRequest.AssignedDate.ToString("yyyy-MM-dd 00:00:00.0");
+
                 if(String.IsNullOrEmpty(patientRequest.GoogleMapLink))
                     patientRequest.GoogleMapLink = "";
 
@@ -270,6 +279,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     Area = patientRequest.Area,
                     CityId = patientRequest.CityId,
                     NationalityId = patientRequest.NationalityId,
+                    AssignedDate = assignedDate,
                     MobileNo = patientRequest.MobileNo,
                     GoogleMapLink = patientRequest.GoogleMapLink,
                     AdultsCount = patientRequest.AdultsCount,
@@ -319,6 +329,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 var colName = $"patient_id = @PatientId, patient_name = @PatientName, company_id = @CompanyId, " +
                               $"request_id = @RequestId, crm_no = @CRMNo, eid_no = @EIDNo, " +
                               $"date_of_birth = @DateOfBirth, age = @Age, sex = @Sex, address = @Address, " +
+                              $"assigned_date = @AssignedDate, " +
                               $"landmark = @LandMark, area = @Area, city_id = @CityId, nationality_id = @NationalityId, " +
                               $"mobile_no = @MobileNo, google_map_link = @GoogleMapLink, " +
                               $"no_of_adults = @AdultsCount, no_of_childrens = @ChildrensCount, " +
@@ -348,6 +359,13 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 if(recptionCallDate == "0001-01-01")
                     recptionCallDate = "";
 
+                string assignedDate = "";
+                assignedDate = patientRequest.AssignedDate.ToString("yyyy-MM-dd");
+                if(assignedDate == "0001-01-01")
+                    assignedDate = "";
+                else
+                    assignedDate = patientRequest.AssignedDate.ToString("yyyy-MM-dd 00:00:00.0");
+
                 if(String.IsNullOrEmpty(patientRequest.GoogleMapLink))
                     patientRequest.GoogleMapLink = "";
 
@@ -367,6 +385,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     Area = patientRequest.Area,
                     CityId = patientRequest.CityId,
                     NationalityId = patientRequest.NationalityId,
+                    AssignedDate = assignedDate,
                     MobileNo = patientRequest.MobileNo,
                     GoogleMapLink = patientRequest.GoogleMapLink,
                     AdultsCount = patientRequest.AdultsCount,

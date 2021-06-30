@@ -58,6 +58,11 @@ namespace Web.Api.Core.Dto.UseCaseRequests
         public int RequestId { get; set; }//request_id - int(10)
         public string CRMNo { get; set; }//crm_no - varchar(128)
         public string EIDNo { get; set; }//eid_no - varchar(128)
+        public string Area { get; set; }//area – varchar(128)
+        public int CityId { get; set; }//city_id - int(10)
+        public string CityName { get; set; }
+        public int NationalityId { get; set; }//nationality_id – int(10)
+        public string NationalityName { get; set; }
         public string MobileNo { get; set; }//mobile_no - varchar(25)
     }
 }

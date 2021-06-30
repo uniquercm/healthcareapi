@@ -109,12 +109,16 @@ namespace Web.Api.Infrastructure.Data.Repositories
                                 $"HC_Master_Details.company_obj co, " +
                                 $"HC_Treatment.scheduled_obj sc, " +
                                 $"HC_Treatment.call_obj ca, " +
+                                $"HC_Master_Details.city_obj ci, HC_Master_Details.nationality_obj n, " +
                                 $"HC_Master_Details.request_crm_obj rc";
 
                 var ColumAssign = $"p.patient_id as PatientId, p.patient_name as PatientName, " +
                                   $"p.company_id as CompanyId, co.company_name as CompanyName, " +
                                   $"p.request_id as RequestId, rc.request_crm_name as RequestCrmName, " +
                                   $"p.crm_no as CRMNo, p.eid_no as EIDNo, " +
+                                  $"p.area as Area, " +
+                                  $"p.city_id as CityId, ci.city_name as CityName, " +
+                                  $"p.nationality_id as NationalityId, n.nationality_name as NationalityName, " +
                                   $"p.mobile_no as MobileNo, ca.call_id as CallId, " +
                                   $"ca.called_date as CalledDate, ca.scheduled_id as ScheduledId, " +
                                   $"ca.call_scheduled_date as CallScheduledDate, " +
@@ -124,6 +128,8 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 var whereCond = $" where p.company_id = co.company_id" +
                                 $" and p.patient_id = sc.patient_id" +
                                 $" and ca.scheduled_id = sc.scheduled_id" +
+                                $" and p.city_id = ci.city_id" +
+                                $" and p.nationality_id = n.nationality_id" +
                                 $" and p.status = 'Active'" +
                                 $" and sc.status = 'Active'" +
                                 $" and p.request_id = rc.request_crm_id";
@@ -208,12 +214,16 @@ namespace Web.Api.Infrastructure.Data.Repositories
                                 $"HC_Master_Details.company_obj co, " +
                                 $"HC_Treatment.scheduled_obj sc, " +
                                 $"HC_Treatment.call_obj ca, " +
+                                $"HC_Master_Details.city_obj ci, HC_Master_Details.nationality_obj n, " +
                                 $"HC_Master_Details.request_crm_obj rc";
 
                 var ColumAssign = $"p.patient_id as PatientId, p.patient_name as PatientName, " +
                                   $"p.company_id as CompanyId, co.company_name as CompanyName, " +
                                   $"p.request_id as RequestId, rc.request_crm_name as RequestCrmName, " +
                                   $"p.crm_no as CRMNo, p.eid_no as EIDNo, " +
+                                  $"p.area as Area, " +
+                                  $"p.city_id as CityId, ci.city_name as CityName, " +
+                                  $"p.nationality_id as NationalityId, n.nationality_name as NationalityName, " +
                                   $"p.mobile_no as MobileNo, ca.call_id as CallId, " +
                                   $"ca.called_date as CalledDate, ca.scheduled_id as ScheduledId, " +
                                   $"ca.call_scheduled_date as CallScheduledDate, " +
@@ -223,6 +233,8 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 var whereCond = $" where p.company_id = co.company_id" +
                                 $" and p.patient_id = sc.patient_id" +
                                 $" and ca.scheduled_id = sc.scheduled_id" +
+                                $" and p.city_id = ci.city_id" +
+                                $" and p.nationality_id = n.nationality_id" +
                                 $" and p.status = 'Active'" +
                                 $" and sc.status = 'Active'" +
                                 $" and p.request_id = rc.request_crm_id";
@@ -302,12 +314,16 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 var tableName = $"HC_Staff_Patient.patient_obj p, " +
                                 $"HC_Master_Details.company_obj co, " +
                                 $"HC_Treatment.scheduled_obj sc, " +
+                                $"HC_Master_Details.city_obj ci, HC_Master_Details.nationality_obj n, " +
                                 $"HC_Master_Details.request_crm_obj rc";
 
                 var ColumAssign = $"p.patient_id as PatientId, p.patient_name as PatientName, " +
                                   $"p.company_id as CompanyId, co.company_name as CompanyName, " +
                                   $"p.request_id as RequestId, rc.request_crm_name as RequestCrmName, " +
                                   $"p.crm_no as CRMNo, p.eid_no as EIDNo, " +
+                                  $"p.area as Area, " +
+                                  $"p.city_id as CityId, ci.city_name as CityName, " +
+                                  $"p.nationality_id as NationalityId, n.nationality_name as NationalityName, " +
                                   $"p.mobile_no as MobileNo, sc.scheduled_id as ScheduledId, " +
                                   $"true as IsPCRCall, ";
                 if(is4thDay)
@@ -321,6 +337,8 @@ namespace Web.Api.Infrastructure.Data.Repositories
 
                 var whereCond = $" where p.company_id = co.company_id" +
                                 $" and p.patient_id = sc.patient_id" +
+                                $" and p.city_id = ci.city_id" +
+                                $" and p.nationality_id = n.nationality_id" +
                                 $" and p.status = 'Active'" +
                                 $" and sc.status = 'Active'" +
                                 $" and p.request_id = rc.request_crm_id";
@@ -389,12 +407,16 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 var tableName = $"HC_Staff_Patient.patient_obj p, " +
                                 $"HC_Master_Details.company_obj co, " +
                                 $"HC_Treatment.scheduled_obj sc, " +
+                                $"HC_Master_Details.city_obj ci, HC_Master_Details.nationality_obj n, " +
                                 $"HC_Master_Details.request_crm_obj rc";
 
                 var ColumAssign = $"p.patient_id as PatientId, p.patient_name as PatientName, " +
                                   $"p.company_id as CompanyId, co.company_name as CompanyName, " +
                                   $"p.request_id as RequestId, rc.request_crm_name as RequestCrmName, " +
                                   $"p.crm_no as CRMNo, p.eid_no as EIDNo, " +
+                                  $"p.area as Area, " +
+                                  $"p.city_id as CityId, ci.city_name as CityName, " +
+                                  $"p.nationality_id as NationalityId, n.nationality_name as NationalityName, " +
                                   $"p.mobile_no as MobileNo, sc.scheduled_id as ScheduledId, " +
                                   $"false as IsPCRCall, ";
 
@@ -409,6 +431,8 @@ namespace Web.Api.Infrastructure.Data.Repositories
 
                 var whereCond = $" where p.company_id = co.company_id" +
                                 $" and p.patient_id = sc.patient_id" +
+                                $" and p.city_id = ci.city_id" +
+                                $" and p.nationality_id = n.nationality_id" +
                                 $" and p.status = 'Active'" +
                                 $" and sc.status = 'Active'" +
                                 $" and p.request_id = rc.request_crm_id";
@@ -470,12 +494,16 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 var tableName = $"HC_Staff_Patient.patient_obj p, " +
                                 $"HC_Master_Details.company_obj co, " +
                                 $"HC_Treatment.scheduled_obj sc, " +
+                                $"HC_Master_Details.city_obj ci, HC_Master_Details.nationality_obj n, " +
                                 $"HC_Master_Details.request_crm_obj rc";
 
                 var ColumAssign = $"p.patient_id as PatientId, p.patient_name as PatientName, " +
                                   $"p.company_id as CompanyId, co.company_name as CompanyName, " +
                                   $"p.request_id as RequestId, rc.request_crm_name as RequestCrmName, " +
                                   $"p.crm_no as CRMNo, p.eid_no as EIDNo, " +
+                                  $"p.area as Area, " +
+                                  $"p.city_id as CityId, ci.city_name as CityName, " +
+                                  $"p.nationality_id as NationalityId, n.nationality_name as NationalityName, " +
                                   $"p.mobile_no as MobileNo, sc.scheduled_id as ScheduledId, " +
                                   $"false as IsPCRCall, " +
                                   $"'discharge' as CallId, sc.discharge_date as CallScheduledDate, " +
@@ -484,6 +512,8 @@ namespace Web.Api.Infrastructure.Data.Repositories
 
                 var whereCond = $" where p.company_id = co.company_id" +
                                 $" and p.patient_id = sc.patient_id" +
+                                $" and p.city_id = ci.city_id" +
+                                $" and p.nationality_id = n.nationality_id" +
                                 $" and p.status = 'Active'" +
                                 $" and sc.status = 'Active'" +
                                 $" and p.request_id = rc.request_crm_id";

@@ -27,6 +27,7 @@ namespace Web.Api.Core.Dto.UseCaseRequests
         public string Area { get; set; }//area – varchar(128)
         public int CityId { get; set; }//city_id - int(10)
         public int NationalityId { get; set; }//nationality_id – int(10)
+        public DateTime AssignedDate { get; set; }//assigned_date - datetime
         public string MobileNo { get; set; }//mobile_no - varchar(25)
         public string GoogleMapLink { get; set; }//google_map_link – varchar(156)
         public int AdultsCount { get; set; }//no_of_adults – int(10)
@@ -68,6 +69,7 @@ namespace Web.Api.Core.Dto.UseCaseRequests
         public string CityName { get; set; }
         public int NationalityId { get; set; }//nationality_id – int(10)
         public string NationalityName { get; set; }
+        public DateTime AssignedDate { get; set; }//assigned_date - datetime
         public string MobileNo { get; set; }//mobile_no - varchar(25)
         public string GoogleMapLink { get; set; }//google_map_link – varchar(156)
         public int AdultsCount { get; set; }//no_of_adults – int(10)

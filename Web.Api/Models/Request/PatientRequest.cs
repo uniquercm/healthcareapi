@@ -23,6 +23,7 @@ namespace Web.Api.Models.Request
         public string Area { get; set; }
         public int CityId { get; set; }
         public int NationalityId { get; set; }
+        public DateTime AssignedDate { get; set; }
         public string MobileNo { get; set; }
         public string GoogleMapLink { get; set; }
         public int AdultsCount { get; set; }
