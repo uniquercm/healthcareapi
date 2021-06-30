@@ -33,11 +33,12 @@ namespace Web.Api.Controllers
         /// </summary>
         /// <param name="userId">User Id (optional)</param>
         /// <param name="companyId">Company Id (optional)</param>
+        /// <param name="userType">User Type (optional)</param>
         /// <returns>User Details</returns>
         [HttpGet("user")]
-        public async Task<ActionResult> GetUserDetails(string userId = "", string companyId = "")
+        public async Task<ActionResult> GetUserDetails(string userId = "", string companyId = "", int userType = 7)
         {
-            await _authUseCases.Handle(new GetDetailsRequest(userId, companyId, true), _getDetailsPresenter);
+            await _authUseCases.Handle(new GetDetailsRequest(userId, companyId, userType), _getDetailsPresenter);
             return _getDetailsPresenter.ContentResult;
         }
 

@@ -97,7 +97,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 return null;
             }
         }
-        public async Task<List<UserDetails>> GetUserDetails(string userId, string companyId)
+        public async Task<List<UserDetails>> GetUserDetails(string userId, string companyId, int userType)
         {
             List<UserDetails> retUserDetailsList = new List<UserDetails>();
             try
@@ -120,6 +120,9 @@ namespace Web.Api.Infrastructure.Data.Repositories
 
                 if (!string.IsNullOrEmpty(companyId))
                     whereCond += " and u.company_id = '" + companyId + "'";
+
+                if(userType > 0)
+                    whereCond += " and u.user_type = " + userType ;
 
                 var sqlSelQuery = $"select " + ColumAssign + " from " + tableName + whereCond;
                 using (var connection = _appDbContext.Connection)

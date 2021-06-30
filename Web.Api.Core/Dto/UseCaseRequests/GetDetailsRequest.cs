@@ -22,6 +22,7 @@ namespace Web.Api.Core.Dto.UseCaseRequests
         public string FieldAllocationStatus { get; set; }//all, allowed, notallowed
         public string ServiceName { get; set; }//all, tracker, sticker, 4pcr, 8pcr, discharge
         public string ServiceStatus { get; set; }//all, applied, removed, replaced, visited, discharged, pending, others
+        public int UserType { get; set; }
 
         public GetDetailsRequest()
         {   }
@@ -29,10 +30,11 @@ namespace Web.Api.Core.Dto.UseCaseRequests
         {
             Id = id;
         }
-        public GetDetailsRequest(string id, string companyId, bool isUser)
+        public GetDetailsRequest(string id, string companyId, int userType)
         {
             Id = id;
             CompanyId = companyId;
+            UserType = userType;
         }
         public GetDetailsRequest(string companyId, string patientId)//, string gmapSatus)
         {
