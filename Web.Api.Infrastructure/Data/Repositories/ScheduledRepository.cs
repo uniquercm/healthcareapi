@@ -113,13 +113,13 @@ namespace Web.Api.Infrastructure.Data.Repositories
                         whereCond += $" and sc.discharge_date between '" + fromDate + timeMin + "' and '" + toDate + timeMin + "'";
                     else
                         whereCond += $" and ((sc.treatment_from_date between '" + fromDate + timeMin + "' and '" + toDate + timeMin + "')" +
-                                     $" or (sc.treatment_to_date between '" + toDate + timeMin + "' and '" + toDate + timeMin + "'))";
+                                     $" or (sc.treatment_to_date between '" + fromDate + timeMin + "' and '" + toDate + timeMin + "'))";
                         /*whereCond += $" and sc.treatment_from_date >= '" + fromDate + timeMin + "'" +
                                      $" and sc.treatment_to_date <= '" + toDate + timeMin + "'";*/
                 }
                 else if(fromDate != "0001-01-01")
                     whereCond += $" and ((sc.treatment_from_date between '" + fromDate + timeMin + "' and '" + toDate + timeMin + "')" +
-                                     $" or (sc.treatment_to_date between '" + toDate + timeMin + "' and '" + toDate + timeMin + "'))";
+                                     $" or (sc.treatment_to_date between '" + fromDate + timeMin + "' and '" + toDate + timeMin + "'))";
                     /*whereCond += $" and sc.treatment_from_date >= '" + fromDate + timeMin + "'" +
                                    $" and sc.treatment_to_date <= '" + toDate + timeMin + "'";*/
 
