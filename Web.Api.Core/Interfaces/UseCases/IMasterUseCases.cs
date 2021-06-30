@@ -9,4 +9,6 @@ namespace Web.Api.Core.Interfaces.UseCases
     {   }
     public partial interface IMasterUseCases : IUseCaseRequestHandler<CompanyRequest, AcknowledgementResponse>
     {   }
+    public partial interface IMasterUseCases : IUseCaseRequestHandler<DeleteRequest, AcknowledgementResponse>
+    {   }
 }

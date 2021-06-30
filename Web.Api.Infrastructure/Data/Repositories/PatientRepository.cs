@@ -43,6 +43,9 @@ namespace Web.Api.Infrastructure.Data.Repositories
                               $"p.tracker_application as TrackerApplication, " +
                               $"p.sticker_removal as StickerRemoval, " +
                               $"p.tracker_removal as TrackerRemoval, " +
+                              $"p.pcr_count as PCRCount, " +
+                              $"p.reception_date as RecptionCallDate, p.reception_status as RecptionCallStatus, " +
+                              $"p.reception_remarks as RecptionCallRemarks, " +
                               $"p.status as Status, " +
                               $"p.created_by as CreatedBy, p.modified_by as ModifiedBy";
 

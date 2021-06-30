@@ -215,13 +215,13 @@ namespace Web.Api.Infrastructure.Data.Repositories
 
                 var ColumAssign = $"company_id as CompanyId, company_name as CompanyName, " +
                                   $"no_of_team as NumberOfTeam, team_name as TeamName, " +
-                                  $"address as Address, " +
+                                  $"address as Address, status as Status, " +
                                   $"created_by as CreatedBy, modified_by as ModifiedBy";
 
-                var whereCond = "";
+                var whereCond = " where status = 'Active'";
 
                 if (!string.IsNullOrEmpty(companyId))
-                    whereCond += " where company_id = '" + companyId + "'";
+                    whereCond += " and company_id = '" + companyId + "'";
 
                 var sqlSelQuery = $"select " + ColumAssign + " from " + tableName + whereCond;
                 using (var connection = _appDbContext.Connection)
@@ -328,6 +328,112 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 return false;
             }
         }
+
+        /*public async Task<bool> DeleteCompany(DeleteRequest request)
+        {
+            try
+            {
+                var tableName = $"HC_Master_Details.company_obj co, " +
+                                $"HC_Staff_Patient.patient_obj pa, " +
+                                $"HC_Treatment.scheduled_obj sc, " +
+                                $"HC_Treatment.call_obj ca";
+
+                var colName = $"co.status = @Status, co.modified_by = @ModifiedBy, co.modified_on = @ModifiedOn, " +
+                              $"pa.status = @Status, pa.modified_by = @ModifiedBy, pa.modified_on = @ModifiedOn, " +
+                              $"sc.status = @Status, sc.modified_by = @ModifiedBy, sc.modified_on = @ModifiedOn, " +
+                              $"ca.status = @Status, ca.modified_by = @ModifiedBy, ca.modified_on = @ModifiedOn";
+
+                var whereCond = $" where co.company_id = @CompanyId" +
+                                $" and co.company_id = pa.company_id" +
+                                $" and pa.patient_id = sc.patient_id" +
+                                $" and sc.scheduled_id = ca.scheduled_id";
+
+                var sqlUpdateQuery = $"UPDATE "+ tableName + " set " + colName + whereCond;
+
+                object colValueParam = new
+                {
+                    CompanyId = request.Id,
+                    Status = Status.InActive,
+                    ModifiedBy = request.DeletedBy,
+                    ModifiedOn = DateTime.UtcNow
+                };
+                using (var connection = _appDbContext.Connection)
+                {
+                    var sqlResult = Convert.ToBoolean(await connection.ExecuteAsync(sqlUpdateQuery, colValueParam));
+                    //if(sqlResult)
+                        //sqlResult = Convert.ToBoolean(await DeleteSchedule(request));
+                    return sqlResult;
+                }
+            }
+            catch (Exception Err)
+            {
+                var Error = Err.Message.ToString();
+                return false;
+            }
+        }*/
+        public async Task<bool> DeleteCompany(DeleteRequest request)
+        {
+            try
+            {
+                var tableName = $"HC_Master_Details.company_obj";
+                var colName = $"status = @Status, modified_by = @ModifiedBy, modified_on = @ModifiedOn";
+
+                var whereCond = $" where company_id = @CompanyId";
+                var sqlUpdateQuery = $"UPDATE "+ tableName + " set " + colName + whereCond;
+
+                object colValueParam = new
+                {
+                    CompanyId = request.CompanyId,
+                    Status = Status.InActive,
+                    ModifiedBy = request.DeletedBy,
+                    ModifiedOn = DateTime.UtcNow
+                };
+                using (var connection = _appDbContext.Connection)
+                {
+                    var sqlResult = Convert.ToBoolean(await connection.ExecuteAsync(sqlUpdateQuery, colValueParam));
+                    if(sqlResult)
+                        sqlResult = Convert.ToBoolean(await DeletePatient(request));
+                    return sqlResult;
+                }
+            }
+            catch (Exception Err)
+            {
+                var Error = Err.Message.ToString();
+                return false;
+            }
+        }
+        async Task<bool> DeletePatient(DeleteRequest request)
+        {
+            try
+            {
+                var tableName = $"HC_Staff_Patient.patient_obj";
+                var colName = $"status = @Status, modified_by = @ModifiedBy, modified_on = @ModifiedOn";
+
+                var whereCond = $" where patient_id = @PatientId";
+                var sqlUpdateQuery = $"UPDATE "+ tableName + " set " + colName + whereCond;
+
+                object colValueParam = new
+                {
+                    PatientId = request.Id,
+                    Status = Status.InActive,
+                    ModifiedBy = request.DeletedBy,
+                    ModifiedOn = DateTime.UtcNow
+                };
+                using (var connection = _appDbContext.Connection)
+                {
+                    var sqlResult = Convert.ToBoolean(await connection.ExecuteAsync(sqlUpdateQuery, colValueParam));
+                    //if(sqlResult)
+                        //sqlResult = Convert.ToBoolean(await DeleteSchedule(request));
+                    return sqlResult;
+                }
+            }
+            catch (Exception Err)
+            {
+                var Error = Err.Message.ToString();
+                return false;
+            }
+        }
+
 
     }
 }

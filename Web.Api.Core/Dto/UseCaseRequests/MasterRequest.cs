@@ -65,6 +65,7 @@ namespace Web.Api.Core.Dto.UseCaseRequests
         public int NumberOfTeam { get; set; }//no_of_team – int(10)
         public string TeamName { get; set; }//team_name – varchar(128)
         public string Address { get; set; }//address - varchar(500)
+        public string Status { get; set; } //status - enum('Active','InActive')
         public string CreatedBy { get; set; } //created_by - varchar(128)
         public string ModifiedBy { get; set; } //modified_by - varchar(128)
     }

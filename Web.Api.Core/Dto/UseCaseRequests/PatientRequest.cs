@@ -79,7 +79,11 @@ namespace Web.Api.Core.Dto.UseCaseRequests
         public string StickerRemoval { get; set; }//sticker_removal - enum('No','Yes')
         public int TrackerRemoval { get; set; }//tracker_removal – int(10)
         public string StickerTrackerAppliedNumber { get; set; }//sticker_tracker_applied_no - varchar(50)
+        public int PCRCount { get; set; }//pcr_count - int(10)
         public string IsSendClaim { get; set; }//have_send_claim - varchar(25)Yes or No
+        public DateTime RecptionCallDate { get; set; }//reception_date - datetime
+        public string RecptionCallStatus { get; set; }//reception_status - varchar(100)
+        public string RecptionCallRemarks { get; set; }//reception_remarks - varchar(256)
         public string DrCallId { get; set; }
         public string ScheduledId { get; set; }
         public string Status { get; set; } //status - enum('Active','InActive')

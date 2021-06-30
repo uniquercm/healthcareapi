@@ -150,5 +150,17 @@ namespace Web.Api.Controllers
             return _acknowledgementPresenter.ContentResult;
         }
 
+
+        /*/// <summary>
+        /// Deleting a Company
+        /// </summary>
+        /// <param name="request">Delete Company Details</param>
+        /// <returns>Acknowledgement</returns>
+        [HttpDelete("company")]
+        public async Task<ActionResult> DeleteCompany([FromBody] Models.Request.DeleteRequest request)
+        {
+            await _masterUseCases.Handle(_mapper.Map<DeleteRequest>(request), _acknowledgementPresenter);
+            return _acknowledgementPresenter.ContentResult;
+        }*/
     }
 }

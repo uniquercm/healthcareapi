@@ -17,5 +17,6 @@ namespace Web.Api.Core.Interfaces.Gateways.Repositories
         Task<bool> CreateCompany(CompanyRequest companyRequest);
         string GenerateUUID();
         Task<bool> EditCompany(CompanyRequest companyRequest);
+        Task<bool> DeleteCompany(DeleteRequest request);
     }
 }
