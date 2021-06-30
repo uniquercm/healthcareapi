@@ -55,6 +55,7 @@ namespace Web.Api.Core.Dto.UseCaseRequests
     {
         public string PatientId { get; set; }//patient_id – varchar(128)
         public string PatientName { get; set; }//patient_name – varchar(128)
+        public int Age { get; set; }
         public int RequestId { get; set; }//request_id - int(10)
         public string RequestCrmName { get; set; }
         public string CRMNo { get; set; }//crm_no - varchar(128)
