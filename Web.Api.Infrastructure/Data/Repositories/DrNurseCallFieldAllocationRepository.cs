@@ -91,6 +91,17 @@ namespace Web.Api.Infrastructure.Data.Repositories
                         else
                             retDrNurseCallDetails = dayCallDetails;
                     }
+                    if(serviceName.Equals("team") || serviceName.Equals("all"))
+                    {
+                        dayCallDetails = await GetTeamFieldAllowCallDetails(companyId, teamUserName, scheduledFromDate, scheduledToDate, serviceStatus, serviceName);
+                        if(retDrNurseCallDetails.Count > 0)
+                        {
+                            foreach(DrNurseCallDetails singleDrNurseCallDetails in dayCallDetails)
+                                retDrNurseCallDetails.Add(singleDrNurseCallDetails);
+                        }
+                        else
+                            retDrNurseCallDetails = dayCallDetails;
+                    }/**/
                 }
             }
             catch (Exception Err)
@@ -205,7 +216,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
             }
             return retDrNurseCallDetails;
         }
-        public async Task<List<DrNurseCallDetails>> GetTeamFieldAllowCallDetails1(string companyId, string teamUserName, DateTime scheduledFromDate, DateTime scheduledToDate, string callStatus, string serviceName)
+        public async Task<List<DrNurseCallDetails>> GetTeamFieldAllowCallDetails(string companyId, string teamUserName, DateTime scheduledFromDate, DateTime scheduledToDate, string callStatus, string serviceName)
         {
             List<DrNurseCallDetails> retDrNurseCallDetails = new List<DrNurseCallDetails>();
             try
