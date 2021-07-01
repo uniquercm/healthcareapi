@@ -18,6 +18,179 @@ namespace Web.Api.Infrastructure.Data.Repositories
         {
             _appDbContext = appDbContext;
         }
+
+        // public async Task<List<ScheduledDetails>> GetScheduledDetails(string companyId, string scheduledId, string patientId, bool isFieldAllocation, IPatientRepository patientRepository, DateTime scheduledFromDate, DateTime scheduledToDate, string searchAllowTeamType, string serviceName, string serviceStatus)
+        // {
+        //     List<ScheduledDetails> retScheduledDetailsList = new List<ScheduledDetails>();
+        //     try
+        //     {
+        //         var tableName = $"HC_Staff_Patient.patient_obj p, " +
+        //                         $"HC_Treatment.scheduled_obj sc";
+
+        //         var ColumAssign = $"sc.scheduled_id as ScheduledId, sc.patient_staff_id as PatientStaffId, " +
+        //                           $"sc.patient_id as PatientId, p.patient_name as PatientName, p.age as Age, " +
+        //                           $"sc.initial_pcr_test_date as PCRTestDate, sc.initial_pcr_test_result as PCRResult, " +
+        //                           $"sc.have_vaccine as HaveVaccine, " +
+
+        //                           $"sc.allocated_team_name as AllocatedTeamName, sc.reallocated_team_name as ReAllocatedTeamName, " +
+
+        //                           $"sc.treatment_type as TreatmentType, " +
+
+        //                           $"sc.treatment_from_date as TreatmentFromDate, sc.treatment_to_date as TreatmentToDate, " +
+
+        //                           $"sc.discharge_date as DischargeDate, sc.discharge_status as DischargeStatus, " +
+        //                           $"sc.discharge_remarks as DischargeRemarks, " +
+
+        //                           $"sc.tracker_schedule_date as TrackerScheduleDate, sc.tracker_applied_date as TrackerAppliedDate, " +
+        //                           $"sc.sticker_schedule_date as StickerScheduleDate, sc.sticker_removed_date as StickerRemovedDate, " +
+        //                           $"sc.tracker_replace_date as TrackerReplacedDate, sc.tracker_replace_no as TrackerReplaceNumber, " +
+        //                           $"sc.sticker_tracker_no as StickerTrackerNumber, sc.sticker_tracker_result as StickerTrackerResult, " +
+                                  
+        //                           $"sc.4day_pcr_test_date as PCR4DayTestDate, sc.4day_pcr_test_sample_date as PCR4DaySampleDate, sc.4day_pcr_test_result as PCR4DayResult, " +
+        //                           $"sc.8day_pcr_test_date as PCR8DayTestDate, sc.8day_pcr_test_sample_date as PCR8DaySampleDate, sc.8day_pcr_test_result as PCR8DayResult, " +
+
+        //                           $"sc.2day_call_id as Day2CallId, sc.3day_call_id as Day3CallId, " +
+        //                           $"sc.4day_call_id as Day4CallId, sc.5day_call_id as Day5CallId, " +
+        //                           $"sc.6day_call_id as Day6CallId, sc.7day_call_id as Day7CallId, " +
+        //                           $"sc.9day_call_id as Day9CallId, " +
+
+        //                           $"sc.have_treatement_extract as ExtractTreatementDate, " +
+        //                           $"sc.status as Status, " +
+        //                           $"sc.created_by as CreatedBy, sc.modified_by as ModifiedBy";
+
+        //         var whereCond = $" where sc.patient_id = p.patient_id" +
+        //                         $" and sc.status = 'Active'" +
+        //                         $" and p.status = 'Active'";
+
+        //         if (!string.IsNullOrEmpty(companyId))
+        //             whereCond += " and p.company_id = '" + companyId + "'";
+
+        //         if (!string.IsNullOrEmpty(scheduledId))
+        //             whereCond += " and sc.scheduled_id = '" + scheduledId + "'";
+
+        //         if (!string.IsNullOrEmpty(patientId))
+        //             whereCond += " and sc.patient_id = '" + patientId + "'";
+                
+        //         if(searchAllowTeamType.ToLower().Equals("allowed"))
+        //             whereCond += " and ((sc.allocated_team_name != null or sc.reallocated_team_name != null) " + 
+        //                          " or (sc.allocated_team_name != '' or sc.reallocated_team_name != '')) ";
+        //         else if(searchAllowTeamType.ToLower().Equals("notallowed"))
+        //             whereCond += " and ((sc.allocated_team_name = null and sc.reallocated_team_name = null) " + 
+        //                          " or (sc.allocated_team_name = '' and sc.reallocated_team_name = '')) ";
+
+        //         string fromDate = scheduledFromDate.Date.ToString("yyyy-MM-dd");
+        //         /*if(fromDate == "0001-01-01")
+        //         {
+        //             scheduledFromDate = DateTime.Today;
+        //             //scheduledFromDate = DateTime.Today.AddDays(1);
+        //             fromDate = scheduledFromDate.ToString("yyyy-MM-dd 00:00:00.0");
+        //         }*/
+        //         string toDate = scheduledToDate.Date.ToString("yyyy-MM-dd");
+        //         if(fromDate != "0001-01-01" || toDate != "0001-01-01")
+        //         {
+        //             if(fromDate == "0001-01-01")
+        //                 fromDate = toDate;
+                    
+        //             if(toDate == "0001-01-01")
+        //                 toDate = fromDate;
+
+        //             //if(fromDate != "0001-01-01")
+        //                 //whereCond += $" and sc.treatment_from_date <= '" + fromDate + "'" +
+        //                              //$" and sc.treatment_to_date > '" + toDate + "'";
+        //         }
+
+        //         string timeMin = " 00:00:00.0";
+        //         if(!String.IsNullOrEmpty(serviceName) && fromDate != "0001-01-01")
+        //         {//all, tracker, sticker, 4pcr, 8pcr, discharge
+        //             if(serviceName.Equals("tracker"))
+        //                 whereCond += $" and sc.tracker_schedule_date between '" + fromDate + timeMin + "' and '" + toDate + timeMin + "'";
+        //             else if(serviceName.Equals("sticker"))
+        //                 whereCond += $" and sc.sticker_schedule_date between '" + fromDate + timeMin + "' and '" + toDate + timeMin + "'";
+        //             else if(serviceName.Equals("4pcr"))
+        //                 whereCond += $" and sc.4day_pcr_test_date between '" + fromDate + timeMin + "' and '" + toDate + timeMin + "'";
+        //             else if(serviceName.Equals("8pcr"))
+        //                 whereCond += $" and sc.8day_pcr_test_date between '" + fromDate + timeMin + "' and '" + toDate + timeMin + "'";
+        //             else if(serviceName.Equals("discharge"))
+        //                 whereCond += $" and sc.discharge_date between '" + fromDate + timeMin + "' and '" + toDate + timeMin + "'";
+        //             else
+        //                 whereCond += $" and ((sc.treatment_from_date between '" + fromDate + timeMin + "' and '" + toDate + timeMin + "')" +
+        //                              $" or (sc.treatment_to_date between '" + fromDate + timeMin + "' and '" + toDate + timeMin + "'))";
+        //                 /*whereCond += $" and sc.treatment_from_date >= '" + fromDate + timeMin + "'" +
+        //                              $" and sc.treatment_to_date <= '" + toDate + timeMin + "'";*/
+        //         }
+        //         else if(fromDate != "0001-01-01")
+        //             whereCond += $" and ((sc.treatment_from_date between '" + fromDate + timeMin + "' and '" + toDate + timeMin + "')" +
+        //                              $" or (sc.treatment_to_date between '" + fromDate + timeMin + "' and '" + toDate + timeMin + "'))";
+        //             /*whereCond += $" and sc.treatment_from_date >= '" + fromDate + timeMin + "'" +
+        //                            $" and sc.treatment_to_date <= '" + toDate + timeMin + "'";*/
+
+        //         if(!String.IsNullOrEmpty(serviceStatus)  && serviceStatus != "all")
+        //         {//all, tracker, sticker, 4pcr, 8pcr, discharge
+        //             if(serviceName.Equals("tracker") || serviceName.Equals("sticker"))
+        //                 whereCond += " and sc.sticker_tracker_result = '" + serviceStatus + "'";
+        //             else if(serviceName.Equals("4pcr"))
+        //                 whereCond += " and sc.4day_pcr_test_result = '" + serviceStatus + "'";
+        //             else if(serviceName.Equals("8pcr"))
+        //                 whereCond += " and sc.8day_pcr_test_result = '" + serviceStatus + "'";
+        //             else if(serviceName.Equals("discharge"))
+        //                 whereCond += " and p.discharge_status = '" + serviceStatus + "'";
+        //         }
+
+        //         var orderCond = $" order by sc.created_on DESC ";
+
+        //         var sqlSelQuery = $"select " + ColumAssign + " from " + tableName + whereCond + orderCond;
+        //         using (var connection = _appDbContext.Connection)
+        //         {
+        //             var sqlSelResult = await connection.QueryAsync<ScheduledDetails>(sqlSelQuery);
+        //             retScheduledDetailsList = sqlSelResult.ToList();
+        //             foreach(ScheduledDetails singleScheduledDetails in retScheduledDetailsList)
+        //             {
+        //                 List<CallDetails> callDetailsList = await GetCallDetails(singleScheduledDetails.Day2CallId, singleScheduledDetails.ScheduledId);
+        //                 if(callDetailsList.Count > 0)
+        //                     singleScheduledDetails.Day2CallDetails = callDetailsList[0];
+
+        //                 callDetailsList = await GetCallDetails(singleScheduledDetails.Day3CallId, singleScheduledDetails.ScheduledId);
+        //                 if(callDetailsList.Count > 0)
+        //                     singleScheduledDetails.Day3CallDetails = callDetailsList[0];
+
+        //                 callDetailsList = await GetCallDetails(singleScheduledDetails.Day4CallId, singleScheduledDetails.ScheduledId);
+        //                 if(callDetailsList.Count > 0)
+        //                     singleScheduledDetails.Day4CallDetails = callDetailsList[0];
+
+        //                 callDetailsList = await GetCallDetails(singleScheduledDetails.Day5CallId, singleScheduledDetails.ScheduledId);
+        //                 if(callDetailsList.Count > 0)
+        //                     singleScheduledDetails.Day5CallDetails = callDetailsList[0];
+
+        //                 callDetailsList = await GetCallDetails(singleScheduledDetails.Day6CallId, singleScheduledDetails.ScheduledId);
+        //                 if(callDetailsList.Count > 0)
+        //                     singleScheduledDetails.Day6CallDetails = callDetailsList[0];
+
+        //                 callDetailsList = await GetCallDetails(singleScheduledDetails.Day7CallId, singleScheduledDetails.ScheduledId);
+        //                 if(callDetailsList.Count > 0)
+        //                     singleScheduledDetails.Day7CallDetails = callDetailsList[0];
+
+        //                 callDetailsList = await GetCallDetails(singleScheduledDetails.Day9CallId, singleScheduledDetails.ScheduledId);
+        //                 if(callDetailsList.Count > 0)
+        //                     singleScheduledDetails.Day9CallDetails = callDetailsList[0];
+
+        //                 singleScheduledDetails.PatientInformation = new PatientDetails();
+        //                 if(isFieldAllocation)
+        //                 {
+        //                     List<PatientDetails> patientDetailsList = new List<PatientDetails>();
+        //                     patientDetailsList = await patientRepository.GetPatientDetails(companyId, singleScheduledDetails.PatientId, "all");
+        //                     if(patientDetailsList.Count > 0)
+        //                         singleScheduledDetails.PatientInformation = patientDetailsList[0];
+        //                 }
+        //             }
+        //         }
+        //     }
+        //     catch (Exception Err)
+        //     {
+        //         var Error = Err.Message.ToString();
+        //     }
+        //     return retScheduledDetailsList;
+        // }
+
         public async Task<List<ScheduledDetails>> GetScheduledDetails(string companyId, string scheduledId, string patientId, bool isFieldAllocation, IPatientRepository patientRepository, DateTime scheduledFromDate, DateTime scheduledToDate, string searchAllowTeamType, string serviceName, string serviceStatus)
         {
             List<ScheduledDetails> retScheduledDetailsList = new List<ScheduledDetails>();
@@ -112,16 +285,16 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     else if(serviceName.Equals("discharge"))
                         whereCond += $" and sc.discharge_date between '" + fromDate + timeMin + "' and '" + toDate + timeMin + "'";
                     else
-                        whereCond += $" and ((sc.treatment_from_date between '" + fromDate + timeMin + "' and '" + toDate + timeMin + "')" +
-                                     $" or (sc.treatment_to_date between '" + fromDate + timeMin + "' and '" + toDate + timeMin + "'))";
-                        /*whereCond += $" and sc.treatment_from_date >= '" + fromDate + timeMin + "'" +
-                                     $" and sc.treatment_to_date <= '" + toDate + timeMin + "'";*/
+                        //whereCond += $" and ((sc.treatment_from_date between '" + fromDate + timeMin + "' and '" + toDate + timeMin + "')" +
+                                     //$" or (sc.treatment_to_date between '" + fromDate + timeMin + "' and '" + toDate + timeMin + "'))";
+                        whereCond += $" and sc.treatment_from_date <= '" + fromDate + timeMin + "'" +
+                                     $" and sc.treatment_to_date >= '" + toDate + timeMin + "'";/**/
                 }
                 else if(fromDate != "0001-01-01")
-                    whereCond += $" and ((sc.treatment_from_date between '" + fromDate + timeMin + "' and '" + toDate + timeMin + "')" +
-                                     $" or (sc.treatment_to_date between '" + fromDate + timeMin + "' and '" + toDate + timeMin + "'))";
-                    /*whereCond += $" and sc.treatment_from_date >= '" + fromDate + timeMin + "'" +
-                                   $" and sc.treatment_to_date <= '" + toDate + timeMin + "'";*/
+                    //whereCond += $" and ((sc.treatment_from_date between '" + fromDate + timeMin + "' and '" + toDate + timeMin + "')" +
+                                     //$" or (sc.treatment_to_date between '" + fromDate + timeMin + "' and '" + toDate + timeMin + "'))";
+                    whereCond += $" and sc.treatment_from_date <= '" + fromDate + timeMin + "'" +
+                                   $" and sc.treatment_to_date >= '" + toDate + timeMin + "'";/**/
 
                 if(!String.IsNullOrEmpty(serviceStatus)  && serviceStatus != "all")
                 {//all, tracker, sticker, 4pcr, 8pcr, discharge
