@@ -91,7 +91,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                         else
                             retDrNurseCallDetails = dayCallDetails;
                     }
-                    if(serviceName.Equals("team") || serviceName.Equals("all"))
+                    /*if(serviceName.Equals("team") || serviceName.Equals("all"))
                     {
                         dayCallDetails = await GetTeamFieldAllowCallDetails(companyId, teamUserName, scheduledFromDate, scheduledToDate, serviceStatus, serviceName);
                         if(retDrNurseCallDetails.Count > 0)
@@ -101,7 +101,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                         }
                         else
                             retDrNurseCallDetails = dayCallDetails;
-                    }/**/
+                    }*/
                 }
             }
             catch (Exception Err)
