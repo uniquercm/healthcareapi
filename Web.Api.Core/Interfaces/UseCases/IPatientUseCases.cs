@@ -11,4 +11,6 @@ namespace Web.Api.Core.Interfaces.UseCases
     {   }
     public partial interface IPatientUseCases : IUseCaseRequestHandler<DeleteRequest, AcknowledgementResponse>
     {   }
+    public partial interface IPatientUseCases : IUseCaseRequestHandler<AvailabilityRequest, AvailabilityResponse>
+    {   }
 }

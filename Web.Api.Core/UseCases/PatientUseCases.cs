@@ -35,19 +35,24 @@ namespace Web.Api.Core.UseCases
         {
             AcknowledgementResponse acknowledgementResponse;
 
-            if(request.IsUpdate)//Edit a Patient
+            if(await _patientRepository.CheckCRMNumberAvailability(request.CRMNo, request.CompanyId, request.PatientId))
+                acknowledgementResponse = new AcknowledgementResponse(new[] { new Error("Already Exist", "The CRM Number already have the other Patient")}, false);
+            else
             {
-                if(await _patientRepository.EditPatient(request))
-                    acknowledgementResponse = new AcknowledgementResponse(true, "Patient Successfully Modifyed");
-                else
-                    acknowledgementResponse = new AcknowledgementResponse(new[] { new Error("Error Occurred", "Error Occurred")}, false);
-            }
-            else//Create a Patient
-            {
-                if(await _patientRepository.CreatePatient(request))
-                    acknowledgementResponse = new AcknowledgementResponse(request.PatientId, true, "Patient Created Successfully");
-                else
-                    acknowledgementResponse = new AcknowledgementResponse(new[] { new Error("Error Occurred", request.ErrorMsg)}, false);
+                if(request.IsUpdate)//Edit a Patient
+                {
+                    if(await _patientRepository.EditPatient(request))
+                        acknowledgementResponse = new AcknowledgementResponse(true, "Patient Successfully Modifyed");
+                    else
+                        acknowledgementResponse = new AcknowledgementResponse(new[] { new Error("Error Occurred", "Error Occurred")}, false);
+                }
+                else//Create a Patient
+                {
+                    if(await _patientRepository.CreatePatient(request))
+                        acknowledgementResponse = new AcknowledgementResponse(request.PatientId, true, "Patient Created Successfully");
+                    else
+                        acknowledgementResponse = new AcknowledgementResponse(new[] { new Error("Error Occurred", request.ErrorMsg)}, false);
+                }
             }
             outputPort.Handle(acknowledgementResponse);
             return true;
@@ -72,6 +77,15 @@ namespace Web.Api.Core.UseCases
             else
                 acknowledgementResponse = new AcknowledgementResponse(new[] { new Error("Error Occurred", "Error Occurred") }, false);
             outputPort.Handle(acknowledgementResponse);
+            return true;
+        }
+        public async Task<bool> Handle(AvailabilityRequest request, IOutputPort<AvailabilityResponse> outputPort)
+        {
+            AvailabilityResponse availabilityResponse;
+            bool retVal = false;
+            retVal = await _patientRepository.CheckCRMNumberAvailability(request.CRMNumber, request.CompanyId, request.PatientId);
+            availabilityResponse = new AvailabilityResponse(retVal, "CRM Number", true);
+            outputPort.Handle(availabilityResponse);
             return true;
         }
 

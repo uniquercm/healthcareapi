@@ -120,5 +120,19 @@ namespace Web.Api.Controllers
             return _acknowledgementPresenter.ContentResult;
         }
 
+        /// <summary>
+        /// CRM Number Availability
+        /// </summary>
+        /// <param name="crmNumber">CRM Number</param>
+        /// <param name="patientId">Patient Id (Optional)</param>
+        /// <param name="companyId">Company Id (Optional)</param>
+        /// <returns></returns>
+        [HttpGet("patient-crmno-available")]
+        public async Task<ActionResult> AgentNameAvailable(string crmNumber, string patientId = "", string companyId = "")
+        {
+            await _patientUseCases.Handle(new AvailabilityRequest(crmNumber, patientId, companyId), _availabilityPresenter);
+            return _availabilityPresenter.ContentResult;
+        }
+
     }
 }

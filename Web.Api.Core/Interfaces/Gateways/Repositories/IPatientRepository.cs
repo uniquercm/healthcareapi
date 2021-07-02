@@ -13,5 +13,6 @@ namespace Web.Api.Core.Interfaces.Gateways.Repositories
         string GenerateUUID();
         Task<bool> EditPatient(PatientRequest patientRequest);
         Task<bool> DeletePatient(DeleteRequest request);
+        Task<bool> CheckCRMNumberAvailability(string crmNumber, string companyId, string patientId);
     }
 }
