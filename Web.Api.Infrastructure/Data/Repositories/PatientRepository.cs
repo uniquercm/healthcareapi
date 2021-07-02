@@ -18,7 +18,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
         {
             _appDbContext = appDbContext;
         }
-        public async Task<List<PatientDetails>> GetPatientDetails(string companyId, string patientId, string gMapLinkSatus)
+        public async Task<List<PatientDetails>> GetPatientDetails(string companyId, string patientId, string gMapLinkSatus, DateTime assignedFromDate, DateTime assignedToDate)
         {
             List<PatientDetails> retPatientDetailsList = new List<PatientDetails>();
             try
@@ -33,6 +33,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                               $"p.crm_no as CRMNo, p.eid_no as EIDNo, " +
                               $"p.date_of_birth as DateOfBirth, " +
                               $"p.age as Age, p.sex as Sex, p.address as Address, " +
+                              $"p.assigned_date as AssignedDate, " +
                               $"p.landmark as LandMark, p.area as Area, " +
                               $"p.city_id as CityId, ci.city_name as CityName, " +
                               $"p.nationality_id as NationalityId, n.nationality_name as NationalityName, " +
@@ -68,6 +69,23 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     else if(gMapLinkSatus.Equals("yes"))
                         whereCond += " and p.google_map_link != ''";
                 }
+
+                string timeMin = " 00:00:00.0";
+                string fromDate = assignedFromDate.Date.ToString("yyyy-MM-dd");
+                string toDate = assignedToDate.Date.ToString("yyyy-MM-dd");
+                if(fromDate != "0001-01-01" || toDate != "0001-01-01")
+                {
+                    if(fromDate == "0001-01-01")
+                        fromDate = toDate;
+                    
+                    if(toDate == "0001-01-01")
+                        toDate = fromDate;
+                }
+
+                if(fromDate != "0001-01-01")
+                    whereCond += $" and p.assigned_date between '" + fromDate + timeMin + "' and '" + toDate + timeMin + "'";
+                    //whereCond += $" and p.assigned_date <= '" + fromDate + timeMin + "'" +
+                                // $" and p.assigned_date >= '" + toDate + timeMin + "'";
 
                 var orderCond = $" order by p.created_on DESC ";
 
@@ -107,6 +125,34 @@ namespace Web.Api.Infrastructure.Data.Repositories
             }
             return retPatientDetailsList;
         }
+        public async Task<bool> CheckCRMNumberAvailability(string crmNumber, string companyId, string patientId)
+        {
+            using (var connection = _appDbContext.Connection)
+            {
+                var tableName = $"HC_Staff_Patient.patient_obj";
+                var whereCond = $" where status = '" + Status.Active.ToString() + "'";
+
+                if(!string.IsNullOrEmpty(crmNumber))
+                    whereCond += $" and crm_no = @CRMNo";
+
+                if(!string.IsNullOrEmpty(companyId))
+                    whereCond += $" and company_id != @CompanyId";
+
+                if(!string.IsNullOrEmpty(patientId))
+                    whereCond += $" and patient_id != @PatientId";
+
+                object colValueParam = new
+                {
+                    CRMNo = crmNumber,
+                    CompanyId = companyId,
+                    PatientId = patientId
+                };
+                var sqlSelQuery = $"select * from " + tableName + whereCond;
+                var sqlResult = await connection.QueryAsync<string>(sqlSelQuery, colValueParam);
+                return sqlResult.ToList().Any();
+            }
+        }
+ 
 
 /*
         public async Task<List<PatientDetails>> GetPatientDetails(string companyId, string patientId)

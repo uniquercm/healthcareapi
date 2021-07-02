@@ -7,7 +7,7 @@ namespace Web.Api.Core.Interfaces.Gateways.Repositories
 {
     public interface IPatientRepository 
     {
-        Task<List<PatientDetails>> GetPatientDetails(string companyId, string patientId, string gMapLinkSatus);
+        Task<List<PatientDetails>> GetPatientDetails(string companyId, string patientId, string gMapLinkSatus, DateTime assignedFromDate, DateTime assignedToDate);
         Task<bool> CreatePatient(PatientRequest patientRequest);
         Task<bool> CreateFilePatient(FilePatientRequest filePatientRequest);
         string GenerateUUID();
