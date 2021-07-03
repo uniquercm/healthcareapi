@@ -136,7 +136,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     whereCond += $" and crm_no = @CRMNo";
 
                 if(!string.IsNullOrEmpty(companyId))
-                    whereCond += $" and company_id != @CompanyId";
+                    whereCond += $" and company_id = @CompanyId";
 
                 if(!string.IsNullOrEmpty(patientId))
                     whereCond += $" and patient_id != @PatientId";
