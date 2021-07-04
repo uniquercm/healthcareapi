@@ -144,7 +144,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
             {
                 var tableName = $"HC_Master_Details.nationality_obj";
 
-                var ColumAssign = $"nationality_id as NationalityId, nationality_name as NationalityName, country_name as CountryName";
+                var ColumAssign = $"nationality_id as NationalityId, country_name as NationalityName, country_name as CountryName";
 
                 var sqlSelQuery = $"select " + ColumAssign + " from " + tableName;
                 using (var connection = _appDbContext.Connection)

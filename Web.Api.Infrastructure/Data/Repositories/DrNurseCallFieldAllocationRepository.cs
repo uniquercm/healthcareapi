@@ -130,7 +130,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                                   $"p.crm_no as CRMNo, p.eid_no as EIDNo, " +
                                   $"p.area as Area, p.age as Age, " +
                                   $"p.city_id as CityId, ci.city_name as CityName, " +
-                                  $"p.nationality_id as NationalityId, n.nationality_name as NationalityName, " +
+                                  $"p.nationality_id as NationalityId, n.country_name as NationalityName, " +
                                   $"p.mobile_no as MobileNo, ca.call_id as CallId, " +
                                   $"ca.called_date as CalledDate, ca.scheduled_id as ScheduledId, " +
                                   $"ca.call_scheduled_date as CallScheduledDate, " +
@@ -235,7 +235,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                                   $"p.crm_no as CRMNo, p.eid_no as EIDNo, " +
                                   $"p.area as Area, p.age as Age, " +
                                   $"p.city_id as CityId, ci.city_name as CityName, " +
-                                  $"p.nationality_id as NationalityId, n.nationality_name as NationalityName, " +
+                                  $"p.nationality_id as NationalityId, n.country_name as NationalityName, " +
                                   $"p.mobile_no as MobileNo, ca.call_id as CallId, " +
                                   $"ca.called_date as CalledDate, ca.scheduled_id as ScheduledId, " +
                                   $"ca.call_scheduled_date as CallScheduledDate, " +
@@ -334,7 +334,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                                   $"p.crm_no as CRMNo, p.eid_no as EIDNo, " +
                                   $"p.area as Area, p.age as Age, " +
                                   $"p.city_id as CityId, ci.city_name as CityName, " +
-                                  $"p.nationality_id as NationalityId, n.nationality_name as NationalityName, " +
+                                  $"p.nationality_id as NationalityId, n.country_name as NationalityName, " +
                                   $"p.mobile_no as MobileNo, sc.scheduled_id as ScheduledId, " +
                                   $"true as IsPCRCall, ";
                 if(is4thDay)
@@ -426,7 +426,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                                   $"p.crm_no as CRMNo, p.eid_no as EIDNo, " +
                                   $"p.area as Area, p.age as Age, " +
                                   $"p.city_id as CityId, ci.city_name as CityName, " +
-                                  $"p.nationality_id as NationalityId, n.nationality_name as NationalityName, " +
+                                  $"p.nationality_id as NationalityId, n.country_name as NationalityName, " +
                                   $"p.mobile_no as MobileNo, sc.scheduled_id as ScheduledId, " +
                                   $"false as IsPCRCall, ";
 
@@ -512,7 +512,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                                   $"p.crm_no as CRMNo, p.eid_no as EIDNo, " +
                                   $"p.area as Area, p.age as Age, " +
                                   $"p.city_id as CityId, ci.city_name as CityName, " +
-                                  $"p.nationality_id as NationalityId, n.nationality_name as NationalityName, " +
+                                  $"p.nationality_id as NationalityId, n.country_name as NationalityName, " +
                                   $"p.mobile_no as MobileNo, sc.scheduled_id as ScheduledId, " +
                                   $"false as IsPCRCall, " +
                                   $"'discharge' as CallId, sc.discharge_date as CallScheduledDate, " +
@@ -588,7 +588,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                                   $"p.crm_no as CRMNo, p.eid_no as EIDNo, " +
                                   $"p.area as Area, p.age as Age, " +
                                   $"p.city_id as CityId, ci.city_name as CityName, " +
-                                  $"p.nationality_id as NationalityId, n.nationality_name as NationalityName, " +
+                                  $"p.nationality_id as NationalityId, n.country_name as NationalityName, " +
                                   $"p.mobile_no as MobileNo, sc.scheduled_id as ScheduledId, " +
                                   $"false as IsPCRCall, " +
                                   $"'allocated' as CallId, sc.team_allocated_date as CallScheduledDate, " +

@@ -36,7 +36,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                               $"p.assigned_date as AssignedDate, " +
                               $"p.landmark as LandMark, p.area as Area, " +
                               $"p.city_id as CityId, ci.city_name as CityName, " +
-                              $"p.nationality_id as NationalityId, n.nationality_name as NationalityName, " +
+                              $"p.nationality_id as NationalityId, n.country_name as NationalityName, " +
                               $"p.mobile_no as MobileNo, p.google_map_link as GoogleMapLink, " +
                               $"p.no_of_adults as AdultsCount, p.no_of_childrens as ChildrensCount, p.pcr_count as PCRCount, " +
                               $"p.enrolled_count as EnrolledCount, p.enrolled_details as EnrolledDetails, " +
@@ -170,7 +170,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                               $"p.age as Age, p.sex as Sex, p.address as Address, " +
                               $"p.landmark as LandMark, p.area as Area, " +
                               $"p.city_id as CityId, ci.city_name as CityName, " +
-                              $"p.nationality_id as NationalityId, n.nationality_name as NationalityName, " +
+                              $"p.nationality_id as NationalityId, n.country_name as NationalityName, " +
                               $"p.mobile_no as MobileNo, p.google_map_link as GoogleMapLink, p.sticker_application as StickerApplication, " +
                               $"p.sticker_removal as StickerRemoval, " +
                               $"p.created_by as CreatedBy, p.modified_by as ModifiedBy";
