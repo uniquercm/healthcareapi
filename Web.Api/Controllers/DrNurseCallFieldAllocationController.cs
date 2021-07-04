@@ -41,18 +41,19 @@ namespace Web.Api.Controllers
         /// <param name="teamUserName">Team User Name (optional)</param>
         /// <param name="serviceName">Service Name(all, tracker, sticker, 4pcr, 8pcr, discharge) (optional)</param>
         /// <param name="serviceStatus">Service Status(all, applied, removed, replaced, visited, discharged, pending, others) (optional)</param>
+        /// <param name="dateSearchType">Date Search Type(schedule, allocated, reallocaed) (optional)</param>
         /// <returns>Doctor Nurse Team Field Allocation Call Details</returns>
         [HttpGet("doctor-nurse-team-call")]
-        public async Task<ActionResult> GetDrNurseCallFieldAllocationCallDetails(DateTime fromDate, DateTime toDate, string companyId = "", string callName = "field", string callStatus = "all", string teamUserName = "", string serviceName = "all", string serviceStatus = "all")
+        public async Task<ActionResult> GetDrNurseCallFieldAllocationCallDetails(DateTime fromDate, DateTime toDate, string companyId = "", string callName = "field", string callStatus = "all", string teamUserName = "", string serviceName = "all", string serviceStatus = "all", string dateSearchType = "schedule")
         {//tracker,
             if(callName.ToLower().Equals("doctor"))
-                await _drNurseCallFieldAllocationUseCases.Handle(new GetDetailsRequest(companyId, fromDate, toDate, "DrCall", callStatus, teamUserName, serviceName), _getDetailsPresenter);
+                await _drNurseCallFieldAllocationUseCases.Handle(new GetDetailsRequest(companyId, fromDate, toDate, "DrCall", callStatus, teamUserName, serviceName, dateSearchType), _getDetailsPresenter);
             else if(callName.ToLower().Equals("nurse"))
-                await _drNurseCallFieldAllocationUseCases.Handle(new GetDetailsRequest(companyId, fromDate, toDate, "NurseCall", callStatus, teamUserName, serviceName), _getDetailsPresenter);
+                await _drNurseCallFieldAllocationUseCases.Handle(new GetDetailsRequest(companyId, fromDate, toDate, "NurseCall", callStatus, teamUserName, serviceName, dateSearchType), _getDetailsPresenter);
             else if(callName.ToLower().Equals("team"))
-                await _drNurseCallFieldAllocationUseCases.Handle(new GetDetailsRequest(companyId, fromDate, toDate, "TeamCall", callStatus, teamUserName, serviceName), _getDetailsPresenter);
+                await _drNurseCallFieldAllocationUseCases.Handle(new GetDetailsRequest(companyId, fromDate, toDate, "TeamCall", callStatus, teamUserName, serviceName, serviceStatus, dateSearchType), _getDetailsPresenter);
             else
-                await _drNurseCallFieldAllocationUseCases.Handle(new GetDetailsRequest(companyId, fromDate, toDate, "FieldAllow", callStatus, teamUserName, serviceName), _getDetailsPresenter);
+                await _drNurseCallFieldAllocationUseCases.Handle(new GetDetailsRequest(companyId, fromDate, toDate, "FieldAllow", callStatus, teamUserName, serviceName, serviceStatus, dateSearchType), _getDetailsPresenter);
             return _getDetailsPresenter.ContentResult;
         }
 

@@ -23,6 +23,9 @@ namespace Web.Api.Core.Dto.UseCaseRequests
         public string ServiceName { get; set; }//all, tracker, sticker, 4pcr, 8pcr, discharge
         public string ServiceStatus { get; set; }//all, applied, removed, replaced, visited, discharged, pending, others
         public int UserType { get; set; }
+        public string DateSearchType { get; set; }//schedule, allocated, reallocaed
+        /*public DateTime AllocatedFromDate { get; set; }
+        public DateTime AllocatedToDate { get; set; }*/
 
         public GetDetailsRequest()
         {   }
@@ -56,7 +59,7 @@ namespace Web.Api.Core.Dto.UseCaseRequests
             ScheduledToDate = scheduledToDate;
             LableName = lableName;
         }
-        public GetDetailsRequest(string companyId, DateTime scheduledFromDate, DateTime scheduledToDate, string lableName, string callStatus, string teamUserName, string serviceName)
+        public GetDetailsRequest(string companyId, DateTime scheduledFromDate, DateTime scheduledToDate, string lableName, string callStatus, string teamUserName, string serviceName, string dateSearchType)
         {
             CompanyId = companyId;
             ScheduledFromDate = scheduledFromDate;
@@ -65,6 +68,19 @@ namespace Web.Api.Core.Dto.UseCaseRequests
             CallStatus = callStatus;
             TeamUserName = teamUserName;
             ServiceName = serviceName;
+            DateSearchType = dateSearchType;
+        }
+        public GetDetailsRequest(string companyId, DateTime scheduledFromDate, DateTime scheduledToDate, string lableName, string callStatus, string teamUserName, string serviceName, string serviceStatus, string dateSearchType)
+        {
+            CompanyId = companyId;
+            ScheduledFromDate = scheduledFromDate;
+            ScheduledToDate = scheduledToDate;
+            LableName = lableName;
+            CallStatus = callStatus;
+            TeamUserName = teamUserName;
+            ServiceName = serviceName;
+            ServiceStatus = serviceStatus;
+            DateSearchType = dateSearchType;
         }
         public GetDetailsRequest(string id, string patientId, string staffId, string patientStaffId, string scheduledId, string lableName)
         {

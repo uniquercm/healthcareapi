@@ -14,7 +14,10 @@ namespace Web.Api.Core.Dto.UseCaseRequests
         public string PCRResult { get; set; }//initial_pcr_test_result - varchar(100) enum('Negative','Positive')
         public string HaveVaccine { get; set; }//have_vaccine - varchar(64)
         public string AllocatedTeamName { get; set; }//allocated_team_name - varchar(100)
+        public DateTime AllocatedDate { get; set; }//team_allocated_date - datetime
         public string ReAllocatedTeamName { get; set; }//reallocated_team_name - varchar(100)
+        public DateTime ReAllocatedDate { get; set; }//team_reallocated_date - datetime
+
 
         public DateTime DischargeDate { get; set; }//discharge_date – datetime
         public string DischargeStatus { get; set; }//discharge_status - varchar(100)
@@ -66,7 +69,9 @@ namespace Web.Api.Core.Dto.UseCaseRequests
         public string PCRResult { get; set; }//initial_pcr_test_result - enum('Negative','Positive')
         public string HaveVaccine { get; set; }//have_vaccine - varchar(64)
         public string AllocatedTeamName { get; set; }//allocated_team_name - varchar(100)
+        public DateTime AllocatedDate { get; set; }//team_allocated_date - datetime
         public string ReAllocatedTeamName { get; set; }//reallocated_team_name - varchar(100)
+        public DateTime ReAllocatedDate { get; set; }//team_reallocated_date - datetime
 
         public DateTime DischargeDate { get; set; }//discharge_date – datetime
         public string DischargeStatus { get; set; }//discharge_status - varchar(100)

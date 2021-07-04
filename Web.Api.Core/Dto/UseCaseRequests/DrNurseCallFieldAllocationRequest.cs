@@ -48,7 +48,9 @@ namespace Web.Api.Core.Dto.UseCaseRequests
         public string PatientStaffId { get; set; }//patient_staff_id – varchar(128)
         public string PatientId { get; set; }//patient_id – varchar(128)
         public string AllocatedTeamName { get; set; }//allocated_team_name - varchar(100)
+        public DateTime AllocatedDate { get; set; }//team_allocated_date - datetime
         public string ReAllocatedTeamName { get; set; }//reallocated_team_name - varchar(100)
+        public DateTime ReAllocatedDate { get; set; }//team_reallocated_date - datetime
         public string ModifiedBy { get; set; } //modified_by
     }
     public class DrNurseCallDetails : CallDetails

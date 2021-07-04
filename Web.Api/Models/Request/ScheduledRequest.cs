@@ -17,7 +17,9 @@ namespace Web.Api.Models.Request
         public string DischargeRemarks { get; set; }
 
         public string AllocatedTeamName { get; set; }
+        public DateTime AllocatedDate { get; set; }
         public string ReAllocatedTeamName { get; set; }
+        public DateTime ReAllocatedDate { get; set; }
         public string TreatmentType { get; set; }
         public DateTime TreatmentFromDate { get; set; }
         public DateTime TreatmentToDate { get; set; }

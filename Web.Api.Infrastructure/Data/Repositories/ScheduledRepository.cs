@@ -205,6 +205,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                                   $"sc.have_vaccine as HaveVaccine, " +
 
                                   $"sc.allocated_team_name as AllocatedTeamName, sc.reallocated_team_name as ReAllocatedTeamName, " +
+                                  $"sc.team_allocated_date as AllocatedDate, sc.team_reallocated_date as ReAllocatedDate, " +
 
                                   $"sc.treatment_type as TreatmentType, " +
 
@@ -251,12 +252,6 @@ namespace Web.Api.Infrastructure.Data.Repositories
                                  " or (sc.allocated_team_name = '' and sc.reallocated_team_name = '')) ";
 
                 string fromDate = scheduledFromDate.Date.ToString("yyyy-MM-dd");
-                /*if(fromDate == "0001-01-01")
-                {
-                    scheduledFromDate = DateTime.Today;
-                    //scheduledFromDate = DateTime.Today.AddDays(1);
-                    fromDate = scheduledFromDate.ToString("yyyy-MM-dd 00:00:00.0");
-                }*/
                 string toDate = scheduledToDate.Date.ToString("yyyy-MM-dd");
                 if(fromDate != "0001-01-01" || toDate != "0001-01-01")
                 {
@@ -265,10 +260,6 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     
                     if(toDate == "0001-01-01")
                         toDate = fromDate;
-
-                    //if(fromDate != "0001-01-01")
-                        //whereCond += $" and sc.treatment_from_date <= '" + fromDate + "'" +
-                                     //$" and sc.treatment_to_date > '" + toDate + "'";
                 }
 
                 string timeMin = " 00:00:00.0";
@@ -285,14 +276,10 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     else if(serviceName.Equals("discharge"))
                         whereCond += $" and sc.discharge_date between '" + fromDate + timeMin + "' and '" + toDate + timeMin + "'";
                     else
-                        //whereCond += $" and ((sc.treatment_from_date between '" + fromDate + timeMin + "' and '" + toDate + timeMin + "')" +
-                                     //$" or (sc.treatment_to_date between '" + fromDate + timeMin + "' and '" + toDate + timeMin + "'))";
                         whereCond += $" and sc.treatment_from_date <= '" + fromDate + timeMin + "'" +
                                      $" and sc.treatment_to_date >= '" + toDate + timeMin + "'";/**/
                 }
                 else if(fromDate != "0001-01-01")
-                    //whereCond += $" and ((sc.treatment_from_date between '" + fromDate + timeMin + "' and '" + toDate + timeMin + "')" +
-                                     //$" or (sc.treatment_to_date between '" + fromDate + timeMin + "' and '" + toDate + timeMin + "'))";
                     whereCond += $" and sc.treatment_from_date <= '" + fromDate + timeMin + "'" +
                                    $" and sc.treatment_to_date >= '" + toDate + timeMin + "'";/**/
 
@@ -506,6 +493,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
 
                 var colName = $"scheduled_id, patient_staff_id, patient_id, initial_pcr_test_date, initial_pcr_test_result, " +
                               $"have_vaccine, allocated_team_name, reallocated_team_name, " +
+                              $"team_allocated_date, team_reallocated_date, " +
                               $"discharge_date, treatment_type, treatment_from_date, treatment_to_date, " +
 
                               $"tracker_schedule_date, sticker_schedule_date, " +
@@ -519,8 +507,9 @@ namespace Web.Api.Infrastructure.Data.Repositories
                               $"9day_call_id, have_treatement_extract, created_by, created_on";
 
                 var colValueName = $"@ScheduledId, @PatientStaffId, @PatientId, @PCRTestDate, @PCRResult, " +
-                                   $"@HaveVaccine, @AllocatedTeamName, " +
-                                   $"@ReAllocatedTeamName, @DischargeDate, @TreatmentType, " +
+                                   $"@HaveVaccine, @AllocatedTeamName, @ReAllocatedTeamName, " +
+                                   $"@AllocatedDate, @ReAllocatedDate, " +
+                                   $"@DischargeDate, @TreatmentType, " +
                                    $"@TreatmentFromDate, @TreatmentToDate, " +
                                    $"@TrackerScheduleDate, @StickerScheduleDate, " +
                                    $"@PCR4DayTestDate, @PCR4DayResult, " + 
@@ -730,6 +719,30 @@ namespace Web.Api.Infrastructure.Data.Repositories
                         pcr8DaySampleDate = scheduledRequest.PCR8DaySampleDate.ToString("yyyy-MM-dd 00:00:00.0");
                 }
 
+                string allocatedDate;
+                if(scheduledRequest.AllocatedDate == null)
+                    allocatedDate = "";
+                else
+                {
+                    allocatedDate = scheduledRequest.AllocatedDate.ToString("yyyy-MM-dd");
+                    if( allocatedDate == "0001-01-01")
+                        allocatedDate = "";
+                    else
+                        allocatedDate = scheduledRequest.AllocatedDate.ToString("yyyy-MM-dd 00:00:00.0");
+                }
+
+                string reAllocatedDate;
+                if(scheduledRequest.ReAllocatedDate == null)
+                    reAllocatedDate = "";
+                else
+                {
+                    reAllocatedDate = scheduledRequest.ReAllocatedDate.ToString("yyyy-MM-dd");
+                    if( reAllocatedDate == "0001-01-01")
+                        reAllocatedDate = "";
+                    else
+                        reAllocatedDate = scheduledRequest.ReAllocatedDate.ToString("yyyy-MM-dd 00:00:00.0");
+                }
+
                 object colValueParam = new
                 {
                     ScheduledId = scheduledRequest.ScheduledId,
@@ -739,7 +752,9 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     PCRResult = scheduledRequest.PCRResult,
                     HaveVaccine = scheduledRequest.HaveVaccine,
                     AllocatedTeamName = scheduledRequest.AllocatedTeamName,
+                    AllocatedDate = allocatedDate,
                     ReAllocatedTeamName = scheduledRequest.ReAllocatedTeamName,
+                    ReAllocatedDate = reAllocatedDate,
                     DischargeDate = dischargeDate,//scheduledRequest.DischargeDate.ToString("yyyy-MM-dd 00:00:00.0"),
                     TrackerScheduleDate = trackerDate,//scheduledRequest.TrackerScheduleDate.ToString("yyyy-MM-dd 00:00:00.0"),
                     StickerScheduleDate = stickerDate,//scheduledRequest.StickerScheduleDate.ToString("yyyy-MM-dd 00:00:00.0"),
@@ -1135,21 +1150,52 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     var tableName = $"HC_Treatment.scheduled_obj";
 
                     var colName = $"scheduled_id = @ScheduledId, " +
-                                //$"patient_staff_id = @PatientStaffId, " +
-                                //$"patient_id = @PatientId, " +
                                 $"allocated_team_name = @AllocatedTeamName, reallocated_team_name = @ReAllocatedTeamName, " +
+                                $"team_allocated_date = @AllocatedDate, team_reallocated_date = @ReAllocatedDate, " +
                                 $"modified_by = @ModifiedBy, modified_on = @ModifiedOn";
 
                     var whereCond = $" where scheduled_id = @ScheduledId";
                     var sqlUpdateQuery = $"UPDATE "+ tableName + " set " + colName + whereCond;
 
+                    string allocatedDate;
+                    /*if(singleFieldAllocationDetails.AllocatedDate == null)
+                        allocatedDate = "";
+                    else
+                    {
+                        allocatedDate = singleFieldAllocationDetails.AllocatedDate.ToString("yyyy-MM-dd");
+                        if( allocatedDate == "0001-01-01")
+                            allocatedDate = "";
+                        else
+                            allocatedDate = singleFieldAllocationDetails.AllocatedDate.ToString("yyyy-MM-dd 00:00:00.0");
+                    }*/
+                    if(String.IsNullOrEmpty(singleFieldAllocationDetails.AllocatedTeamName))
+                        allocatedDate = "";
+                    else
+                        allocatedDate = DateTime.Today.ToString("yyyy-MM-dd 00:00:00.0");
+
+                    string reAllocatedDate;
+                    /*if(singleFieldAllocationDetails.ReAllocatedDate == null)
+                        reAllocatedDate = "";
+                    else
+                    {
+                        reAllocatedDate = singleFieldAllocationDetails.ReAllocatedDate.ToString("yyyy-MM-dd");
+                        if( reAllocatedDate == "0001-01-01")
+                            reAllocatedDate = "";
+                        else
+                            reAllocatedDate = singleFieldAllocationDetails.ReAllocatedDate.ToString("yyyy-MM-dd 00:00:00.0");
+                    }*/
+                    if(String.IsNullOrEmpty(singleFieldAllocationDetails.ReAllocatedTeamName))
+                        reAllocatedDate = "";
+                    else
+                        reAllocatedDate = DateTime.Today.ToString("yyyy-MM-dd 00:00:00.0");
+
                     object colValueParam = new
                     {
                         ScheduledId = singleFieldAllocationDetails.ScheduledId,
-                        //PatientStaffId = singleFieldAllocationDetails.PatientStaffId,
-                        //PatientId = singleFieldAllocationDetails.PatientId,
                         AllocatedTeamName = singleFieldAllocationDetails.AllocatedTeamName,
                         ReAllocatedTeamName = singleFieldAllocationDetails.ReAllocatedTeamName,
+                        AllocatedDate = allocatedDate,
+                        ReAllocatedDate = reAllocatedDate,
                         ModifiedBy = singleFieldAllocationDetails.ModifiedBy,
                         ModifiedOn = DateTime.Today.ToString("yyyy-MM-dd 00:00:00.0")
                     };
