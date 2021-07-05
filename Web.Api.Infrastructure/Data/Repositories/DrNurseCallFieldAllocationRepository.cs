@@ -30,7 +30,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     /*comminted for 4 th PCR
                     if(serviceName.Equals("4pcr") || serviceName.Equals("all"))
                     {
-                        dayCallDetails = await GetPCRCallDetails(companyId, teamUserName, true, scheduledFromDate, scheduledToDate, serviceStatus);
+                        dayCallDetails = await GetPCRCallDetails(companyId, teamUserName, true, scheduledFromDate, scheduledToDate, serviceStatus, dateSearchType);
                         if(retDrNurseCallDetails.Count > 0)
                         {
                             foreach(DrNurseCallDetails singleDrNurseCallDetails in dayCallDetails)
@@ -40,13 +40,13 @@ namespace Web.Api.Infrastructure.Data.Repositories
                             retDrNurseCallDetails = dayCallDetails;
                     }*/
 
-                    if(dateSearchType.Equals("allocated"))
+                    if(dateSearchType.Equals("allocated") && serviceName.Equals("all"))
                         retDrNurseCallDetails = await GetAllocatedDateDetails(companyId, teamUserName, scheduledFromDate,scheduledToDate);
                     else
                     {
                         if(serviceName.Equals("8pcr")  || serviceName.Equals("eight") || serviceName.Equals("all"))
                         {
-                            dayCallDetails = await GetPCRCallDetails(companyId, teamUserName, false, scheduledFromDate, scheduledToDate, serviceStatus);
+                            dayCallDetails = await GetPCRCallDetails(companyId, teamUserName, false, scheduledFromDate, scheduledToDate, serviceStatus, dateSearchType);
                             if(retDrNurseCallDetails.Count > 0)
                             {
                                 foreach(DrNurseCallDetails singleDrNurseCallDetails in dayCallDetails)
@@ -58,7 +58,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
 
                         if(serviceName.Equals("tracker") || serviceName.Equals("all"))
                         {
-                            dayCallDetails = await GetTrackerStickerCallDetails(companyId, teamUserName, true, scheduledFromDate, scheduledToDate, serviceStatus);
+                            dayCallDetails = await GetTrackerStickerCallDetails(companyId, teamUserName, true, scheduledFromDate, scheduledToDate, serviceStatus, dateSearchType);
                             if(retDrNurseCallDetails.Count > 0)
                             {
                                 foreach(DrNurseCallDetails singleDrNurseCallDetails in dayCallDetails)
@@ -70,7 +70,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
 
                         if(serviceName.Equals("sticker") || serviceName.Equals("all"))
                         {
-                            dayCallDetails = await GetTrackerStickerCallDetails(companyId, teamUserName, false, scheduledFromDate, scheduledToDate, serviceStatus);
+                            dayCallDetails = await GetTrackerStickerCallDetails(companyId, teamUserName, false, scheduledFromDate, scheduledToDate, serviceStatus, dateSearchType);
                             if(retDrNurseCallDetails.Count > 0)
                             {
                                 foreach(DrNurseCallDetails singleDrNurseCallDetails in dayCallDetails)
@@ -82,7 +82,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
 
                         if(serviceName.Equals("discharge") || serviceName.Equals("all"))
                         {
-                            dayCallDetails = await GetDischargeCallDetails(companyId, teamUserName, scheduledFromDate, scheduledToDate, serviceStatus);
+                            dayCallDetails = await GetDischargeCallDetails(companyId, teamUserName, scheduledFromDate, scheduledToDate, serviceStatus, dateSearchType);
                             if(retDrNurseCallDetails.Count > 0)
                             {
                                 foreach(DrNurseCallDetails singleDrNurseCallDetails in dayCallDetails)
@@ -317,7 +317,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
             }
             return retDrNurseCallDetails;
         }
-        public async Task<List<DrNurseCallDetails>> GetPCRCallDetails(string companyId, string teamUserName, bool is4thDay, DateTime scheduledFromDate, DateTime scheduledToDate, string serviceStatus)
+        public async Task<List<DrNurseCallDetails>> GetPCRCallDetails(string companyId, string teamUserName, bool is4thDay, DateTime scheduledFromDate, DateTime scheduledToDate, string serviceStatus, string dateSearchType)
         {
             List<DrNurseCallDetails> retDrNurseCallDetails = new List<DrNurseCallDetails>();
             try
@@ -379,6 +379,11 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 else
                     whereCond += $" and sc.8day_pcr_test_date = '" + fromDate + "'";
 
+                if(dateSearchType.Equals("allocated") && toDate != "01-01-0001")
+                    whereCond += $" and sc.team_allocated_date between '" + fromDate + "' and '" + toDate + "'";
+                else
+                    whereCond += $" and sc.team_allocated_date = '" + fromDate + "'";
+
                 if (!string.IsNullOrEmpty(companyId))
                     whereCond += " and p.company_id = '" + companyId + "'";
 
@@ -409,7 +414,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
             }
             return retDrNurseCallDetails;
         }
-        public async Task<List<DrNurseCallDetails>> GetTrackerStickerCallDetails(string companyId, string teamUserName, bool isTracker, DateTime scheduledFromDate, DateTime scheduledToDate, string serviceStatus)
+        public async Task<List<DrNurseCallDetails>> GetTrackerStickerCallDetails(string companyId, string teamUserName, bool isTracker, DateTime scheduledFromDate, DateTime scheduledToDate, string serviceStatus, string dateSearchType)
         {
             List<DrNurseCallDetails> retDrNurseCallDetails = new List<DrNurseCallDetails>();
             try
@@ -470,6 +475,11 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 else
                     whereCond += $" and sc.sticker_schedule_date = '" + fromDate + "'";
 
+                if(dateSearchType.Equals("allocated") && toDate != "01-01-0001")
+                    whereCond += $" and sc.team_allocated_date between '" + fromDate + "' and '" + toDate + "'";
+                else
+                    whereCond += $" and sc.team_allocated_date = '" + fromDate + "'";
+
                 if (!string.IsNullOrEmpty(companyId))
                     whereCond += " and p.company_id = '" + companyId + "'";
 
@@ -495,7 +505,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
             }
             return retDrNurseCallDetails;
         }
-        public async Task<List<DrNurseCallDetails>> GetDischargeCallDetails(string companyId, string teamUserName, DateTime scheduledFromDate, DateTime scheduledToDate, string serviceStatus)
+        public async Task<List<DrNurseCallDetails>> GetDischargeCallDetails(string companyId, string teamUserName, DateTime scheduledFromDate, DateTime scheduledToDate, string serviceStatus, string dateSearchType)
         {
             List<DrNurseCallDetails> retDrNurseCallDetails = new List<DrNurseCallDetails>();
             try
@@ -544,6 +554,11 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 }
                 else
                     whereCond += $" and sc.discharge_date = '" + fromDate + "'";
+
+                if(dateSearchType.Equals("allocated") && toDate != "01-01-0001")
+                    whereCond += $" and sc.team_allocated_date between '" + fromDate + "' and '" + toDate + "'";
+                else
+                    whereCond += $" and sc.team_allocated_date = '" + fromDate + "'";
 
                 if (!string.IsNullOrEmpty(companyId))
                     whereCond += " and p.company_id = '" + companyId + "'";
