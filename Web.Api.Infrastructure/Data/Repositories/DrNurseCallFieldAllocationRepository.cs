@@ -40,7 +40,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                             retDrNurseCallDetails = dayCallDetails;
                     }*/
 
-                    if(dateSearchType.Equals("allocated") && serviceName.Equals("all"))
+                    if(dateSearchType.Equals("allocated") && serviceName.Equals("all") && serviceStatus.Equals("all"))
                         retDrNurseCallDetails = await GetAllocatedDateDetails(companyId, teamUserName, scheduledFromDate,scheduledToDate);
                     else
                     {
