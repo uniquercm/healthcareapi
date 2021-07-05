@@ -73,6 +73,11 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 string timeMin = " 00:00:00.0";
                 string fromDate = assignedFromDate.Date.ToString("yyyy-MM-dd");
                 string toDate = assignedToDate.Date.ToString("yyyy-MM-dd");
+                /*if(fromDate == "0001-01-01" && toDate == "0001-01-01")
+                {
+                    assignedFromDate = DateTime.Today;
+                    fromDate = assignedFromDate.Date.ToString("yyyy-MM-dd");
+                }*/
                 if(fromDate != "0001-01-01" || toDate != "0001-01-01")
                 {
                     if(fromDate == "0001-01-01")

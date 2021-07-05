@@ -40,8 +40,24 @@ namespace Web.Api.Infrastructure.Data.Repositories
                             retDrNurseCallDetails = dayCallDetails;
                     }*/
 
+                    string fromDate = scheduledFromDate.Date.ToString("yyyy-MM-dd");
+                    string toDate = scheduledToDate.Date.ToString("yyyy-MM-dd");
+                    if(fromDate == "0001-01-01" && toDate == "0001-01-01")
+                    {
+                        scheduledFromDate = DateTime.Today;
+                        fromDate = scheduledFromDate.Date.ToString("yyyy-MM-dd");
+                    }
+                    if(fromDate != "0001-01-01" || toDate != "0001-01-01")
+                    {
+                        if(fromDate == "0001-01-01")
+                            fromDate = toDate;
+                        
+                        if(toDate == "0001-01-01")
+                            scheduledToDate = scheduledFromDate;
+                    }
+
                     if(dateSearchType.Equals("allocated") && serviceName.Equals("all") && serviceStatus.Equals("all"))
-                        retDrNurseCallDetails = await GetAllocatedDateDetails(companyId, teamUserName, scheduledFromDate,scheduledToDate);
+                        retDrNurseCallDetails = await GetAllocatedDateDetails(companyId, teamUserName, scheduledFromDate, scheduledToDate);
                     else
                     {
                         if(serviceName.Equals("8pcr")  || serviceName.Equals("eight") || serviceName.Equals("all"))
