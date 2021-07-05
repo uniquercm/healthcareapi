@@ -44,7 +44,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                         retDrNurseCallDetails = await GetAllocatedDateDetails(companyId, teamUserName, scheduledFromDate,scheduledToDate);
                     else
                     {
-                        if(serviceName.Equals("8pcr") || serviceName.Equals("all"))
+                        if(serviceName.Equals("8pcr")  || serviceName.Equals("eight") || serviceName.Equals("all"))
                         {
                             dayCallDetails = await GetPCRCallDetails(companyId, teamUserName, false, scheduledFromDate, scheduledToDate, serviceStatus);
                             if(retDrNurseCallDetails.Count > 0)

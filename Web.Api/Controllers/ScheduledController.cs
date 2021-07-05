@@ -44,7 +44,7 @@ namespace Web.Api.Controllers
         /// <param name="serviceStatus">Service Status(all, applied, removed, replaced, visited, discharged, pending, others) (optional)</param>
         /// <returns>Scheduled Details</returns>
         [HttpGet("scheduled")]
-        public async Task<ActionResult> GetScheduledDetails(DateTime fromDate, DateTime toDate, string companyId = "", string scheduledId = "", string patientId = "", bool isFieldAllocation = false, string fieldAllocationStatus = "all", string serviceName = "all", string serviceStatus = "all")
+        public async Task<ActionResult> GetScheduledDetails(DateTime fromDate = new DateTime(), DateTime toDate = new DateTime(), string companyId = "", string scheduledId = "", string patientId = "", bool isFieldAllocation = false, string fieldAllocationStatus = "all", string serviceName = "all", string serviceStatus = "all")
         {
             if(isFieldAllocation)
                 await _scheduledUseCases.Handle(new GetDetailsRequest(companyId, patientId, scheduledId, fromDate, toDate, "FieldAllocation", fieldAllocationStatus, serviceName, serviceStatus), _getDetailsPresenter);

@@ -271,7 +271,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                         whereCond += $" and sc.sticker_schedule_date between '" + fromDate + timeMin + "' and '" + toDate + timeMin + "'";
                     else if(serviceName.Equals("4pcr"))
                         whereCond += $" and sc.4day_pcr_test_date between '" + fromDate + timeMin + "' and '" + toDate + timeMin + "'";
-                    else if(serviceName.Equals("8pcr"))
+                    else if(serviceName.Equals("8pcr") || serviceName.Equals("eight"))
                         whereCond += $" and sc.8day_pcr_test_date between '" + fromDate + timeMin + "' and '" + toDate + timeMin + "'";
                     else if(serviceName.Equals("discharge"))
                         whereCond += $" and sc.discharge_date between '" + fromDate + timeMin + "' and '" + toDate + timeMin + "'";
@@ -289,7 +289,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                         whereCond += " and sc.sticker_tracker_result = '" + serviceStatus + "'";
                     else if(serviceName.Equals("4pcr"))
                         whereCond += " and sc.4day_pcr_test_result = '" + serviceStatus + "'";
-                    else if(serviceName.Equals("8pcr"))
+                    else if(serviceName.Equals("8pcr") || serviceName.Equals("eight"))
                         whereCond += " and sc.8day_pcr_test_result = '" + serviceStatus + "'";
                     else if(serviceName.Equals("discharge"))
                         whereCond += " and p.discharge_status = '" + serviceStatus + "'";
