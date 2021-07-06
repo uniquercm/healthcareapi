@@ -110,13 +110,13 @@ namespace Web.Api.Infrastructure.Data.Repositories
 
                         Dictionary<string, string> data = connection.Query<KeyValuePair<string, string>>(sqlQuery).ToDictionary(pair => pair.Key, pair => pair.Value);
                         scheduleDrCallIdList = data.ToList();
-                        if(scheduleDrCallIdList.Count == 0)
+                        /*if(scheduleDrCallIdList.Count == 0)
                         {
                             singlePatienDetails.ScheduledId = "";
                             singlePatienDetails.DrCallId = "";
                             retPatientDetailsList.Add(singlePatienDetails);
-                        }
-                        /*if(scheduleDrCallIdList.Count > 0)
+                        }*/
+                        if(scheduleDrCallIdList.Count > 0)
                         {
                             singlePatienDetails.ScheduledId = scheduleDrCallIdList[0].Key;
                             singlePatienDetails.DrCallId = scheduleDrCallIdList[0].Value;
@@ -126,7 +126,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                             singlePatienDetails.ScheduledId = "";
                             singlePatienDetails.DrCallId = "";
                         }
-                        retPatientDetailsList.Add(singlePatienDetails);*/
+                        retPatientDetailsList.Add(singlePatienDetails);
                     }
                 }
             }
@@ -241,6 +241,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
             //{
             bool sqlResult = true;
             filePatientRequest.CreatedPatientIdList = new List<string>();
+            filePatientRequest.DuplicatedPatientRequestList = new List<PatientRequest>();
             filePatientRequest.ErroredPatientRequestList = new List<PatientRequest>();
             foreach(PatientRequest singlePatientRequest in filePatientRequest.PatientRequestList)
             {
