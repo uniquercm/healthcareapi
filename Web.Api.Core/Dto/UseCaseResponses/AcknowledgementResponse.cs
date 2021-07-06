@@ -10,6 +10,7 @@ namespace Web.Api.Core.Dto.UseCaseResponses
         public IEnumerable<Error> Errors { get; }
         public string Id { get; set; }
         public dynamic CreatedDetails { get; set; }
+        public dynamic DuplicatedList { get; set; }
         public dynamic ErroredDetails { get; set; }
 
         public AcknowledgementResponse(IEnumerable<Error> errors, bool success = false, string message = null) : base(success, message)
@@ -30,10 +31,11 @@ namespace Web.Api.Core.Dto.UseCaseResponses
             Success = success;
             Message = message;
         }
-        public AcknowledgementResponse(dynamic createdDetailsList, dynamic erroredDetailsList, bool success, string message = null) : base(success, message)
+        public AcknowledgementResponse(dynamic createdList, dynamic duplicatedList, dynamic erroredList, bool success, string message = null) : base(success, message)
         {
-            CreatedDetails = createdDetailsList;
-            ErroredDetails = erroredDetailsList;
+            CreatedDetails = createdList;
+            DuplicatedList = duplicatedList;
+            ErroredDetails = erroredList;
             Success = success;
             Message = message;
         }

@@ -240,11 +240,16 @@ namespace Web.Api.Infrastructure.Data.Repositories
             {
                 try
                 {
-                    sqlResult = await CreatePatient(singlePatientRequest);
-                    if(sqlResult)
-                        filePatientRequest.CreatedPatientIdList.Add(singlePatientRequest.PatientId);
+                    if(! await CheckCRMNumberAvailability(singlePatientRequest.CRMNo, singlePatientRequest.CompanyId, ""))
+                    {
+                        sqlResult = await CreatePatient(singlePatientRequest);
+                        if(sqlResult)
+                            filePatientRequest.CreatedPatientIdList.Add(singlePatientRequest.PatientId);
+                        else
+                            filePatientRequest.ErroredPatientRequestList.Add(singlePatientRequest);
+                    }
                     else
-                        filePatientRequest.ErroredPatientRequestList.Add(singlePatientRequest);
+                        filePatientRequest.DuplicatedPatientRequestList.Add(singlePatientRequest);
                 }
                 catch (Exception Err)
                 {

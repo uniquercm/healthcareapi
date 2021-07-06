@@ -9,6 +9,7 @@ namespace Web.Api.Core.Dto.UseCaseRequests
     {
         public List<PatientRequest> PatientRequestList { get; set; }
         public List<string> CreatedPatientIdList { get; set; }
+        public List<PatientRequest> DuplicatedPatientRequestList { get; set; }
         public List<PatientRequest> ErroredPatientRequestList { get; set; }
     }
     public class PatientRequest : IUseCaseRequest<AcknowledgementResponse>

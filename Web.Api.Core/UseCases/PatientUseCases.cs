@@ -62,7 +62,7 @@ namespace Web.Api.Core.UseCases
             AcknowledgementResponse acknowledgementResponse;
 
             if(await _patientRepository.CreateFilePatient(request))
-                acknowledgementResponse = new AcknowledgementResponse(request.CreatedPatientIdList, request.ErroredPatientRequestList, true, "All Patient Created Successfully");
+                acknowledgementResponse = new AcknowledgementResponse(request.CreatedPatientIdList, request.DuplicatedPatientRequestList, request.ErroredPatientRequestList, true, "All Patient Created Successfully");
             else
                 acknowledgementResponse = new AcknowledgementResponse(new[] { new Error("Error Occurred", "Error Occurred")}, false);
 
