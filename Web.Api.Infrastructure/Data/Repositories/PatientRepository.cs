@@ -248,6 +248,14 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 {
                     if(! await CheckCRMNumberAvailability(singlePatientRequest.CRMNo, singlePatientRequest.CompanyId, ""))
                     {
+                        if(!String.IsNullOrEmpty(singlePatientRequest.NationalityName))
+                            singlePatientRequest.NationalityId = await GetNationalityId(singlePatientRequest.NationalityName);
+                        else
+                            singlePatientRequest.NationalityId = 0;
+                        if(!String.IsNullOrEmpty(singlePatientRequest.RequestCrmName))
+                            singlePatientRequest.RequestId = await GetRequestId(singlePatientRequest.RequestCrmName);
+                        else
+                            singlePatientRequest.RequestId = 0;
                         sqlResult = await CreatePatient(singlePatientRequest);
                         if(sqlResult)
                             filePatientRequest.CreatedPatientIdList.Add(singlePatientRequest.PatientId);
@@ -272,6 +280,55 @@ namespace Web.Api.Infrastructure.Data.Repositories
             }*/
             return sqlResult;
         }
+
+        async Task<int> GetNationalityId(string nationalityName)
+        {
+            int retVal = 0;
+            try
+            {
+                var tableName = $"HC_Master_Details.nationality_obj";
+
+                var whereCond = $" where country_name = '" + nationalityName + "'";
+
+                var sqlSelQuery = $"select country_name from " + tableName + whereCond;
+                using (var connection = _appDbContext.Connection)
+                {
+                    var sqlSelResult = await connection.QueryAsync<int>(sqlSelQuery);
+                    retVal = sqlSelResult.FirstOrDefault();
+                }
+            }
+            catch (Exception Err)
+            {
+                var Error = Err.Message.ToString();
+                retVal = 0;
+            }
+            return retVal;
+        }
+
+        async Task<int> GetRequestId(string requestCrmName)
+        {
+            int retVal = 0;
+            try
+            {
+                var tableName = $"HC_Master_Details.request_crm_obj";
+
+                var whereCond = $" where request_crm_name = '" + requestCrmName + "'";
+
+                var sqlSelQuery = $"select request_crm_id from " + tableName + whereCond;
+                using (var connection = _appDbContext.Connection)
+                {
+                    var sqlSelResult = await connection.QueryAsync<int>(sqlSelQuery);
+                    retVal = sqlSelResult.FirstOrDefault();
+                }
+            }
+            catch (Exception Err)
+            {
+                var Error = Err.Message.ToString();
+                retVal = 0;
+            }
+            return retVal;
+        }
+
         public async Task<bool> CreatePatient(PatientRequest patientRequest)
         {
             try

@@ -18,6 +18,7 @@ namespace Web.Api.Core.Dto.UseCaseRequests
         public string PatientName { get; set; }//patient_name – varchar(128)
         public string CompanyId { get; set; }//company_id – varchar(128)
         public int RequestId { get; set; }//request_id - int(10)
+        public string RequestCrmName { get; set; }
         public string CRMNo { get; set; }//crm_no	- varchar(128)
         public string EIDNo { get; set; }//eid_no - varchar(128)
         public DateTime DateOfBirth { get; set; }//date_of_birth – datetime
@@ -28,6 +29,7 @@ namespace Web.Api.Core.Dto.UseCaseRequests
         public string Area { get; set; }//area – varchar(128)
         public int CityId { get; set; }//city_id - int(10)
         public int NationalityId { get; set; }//nationality_id – int(10)
+        public string NationalityName { get; set; }
         public DateTime AssignedDate { get; set; }//assigned_date - datetime
         public string MobileNo { get; set; }//mobile_no - varchar(25)
         public string GoogleMapLink { get; set; }//google_map_link – varchar(156)

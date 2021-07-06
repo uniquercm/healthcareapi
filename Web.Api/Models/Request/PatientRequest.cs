@@ -13,6 +13,7 @@ namespace Web.Api.Models.Request
         public string PatientName { get; set; }
         public string CompanyId { get; set; }
         public int RequestId { get; set; }
+        public string RequestCrmName { get; set; }
         public string CRMNo { get; set; }
         public string EIDNo { get; set; }
         public DateTime DateOfBirth { get; set; }
@@ -23,6 +24,7 @@ namespace Web.Api.Models.Request
         public string Area { get; set; }
         public int CityId { get; set; }
         public int NationalityId { get; set; }
+        public string NationalityName { get; set; }
         public DateTime AssignedDate { get; set; }
         public string MobileNo { get; set; }
         public string GoogleMapLink { get; set; }
