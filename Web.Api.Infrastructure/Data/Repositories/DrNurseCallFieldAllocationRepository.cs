@@ -96,7 +96,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                                 retDrNurseCallDetails = dayCallDetails;
                         }
 
-                        if(serviceName.Equals("discharge") || serviceName.Equals("all"))
+                        if(serviceName.Equals("discharge"))// || serviceName.Equals("all"))
                         {
                             dayCallDetails = await GetDischargeCallDetails(companyId, teamUserName, scheduledFromDate, scheduledToDate, serviceStatus, dateSearchType);
                             if(retDrNurseCallDetails.Count > 0)
