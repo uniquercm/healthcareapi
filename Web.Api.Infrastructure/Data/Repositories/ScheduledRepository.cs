@@ -281,12 +281,16 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     else if(serviceName.Equals("discharge"))
                         whereCond += $" and sc.discharge_date between '" + fromDate + timeMin + "' and '" + toDate + timeMin + "'";
                     else
-                        whereCond += $" and sc.treatment_from_date <= '" + fromDate + timeMin + "'" +
-                                     $" and sc.treatment_to_date >= '" + toDate + timeMin + "'";/**/
+                        whereCond += $" and (sc.treatment_from_date between '" + fromDate + timeMin + "' and '" + toDate + timeMin + "')" +
+                                     $" and (sc.treatment_to_date between '" + fromDate + timeMin + "' and '" + toDate + timeMin + "')";
+                        /*whereCond += $" and sc.treatment_from_date >= '" + fromDate + timeMin + "'" +
+                                     $" and sc.treatment_to_date <= '" + toDate + timeMin + "'";*/
                 }
                 else if(fromDate != "0001-01-01")
-                    whereCond += $" and sc.treatment_from_date <= '" + fromDate + timeMin + "'" +
-                                   $" and sc.treatment_to_date >= '" + toDate + timeMin + "'";/**/
+                    whereCond += $" and (sc.treatment_from_date between '" + fromDate + timeMin + "' and '" + toDate + timeMin + "')" +
+                                     $" and (sc.treatment_to_date between '" + fromDate + timeMin + "' and '" + toDate + timeMin + "')";
+                    /*whereCond += $" and sc.treatment_from_date >= '" + fromDate + timeMin + "'" +
+                                   $" and sc.treatment_to_date <= '" + toDate + timeMin + "'";*/
 
                 if(!String.IsNullOrEmpty(serviceStatus)  && serviceStatus != "all")
                 {//all, tracker, sticker, 4pcr, 8pcr, discharge
