@@ -24,8 +24,7 @@ namespace Web.Api.Core.Dto.UseCaseRequests
         public string ServiceStatus { get; set; }//all, applied, removed, replaced, visited, discharged, pending, others
         public int UserType { get; set; }
         public string DateSearchType { get; set; }//schedule, allocated, reallocaed
-        /*public DateTime AllocatedFromDate { get; set; }
-        public DateTime AllocatedToDate { get; set; }*/
+        public string SearchStatus { get; set; }//all, completed, pending, scheduled, notscheduled
 
         public GetDetailsRequest()
         {   }
@@ -51,13 +50,14 @@ namespace Web.Api.Core.Dto.UseCaseRequests
             PatientId = patientId;
             LableName = lableName;
         }
-        public GetDetailsRequest(string companyId, string patientId, DateTime scheduledFromDate, DateTime scheduledToDate, string lableName)
+        public GetDetailsRequest(string companyId, string patientId, DateTime scheduledFromDate, DateTime scheduledToDate, string lableName, string searchStatus)
         {
             CompanyId = companyId;
             PatientId = patientId;
             ScheduledFromDate = scheduledFromDate;
             ScheduledToDate = scheduledToDate;
             LableName = lableName;
+            SearchStatus = searchStatus;
         }
         public GetDetailsRequest(string companyId, DateTime scheduledFromDate, DateTime scheduledToDate, string lableName, string callStatus, string teamUserName, string serviceName, string dateSearchType)
         {

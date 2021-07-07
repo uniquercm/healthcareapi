@@ -18,7 +18,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
         {
             _appDbContext = appDbContext;
         }
-        public async Task<List<PatientDetails>> GetPatientDetails(string companyId, string patientId, string gMapLinkSatus, DateTime assignedFromDate, DateTime assignedToDate)
+        public async Task<List<PatientDetails>> GetPatientDetails(string companyId, string patientId, string gMapLinkSatus, DateTime assignedFromDate, DateTime assignedToDate, string searchStatus)
         {
             List<PatientDetails> retPatientDetailsList = new List<PatientDetails>();
             try
@@ -70,6 +70,14 @@ namespace Web.Api.Infrastructure.Data.Repositories
                         whereCond += " and p.google_map_link != ''";
                 }
 
+                if (!string.IsNullOrEmpty(searchStatus))
+                {
+                    if(searchStatus.Equals("completed"))
+                        whereCond += " and p.reception_status = 'completed'";
+                    else if(searchStatus.Equals("pending"))
+                        whereCond += " and p.reception_status = 'pending'";
+                }
+
                 string timeMin = " 00:00:00.0";
                 string fromDate = assignedFromDate.Date.ToString("yyyy-MM-dd");
                 string toDate = assignedToDate.Date.ToString("yyyy-MM-dd");
@@ -110,12 +118,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
 
                         Dictionary<string, string> data = connection.Query<KeyValuePair<string, string>>(sqlQuery).ToDictionary(pair => pair.Key, pair => pair.Value);
                         scheduleDrCallIdList = data.ToList();
-                        /*if(scheduleDrCallIdList.Count == 0)
-                        {
-                            singlePatienDetails.ScheduledId = "";
-                            singlePatienDetails.DrCallId = "";
-                            retPatientDetailsList.Add(singlePatienDetails);
-                        }*/
+
                         if(scheduleDrCallIdList.Count > 0)
                         {
                             singlePatienDetails.ScheduledId = scheduleDrCallIdList[0].Key;
@@ -126,7 +129,22 @@ namespace Web.Api.Infrastructure.Data.Repositories
                             singlePatienDetails.ScheduledId = "";
                             singlePatienDetails.DrCallId = "";
                         }
-                        retPatientDetailsList.Add(singlePatienDetails);
+
+                        if (!string.IsNullOrEmpty(searchStatus))
+                        {
+                            if(searchStatus.Equals("scheduled"))
+                            {
+                                if(scheduleDrCallIdList.Count > 0)
+                                    retPatientDetailsList.Add(singlePatienDetails);
+                            }
+                            else if(searchStatus.Equals("notscheduled"))
+                            {
+                                if(scheduleDrCallIdList.Count == 0)
+                                    retPatientDetailsList.Add(singlePatienDetails);
+                            }
+                            else
+                                retPatientDetailsList.Add(singlePatienDetails);
+                        }
                     }
                 }
             }

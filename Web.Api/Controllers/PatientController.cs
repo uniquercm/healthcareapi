@@ -61,11 +61,12 @@ namespace Web.Api.Controllers
         /// <param name="companyId">Company Id (optional)</param>
         /// <param name="patientId">Patient Id (optional)</param>
         /// <param name="gMapLinkSatus"> Google Map Link (all, yes, no) (optional)</param>
+        /// <param name="searchStatus"> Search Status (all, completed, pending, scheduled, notscheduled) (optional)</param>
         /// <returns>Patient Details</returns>
         [HttpGet("patient")]
-        public async Task<ActionResult> GetPatientDetails(DateTime fromDate, DateTime toDate, string companyId = "", string patientId = "", string gMapLinkSatus = "all")
+        public async Task<ActionResult> GetPatientDetails(DateTime fromDate, DateTime toDate, string companyId = "", string patientId = "", string gMapLinkSatus = "all", string searchStatus = "all")
         {
-            await _patientUseCases.Handle(new GetDetailsRequest(companyId, patientId, fromDate, toDate, gMapLinkSatus), _getDetailsPresenter);
+            await _patientUseCases.Handle(new GetDetailsRequest(companyId, patientId, fromDate, toDate, gMapLinkSatus, searchStatus), _getDetailsPresenter);
             return _getDetailsPresenter.ContentResult;
         }
 
