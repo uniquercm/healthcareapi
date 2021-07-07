@@ -154,7 +154,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
 
                 object colValueParam = new
                 {
-                    CRMNo = crmNumber,
+                    CRMNo = crmNumber.Trim(),
                     CompanyId = companyId,
                     PatientId = patientId
                 };
