@@ -493,6 +493,10 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 if(String.IsNullOrEmpty(patientRequest.GoogleMapLink))
                     patientRequest.GoogleMapLink = "";
 
+                var crmNo = "";
+                if(!String.IsNullOrEmpty(patientRequest.CRMNo))
+                    crmNo = patientRequest.CRMNo.Trim();
+
                 object colValueParam = new
                 {
                     PatientId = patientRequest.PatientId,
