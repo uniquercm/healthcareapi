@@ -383,13 +383,17 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 if(String.IsNullOrEmpty(patientRequest.GoogleMapLink))
                     patientRequest.GoogleMapLink = "";
 
+                var crmNo = "";
+                if(!String.IsNullOrEmpty(patientRequest.CRMNo))
+                    crmNo = patientRequest.CRMNo.Trim();
+
                 object colValueParam = new
                 {
                     PatientId = patientRequest.PatientId,
                     PatientName = patientRequest.PatientName,
                     CompanyId = patientRequest.CompanyId,
                     RequestId = patientRequest.RequestId,
-                    CRMNo = patientRequest.CRMNo,
+                    CRMNo = crmNo,
                     EIDNo = patientRequest.EIDNo,
                     DateOfBirth = dateOfBirth,//patientRequest.DateOfBirth.ToString("yyyy-MM-dd 00:00:00.0"),
                     Age = patientRequest.Age,
