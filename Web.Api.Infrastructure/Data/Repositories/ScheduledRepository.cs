@@ -253,11 +253,11 @@ namespace Web.Api.Infrastructure.Data.Repositories
 
                 string fromDate = scheduledFromDate.Date.ToString("yyyy-MM-dd");
                 string toDate = scheduledToDate.Date.ToString("yyyy-MM-dd");
-                if(fromDate == "0001-01-01" && toDate == "0001-01-01")
+                /*if(fromDate == "0001-01-01" && toDate == "0001-01-01")
                 {
                     scheduledFromDate = DateTime.Today;
                     fromDate = scheduledFromDate.Date.ToString("yyyy-MM-dd");
-                }
+                }*/
                 if(fromDate != "0001-01-01" || toDate != "0001-01-01")
                 {
                     if(fromDate == "0001-01-01")
@@ -345,7 +345,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                         if(isFieldAllocation)
                         {
                             List<PatientDetails> patientDetailsList = new List<PatientDetails>();
-                            patientDetailsList = await patientRepository.GetPatientDetails(companyId, singleScheduledDetails.PatientId, "all", new DateTime(01,01,01), new DateTime(01,01,01), "scheduled");
+                            patientDetailsList = await patientRepository.GetPatientDetails(companyId, singleScheduledDetails.PatientId, "all", new DateTime(01,01,01), new DateTime(01,01,01), "all");
                             if(patientDetailsList.Count > 0)
                                 singleScheduledDetails.PatientInformation = patientDetailsList[0];
                         }
