@@ -100,6 +100,13 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     var sqlSelResult = await connection.QueryAsync<ReportDetails>(sqlSelQuery);
                     foreach(ReportDetails singleReportDetails in sqlSelResult.ToList())
                     {
+                        if(!String.IsNullOrEmpty(singleReportDetails.EnrolledDetails))
+                        {
+                            singleReportDetails.EnrolledDetails = singleReportDetails.EnrolledDetails.Replace("[","");
+                            singleReportDetails.EnrolledDetails = singleReportDetails.EnrolledDetails.Replace("]","");
+                            singleReportDetails.EnrolledDetails = singleReportDetails.EnrolledDetails.Replace("\"","");
+                        }
+
                         CallDetails callDetails = new CallDetails();
                         callDetails = await GetCallDetails(singleReportDetails.Day2CallId, singleReportDetails.ScheduledId);
                         singleReportDetails.DrCallStatus = callDetails.CallStatus;
