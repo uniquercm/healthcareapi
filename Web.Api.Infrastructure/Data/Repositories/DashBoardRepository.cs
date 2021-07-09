@@ -347,6 +347,9 @@ namespace Web.Api.Infrastructure.Data.Repositories
                         tmpDrNurseCallDetails = await drNurseCallFieldAllocationRepository.GetFieldAllowCallDetails(companyId, singleTeamStatusDetails.TeamUserName, "TeamCall", DateTime.Today, DateTime.Today, "visited", "all", "all", "schedule");
                         singleTeamStatusDetails.CallStatusVisitedCount = tmpDrNurseCallDetails.Count();
 
+                        tmpDrNurseCallDetails = await drNurseCallFieldAllocationRepository.GetFieldAllowCallDetails(companyId, singleTeamStatusDetails.TeamUserName, "TeamCall", DateTime.Today, DateTime.Today, "notvisited", "all", "all", "schedule");
+                        singleTeamStatusDetails.CallStatusNotVisitedCount = tmpDrNurseCallDetails.Count();
+
                         retTeamStatusDetails.Add(singleTeamStatusDetails);
                     }
                 }

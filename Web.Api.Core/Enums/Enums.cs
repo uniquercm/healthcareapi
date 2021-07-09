@@ -23,7 +23,8 @@ namespace Web.Api.Core.Enums
     public enum VisitStatus
     {
         Visited = 1,
-        Pending = 2
+        NotVisited = 2,
+        Pending = 3
     }
     public enum CallStatus
     {

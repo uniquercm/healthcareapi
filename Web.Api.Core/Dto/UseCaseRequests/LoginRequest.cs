@@ -134,6 +134,7 @@ namespace Web.Api.Core.Dto.UseCaseRequests
         public int AllocatedCount { get; set; }
         //public int CallStatusCalledCount { get; set; }
         public int CallStatusVisitedCount { get; set; }
+        public int CallStatusNotVisitedCount { get; set; }
         public int CallStatusPendingCount { get; set; }
     }
 }

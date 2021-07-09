@@ -281,16 +281,34 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     else if(serviceName.Equals("discharge"))
                         whereCond += $" and sc.discharge_date between '" + fromDate + timeMin + "' and '" + toDate + timeMin + "'";
                     else
-                        whereCond += $" and (sc.treatment_from_date between '" + fromDate + timeMin + "' and '" + toDate + timeMin + "')" +
-                                     $" and (sc.treatment_to_date between '" + fromDate + timeMin + "' and '" + toDate + timeMin + "')";
+                    {
+                        //whereCond += $" and (sc.treatment_from_date between '" + fromDate + timeMin + "' and '" + toDate + timeMin + "')" +
+                                     //$" and (sc.treatment_to_date between '" + fromDate + timeMin + "' and '" + toDate + timeMin + "')";
+
+                    whereCond += $" and (sc.tracker_schedule_date between '" + fromDate + timeMin + "' and '" + toDate + timeMin + "'";
+                    //whereCond += $" or sc.4day_pcr_test_date between '" + fromDate + timeMin + "' and '" + toDate + timeMin + "'";
+                    whereCond += $" or sc.8day_pcr_test_date between '" + fromDate + timeMin + "' and '" + toDate + timeMin + "'";
+                    whereCond += $" or sc.sticker_schedule_date between '" + fromDate + timeMin + "' and '" + toDate + timeMin + "'";
+                    whereCond += $" or sc.discharge_date between '" + fromDate + timeMin + "' and '" + toDate + timeMin + "')";
+
                         /*whereCond += $" and sc.treatment_from_date >= '" + fromDate + timeMin + "'" +
                                      $" and sc.treatment_to_date <= '" + toDate + timeMin + "'";*/
+                    }
                 }
                 else if(fromDate != "0001-01-01")
-                    whereCond += $" and (sc.treatment_from_date between '" + fromDate + timeMin + "' and '" + toDate + timeMin + "')" +
-                                     $" and (sc.treatment_to_date between '" + fromDate + timeMin + "' and '" + toDate + timeMin + "')";
+                {
+                    //whereCond += $" and (sc.treatment_from_date between '" + fromDate + timeMin + "' and '" + toDate + timeMin + "')" +
+                                     //$" and (sc.treatment_to_date between '" + fromDate + timeMin + "' and '" + toDate + timeMin + "')";
+
+                    whereCond += $" and (sc.tracker_schedule_date between '" + fromDate + timeMin + "' and '" + toDate + timeMin + "'";
+                    //whereCond += $" or sc.4day_pcr_test_date between '" + fromDate + timeMin + "' and '" + toDate + timeMin + "'";
+                    whereCond += $" or sc.8day_pcr_test_date between '" + fromDate + timeMin + "' and '" + toDate + timeMin + "'";
+                    whereCond += $" or sc.sticker_schedule_date between '" + fromDate + timeMin + "' and '" + toDate + timeMin + "'";
+                    whereCond += $" or sc.discharge_date between '" + fromDate + timeMin + "' and '" + toDate + timeMin + "')";
+
                     /*whereCond += $" and sc.treatment_from_date >= '" + fromDate + timeMin + "'" +
                                    $" and sc.treatment_to_date <= '" + toDate + timeMin + "'";*/
+                }
 
                 if(!String.IsNullOrEmpty(serviceStatus)  && serviceStatus != "all")
                 {//all, tracker, sticker, 4pcr, 8pcr, discharge
