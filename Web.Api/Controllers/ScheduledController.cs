@@ -42,14 +42,15 @@ namespace Web.Api.Controllers
         /// <param name="fieldAllocationStatus"> Field Allocation Status(all, allowed, notallowed) (optional)</param>
         /// <param name="serviceName">Service Name(all, tracker, sticker, 4pcr, 8pcr, discharge) (optional)</param>
         /// <param name="serviceStatus">Service Status(all, applied, removed, replaced, visited, notvisited, discharged, pending, others) (optional)</param>
+        /// <param name="isTeam">Is Team Field Allocation (optional)</param>
         /// <returns>Scheduled Details</returns>
         [HttpGet("scheduled")]
-        public async Task<ActionResult> GetScheduledDetails(DateTime fromDate = new DateTime(), DateTime toDate = new DateTime(), string companyId = "", string scheduledId = "", string patientId = "", bool isFieldAllocation = false, string fieldAllocationStatus = "all", string serviceName = "all", string serviceStatus = "all")
+        public async Task<ActionResult> GetScheduledDetails(DateTime fromDate = new DateTime(), DateTime toDate = new DateTime(), string companyId = "", string scheduledId = "", string patientId = "", bool isFieldAllocation = false, string fieldAllocationStatus = "all", string serviceName = "all", string serviceStatus = "all", bool isTeam = false)
         {
             if(isFieldAllocation)
-                await _scheduledUseCases.Handle(new GetDetailsRequest(companyId, patientId, scheduledId, fromDate, toDate, "FieldAllocation", fieldAllocationStatus, serviceName, serviceStatus), _getDetailsPresenter);
+                await _scheduledUseCases.Handle(new GetDetailsRequest(companyId, patientId, scheduledId, fromDate, toDate, "FieldAllocation", fieldAllocationStatus, serviceName, serviceStatus, isTeam), _getDetailsPresenter);
             else
-                await _scheduledUseCases.Handle(new GetDetailsRequest(companyId, patientId, scheduledId, fromDate, toDate, "", fieldAllocationStatus, serviceName, serviceStatus), _getDetailsPresenter);
+                await _scheduledUseCases.Handle(new GetDetailsRequest(companyId, patientId, scheduledId, fromDate, toDate, "", fieldAllocationStatus, serviceName, serviceStatus, false), _getDetailsPresenter);
             return _getDetailsPresenter.ContentResult;
         }
 

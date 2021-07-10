@@ -191,7 +191,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
         //     return retScheduledDetailsList;
         // }
 
-        public async Task<List<ScheduledDetails>> GetScheduledDetails(string companyId, string scheduledId, string patientId, bool isFieldAllocation, IPatientRepository patientRepository, DateTime scheduledFromDate, DateTime scheduledToDate, string searchAllowTeamType, string serviceName, string serviceStatus)
+        public async Task<List<ScheduledDetails>> GetScheduledDetails(string companyId, string scheduledId, string patientId, bool isFieldAllocation, IPatientRepository patientRepository, DateTime scheduledFromDate, DateTime scheduledToDate, string searchAllowTeamType, string serviceName, string serviceStatus, bool isTeam)
         {
             List<ScheduledDetails> retScheduledDetailsList = new List<ScheduledDetails>();
             try
@@ -272,7 +272,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 string toDate = scheduledToDate.Date.ToString("yyyy-MM-dd");
                 if(isFieldAllocation)
                 {
-                    if (string.IsNullOrEmpty(patientId))
+                    if (!isTeam)
                     {
                         if(fromDate == "0001-01-01" && toDate == "0001-01-01")
                         {

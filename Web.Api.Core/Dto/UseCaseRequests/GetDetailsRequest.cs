@@ -25,6 +25,7 @@ namespace Web.Api.Core.Dto.UseCaseRequests
         public int UserType { get; set; }
         public string DateSearchType { get; set; }//schedule, allocated, reallocaed
         public string SearchStatus { get; set; }//all, completed, pending, scheduled, notscheduled
+        public bool IsTeamFieldAllocation { get; set; }
 
         public GetDetailsRequest()
         {   }
@@ -100,7 +101,7 @@ namespace Web.Api.Core.Dto.UseCaseRequests
             ScheduledToDate = scheduledToDate;
             LableName = lableName;
         }
-        public GetDetailsRequest(string companyId, string patientId, string scheduledId, DateTime scheduledFromDate, DateTime scheduledToDate, string lableName, string fieldAllocationStatus, string serviceName, string serviceStatus)
+        public GetDetailsRequest(string companyId, string patientId, string scheduledId, DateTime scheduledFromDate, DateTime scheduledToDate, string lableName, string fieldAllocationStatus, string serviceName, string serviceStatus, bool isTeamFieldAllocation)
         {
             CompanyId = companyId;
             PatientId = patientId;
@@ -111,6 +112,7 @@ namespace Web.Api.Core.Dto.UseCaseRequests
             FieldAllocationStatus = fieldAllocationStatus;
             ServiceName = serviceName;
             ServiceStatus = serviceStatus;
+            IsTeamFieldAllocation = isTeamFieldAllocation;
         }
         public GetDetailsRequest(string companyId, string patientId, string scheduledId, DateTime scheduledFromDate, DateTime scheduledToDate, string lableName, string extractData, string sendClaim)
         {
