@@ -431,10 +431,13 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 else
                     whereCond += $" and sc.8day_pcr_test_date = '" + fromDate + "'";
 
-                if(dateSearchType.Equals("allocated") && toDate != "01-01-0001")
-                    whereCond += $" and sc.team_allocated_date between '" + fromDate + "' and '" + toDate + "'";
-                else
-                    whereCond += $" and sc.team_allocated_date = '" + fromDate + "'";
+                if(dateSearchType.Equals("allocated"))
+                {
+                    if(toDate != "01-01-0001")
+                        whereCond += $" and sc.team_allocated_date between '" + fromDate + "' and '" + toDate + "'";
+                    else
+                        whereCond += $" and sc.team_allocated_date = '" + fromDate + "'";
+                }
 
                 if (!string.IsNullOrEmpty(companyId))
                     whereCond += " and p.company_id = '" + companyId + "'";
@@ -527,10 +530,13 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 else
                     whereCond += $" and sc.sticker_schedule_date = '" + fromDate + "'";
 
-                if(dateSearchType.Equals("allocated") && toDate != "01-01-0001")
-                    whereCond += $" and sc.team_allocated_date between '" + fromDate + "' and '" + toDate + "'";
-                else
-                    whereCond += $" and sc.team_allocated_date = '" + fromDate + "'";
+                if(dateSearchType.Equals("allocated"))
+                {
+                    if(toDate != "01-01-0001")
+                        whereCond += $" and sc.team_allocated_date between '" + fromDate + "' and '" + toDate + "'";
+                    else
+                        whereCond += $" and sc.team_allocated_date = '" + fromDate + "'";
+                }
 
                 if (!string.IsNullOrEmpty(companyId))
                     whereCond += " and p.company_id = '" + companyId + "'";
@@ -607,10 +613,13 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 else
                     whereCond += $" and sc.discharge_date = '" + fromDate + "'";
 
-                if(dateSearchType.Equals("allocated") && toDate != "01-01-0001")
-                    whereCond += $" and sc.team_allocated_date between '" + fromDate + "' and '" + toDate + "'";
-                else
-                    whereCond += $" and sc.team_allocated_date = '" + fromDate + "'";
+                if(dateSearchType.Equals("allocated"))
+                {
+                    if(toDate != "01-01-0001")
+                        whereCond += $" and sc.team_allocated_date between '" + fromDate + "' and '" + toDate + "'";
+                    else
+                        whereCond += $" and sc.team_allocated_date = '" + fromDate + "'";
+                }
 
                 if (!string.IsNullOrEmpty(companyId))
                     whereCond += " and p.company_id = '" + companyId + "'";
