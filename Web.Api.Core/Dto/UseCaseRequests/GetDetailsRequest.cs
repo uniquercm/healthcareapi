@@ -21,7 +21,7 @@ namespace Web.Api.Core.Dto.UseCaseRequests
         public string CallStatus { get; set; }//all, called, pending
         public string FieldAllocationStatus { get; set; }//all, allowed, notallowed
         public string ServiceName { get; set; }//all, tracker, sticker, 4pcr, 8pcr, discharge
-        public string ServiceStatus { get; set; }//all, applied, removed, replaced, visited, discharged, pending, others
+        public string ServiceStatus { get; set; }//all, applied, removed, replaced, visited, notvisited, discharged, pending, others
         public int UserType { get; set; }
         public string DateSearchType { get; set; }//schedule, allocated, reallocaed
         public string SearchStatus { get; set; }//all, completed, pending, scheduled, notscheduled

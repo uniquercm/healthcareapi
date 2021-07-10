@@ -37,10 +37,10 @@ namespace Web.Api.Controllers
         /// <param name="toDate">Scheduled To Date (optional)</param>
         /// <param name="companyId">Company Id (optional)</param>
         /// <param name="callName">Call Name (doctor, nurse, team, field) (optional)</param>
-        /// <param name="callStatus">Call Status(all, called, pending, visited) (optional)</param>
+        /// <param name="callStatus">Call Status(all, called, pending, visited, notvisited) (optional)</param>
         /// <param name="teamUserName">Team User Name (optional)</param>
         /// <param name="serviceName">Service Name(all, tracker, sticker, 4pcr, 8pcr, discharge) (optional)</param>
-        /// <param name="serviceStatus">Service Status(all, applied, removed, replaced, visited, discharged, pending, others) (optional)</param>
+        /// <param name="serviceStatus">Service Status(all, applied, removed, replaced, visited, notvisited, discharged, pending, others) (optional)</param>
         /// <param name="dateSearchType">Date Search Type(schedule, allocated, reallocaed) (optional)</param>
         /// <returns>Doctor Nurse Team Field Allocation Call Details</returns>
         [HttpGet("doctor-nurse-team-call")]

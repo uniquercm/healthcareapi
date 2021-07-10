@@ -16,6 +16,10 @@ namespace Web.Api.Models.Request
         public string CreatedBy { get; set; }
         public string ModifiedBy { get; set; }
         public bool IsUpdate { get; set; }
+        public string TeamUserName { get; set; }
+        public string TeamStatus { get; set; }
+        public string TeamRemark { get; set; }
+        public DateTime TeamStatusDate { get; set; }
     }
     public class FieldAllocationRequest
     {

@@ -213,14 +213,31 @@ namespace Web.Api.Infrastructure.Data.Repositories
 
                                   $"sc.discharge_date as DischargeDate, sc.discharge_status as DischargeStatus, " +
                                   $"sc.discharge_remarks as DischargeRemarks, " +
+                                  $"sc.discharge_team_user_name as DischargeTeamUserName, sc.discharge_team_status as DischargeTeamStatus, " +
+                                  $"sc.discharge_team_remark as DischargeTeamRemark, sc.discharge_team_date as DischargeTeamStatusDate, " +
+
 
                                   $"sc.tracker_schedule_date as TrackerScheduleDate, sc.tracker_applied_date as TrackerAppliedDate, " +
+                                  $"sc.tracker_team_user_name as TrackerTeamUserName, sc.tracker_team_status as TrackerTeamStatus, " +
+                                  $"sc.tracker_team_remark as TrackerTeamRemark, sc.tracker_team_date as TrackerTeamStatusDate, " +
+
                                   $"sc.sticker_schedule_date as StickerScheduleDate, sc.sticker_removed_date as StickerRemovedDate, " +
+                                  $"sc.sticker_team_user_name as StickerTeamUserName, sc.sticker_team_status as StickerTeamStatus, " +
+                                  $"sc.sticker_team_remark as StickerTeamRemark, sc.sticker_team_date as StickerTeamStatusDate, " +
+
                                   $"sc.tracker_replace_date as TrackerReplacedDate, sc.tracker_replace_no as TrackerReplaceNumber, " +
+                                  $"sc.tracker_replace_team_user_name as TrackerReplaceTeamUserName, sc.tracker_replace_team_status as TrackerReplaceTeamStatus, " +
+                                  $"sc.tracker_replace_team_remark as TrackerReplaceTeamRemark, sc.tracker_replace_team_date as TrackerReplaceTeamStatusDate, " +
+
                                   $"sc.sticker_tracker_no as StickerTrackerNumber, sc.sticker_tracker_result as StickerTrackerResult, " +
-                                  
+
                                   $"sc.4day_pcr_test_date as PCR4DayTestDate, sc.4day_pcr_test_sample_date as PCR4DaySampleDate, sc.4day_pcr_test_result as PCR4DayResult, " +
+                                  $"sc.4day_pcr_team_user_name as PCR4DayTeamUserName, sc.4day_pcr_team_status as PCR4DayTeamStatus, " +
+                                  $"sc.4day_pcr_team_remark as PCR4DayTeamRemark, sc.4day_pcr_team_date as PCR4DayTeamStatusDate, " +
                                   $"sc.8day_pcr_test_date as PCR8DayTestDate, sc.8day_pcr_test_sample_date as PCR8DaySampleDate, sc.8day_pcr_test_result as PCR8DayResult, " +
+                                  $"sc.8day_pcr_team_user_name as PCR8DayTeamUserName, sc.8day_pcr_team_status as PCR8DayTeamStatus, " +
+                                  $"sc.8day_pcr_team_remark as PCR8DayTeamRemark, sc.8day_pcr_team_date as PCR8DayTeamStatusDate, " +
+
 
                                   $"sc.2day_call_id as Day2CallId, sc.3day_call_id as Day3CallId, " +
                                   $"sc.4day_call_id as Day4CallId, sc.5day_call_id as Day5CallId, " +
@@ -285,11 +302,11 @@ namespace Web.Api.Infrastructure.Data.Repositories
                         //whereCond += $" and (sc.treatment_from_date between '" + fromDate + timeMin + "' and '" + toDate + timeMin + "')" +
                                      //$" and (sc.treatment_to_date between '" + fromDate + timeMin + "' and '" + toDate + timeMin + "')";
 
-                    whereCond += $" and (sc.tracker_schedule_date between '" + fromDate + timeMin + "' and '" + toDate + timeMin + "'";
-                    //whereCond += $" or sc.4day_pcr_test_date between '" + fromDate + timeMin + "' and '" + toDate + timeMin + "'";
-                    whereCond += $" or sc.8day_pcr_test_date between '" + fromDate + timeMin + "' and '" + toDate + timeMin + "'";
-                    whereCond += $" or sc.sticker_schedule_date between '" + fromDate + timeMin + "' and '" + toDate + timeMin + "'";
-                    whereCond += $" or sc.discharge_date between '" + fromDate + timeMin + "' and '" + toDate + timeMin + "')";
+                        whereCond += $" and (sc.tracker_schedule_date between '" + fromDate + timeMin + "' and '" + toDate + timeMin + "'";
+                        //whereCond += $" or sc.4day_pcr_test_date between '" + fromDate + timeMin + "' and '" + toDate + timeMin + "'";
+                        whereCond += $" or sc.8day_pcr_test_date between '" + fromDate + timeMin + "' and '" + toDate + timeMin + "'";
+                        whereCond += $" or sc.sticker_schedule_date between '" + fromDate + timeMin + "' and '" + toDate + timeMin + "'";
+                        whereCond += $" or sc.discharge_date between '" + fromDate + timeMin + "' and '" + toDate + timeMin + "')";
 
                         /*whereCond += $" and sc.treatment_from_date >= '" + fromDate + timeMin + "'" +
                                      $" and sc.treatment_to_date <= '" + toDate + timeMin + "'";*/

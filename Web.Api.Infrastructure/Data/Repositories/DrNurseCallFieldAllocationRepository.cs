@@ -727,12 +727,20 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     if(callRequest.CallId.ToLower().Equals("4thday"))
                     {
                         colName += $", 4day_pcr_test_sample_date = @CalledDate, " +
-                                   $"4day_pcr_test_result = @CallStatus";
+                                   $"4day_pcr_test_result = @CallStatus, " +
+                                   $"4day_pcr_team_user_name = @TeamUserName, " +
+                                   $"4day_pcr_team_status = @TeamStatus, " +
+                                   $"4day_pcr_team_remark = @TeamRemark, " +
+                                   $"4day_pcr_team_date = @TeamStatusDate";
                     }
                     else if(callRequest.CallId.ToLower().Equals("8thday"))
                     {
                         colName += $", 8day_pcr_test_sample_date = @CalledDate, " +
-                                   $"8day_pcr_test_result = @CallStatus";
+                                   $"8day_pcr_test_result = @CallStatus, " +
+                                   $"8day_pcr_team_user_name = @TeamUserName, " +
+                                   $"8day_pcr_team_status = @TeamStatus, " +
+                                   $"8day_pcr_team_remark = @TeamRemark, " +
+                                   $"8day_pcr_team_date = @TeamStatusDate";
                     }
                 }
                 else
@@ -754,11 +762,27 @@ namespace Web.Api.Infrastructure.Data.Repositories
                         calledDate = callRequest.CalledDate.ToString("yyyy-MM-dd 00:00:00.0");
                 }
 
+                string teamStatusDate;
+                if(callRequest.TeamStatusDate == null)
+                    teamStatusDate = "";
+                else
+                {
+                    teamStatusDate = callRequest.TeamStatusDate.ToString("yyyy-MM-dd");
+                    if( teamStatusDate == "0001-01-01")
+                        teamStatusDate = "";
+                    else
+                        teamStatusDate = callRequest.TeamStatusDate.ToString("yyyy-MM-dd 00:00:00.0");
+                }
+
                 object colValueParam = new
                 {
                     ScheduledId = callRequest.ScheduledId,
                     CalledDate = calledDate,
                     CallStatus = callRequest.CallStatus,
+                    TeamUserName = callRequest.TeamUserName,
+                    TeamStatus = callRequest.TeamStatus,
+                    TeamRemark = callRequest.TeamRemark,
+                    TeamStatusDate = teamStatusDate,
                     //Remarks = callRequest.Remarks,
                     //EMRDone = callRequest.EMRDone,
                     //IsPCRCall = callRequest.IsPCRCall,
@@ -795,17 +819,29 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     if(callRequest.CallId.ToLower().Equals("tracker"))
                     {
                         colName += $", tracker_applied_date = @CalledDate, " +
-                                   $"sticker_tracker_result = @CallStatus";
+                                   $"sticker_tracker_result = @CallStatus, " +
+                                   $"tracker_team_user_name = @TeamUserName, " +
+                                   $"tracker_team_status = @TeamStatus, " +
+                                   $"tracker_team_remark = @TeamRemark, " +
+                                   $"tracker_team_date = @TeamStatusDate";
                     }
                     else if(callRequest.CallId.ToLower().Equals("sticker"))
                     {
                         colName += $", sticker_removed_date = @CalledDate, " +
-                                   $"sticker_tracker_result = @CallStatus";
+                                   $"sticker_tracker_result = @CallStatus, " +
+                                   $"sticker_team_user_name = @TeamUserName, " +
+                                   $"sticker_team_status = @TeamStatus, " +
+                                   $"sticker_team_remark = @TeamRemark, " +
+                                   $"sticker_team_date = @TeamStatusDate";
                     }
                     else if(callRequest.CallId.ToLower().Equals("discharge"))
                     {
                         colName += $", discharge_remarks = @Remarks, " +
-                                   $"discharge_status = @CallStatus";
+                                   $"discharge_status = @CallStatus, " +
+                                   $"discharge_team_user_name = @TeamUserName, " +
+                                   $"discharge_team_status = @TeamStatus, " +
+                                   $"discharge_team_remark = @TeamRemark, " +
+                                   $"discharge_team_date = @TeamStatusDate";
                     }
                 }
                 else
@@ -827,12 +863,28 @@ namespace Web.Api.Infrastructure.Data.Repositories
                         calledDate = callRequest.CalledDate.ToString("yyyy-MM-dd 00:00:00.0");
                 }
 
+                string teamStatusDate;
+                if(callRequest.TeamStatusDate == null)
+                    teamStatusDate = "";
+                else
+                {
+                    teamStatusDate = callRequest.TeamStatusDate.ToString("yyyy-MM-dd");
+                    if( teamStatusDate == "0001-01-01")
+                        teamStatusDate = "";
+                    else
+                        teamStatusDate = callRequest.TeamStatusDate.ToString("yyyy-MM-dd 00:00:00.0");
+                }
+
                 object colValueParam = new
                 {
                     ScheduledId = callRequest.ScheduledId,
                     CalledDate = calledDate,
                     CallStatus = callRequest.CallStatus,
                     Remarks = callRequest.Remarks,
+                    TeamUserName = callRequest.TeamUserName,
+                    TeamStatus = callRequest.TeamStatus,
+                    TeamRemark = callRequest.TeamRemark,
+                    TeamStatusDate = teamStatusDate,
                     //EMRDone = callRequest.EMRDone,
                     //IsPCRCall = callRequest.IsPCRCall,
                     ModifiedBy = callRequest.ModifiedBy,

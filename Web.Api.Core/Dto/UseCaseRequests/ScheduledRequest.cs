@@ -76,6 +76,10 @@ namespace Web.Api.Core.Dto.UseCaseRequests
         public DateTime DischargeDate { get; set; }//discharge_date – datetime
         public string DischargeStatus { get; set; }//discharge_status - varchar(100)
         public string DischargeRemarks { get; set; }//discharge_remarks - varchar(128)
+        public string DischargeTeamUserName { get; set; }//discharge_team_user_name - varchar(128)
+        public string DischargeTeamStatus { get; set; }//discharge_team_status - varchar(100) - enum('visited','notvisited','pending')
+        public string DischargeTeamRemark { get; set; }//discharge_team_remark - varchar(256)
+        public DateTime DischargeTeamStatusDate { get; set; }//discharge_team_date - datetime
 
         public string TreatmentType { get; set; }//treatment_type - enum('Quarantine','Isolation')
 
@@ -85,18 +89,38 @@ namespace Web.Api.Core.Dto.UseCaseRequests
         public DateTime PCR4DayTestDate { get; set; }//4day_pcr_test_date – datetime
         public DateTime PCR4DaySampleDate { get; set; }//4day_pcr_test_sample_date – datetime
         public string PCR4DayResult { get; set; }//4day_pcr_test_result - enum('Negative','Positive')
+        public string PCR4DayTeamUserName { get; set; }//4day_pcr_team_user_name - varchar(128)
+        public string PCR4DayTeamStatus { get; set; }//4day_pcr_team_status - varchar(100) - enum('visited','notvisited','pending')
+        public string PCR4DayTeamRemark { get; set; }//4day_pcr_team_remark - varchar(256)
+        public DateTime PCR4DayTeamStatusDate { get; set; }//4day_pcr_team_date - datetime
 
         public DateTime PCR8DayTestDate { get; set; }//8day_pcr_test_date - datetime
         public DateTime PCR8DaySampleDate { get; set; }//8day_pcr_test_sample_date – datetime
         public string PCR8DayResult { get; set; }//8day_pcr_test_result - enum('Negative','Positive')
+        public string PCR8DayTeamUserName { get; set; }//8day_pcr_team_user_name - varchar(128)
+        public string PCR8DayTeamStatus { get; set; }//8day_pcr_team_status - varchar(100) - enum('visited','notvisited','pending')
+        public string PCR8DayTeamRemark { get; set; }//8day_pcr_team_remark - varchar(256)
+        public DateTime PCR8DayTeamStatusDate { get; set; }//8day_pcr_team_date - datetime
 
         public DateTime TrackerScheduleDate { get; set; }//tracker_schedule_date - datetime
         public DateTime TrackerAppliedDate { get; set; }//tracker_applied_date - datetime
+        public string TrackerTeamUserName { get; set; }//tracker_team_user_name - varchar(128)
+        public string TrackerTeamStatus { get; set; }//tracker_team_status - varchar(100) - enum('visited','notvisited','pending')
+        public string TrackerTeamRemark { get; set; }//tracker_team_remark - varchar(256)
+        public DateTime TrackerTeamStatusDate { get; set; }//tracker_team_date - datetime
         public DateTime StickerScheduleDate { get; set; }//sticker_schedule_date - datetime
         public DateTime StickerRemovedDate { get; set; }//sticker_removed_date - datetime
+        public string StickerTeamUserName { get; set; }//sticker_team_user_name - varchar(128)
+        public string StickerTeamStatus { get; set; }//sticker_team_status - varchar(100) - enum('visited','notvisited','pending')
+        public string StickerTeamRemark { get; set; }//sticker_team_remark - varchar(256)
+        public DateTime StickerTeamStatusDate { get; set; }//sticker_team_date - datetime
         public string StickerTrackerNumber { get; set; }//sticker_tracker_no - varchar(50)
         public DateTime TrackerReplacedDate { get; set; }//tracker_replace_date - datatime
         public string TrackerReplaceNumber { get; set; }//tracker_replace_no - varchar(50)
+        public string TrackerReplaceTeamUserName { get; set; }//tracker_replace_team_user_name - varchar(128)
+        public string TrackerReplaceTeamStatus { get; set; }//tracker_replace_team_status - varchar(100) - enum('visited','notvisited','pending')
+        public string TrackerReplaceTeamRemark { get; set; }//tracker_replace_team_remark - varchar(256)
+        public DateTime TrackerReplaceTeamStatusDate { get; set; }//tracker_replace_team_date - datetime
         public string StickerTrackerResult { get; set; }//sticker_tracker_result - varchar(50)
        
         public string Day2CallId { get; set; }//2day_call_id – varchar(128)

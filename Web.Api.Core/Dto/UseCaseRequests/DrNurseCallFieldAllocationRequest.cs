@@ -24,8 +24,12 @@ namespace Web.Api.Core.Dto.UseCaseRequests
         public string CreatedBy { get; set; } //created_by
         public string ModifiedBy { get; set; } //modified_by
         public bool IsUpdate { get; set; }
+        public string TeamUserName { get; set; }
+        public string TeamStatus { get; set; }
+        public string TeamRemark { get; set; }
+        public DateTime TeamStatusDate { get; set; }
     }
-    public class CallDetails
+    public class CallDetails : TeamVisitDetails
     {
         public string CallId { get; set; }//call_id – varchar(128)
         public string ScheduledId { get; set; }//scheduled_id – varchar(128)
@@ -53,7 +57,14 @@ namespace Web.Api.Core.Dto.UseCaseRequests
         public DateTime ReAllocatedDate { get; set; }//team_reallocated_date - datetime
         public string ModifiedBy { get; set; } //modified_by
     }
-    public class DrNurseCallDetails : CallDetails
+    public class TeamVisitDetails
+    {
+        public string TeamUserName { get; set; }
+        public string TeamStatus { get; set; }
+        public string TeamRemark { get; set; }
+        public DateTime TeamStatusDate { get; set; }
+    }
+    public class DrNurseCallDetails : CallDetails//, TeamVisitDetails
     {
         public string PatientId { get; set; }//patient_id – varchar(128)
         public string PatientName { get; set; }//patient_name – varchar(128)

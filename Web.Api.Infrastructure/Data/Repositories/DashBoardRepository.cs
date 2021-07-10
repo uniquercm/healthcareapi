@@ -337,7 +337,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     var sqlSelResult = await connection.QueryAsync<TeamStatusDetails>(sqlSelQuery);
 
                     foreach(TeamStatusDetails singleTeamStatusDetails in sqlSelResult.ToList())
-                    {//called , pending, visited
+                    {//called , pending, visited, notvisited
                         List<DrNurseCallDetails> tmpDrNurseCallDetails = await drNurseCallFieldAllocationRepository.GetFieldAllowCallDetails(companyId, singleTeamStatusDetails.TeamUserName, "TeamCall", DateTime.Today, DateTime.Today, "all", "all", "all", "schedule");
                         singleTeamStatusDetails.AllocatedCount = tmpDrNurseCallDetails.Count();
 
