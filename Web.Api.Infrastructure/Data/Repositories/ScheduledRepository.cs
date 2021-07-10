@@ -272,10 +272,13 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 string toDate = scheduledToDate.Date.ToString("yyyy-MM-dd");
                 if(isFieldAllocation)
                 {
-                    if(fromDate == "0001-01-01" && toDate == "0001-01-01")
+                    if (string.IsNullOrEmpty(patientId))
                     {
-                        scheduledFromDate = DateTime.Today;
-                        fromDate = scheduledFromDate.Date.ToString("yyyy-MM-dd");
+                        if(fromDate == "0001-01-01" && toDate == "0001-01-01")
+                        {
+                            scheduledFromDate = DateTime.Today;
+                            fromDate = scheduledFromDate.Date.ToString("yyyy-MM-dd");
+                        }
                     }
                 }
                 if(fromDate != "0001-01-01" || toDate != "0001-01-01")
