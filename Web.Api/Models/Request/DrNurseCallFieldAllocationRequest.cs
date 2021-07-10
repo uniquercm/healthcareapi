@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Web.Api.Models.Request
 {
-    public class CallRequest
+    public class CallRequest : TeamVisitDetails
     {
         public string CallId { get; set; }
         public string ScheduledId { get; set; }
@@ -16,10 +16,15 @@ namespace Web.Api.Models.Request
         public string CreatedBy { get; set; }
         public string ModifiedBy { get; set; }
         public bool IsUpdate { get; set; }
+    }
+    public class TeamVisitDetails
+    {
+        public string ServiceName { get; set; }
         public string TeamUserName { get; set; }
         public string TeamStatus { get; set; }
         public string TeamRemark { get; set; }
         public DateTime TeamStatusDate { get; set; }
+        public bool ShowDischage { get; set;}
     }
     public class FieldAllocationRequest
     {

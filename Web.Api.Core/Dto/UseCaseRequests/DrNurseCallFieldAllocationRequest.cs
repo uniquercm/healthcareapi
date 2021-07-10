@@ -11,7 +11,7 @@ namespace Web.Api.Core.Dto.UseCaseRequests
         public string Remarks { get; set; }//remarks – varchar(128)
         public string EMRDone { get; set; }//emr_done - varchar(50)
     }
-    public class CallRequest : IUseCaseRequest<AcknowledgementResponse>
+    public class CallRequest : TeamVisitDetails, IUseCaseRequest<AcknowledgementResponse>
     {
         public string CallId { get; set; }//call_id – varchar(128)
         public string ScheduledId { get; set; }//scheduled_id – varchar(128)
@@ -24,10 +24,6 @@ namespace Web.Api.Core.Dto.UseCaseRequests
         public string CreatedBy { get; set; } //created_by
         public string ModifiedBy { get; set; } //modified_by
         public bool IsUpdate { get; set; }
-        public string TeamUserName { get; set; }
-        public string TeamStatus { get; set; }
-        public string TeamRemark { get; set; }
-        public DateTime TeamStatusDate { get; set; }
     }
     public class CallDetails : TeamVisitDetails
     {
@@ -59,10 +55,12 @@ namespace Web.Api.Core.Dto.UseCaseRequests
     }
     public class TeamVisitDetails
     {
+        public string ServiceName { get; set; }
         public string TeamUserName { get; set; }
         public string TeamStatus { get; set; }
         public string TeamRemark { get; set; }
         public DateTime TeamStatusDate { get; set; }
+        public bool ShowDischage { get; set;}
     }
     public class DrNurseCallDetails : CallDetails//, TeamVisitDetails
     {

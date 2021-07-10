@@ -51,6 +51,11 @@ namespace Web.Api.Models.Request
         public string PatientId { get; set; }//patient_id – varchar(128)
         public string CompanyId { get; set; }//company_id – varchar(128)
         public string ScheduledId { get; set; }//scheduled_id - varchar(128)
+
+        public string ServiceName { get; set; }
+        public DateTime PCRSampleDate { get; set; }
+        public string PCRResult { get; set;}
+
         public DateTime TrackerScheduleDate { get; set; }//tracker_schedule_date - datetime
         public DateTime TrackerAppliedDate { get; set; }//tracker_applied_date - datetime
         public DateTime StickerScheduleDate { get; set; }//sticker_schedule_date - datetime
