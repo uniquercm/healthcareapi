@@ -30,7 +30,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     /*comminted for 4 th PCR
                     if(serviceName.Equals("4pcr") || serviceName.Equals("all"))
                     {
-                        dayCallDetails = await GetPCRCallDetails(companyId, teamUserName, true, scheduledFromDate, scheduledToDate, serviceStatus, dateSearchType);
+                        dayCallDetails = await GetPCRCallDetails(companyId, teamUserName, "4", scheduledFromDate, scheduledToDate, callStatus, serviceStatus, dateSearchType);
                         if(retDrNurseCallDetails.Count > 0)
                         {
                             foreach(DrNurseCallDetails singleDrNurseCallDetails in dayCallDetails)
@@ -62,7 +62,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     {
                         if(serviceName.Equals("tracker") || serviceName.Equals("all"))
                         {
-                            dayCallDetails = await GetTrackerStickerCallDetails(companyId, teamUserName, true, scheduledFromDate, scheduledToDate, serviceStatus, dateSearchType);
+                            dayCallDetails = await GetTrackerStickerCallDetails(companyId, teamUserName, true, scheduledFromDate, scheduledToDate, callStatus, serviceStatus, dateSearchType);
                             if(retDrNurseCallDetails.Count > 0)
                             {
                                 foreach(DrNurseCallDetails singleDrNurseCallDetails in dayCallDetails)
@@ -72,9 +72,57 @@ namespace Web.Api.Infrastructure.Data.Repositories
                                 retDrNurseCallDetails = dayCallDetails;
                         }
 
-                        if(serviceName.Equals("8pcr")  || serviceName.Equals("eight") || serviceName.Equals("all"))
+                        if(serviceName.Equals("6pcr") || serviceName.Equals("all"))
                         {
-                            dayCallDetails = await GetPCRCallDetails(companyId, teamUserName, false, scheduledFromDate, scheduledToDate, serviceStatus, dateSearchType);
+                            dayCallDetails = await GetPCRCallDetails(companyId, teamUserName, "6", scheduledFromDate, scheduledToDate, callStatus, serviceStatus, dateSearchType);
+                            if(retDrNurseCallDetails.Count > 0)
+                            {
+                                foreach(DrNurseCallDetails singleDrNurseCallDetails in dayCallDetails)
+                                {
+                                    bool isAdd = true;
+                                    foreach(DrNurseCallDetails addedListSingDrNurCallDet in retDrNurseCallDetails)
+                                    {
+                                        if(singleDrNurseCallDetails.CRMNo.Trim().Equals(addedListSingDrNurCallDet.CRMNo.Trim()))
+                                        {
+                                            isAdd = false;
+                                            break;
+                                        }
+                                    }
+                                    if(isAdd)
+                                        retDrNurseCallDetails.Add(singleDrNurseCallDetails);
+                                }
+                            }
+                            else
+                                retDrNurseCallDetails = dayCallDetails;
+                        }
+
+                        if(serviceName.Equals("8pcr") || serviceName.Equals("eight") || serviceName.Equals("all"))
+                        {
+                            dayCallDetails = await GetPCRCallDetails(companyId, teamUserName, "8", scheduledFromDate, scheduledToDate, callStatus, serviceStatus, dateSearchType);
+                            if(retDrNurseCallDetails.Count > 0)
+                            {
+                                foreach(DrNurseCallDetails singleDrNurseCallDetails in dayCallDetails)
+                                {
+                                    bool isAdd = true;
+                                    foreach(DrNurseCallDetails addedListSingDrNurCallDet in retDrNurseCallDetails)
+                                    {
+                                        if(singleDrNurseCallDetails.CRMNo.Trim().Equals(addedListSingDrNurCallDet.CRMNo.Trim()))
+                                        {
+                                            isAdd = false;
+                                            break;
+                                        }
+                                    }
+                                    if(isAdd)
+                                        retDrNurseCallDetails.Add(singleDrNurseCallDetails);
+                                }
+                            }
+                            else
+                                retDrNurseCallDetails = dayCallDetails;
+                        }
+
+                        if(serviceName.Equals("11pcr") || serviceName.Equals("all"))
+                        {
+                            dayCallDetails = await GetPCRCallDetails(companyId, teamUserName, "11", scheduledFromDate, scheduledToDate, callStatus, serviceStatus, dateSearchType);
                             if(retDrNurseCallDetails.Count > 0)
                             {
                                 foreach(DrNurseCallDetails singleDrNurseCallDetails in dayCallDetails)
@@ -98,7 +146,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
 
                         if(serviceName.Equals("sticker") || serviceName.Equals("all"))
                         {
-                            dayCallDetails = await GetTrackerStickerCallDetails(companyId, teamUserName, false, scheduledFromDate, scheduledToDate, serviceStatus, dateSearchType);
+                            dayCallDetails = await GetTrackerStickerCallDetails(companyId, teamUserName, false, scheduledFromDate, scheduledToDate, callStatus, serviceStatus, dateSearchType);
                             if(retDrNurseCallDetails.Count > 0)
                             {
                                 foreach(DrNurseCallDetails singleDrNurseCallDetails in dayCallDetails)
@@ -120,9 +168,9 @@ namespace Web.Api.Infrastructure.Data.Repositories
                                 retDrNurseCallDetails = dayCallDetails;
                         }
 
-                        if(serviceName.Equals("discharge"))// || serviceName.Equals("all"))
+                        if(serviceName.Equals("discharge") || serviceName.Equals("all"))
                         {
-                            dayCallDetails = await GetDischargeCallDetails(companyId, teamUserName, scheduledFromDate, scheduledToDate, serviceStatus, dateSearchType);
+                            dayCallDetails = await GetDischargeCallDetails(companyId, teamUserName, scheduledFromDate, scheduledToDate, callStatus, serviceStatus, dateSearchType);
                             if(retDrNurseCallDetails.Count > 0)
                             {
                                 foreach(DrNurseCallDetails singleDrNurseCallDetails in dayCallDetails)
@@ -132,6 +180,8 @@ namespace Web.Api.Infrastructure.Data.Repositories
                                     {
                                         if(singleDrNurseCallDetails.CRMNo.Trim().Equals(addedListSingDrNurCallDet.CRMNo.Trim()))
                                         {
+                                            if(addedListSingDrNurCallDet.CallId.Equals("sticker"))
+                                                addedListSingDrNurCallDet.ShowDischage = true;
                                             isAdd = false;
                                             break;
                                         }
@@ -145,7 +195,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                         }
                         /*if(serviceName.Equals("team") || serviceName.Equals("all"))
                         {
-                            dayCallDetails = await GetTeamFieldAllowCallDetails(companyId, teamUserName, scheduledFromDate, scheduledToDate, serviceStatus, serviceName);
+                            dayCallDetails = await GetTeamFieldAllowCallDetails(companyId, teamUserName, scheduledFromDate, scheduledToDate, callStatus, serviceStatus, serviceName);
                             if(retDrNurseCallDetails.Count > 0)
                             {
                                 foreach(DrNurseCallDetails singleDrNurseCallDetails in dayCallDetails)
@@ -369,7 +419,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
             }
             return retDrNurseCallDetails;
         }
-        public async Task<List<DrNurseCallDetails>> GetPCRCallDetails(string companyId, string teamUserName, bool is4thDay, DateTime scheduledFromDate, DateTime scheduledToDate, string serviceStatus, string dateSearchType)
+        public async Task<List<DrNurseCallDetails>> GetPCRCallDetails(string companyId, string teamUserName, string pcrDayNumber, DateTime scheduledFromDate, DateTime scheduledToDate, string callStatus, string serviceStatus, string dateSearchType)
         {
             List<DrNurseCallDetails> retDrNurseCallDetails = new List<DrNurseCallDetails>();
             try
@@ -388,15 +438,40 @@ namespace Web.Api.Infrastructure.Data.Repositories
                                   $"p.city_id as CityId, ci.city_name as CityName, " +
                                   $"p.nationality_id as NationalityId, n.country_name as NationalityName, " +
                                   $"p.mobile_no as MobileNo, sc.scheduled_id as ScheduledId, " +
-                                  $"true as IsPCRCall, ";
-                if(is4thDay)
+                                  $"true as IsPCRCall, false as ShowDischage, ";
+
+                if(pcrDayNumber.Equals("4"))
                     ColumAssign += $"'4thday' as CallId, sc.4day_pcr_test_date as CallScheduledDate, " +
                                   $"sc.4day_pcr_test_sample_date as CalledDate, " +
-                                  $"sc.4day_pcr_test_result as CallStatus";
-                else
+                                  $"sc.4day_pcr_test_result as CallStatus, " +
+                                  $"sc.4day_pcr_team_user_name as PCR4DayTeamUserName, " +
+                                  $"sc.4day_pcr_team_status as PCR4DayTeamStatus, " +
+                                  $"sc.4day_pcr_team_remark as PCR4DayTeamRemark, " +
+                                  $"sc.4day_pcr_team_date as PCR4DayTeamStatusDate";
+                else if(pcrDayNumber.Equals("6"))
+                    ColumAssign += $"'6thday' as CallId, sc.6day_pcr_test_date as CallScheduledDate, " +
+                                  $"sc.6day_pcr_test_sample_date as CalledDate, " +
+                                  $"sc.6day_pcr_test_result as CallStatus, " +
+                                  $"sc.6day_pcr_team_user_name as PCR6DayTeamUserName, " +
+                                  $"sc.6day_pcr_team_status as PCR6DayTeamStatus, " +
+                                  $"sc.6day_pcr_team_remark as PCR6DayTeamRemark, " +
+                                  $"sc.6day_pcr_team_date as PCR6DayTeamStatusDate";
+                else if(pcrDayNumber.Equals("8"))
                     ColumAssign += $"'8thday' as CallId, sc.8day_pcr_test_date as CallScheduledDate, " +
                                   $"sc.8day_pcr_test_sample_date as CalledDate, " +
-                                  $"sc.8day_pcr_test_result as CallStatus";
+                                  $"sc.8day_pcr_test_result as CallStatus, " +
+                                  $"sc.8day_pcr_team_user_name as PCR8DayTeamUserName, " +
+                                  $"sc.8day_pcr_team_status as PCR8DayTeamStatus, " +
+                                  $"sc.8day_pcr_team_remark as PCR8DayTeamRemark, " +
+                                  $"sc.8day_pcr_team_date as PCR8DayTeamStatusDate";
+                else
+                    ColumAssign += $"'11thday' as CallId, sc.11day_pcr_test_date as CallScheduledDate, " +
+                                  $"sc.11day_pcr_test_sample_date as CalledDate, " +
+                                  $"sc.11day_pcr_test_result as CallStatus, " +
+                                  $"sc.11day_pcr_team_user_name as PCR11DayTeamUserName, " +
+                                  $"sc.11day_pcr_team_status as PCR11DayTeamStatus, " +
+                                  $"sc.11day_pcr_team_remark as PCR11DayTeamRemark, " +
+                                  $"sc.11day_pcr_team_date as PCR11DayTeamStatusDate";
 
                 var whereCond = $" where p.company_id = co.company_id" +
                                 $" and p.patient_id = sc.patient_id" +
@@ -421,15 +496,23 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 if(toDate != "01-01-0001")
                 {
                     toDate = scheduledToDate.ToString("yyyy-MM-dd 00:00:00.0");
-                    if(is4thDay)
+                    if(pcrDayNumber.Equals("4"))
                         whereCond += $" and sc.4day_pcr_test_date between '" + fromDate + "' and '" + toDate + "'";
-                    else
+                    else if(pcrDayNumber.Equals("6"))
+                        whereCond += $" and sc.6day_pcr_test_date between '" + fromDate + "' and '" + toDate + "'";
+                    else if(pcrDayNumber.Equals("8"))
                         whereCond += $" and sc.8day_pcr_test_date between '" + fromDate + "' and '" + toDate + "'";
+                    else
+                        whereCond += $" and sc.11day_pcr_test_date between '" + fromDate + "' and '" + toDate + "'";
                 }
-                else if(is4thDay)
+                else if(pcrDayNumber.Equals("4"))
                     whereCond += $" and sc.4day_pcr_test_date = '" + fromDate + "'";
-                else
+                else if(pcrDayNumber.Equals("6"))
+                    whereCond += $" and sc.6day_pcr_test_date = '" + fromDate + "'";
+                else if(pcrDayNumber.Equals("8"))
                     whereCond += $" and sc.8day_pcr_test_date = '" + fromDate + "'";
+                else
+                    whereCond += $" and sc.11day_pcr_test_date = '" + fromDate + "'";
 
                 if(dateSearchType.Equals("allocated"))
                 {
@@ -448,10 +531,26 @@ namespace Web.Api.Infrastructure.Data.Repositories
 
                 if (!string.IsNullOrEmpty(serviceStatus) && serviceStatus != "all")
                 {
-                    if(is4thDay)
+                    if(pcrDayNumber.Equals("4"))
                         whereCond += " and sc.4day_pcr_test_result = '" + serviceStatus + "'";
-                    else
+                    else if(pcrDayNumber.Equals("6"))
+                        whereCond += " and sc.6day_pcr_test_result = '" + serviceStatus + "'";
+                    else if(pcrDayNumber.Equals("8"))
                         whereCond += " and sc.8day_pcr_test_result = '" + serviceStatus + "'";
+                    else
+                        whereCond += " and sc.11day_pcr_test_result = '" + serviceStatus + "'";
+                }
+
+                if (!string.IsNullOrEmpty(callStatus) && callStatus != "all")
+                {//pending, visited, notvisited
+                    if(pcrDayNumber.Equals("4"))
+                        whereCond += " and sc.4day_pcr_team_status = '" + callStatus + "'";
+                    else if(pcrDayNumber.Equals("6"))
+                        whereCond += " and sc.6day_pcr_team_status = '" + callStatus + "'";
+                    else if(pcrDayNumber.Equals("8"))
+                        whereCond += " and sc.8day_pcr_team_status = '" + callStatus + "'";
+                    else
+                        whereCond += " and sc.11day_pcr_team_status = '" + callStatus + "'";
                 }
 
                 var orderCond = $" order by sc.created_on DESC ";
@@ -469,7 +568,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
             }
             return retDrNurseCallDetails;
         }
-        public async Task<List<DrNurseCallDetails>> GetTrackerStickerCallDetails(string companyId, string teamUserName, bool isTracker, DateTime scheduledFromDate, DateTime scheduledToDate, string serviceStatus, string dateSearchType)
+        public async Task<List<DrNurseCallDetails>> GetTrackerStickerCallDetails(string companyId, string teamUserName, bool isTracker, DateTime scheduledFromDate, DateTime scheduledToDate, string callStatus, string serviceStatus, string dateSearchType)
         {
             List<DrNurseCallDetails> retDrNurseCallDetails = new List<DrNurseCallDetails>();
             try
@@ -488,16 +587,31 @@ namespace Web.Api.Infrastructure.Data.Repositories
                                   $"p.city_id as CityId, ci.city_name as CityName, " +
                                   $"p.nationality_id as NationalityId, n.country_name as NationalityName, " +
                                   $"p.mobile_no as MobileNo, sc.scheduled_id as ScheduledId, " +
-                                  $"false as IsPCRCall, ";
+                                  $"false as IsPCRCall, false as ShowDischage, ";
+
+                ColumAssign +=  $"sc.tracker_replace_date as TrackerReplacedDate, " +
+                                $"sc.tracker_replace_no as TrackerReplaceNumber, " +
+                                $"sc.tracker_replace_team_user_name as TrackerReplaceTeamUserName, " +
+                                $"sc.tracker_replace_team_status as TrackerReplaceTeamStatus, " +
+                                $"sc.tracker_replace_team_remark as TrackerReplaceTeamRemark, " +
+                                $"sc.tracker_replace_team_date as TrackerReplaceTeamStatusDate";
 
                 if(isTracker)
                     ColumAssign += $"'tracker' as CallId, sc.tracker_schedule_date as CallScheduledDate, " +
                                 $"sc.tracker_applied_date as CalledDate, sc.sticker_tracker_no as Remarks, " +
-                                $"sc.sticker_tracker_result as CallStatus";
+                                $"sc.sticker_tracker_result as CallStatus, " +
+                                $"sc.tracker_team_user_name as TrackerTeamUserName, " +
+                                $"sc.tracker_team_status as TrackerTeamStatus, " +
+                                $"sc.tracker_team_remark as TrackerTeamRemark, " +
+                                $"sc.tracker_team_date as TrackerTeamStatusDate";
                 else
                     ColumAssign += $"'sticker' as CallId, sc.sticker_schedule_date as CallScheduledDate, " +
                                 $"sc.sticker_removed_date as CalledDate, sc.sticker_tracker_no as Remarks, " +
-                                $"sc.sticker_tracker_result as CallStatus";
+                                $"sc.sticker_tracker_result as CallStatus, " +
+                                $"sc.sticker_team_user_name as StickerTeamUserName, " +
+                                $"sc.sticker_team_status as StickerTeamStatus, " +
+                                $"sc.sticker_team_remark as StickerTeamRemark, " +
+                                $"sc.sticker_team_date as StickerTeamStatusDate";
 
                 var whereCond = $" where p.company_id = co.company_id" +
                                 $" and p.patient_id = sc.patient_id" +
@@ -548,6 +662,14 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 if (!string.IsNullOrEmpty(serviceStatus) && serviceStatus != "all")
                     whereCond += " and sc.sticker_tracker_result = '" + serviceStatus + "'";
 
+                if (!string.IsNullOrEmpty(callStatus) && callStatus != "all")
+                {//pending, visited, notvisited
+                    if(isTracker)
+                        whereCond += " and sc.tracker_team_status = '" + callStatus + "'";
+                    else
+                        whereCond += " and sc.sticker_team_status = '" + callStatus + "'";
+                }
+
                 var orderCond = $" order by sc.created_on DESC ";
 
                 var sqlSelQuery = $"select " + ColumAssign + " from " + tableName + whereCond + orderCond;
@@ -563,7 +685,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
             }
             return retDrNurseCallDetails;
         }
-        public async Task<List<DrNurseCallDetails>> GetDischargeCallDetails(string companyId, string teamUserName, DateTime scheduledFromDate, DateTime scheduledToDate, string serviceStatus, string dateSearchType)
+        public async Task<List<DrNurseCallDetails>> GetDischargeCallDetails(string companyId, string teamUserName, DateTime scheduledFromDate, DateTime scheduledToDate, string callStatus, string serviceStatus, string dateSearchType)
         {
             List<DrNurseCallDetails> retDrNurseCallDetails = new List<DrNurseCallDetails>();
             try
@@ -582,10 +704,14 @@ namespace Web.Api.Infrastructure.Data.Repositories
                                   $"p.city_id as CityId, ci.city_name as CityName, " +
                                   $"p.nationality_id as NationalityId, n.country_name as NationalityName, " +
                                   $"p.mobile_no as MobileNo, sc.scheduled_id as ScheduledId, " +
-                                  $"false as IsPCRCall, " +
+                                  $"false as IsPCRCall, true as ShowDischage, " +
                                   $"'discharge' as CallId, sc.discharge_date as CallScheduledDate, " +
                                   $"sc.discharge_remarks as Remarks, " +
-                                  $"sc.discharge_status as CallStatus";
+                                  $"sc.discharge_status as CallStatus, " +
+                                  $"sc.discharge_team_user_name as DischargeTeamUserName, " +
+                                  $"sc.discharge_team_status as DischargeTeamStatus, " +
+                                  $"sc.discharge_team_remark as DischargeTeamRemark, " +
+                                  $"sc.discharge_team_date as DischargeTeamStatusDate";
 
                 var whereCond = $" where p.company_id = co.company_id" +
                                 $" and p.patient_id = sc.patient_id" +
@@ -631,6 +757,10 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 if (!string.IsNullOrEmpty(serviceStatus) && serviceStatus != "all")
                     whereCond += " and p.discharge_status = '" + serviceStatus + "'";
 
+                //pending, visited, notvisited
+                if (!string.IsNullOrEmpty(callStatus) && callStatus != "all")
+                    whereCond += " and sc.discharge_team_status = '" + callStatus + "'";
+
                 var orderCond = $" order by sc.created_on DESC ";
 
                 var sqlSelQuery = $"select " + ColumAssign + " from " + tableName + whereCond + orderCond;
@@ -646,6 +776,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
             }
             return retDrNurseCallDetails;
         }
+
 
         public async Task<List<DrNurseCallDetails>> GetAllocatedDateDetails(string companyId, string teamUserName, DateTime scheduledFromDate, DateTime scheduledToDate)
         {
@@ -720,6 +851,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
             return retDrNurseCallDetails;
         }
 
+
         public async Task<bool> EditPCRCall(CallRequest callRequest)
         {
             try
@@ -728,7 +860,6 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 var tableName = $"HC_Treatment.scheduled_obj";
 
                 var colName = $"scheduled_id = @ScheduledId, " +
-                              //$"remarks = @Remarks, emr_done = @EMRDone, is_pcr = @IsPCRCall," +
                               $"modified_by = @ModifiedBy, modified_on = @ModifiedOn";
 
                 if(!String.IsNullOrEmpty(callRequest.CallId))
@@ -742,6 +873,15 @@ namespace Web.Api.Infrastructure.Data.Repositories
                                    $"4day_pcr_team_remark = @TeamRemark, " +
                                    $"4day_pcr_team_date = @TeamStatusDate";
                     }
+                    else if(callRequest.CallId.ToLower().Equals("6thday"))
+                    {
+                        colName += $", 6day_pcr_test_sample_date = @CalledDate, " +
+                                   $"6day_pcr_test_result = @CallStatus, " +
+                                   $"6day_pcr_team_user_name = @TeamUserName, " +
+                                   $"6day_pcr_team_status = @TeamStatus, " +
+                                   $"6day_pcr_team_remark = @TeamRemark, " +
+                                   $"6day_pcr_team_date = @TeamStatusDate";
+                    }
                     else if(callRequest.CallId.ToLower().Equals("8thday"))
                     {
                         colName += $", 8day_pcr_test_sample_date = @CalledDate, " +
@@ -750,6 +890,15 @@ namespace Web.Api.Infrastructure.Data.Repositories
                                    $"8day_pcr_team_status = @TeamStatus, " +
                                    $"8day_pcr_team_remark = @TeamRemark, " +
                                    $"8day_pcr_team_date = @TeamStatusDate";
+                    }
+                    else if(callRequest.CallId.ToLower().Equals("11thday"))
+                    {
+                        colName += $", 11day_pcr_test_sample_date = @CalledDate, " +
+                                   $"11day_pcr_test_result = @CallStatus, " +
+                                   $"11day_pcr_team_user_name = @TeamUserName, " +
+                                   $"11day_pcr_team_status = @TeamStatus, " +
+                                   $"11day_pcr_team_remark = @TeamRemark, " +
+                                   $"11day_pcr_team_date = @TeamStatusDate";
                     }
                 }
                 else
@@ -811,7 +960,6 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 return false;
             }
         }
-        
         public async Task<bool> EditStickerTrackerDischargeCall(CallRequest callRequest)
         {
             try
@@ -912,19 +1060,31 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 return false;
             }
         }
+
         public async Task<bool> EditServicePlan(ServicePlanRequest servicePlanRequest)
         {
+            bool retVal = true;
             try
             {
                 await EditPatientEnrollmentDetails(servicePlanRequest);
-                await EditScheduleStickerTrackerDetails(servicePlanRequest);
-                return true;
+                if(!String.IsNullOrEmpty(servicePlanRequest.ServiceName))
+                {
+                    if(servicePlanRequest.ServiceName.ToLower().Equals("sticker"))
+                        retVal = await EditScheduleStickerDetails(servicePlanRequest);
+                    else if(servicePlanRequest.ServiceName.ToLower().Equals("tracker"))
+                        retVal = await EditScheduleTrackerDetails(servicePlanRequest);
+                    else if(servicePlanRequest.ServiceName.ToLower().Equals("discharge"))
+                        retVal = await EditScheduleTrackerDetails(servicePlanRequest);
+                    else
+                        retVal = await EditSchedulePCRDetails(servicePlanRequest);
+                }
             }
             catch (Exception Err)
             {
                 var Error = Err.Message.ToString();
-                return false;
+                retVal = false;
             }
+            return retVal;
         }
         public async Task<bool> EditPatientEnrollmentDetails(ServicePlanRequest servicePlanRequest)
         {
@@ -966,32 +1126,21 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 return false;
             }
         }
-        public async Task<bool> EditScheduleStickerTrackerDetails(ServicePlanRequest servicePlanRequest)
+        public async Task<bool> EditScheduleStickerDetails(ServicePlanRequest servicePlanRequest)
         {
             try
             {
                 bool sqlResult = true;
                 var tableName = $"HC_Staff_Patient.scheduled_obj";
 
-                var colName = $"tracker_applied_date = @TrackerAppliedDate, sticker_removed_date = @StickerRemovedDate, " +
-                              $"sticker_tracker_no = @StickerTrackerNumber, sticker_tracker_result = @StickerTrackerResult, " +
+                var colName = $"sticker_removed_date = @StickerRemovedDate, " +
+                              $"sticker_tracker_no = @StickerTrackerNumber, " +
+                              $"sticker_tracker_result = @StickerTrackerResult, " +
                               $"tracker_replace_date = @TrackerReplacedDate, tracker_replace_no = @TrackerReplaceNumber, " +
                               $"modified_by = @ModifiedBy, modified_on = @ModifiedOn";
 
                 var whereCond = $" where patient_id = @PatientId and scheduled_id = @ScheduledId";
                 var sqlUpdateQuery = $"UPDATE "+ tableName + " set " + colName + whereCond;
-
-                string appliedDate = "";
-                if(servicePlanRequest.TrackerAppliedDate == null)
-                    appliedDate = "";
-                else
-                {
-                    appliedDate = servicePlanRequest.TrackerAppliedDate.ToString("yyyy-MM-dd");
-                    if( appliedDate == "0001-01-01")
-                        appliedDate = "";
-                    else
-                        appliedDate = servicePlanRequest.TrackerAppliedDate.ToString("yyyy-MM-dd 00:00:00.0");
-                }
 
                 string removedDate = "";
                 if(servicePlanRequest.StickerRemovedDate == null)
@@ -1021,7 +1170,6 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 {
                     PatientId = servicePlanRequest.PatientId,
                     ScheduledId = servicePlanRequest.ScheduledId,
-                    TrackerAppliedDate = appliedDate,
                     StickerRemovedDate = removedDate,
                     StickerTrackerNumber = servicePlanRequest.StickerTrackerNumber,
                     TrackerReplacedDate = replacedDate,
@@ -1043,6 +1191,286 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 return false;
             }
         }
+        public async Task<bool> EditScheduleTrackerDetails(ServicePlanRequest servicePlanRequest)
+        {
+            try
+            {
+                bool sqlResult = true;
+                var tableName = $"HC_Staff_Patient.scheduled_obj";
 
+                var colName = $"tracker_applied_date = @TrackerAppliedDate, " +
+                              $"sticker_tracker_no = @StickerTrackerNumber, " +
+                              $"sticker_tracker_result = @StickerTrackerResult, " +
+                              $"tracker_replace_date = @TrackerReplacedDate, tracker_replace_no = @TrackerReplaceNumber, " +
+                              $"modified_by = @ModifiedBy, modified_on = @ModifiedOn";
+
+                var whereCond = $" where patient_id = @PatientId and scheduled_id = @ScheduledId";
+                var sqlUpdateQuery = $"UPDATE "+ tableName + " set " + colName + whereCond;
+
+                string appliedDate = "";
+                if(servicePlanRequest.TrackerAppliedDate == null)
+                    appliedDate = "";
+                else
+                {
+                    appliedDate = servicePlanRequest.TrackerAppliedDate.ToString("yyyy-MM-dd");
+                    if( appliedDate == "0001-01-01")
+                        appliedDate = "";
+                    else
+                        appliedDate = servicePlanRequest.TrackerAppliedDate.ToString("yyyy-MM-dd 00:00:00.0");
+                }
+
+                string replacedDate = "";
+                if(servicePlanRequest.TrackerReplacedDate == null)
+                    replacedDate = "";
+                else
+                {
+                    replacedDate = servicePlanRequest.TrackerReplacedDate.ToString("yyyy-MM-dd");
+                    if( replacedDate == "0001-01-01")
+                        replacedDate = "";
+                    else
+                        replacedDate = servicePlanRequest.TrackerReplacedDate.ToString("yyyy-MM-dd 00:00:00.0");
+                }
+
+                object colValueParam = new
+                {
+                    PatientId = servicePlanRequest.PatientId,
+                    ScheduledId = servicePlanRequest.ScheduledId,
+                    TrackerAppliedDate = appliedDate,
+                    StickerTrackerNumber = servicePlanRequest.StickerTrackerNumber,
+                    TrackerReplacedDate = replacedDate,
+                    TrackerReplaceNumber = servicePlanRequest.TrackerReplaceNumber,
+                    StickerTrackerResult = servicePlanRequest.StickerTrackerResult,
+                    ModifiedBy = servicePlanRequest.ModifiedBy,
+                    ModifiedOn = DateTime.Today.ToString("yyyy-MM-dd 00:00:00.0")
+                };
+
+                using (var connection = _appDbContext.Connection)
+                {
+                    sqlResult = Convert.ToBoolean(await connection.ExecuteAsync(sqlUpdateQuery, colValueParam));
+                    return sqlResult;
+                }
+            }
+            catch (Exception Err)
+            {
+                var Error = Err.Message.ToString();
+                return false;
+            }
+        }
+        public async Task<bool> EditScheduleDischargeDetails(ServicePlanRequest servicePlanRequest)
+        {
+            try
+            {
+                bool sqlResult = true;
+                var tableName = $"HC_Treatment.scheduled_obj";
+
+                var colName = $"discharge_remarks = @DischargeRemarks, " +
+                              $"discharge_status = @DischargeStatus, " +
+                              $"modified_by = @ModifiedBy, modified_on = @ModifiedOn";
+
+                var whereCond = $" where patient_id = @PatientId and scheduled_id = @ScheduledId";
+
+                var sqlUpdateQuery = $"UPDATE "+ tableName + " set " + colName + whereCond;
+
+                object colValueParam = new
+                {
+                    PatientId = servicePlanRequest.PatientId,
+                    ScheduledId = servicePlanRequest.ScheduledId,
+                    DischargeStatus = servicePlanRequest.DischargeStatus,
+                    DischargeRemarks = servicePlanRequest.DischargeRemarks,
+                    ModifiedBy = servicePlanRequest.ModifiedBy,
+                    ModifiedOn = DateTime.Today.ToString("yyyy-MM-dd 00:00:00.0")
+                };
+
+                using (var connection = _appDbContext.Connection)
+                {
+                    sqlResult = Convert.ToBoolean(await connection.ExecuteAsync(sqlUpdateQuery, colValueParam));
+                    return sqlResult;
+                }
+            }
+            catch (Exception Err)
+            {
+                var Error = Err.Message.ToString();
+                return false;
+            }
+        }
+        public async Task<bool> EditSchedulePCRDetails(ServicePlanRequest servicePlanRequest)
+        {
+            try
+            {
+                bool sqlResult = true;
+                var tableName = $"HC_Treatment.scheduled_obj";
+
+                var colName = $"modified_by = @ModifiedBy, modified_on = @ModifiedOn";
+
+                if(servicePlanRequest.ServiceName.ToLower().Equals("4thday"))
+                {
+                    colName += $", 4day_pcr_test_sample_date = @PCRSampleDate, " +
+                                $"4day_pcr_test_result = @PCRResult";
+                }
+                else if(servicePlanRequest.ServiceName.ToLower().Equals("6thday"))
+                {
+                    colName += $", 6day_pcr_test_sample_date = @PCRSampleDate, " +
+                                $"6day_pcr_test_result = @PCRResult";
+                }
+                else if(servicePlanRequest.ServiceName.ToLower().Equals("8thday"))
+                {
+                    colName += $", 8day_pcr_test_sample_date = @PCRSampleDate, " +
+                                $"8day_pcr_test_result = @PCRResult";
+                }
+                else if(servicePlanRequest.ServiceName.ToLower().Equals("11thday"))
+                {
+                    colName += $", 11day_pcr_test_sample_date = @PCRSampleDate, " +
+                                $"11day_pcr_test_result = @PCRResult";
+                }
+
+                var whereCond = $" where patient_id = @PatientId and scheduled_id = @ScheduledId";
+
+                var sqlUpdateQuery = $"UPDATE "+ tableName + " set " + colName + whereCond;
+
+                string sampleDate;
+                if(servicePlanRequest.PCRSampleDate == null)
+                    sampleDate = "";
+                else
+                {
+                    sampleDate = servicePlanRequest.PCRSampleDate.ToString("yyyy-MM-dd");
+                    if( sampleDate == "0001-01-01")
+                        sampleDate = "";
+                    else
+                        sampleDate = servicePlanRequest.PCRSampleDate.ToString("yyyy-MM-dd 00:00:00.0");
+                }
+
+                object colValueParam = new
+                {
+                    PatientId = servicePlanRequest.PatientId,
+                    ScheduledId = servicePlanRequest.ScheduledId,
+                    PCRSampleDate = sampleDate,
+                    PCRResult = servicePlanRequest.PCRResult,
+                    ModifiedBy = servicePlanRequest.ModifiedBy,
+                    ModifiedOn = DateTime.Today.ToString("yyyy-MM-dd 00:00:00.0")
+                };
+
+                using (var connection = _appDbContext.Connection)
+                {
+                    sqlResult = Convert.ToBoolean(await connection.ExecuteAsync(sqlUpdateQuery, colValueParam));
+                    return sqlResult;
+                }
+            }
+            catch (Exception Err)
+            {
+                var Error = Err.Message.ToString();
+                return false;
+            }
+        }
+
+        public async Task<bool> EditTeamVisitDetails(TeamVisitDetails teamVisitDetails)
+        {
+            bool retVal = true;
+            try
+            {
+                var tableName = $"HC_Treatment.scheduled_obj";
+
+                var colName = $"modified_by = @ModifiedBy, modified_on = @ModifiedOn";
+
+                if(!String.IsNullOrEmpty(teamVisitDetails.ServiceName))
+                {
+                    if(teamVisitDetails.ServiceName.ToLower().Equals("4thday"))
+                    {
+                        colName += $", 4day_pcr_team_user_name = @TeamUserName, " +
+                                   $"4day_pcr_team_status = @TeamStatus, " +
+                                   $"4day_pcr_team_remark = @TeamRemark, " +
+                                   $"4day_pcr_team_date = @TeamStatusDate";
+                    }
+                    else if(teamVisitDetails.ServiceName.ToLower().Equals("6thday"))
+                    {
+                        colName += $", 6day_pcr_team_user_name = @TeamUserName, " +
+                                   $"6day_pcr_team_status = @TeamStatus, " +
+                                   $"6day_pcr_team_remark = @TeamRemark, " +
+                                   $"6day_pcr_team_date = @TeamStatusDate";
+                    }
+                    else if(teamVisitDetails.ServiceName.ToLower().Equals("8thday"))
+                    {
+                        colName += $", 8day_pcr_team_user_name = @TeamUserName, " +
+                                   $"8day_pcr_team_status = @TeamStatus, " +
+                                   $"8day_pcr_team_remark = @TeamRemark, " +
+                                   $"8day_pcr_team_date = @TeamStatusDate";
+                    }
+                    else if(teamVisitDetails.ServiceName.ToLower().Equals("11thday"))
+                    {
+                        colName += $", 11day_pcr_team_user_name = @TeamUserName, " +
+                                   $"11day_pcr_team_status = @TeamStatus, " +
+                                   $"11day_pcr_team_remark = @TeamRemark, " +
+                                   $"11day_pcr_team_date = @TeamStatusDate";
+                    }
+                    else if(teamVisitDetails.ServiceName.ToLower().Equals("tracker"))
+                    { 
+                        colName += $", tracker_team_user_name = @TeamUserName, " +
+                                   $"tracker_team_status = @TeamStatus, " +
+                                   $"tracker_team_remark = @TeamRemark, " +
+                                   $"tracker_team_date = @TeamStatusDate";
+                    }
+                    else if(teamVisitDetails.ServiceName.ToLower().Equals("sticker"))
+                    {
+                        colName += $", sticker_team_user_name = @TeamUserName, " +
+                                   $"sticker_team_status = @TeamStatus, " +
+                                   $"sticker_team_remark = @TeamRemark, " +
+                                   $"sticker_team_date = @TeamStatusDate";
+                    }
+                    if(teamVisitDetails.ServiceName.ToLower().Equals("discharge") || teamVisitDetails.ShowDischage)
+                    {
+                        colName += $", discharge_team_user_name = @TeamUserName, " +
+                                   $"discharge_team_status = @TeamStatus, " +
+                                   $"discharge_team_remark = @TeamRemark, " +
+                                   $"discharge_team_date = @TeamStatusDate";
+                    }
+                    if(teamVisitDetails.ServiceName.ToLower().Equals("tracker") ||
+                        teamVisitDetails.ServiceName.ToLower().Equals("sticker"))
+                    {
+                        colName += $", tracker_replace_team_user_name = @TeamUserName, " +
+                                   $"tracker_replace_team_status = @TeamStatus, " +
+                                   $"tracker_replace_team_remark = @TeamRemark, " +
+                                   $"tracker_replace_team_date = @TeamStatusDate";
+                    }
+                }
+
+                var whereCond = $" where patient_id = @PatientId and scheduled_id = @ScheduledId";
+
+                var sqlUpdateQuery = $"UPDATE "+ tableName + " set " + colName + whereCond;
+
+                string teamStatusDate;
+                if(teamVisitDetails.TeamStatusDate == null)
+                    teamStatusDate = "";
+                else
+                {
+                    teamStatusDate = teamVisitDetails.TeamStatusDate.ToString("yyyy-MM-dd");
+                    if( teamStatusDate == "0001-01-01")
+                        teamStatusDate = "";
+                    else
+                        teamStatusDate = teamVisitDetails.TeamStatusDate.ToString("yyyy-MM-dd 00:00:00.0");
+                }
+
+                object colValueParam = new
+                {
+                    PatientId = teamVisitDetails.PatientId,
+                    ScheduledId = teamVisitDetails.ScheduledId,
+                    TeamUserName = teamVisitDetails.TeamUserName,
+                    TeamStatus = teamVisitDetails.TeamStatus,
+                    TeamRemark = teamVisitDetails.TeamRemark,
+                    TeamStatusDate = teamStatusDate,
+                    ModifiedBy = teamVisitDetails.ModifiedBy,
+                    ModifiedOn = DateTime.Today.ToString("yyyy-MM-dd 00:00:00.0")
+                };
+
+                using (var connection = _appDbContext.Connection)
+                {
+                    retVal = Convert.ToBoolean(await connection.ExecuteAsync(sqlUpdateQuery, colValueParam));
+                }
+            }
+            catch (Exception Err)
+            {
+                var Error = Err.Message.ToString();
+                retVal = false;
+            }
+            return retVal;
+        }
     }
 }

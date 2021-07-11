@@ -26,9 +26,15 @@ namespace Web.Api.Models.Request
         public DateTime PCR4DayTestDate { get; set; }
         public DateTime PCR4DaySampleDate { get; set; }
         public string PCR4DayResult { get; set; }
+        public DateTime PCR6DayTestDate { get; set; }
+        public DateTime PCR6DaySampleDate { get; set; }
+        public string PCR6DayResult { get; set; }
         public DateTime PCR8DayTestDate { get; set; }
         public DateTime PCR8DaySampleDate { get; set; }
         public string PCR8DayResult { get; set; }
+        public DateTime PCR11DayTestDate { get; set; }
+        public DateTime PCR11DaySampleDate { get; set; }
+        public string PCR11DayResult { get; set; }
 
         public DateTime TrackerScheduleDate { get; set; }
         public DateTime TrackerAppliedDate { get; set; }
@@ -43,5 +49,8 @@ namespace Web.Api.Models.Request
         public string CreatedBy { get; set; }
         public string ModifiedBy { get; set; }
         public bool IsUpdate { get; set; }
+
+        public int RequestId { get; set; }//1-HQP, 2- HIP, 3- CRM
+        public string RequestCrmName { get; set; }
     }
 }

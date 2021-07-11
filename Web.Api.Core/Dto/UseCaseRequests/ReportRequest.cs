@@ -33,9 +33,15 @@ namespace Web.Api.Core.Dto.UseCaseRequests
         public DateTime PCR4DayTestDate { get; set; }//4day_pcr_test_date - datetime
         public DateTime PCR4DaySampleDate { get; set; }//4day_pcr_test_sample_date – datetime
         public string PCR4DayResult { get; set; }//4day_pcr_test_result - enum('Negative','Positive')
+        public DateTime PCR6DayTestDate { get; set; }//6day_pcr_test_date - datetime
+        public DateTime PCR6DaySampleDate { get; set; }//6day_pcr_test_sample_date – datetime
+        public string PCR6DayResult { get; set; }//6day_pcr_test_result - varchar(100) enum('Negative','Positive')
         public DateTime PCR8DayTestDate { get; set; }//8day_pcr_test_date - datetime
         public DateTime PCR8DaySampleDate { get; set; }//8day_pcr_test_sample_date – datetime
         public string PCR8DayResult { get; set; }//8day_pcr_test_result - enum('Negative','Positive')
+        public DateTime PCR11DayTestDate { get; set; }//11day_pcr_test_date - datetime
+        public DateTime PCR11DaySampleDate { get; set; }//11day_pcr_test_sample_date – datetime
+        public string PCR11DayResult { get; set; }//11day_pcr_test_result - varchar(100) enum('Negative','Positive')
         public string Day3CallId { get; set; }//3day_call_id – varchar(128)
         public string Day3CallStatus { get; set; }
         public string Day3CallRemarks { get; set; }

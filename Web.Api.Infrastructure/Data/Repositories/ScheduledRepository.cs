@@ -234,9 +234,18 @@ namespace Web.Api.Infrastructure.Data.Repositories
                                   $"sc.4day_pcr_test_date as PCR4DayTestDate, sc.4day_pcr_test_sample_date as PCR4DaySampleDate, sc.4day_pcr_test_result as PCR4DayResult, " +
                                   $"sc.4day_pcr_team_user_name as PCR4DayTeamUserName, sc.4day_pcr_team_status as PCR4DayTeamStatus, " +
                                   $"sc.4day_pcr_team_remark as PCR4DayTeamRemark, sc.4day_pcr_team_date as PCR4DayTeamStatusDate, " +
+
+                                  $"sc.6day_pcr_test_date as PCR6DayTestDate, sc.6day_pcr_test_sample_date as PCR6DaySampleDate, sc.6day_pcr_test_result as PCR6DayResult, " +
+                                  $"sc.6day_pcr_team_user_name as PCR6DayTeamUserName, sc.6day_pcr_team_status as PCR6DayTeamStatus, " +
+                                  $"sc.6day_pcr_team_remark as PCR6DayTeamRemark, sc.6day_pcr_team_date as PCR6DayTeamStatusDate, " +
+
                                   $"sc.8day_pcr_test_date as PCR8DayTestDate, sc.8day_pcr_test_sample_date as PCR8DaySampleDate, sc.8day_pcr_test_result as PCR8DayResult, " +
                                   $"sc.8day_pcr_team_user_name as PCR8DayTeamUserName, sc.8day_pcr_team_status as PCR8DayTeamStatus, " +
                                   $"sc.8day_pcr_team_remark as PCR8DayTeamRemark, sc.8day_pcr_team_date as PCR8DayTeamStatusDate, " +
+
+                                  $"sc.11day_pcr_test_date as PCR11DayTestDate, sc.11day_pcr_test_sample_date as PCR11DaySampleDate, sc.11day_pcr_test_result as PCR11DayResult, " +
+                                  $"sc.11day_pcr_team_user_name as PCR11DayTeamUserName, sc.11day_pcr_team_status as PCR11DayTeamStatus, " +
+                                  $"sc.11day_pcr_team_remark as PCR11DayTeamRemark, sc.11day_pcr_team_date as PCR11DayTeamStatusDate, " +
 
 
                                   $"sc.2day_call_id as Day2CallId, sc.3day_call_id as Day3CallId, " +
@@ -299,8 +308,12 @@ namespace Web.Api.Infrastructure.Data.Repositories
                         whereCond += $" and sc.sticker_schedule_date between '" + fromDate + timeMin + "' and '" + toDate + timeMin + "'";
                     else if(serviceName.Equals("4pcr"))
                         whereCond += $" and sc.4day_pcr_test_date between '" + fromDate + timeMin + "' and '" + toDate + timeMin + "'";
+                    else if(serviceName.Equals("6pcr"))
+                        whereCond += $" and sc.6day_pcr_test_date between '" + fromDate + timeMin + "' and '" + toDate + timeMin + "'";
                     else if(serviceName.Equals("8pcr") || serviceName.Equals("eight"))
                         whereCond += $" and sc.8day_pcr_test_date between '" + fromDate + timeMin + "' and '" + toDate + timeMin + "'";
+                    else if(serviceName.Equals("11pcr"))
+                        whereCond += $" and sc.11day_pcr_test_date between '" + fromDate + timeMin + "' and '" + toDate + timeMin + "'";
                     else if(serviceName.Equals("discharge"))
                         whereCond += $" and sc.discharge_date between '" + fromDate + timeMin + "' and '" + toDate + timeMin + "'";
                     else
@@ -310,7 +323,9 @@ namespace Web.Api.Infrastructure.Data.Repositories
 
                         whereCond += $" and (sc.tracker_schedule_date between '" + fromDate + timeMin + "' and '" + toDate + timeMin + "'";
                         //whereCond += $" or sc.4day_pcr_test_date between '" + fromDate + timeMin + "' and '" + toDate + timeMin + "'";
+                        whereCond += $" or sc.6day_pcr_test_date between '" + fromDate + timeMin + "' and '" + toDate + timeMin + "'";
                         whereCond += $" or sc.8day_pcr_test_date between '" + fromDate + timeMin + "' and '" + toDate + timeMin + "'";
+                        whereCond += $" or sc.11day_pcr_test_date between '" + fromDate + timeMin + "' and '" + toDate + timeMin + "'";
                         whereCond += $" or sc.sticker_schedule_date between '" + fromDate + timeMin + "' and '" + toDate + timeMin + "'";
                         whereCond += $" or sc.discharge_date between '" + fromDate + timeMin + "' and '" + toDate + timeMin + "')";
 
@@ -325,7 +340,9 @@ namespace Web.Api.Infrastructure.Data.Repositories
 
                     whereCond += $" and (sc.tracker_schedule_date between '" + fromDate + timeMin + "' and '" + toDate + timeMin + "'";
                     //whereCond += $" or sc.4day_pcr_test_date between '" + fromDate + timeMin + "' and '" + toDate + timeMin + "'";
+                    whereCond += $" or sc.6day_pcr_test_date between '" + fromDate + timeMin + "' and '" + toDate + timeMin + "'";
                     whereCond += $" or sc.8day_pcr_test_date between '" + fromDate + timeMin + "' and '" + toDate + timeMin + "'";
+                    whereCond += $" or sc.11day_pcr_test_date between '" + fromDate + timeMin + "' and '" + toDate + timeMin + "'";
                     whereCond += $" or sc.sticker_schedule_date between '" + fromDate + timeMin + "' and '" + toDate + timeMin + "'";
                     whereCond += $" or sc.discharge_date between '" + fromDate + timeMin + "' and '" + toDate + timeMin + "')";
 
@@ -339,8 +356,12 @@ namespace Web.Api.Infrastructure.Data.Repositories
                         whereCond += " and sc.sticker_tracker_result = '" + serviceStatus + "'";
                     else if(serviceName.Equals("4pcr"))
                         whereCond += " and sc.4day_pcr_test_result = '" + serviceStatus + "'";
+                    else if(serviceName.Equals("6pcr"))
+                        whereCond += " and sc.6day_pcr_test_result = '" + serviceStatus + "'";
                     else if(serviceName.Equals("8pcr") || serviceName.Equals("eight"))
                         whereCond += " and sc.8day_pcr_test_result = '" + serviceStatus + "'";
+                    else if(serviceName.Equals("11pcr"))
+                        whereCond += " and sc.11day_pcr_test_result = '" + serviceStatus + "'";
                     else if(serviceName.Equals("discharge"))
                         whereCond += " and p.discharge_status = '" + serviceStatus + "'";
                 }
@@ -550,8 +571,13 @@ namespace Web.Api.Infrastructure.Data.Repositories
 
                               $"4day_pcr_test_date, 4day_pcr_test_result, " +
                               //$"4day_pcr_test_sample_date, " +
+                              $"6day_pcr_test_date, 6day_pcr_test_result, " +
+                              //$"6day_pcr_test_sample_date, " +
                               $"8day_pcr_test_date, 8day_pcr_test_result, " +
                               //$"8day_pcr_test_sample_date, " +
+                              $"11day_pcr_test_date, 11day_pcr_test_result, " +
+                              //$"11day_pcr_test_sample_date, " +
+
                               $"2day_call_id, 3day_call_id, 4day_call_id, " +
                               $"5day_call_id, 6day_call_id, 7day_call_id, " +
                               $"9day_call_id, have_treatement_extract, created_by, created_on";
@@ -564,8 +590,12 @@ namespace Web.Api.Infrastructure.Data.Repositories
                                    $"@TrackerScheduleDate, @StickerScheduleDate, " +
                                    $"@PCR4DayTestDate, @PCR4DayResult, " + 
                                    //$"@PCR4DaySampleDate, " +
+                                   $"@PCR6DayTestDate, @PCR6DayResult, " +
+                                   //$"@PCR6DaySampleDate, " +
                                    $"@PCR8DayTestDate, @PCR8DayResult, " +
                                    //$"@PCR8DaySampleDate, " +
+                                   $"@PCR11DayTestDate, @PCR11DayResult, " +
+                                   //$"@PCR11DaySampleDate, " +
                                    $"@Day2CallId, @Day3CallId, " +
                                    $"@Day4CallId, @Day5CallId, " +
                                    $"@Day6CallId, @Day7CallId, " +
@@ -579,7 +609,6 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 CallRequest callRequest = new CallRequest();
                 callRequest.ScheduledId = scheduledRequest.ScheduledId;
                 callRequest.EMRDone = "no";
-                //callRequest.CallStatus = "pending";
                 callRequest.CreatedBy = scheduledRequest.CreatedBy;
 
                 callRequest.CallScheduledDate = scheduledRequest.TreatmentFromDate.AddDays(1);
@@ -588,49 +617,19 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 else
                     scheduledRequest.Day2CallId = "";
 
-                if(!String.IsNullOrEmpty(scheduledRequest.TreatmentType) && 
-                   scheduledRequest.TreatmentType.ToLower() == "isolation")
+                if(scheduledRequest.RequestId == 1)//HQP
                 {
-                    callRequest.CallScheduledDate = scheduledRequest.TreatmentFromDate.AddDays(2);
-                    if(await CreateCall(callRequest))
-                        scheduledRequest.Day3CallId = callRequest.CallId;
+                    if(scheduledRequest.HaveVaccine.Equals("yes"))
+                    {
+                        scheduledRequest.PCR6DayTestDate = scheduledRequest.TreatmentFromDate.AddDays(5);
+                        scheduledRequest.DischargeDate = scheduledRequest.TreatmentFromDate.AddDays(6);
+                    }
                     else
-                        scheduledRequest.Day3CallId = "";
+                    {
+                        scheduledRequest.PCR11DayTestDate = scheduledRequest.TreatmentFromDate.AddDays(10);
+                        scheduledRequest.DischargeDate = scheduledRequest.TreatmentFromDate.AddDays(11);
+                    }
 
-                    callRequest.CallScheduledDate = scheduledRequest.TreatmentFromDate.AddDays(3);
-                    if(await CreateCall(callRequest))
-                        scheduledRequest.Day4CallId = callRequest.CallId;
-                    else
-                        scheduledRequest.Day4CallId = "";
-
-                    callRequest.CallScheduledDate = scheduledRequest.TreatmentFromDate.AddDays(4);
-                    if(await CreateCall(callRequest))
-                        scheduledRequest.Day5CallId = callRequest.CallId;
-                    else
-                        scheduledRequest.Day5CallId = "";
-
-                    callRequest.CallScheduledDate = scheduledRequest.TreatmentFromDate.AddDays(5);
-                    if(await CreateCall(callRequest))
-                        scheduledRequest.Day6CallId = callRequest.CallId;
-                    else
-                        scheduledRequest.Day6CallId = "";
-
-                    callRequest.CallScheduledDate = scheduledRequest.TreatmentFromDate.AddDays(6);
-                    if(await CreateCall(callRequest))
-                        scheduledRequest.Day7CallId = callRequest.CallId;
-                    else
-                        scheduledRequest.Day7CallId = "";
-
-                    callRequest.CallScheduledDate = scheduledRequest.TreatmentFromDate.AddDays(8);
-                    if(await CreateCall(callRequest))
-                        scheduledRequest.Day9CallId = callRequest.CallId;
-                    else
-                        scheduledRequest.Day9CallId = "";
-
-                    scheduledRequest.DischargeDate = scheduledRequest.TreatmentToDate;
-                }
-                else
-                {
                     scheduledRequest.Day3CallId = "";
                     scheduledRequest.Day4CallId = "";
                     scheduledRequest.Day5CallId = "";
@@ -638,15 +637,69 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     scheduledRequest.Day7CallId = "";
                     scheduledRequest.Day9CallId = "";
 
-                    scheduledRequest.DischargeDate = scheduledRequest.TreatmentFromDate.AddDays(3);
+                    scheduledRequest.TrackerScheduleDate = scheduledRequest.TreatmentFromDate;
+                }
+                else if(scheduledRequest.RequestId == 2)//HIP
+                {
+                    if(!String.IsNullOrEmpty(scheduledRequest.TreatmentType) && 
+                        scheduledRequest.TreatmentType.ToLower() == "isolation")
+                    {
+                        callRequest.CallScheduledDate = scheduledRequest.TreatmentFromDate.AddDays(2);
+                        if(await CreateCall(callRequest))
+                            scheduledRequest.Day3CallId = callRequest.CallId;
+                        else
+                            scheduledRequest.Day3CallId = "";
+
+                        callRequest.CallScheduledDate = scheduledRequest.TreatmentFromDate.AddDays(3);
+                        if(await CreateCall(callRequest))
+                            scheduledRequest.Day4CallId = callRequest.CallId;
+                        else
+                            scheduledRequest.Day4CallId = "";
+
+                        callRequest.CallScheduledDate = scheduledRequest.TreatmentFromDate.AddDays(4);
+                        if(await CreateCall(callRequest))
+                            scheduledRequest.Day5CallId = callRequest.CallId;
+                        else
+                            scheduledRequest.Day5CallId = "";
+
+                        callRequest.CallScheduledDate = scheduledRequest.TreatmentFromDate.AddDays(5);
+                        if(await CreateCall(callRequest))
+                            scheduledRequest.Day6CallId = callRequest.CallId;
+                        else
+                            scheduledRequest.Day6CallId = "";
+
+                        callRequest.CallScheduledDate = scheduledRequest.TreatmentFromDate.AddDays(6);
+                        if(await CreateCall(callRequest))
+                            scheduledRequest.Day7CallId = callRequest.CallId;
+                        else
+                            scheduledRequest.Day7CallId = "";
+
+                        callRequest.CallScheduledDate = scheduledRequest.TreatmentFromDate.AddDays(8);
+                        if(await CreateCall(callRequest))
+                            scheduledRequest.Day9CallId = callRequest.CallId;
+                        else
+                            scheduledRequest.Day9CallId = "";
+
+                        scheduledRequest.DischargeDate = scheduledRequest.TreatmentToDate;
+                    }
+                    else
+                    {
+                        scheduledRequest.Day3CallId = "";
+                        scheduledRequest.Day4CallId = "";
+                        scheduledRequest.Day5CallId = "";
+                        scheduledRequest.Day6CallId = "";
+                        scheduledRequest.Day7CallId = "";
+                        scheduledRequest.Day9CallId = "";
+
+                        scheduledRequest.DischargeDate = scheduledRequest.TreatmentFromDate.AddDays(3);
+                    }
+
+                    scheduledRequest.PCR4DayTestDate = scheduledRequest.TreatmentFromDate.AddDays(3);
+                    scheduledRequest.PCR8DayTestDate = scheduledRequest.TreatmentFromDate.AddDays(7);
+
+                    scheduledRequest.TrackerScheduleDate = scheduledRequest.TreatmentFromDate.AddDays(1);
                 }
 
-                scheduledRequest.PCR4DayTestDate = scheduledRequest.TreatmentFromDate.AddDays(3);
-                scheduledRequest.PCR8DayTestDate = scheduledRequest.TreatmentFromDate.AddDays(7);
-
-                //scheduledRequest.DischargeDate = scheduledRequest.TreatmentToDate;//.TreatmentFromDate.AddDays(9);
-
-                scheduledRequest.TrackerScheduleDate = scheduledRequest.TreatmentFromDate.AddDays(1);
                 scheduledRequest.StickerScheduleDate = scheduledRequest.DischargeDate;
 
                 string pcrTestDate;
@@ -733,7 +786,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                         pcr4DayTestDate = scheduledRequest.PCR4DayTestDate.ToString("yyyy-MM-dd 00:00:00.0");
                 }
 
-                string pcr4DaySampleDate;
+                /*string pcr4DaySampleDate;
                 if(scheduledRequest.PCR4DaySampleDate == null)
                     pcr4DaySampleDate = "";
                 else
@@ -743,7 +796,31 @@ namespace Web.Api.Infrastructure.Data.Repositories
                         pcr4DaySampleDate = "";
                     else
                         pcr4DaySampleDate = scheduledRequest.PCR4DaySampleDate.ToString("yyyy-MM-dd 00:00:00.0");
+                }*/
+
+                string pcr6DayTestDate;
+                if(scheduledRequest.PCR6DayTestDate == null)
+                    pcr6DayTestDate = "";
+                else
+                {
+                    pcr6DayTestDate = scheduledRequest.PCR6DayTestDate.ToString("yyyy-MM-dd");
+                    if( pcr6DayTestDate == "0001-01-01")
+                        pcr6DayTestDate = "";
+                    else
+                        pcr6DayTestDate = scheduledRequest.PCR6DayTestDate.ToString("yyyy-MM-dd 00:00:00.0");
                 }
+
+                /*string pcr6DaySampleDate;
+                if(scheduledRequest.PCR6DaySampleDate == null)
+                    pcr6DaySampleDate = "";
+                else
+                {
+                    pcr6DaySampleDate = scheduledRequest.PCR6DaySampleDate.ToString("yyyy-MM-dd");
+                    if( pcr6DaySampleDate == "0001-01-01")
+                        pcr6DaySampleDate = "";
+                    else
+                        pcr6DaySampleDate = scheduledRequest.PCR6DaySampleDate.ToString("yyyy-MM-dd 00:00:00.0");
+                }*/
 
                 string pcr8DayTestDate;
                 if(scheduledRequest.PCR8DayTestDate == null)
@@ -757,7 +834,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                         pcr8DayTestDate = scheduledRequest.PCR8DayTestDate.ToString("yyyy-MM-dd 00:00:00.0");
                 }
 
-                string pcr8DaySampleDate;
+                /*string pcr8DaySampleDate;
                 if(scheduledRequest.PCR8DaySampleDate == null)
                     pcr8DaySampleDate = "";
                 else
@@ -767,7 +844,31 @@ namespace Web.Api.Infrastructure.Data.Repositories
                         pcr8DaySampleDate = "";
                     else
                         pcr8DaySampleDate = scheduledRequest.PCR8DaySampleDate.ToString("yyyy-MM-dd 00:00:00.0");
+                }*/
+
+                string pcr11DayTestDate;
+                if(scheduledRequest.PCR11DayTestDate == null)
+                    pcr11DayTestDate = "";
+                else
+                {
+                    pcr11DayTestDate = scheduledRequest.PCR11DayTestDate.ToString("yyyy-MM-dd");
+                    if( pcr11DayTestDate == "0001-01-01")
+                        pcr11DayTestDate = "";
+                    else
+                        pcr11DayTestDate = scheduledRequest.PCR11DayTestDate.ToString("yyyy-MM-dd 00:00:00.0");
                 }
+
+                /*string pcr11DaySampleDate;
+                if(scheduledRequest.PCR11DaySampleDate == null)
+                    pcr11DaySampleDate = "";
+                else
+                {
+                    pcr11DaySampleDate = scheduledRequest.PCR11DaySampleDate.ToString("yyyy-MM-dd");
+                    if( pcr11DaySampleDate == "0001-01-01")
+                        pcr11DaySampleDate = "";
+                    else
+                        pcr11DaySampleDate = scheduledRequest.PCR11DaySampleDate.ToString("yyyy-MM-dd 00:00:00.0");
+                }*/
 
                 string allocatedDate;
                 if(scheduledRequest.AllocatedDate == null)
@@ -814,9 +915,15 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     PCR4DayTestDate = pcr4DayTestDate,//scheduledRequest.PCR4DayTestDate.ToString("yyyy-MM-dd 00:00:00.0"),
                     //PCR4DaySampleDate = pcr4DaySampleDate,//scheduledRequest.PCR4DaySampleDate.ToString("yyyy-MM-dd 00:00:00.0"),
                     PCR4DayResult = scheduledRequest.PCR4DayResult,
+                    PCR6DayTestDate = pcr6DayTestDate,//scheduledRequest.PCR6DayTestDate.ToString("yyyy-MM-dd 00:00:00.0"),
+                    //PCR6DaySampleDate = pcr6DaySampleDate,//scheduledRequest.PCR6DaySampleDate.ToString("yyyy-MM-dd 00:00:00.0"),
+                    PCR6DayResult = scheduledRequest.PCR6DayResult,
                     PCR8DayTestDate = pcr8DayTestDate,//scheduledRequest.PCR8DayTestDate.ToString("yyyy-MM-dd 00:00:00.0"),
                     //PCR8DaySampleDate = pcr8DaySampleDate,//scheduledRequest.PCR8DaySampleDate.ToString("yyyy-MM-dd 00:00:00.0"),
                     PCR8DayResult = scheduledRequest.PCR8DayResult,
+                    PCR11DayTestDate = pcr11DayTestDate,//scheduledRequest.PCR11DayTestDate.ToString("yyyy-MM-dd 00:00:00.0"),
+                    //PCR11DaySampleDate = pcr11DaySampleDate,//scheduledRequest.PCR11DaySampleDate.ToString("yyyy-MM-dd 00:00:00.0"),
+                    PCR11DayResult = scheduledRequest.PCR11DayResult,
                     Day2CallId = scheduledRequest.Day2CallId,
                     Day3CallId = scheduledRequest.Day3CallId,
                     Day4CallId = scheduledRequest.Day4CallId,
@@ -926,8 +1033,13 @@ namespace Web.Api.Infrastructure.Data.Repositories
 
                               $"4day_pcr_test_date = @PCR4DayTestDate, " +
                               //$"4day_pcr_test_sample_date = @PCR4DaySampleDate, 4day_pcr_test_result = @PCR4DayResult, " +
+                              $"6day_pcr_test_date = @PCR6DayTestDate, " +
+                              //$"6day_pcr_test_sample_date = @PCR6DaySampleDate, 6day_pcr_test_result = @PCR6DayResult, " +
                               $"8day_pcr_test_date = @PCR8DayTestDate, " +
                               //$"8day_pcr_test_sample_date = @PCR8DaySampleDate, 8day_pcr_test_result = @PCR8DayResult, " +
+                              $"11day_pcr_test_date = @PCR11DayTestDate, " +
+                              //$"11day_pcr_test_sample_date = @PCR11DaySampleDate, 11day_pcr_test_result = @PCR11DayResult, " +
+
                               $"modified_by = @ModifiedBy, modified_on = @ModifiedOn";
 
                 var whereCond = $" where scheduled_id = @ScheduledId";
@@ -940,37 +1052,19 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 callRequest.CallScheduledDate = scheduledRequest.TreatmentFromDate.AddDays(1);
                 await EditCall(callRequest);
 
-                if(!String.IsNullOrEmpty(scheduledRequest.TreatmentType) && 
-                   scheduledRequest.TreatmentType.ToLower() == "isolation")
+                if(scheduledRequest.RequestId == 1)//HQP
                 {
-                    callRequest.CallId = scheduledRequest.Day3CallId;
-                    callRequest.CallScheduledDate = scheduledRequest.TreatmentFromDate.AddDays(2);
-                    await EditCall(callRequest);
+                    if(scheduledRequest.HaveVaccine.Equals("yes"))
+                    {
+                        scheduledRequest.PCR6DayTestDate = scheduledRequest.TreatmentFromDate.AddDays(5);
+                        scheduledRequest.DischargeDate = scheduledRequest.TreatmentFromDate.AddDays(6);
+                    }
+                    else
+                    {
+                        scheduledRequest.PCR11DayTestDate = scheduledRequest.TreatmentFromDate.AddDays(10);
+                        scheduledRequest.DischargeDate = scheduledRequest.TreatmentFromDate.AddDays(11);
+                    }
 
-                    callRequest.CallId = scheduledRequest.Day4CallId;
-                    callRequest.CallScheduledDate = scheduledRequest.TreatmentFromDate.AddDays(3);
-                    await EditCall(callRequest);
-
-                    callRequest.CallId = scheduledRequest.Day5CallId;
-                    callRequest.CallScheduledDate = scheduledRequest.TreatmentFromDate.AddDays(4);
-                    await EditCall(callRequest);
-
-                    callRequest.CallId = scheduledRequest.Day6CallId;
-                    callRequest.CallScheduledDate = scheduledRequest.TreatmentFromDate.AddDays(5);
-                    await EditCall(callRequest);
-
-                    callRequest.CallId = scheduledRequest.Day7CallId;
-                    callRequest.CallScheduledDate = scheduledRequest.TreatmentFromDate.AddDays(6);
-                    await EditCall(callRequest);
-
-                    callRequest.CallId = scheduledRequest.Day9CallId;
-                    callRequest.CallScheduledDate = scheduledRequest.TreatmentFromDate.AddDays(8);
-                    await EditCall(callRequest);
-
-                    scheduledRequest.DischargeDate = scheduledRequest.TreatmentToDate;
-                }
-                else
-                {
                     scheduledRequest.Day3CallId = "";
                     scheduledRequest.Day4CallId = "";
                     scheduledRequest.Day5CallId = "";
@@ -978,15 +1072,57 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     scheduledRequest.Day7CallId = "";
                     scheduledRequest.Day9CallId = "";
 
-                    scheduledRequest.DischargeDate = scheduledRequest.TreatmentFromDate.AddDays(3);
+                    scheduledRequest.TrackerScheduleDate = scheduledRequest.TreatmentFromDate;
+                }
+                else if(scheduledRequest.RequestId == 2)//HIP
+                {
+                    if(!String.IsNullOrEmpty(scheduledRequest.TreatmentType) && 
+                    scheduledRequest.TreatmentType.ToLower() == "isolation")
+                    {
+                        callRequest.CallId = scheduledRequest.Day3CallId;
+                        callRequest.CallScheduledDate = scheduledRequest.TreatmentFromDate.AddDays(2);
+                        await EditCall(callRequest);
+
+                        callRequest.CallId = scheduledRequest.Day4CallId;
+                        callRequest.CallScheduledDate = scheduledRequest.TreatmentFromDate.AddDays(3);
+                        await EditCall(callRequest);
+
+                        callRequest.CallId = scheduledRequest.Day5CallId;
+                        callRequest.CallScheduledDate = scheduledRequest.TreatmentFromDate.AddDays(4);
+                        await EditCall(callRequest);
+
+                        callRequest.CallId = scheduledRequest.Day6CallId;
+                        callRequest.CallScheduledDate = scheduledRequest.TreatmentFromDate.AddDays(5);
+                        await EditCall(callRequest);
+
+                        callRequest.CallId = scheduledRequest.Day7CallId;
+                        callRequest.CallScheduledDate = scheduledRequest.TreatmentFromDate.AddDays(6);
+                        await EditCall(callRequest);
+
+                        callRequest.CallId = scheduledRequest.Day9CallId;
+                        callRequest.CallScheduledDate = scheduledRequest.TreatmentFromDate.AddDays(8);
+                        await EditCall(callRequest);
+
+                        scheduledRequest.DischargeDate = scheduledRequest.TreatmentToDate;
+                    }
+                    else
+                    {
+                        scheduledRequest.Day3CallId = "";
+                        scheduledRequest.Day4CallId = "";
+                        scheduledRequest.Day5CallId = "";
+                        scheduledRequest.Day6CallId = "";
+                        scheduledRequest.Day7CallId = "";
+                        scheduledRequest.Day9CallId = "";
+
+                        scheduledRequest.DischargeDate = scheduledRequest.TreatmentFromDate.AddDays(3);
+                    }
+
+                    scheduledRequest.PCR4DayTestDate = scheduledRequest.TreatmentFromDate.AddDays(3);
+                    scheduledRequest.PCR8DayTestDate = scheduledRequest.TreatmentFromDate.AddDays(7);
+
+                    scheduledRequest.TrackerScheduleDate = scheduledRequest.TreatmentFromDate.AddDays(1);
                 }
 
-                scheduledRequest.PCR4DayTestDate = scheduledRequest.TreatmentFromDate.AddDays(3);
-                scheduledRequest.PCR8DayTestDate = scheduledRequest.TreatmentFromDate.AddDays(7);
-
-                //scheduledRequest.DischargeDate = scheduledRequest.TreatmentToDate;//.TreatmentFromDate.AddDays(9);
-
-                scheduledRequest.TrackerScheduleDate = scheduledRequest.TreatmentFromDate.AddDays(1);
                 scheduledRequest.StickerScheduleDate = scheduledRequest.DischargeDate;
 
                 string pcrTestDate;
@@ -1073,6 +1209,18 @@ namespace Web.Api.Infrastructure.Data.Repositories
                         pcr4DayTestDate = scheduledRequest.PCR4DayTestDate.ToString("yyyy-MM-dd 00:00:00.0");
                 }
 
+                string pcr6DayTestDate;
+                if(scheduledRequest.PCR6DayTestDate == null)
+                    pcr6DayTestDate = "";
+                else
+                {
+                    pcr6DayTestDate = scheduledRequest.PCR6DayTestDate.ToString("yyyy-MM-dd");
+                    if( pcr6DayTestDate == "0001-01-01")
+                        pcr6DayTestDate = "";
+                    else
+                        pcr6DayTestDate = scheduledRequest.PCR6DayTestDate.ToString("yyyy-MM-dd 00:00:00.0");
+                }
+
                 string pcr8DayTestDate;
                 if(scheduledRequest.PCR8DayTestDate == null)
                     pcr8DayTestDate = "";
@@ -1083,6 +1231,18 @@ namespace Web.Api.Infrastructure.Data.Repositories
                         pcr8DayTestDate = "";
                     else
                         pcr8DayTestDate = scheduledRequest.PCR8DayTestDate.ToString("yyyy-MM-dd 00:00:00.0");
+                }
+
+                string pcr11DayTestDate;
+                if(scheduledRequest.PCR11DayTestDate == null)
+                    pcr11DayTestDate = "";
+                else
+                {
+                    pcr11DayTestDate = scheduledRequest.PCR11DayTestDate.ToString("yyyy-MM-dd");
+                    if( pcr11DayTestDate == "0001-01-01")
+                        pcr11DayTestDate = "";
+                    else
+                        pcr11DayTestDate = scheduledRequest.PCR11DayTestDate.ToString("yyyy-MM-dd 00:00:00.0");
                 }
 
                 object colValueParam = new
@@ -1104,9 +1264,15 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     PCR4DayTestDate = pcr4DayTestDate,//scheduledRequest.PCR4DayTestDate.ToString("yyyy-MM-dd 00:00:00.0"),
                     //PCR4DaySampleDate = pcr4DaySampleDate,//scheduledRequest.PCR4DaySampleDate.ToString("yyyy-MM-dd 00:00:00.0"),
                     //PCR4DayResult = scheduledRequest.PCR4DayResult,
+                    PCR6DayTestDate = pcr6DayTestDate,//scheduledRequest.PCR6DayTestDate.ToString("yyyy-MM-dd 00:00:00.0"),
+                    //PCR6DaySampleDate = pcr6DaySampleDate,//scheduledRequest.PCR6DaySampleDate.ToString("yyyy-MM-dd 00:00:00.0"),
+                    //PCR6DayResult = scheduledRequest.PCR6DayResult,
                     PCR8DayTestDate = pcr8DayTestDate,//scheduledRequest.PCR8DayTestDate.ToString("yyyy-MM-dd 00:00:00.0"),
                     //PCR8DaySampleDate = pcr8DaySampleDate,//scheduledRequest.PCR8DaySampleDate.ToString("yyyy-MM-dd 00:00:00.0"),
                     //PCR8DayResult = scheduledRequest.PCR8DayResult,
+                    PCR11DayTestDate = pcr11DayTestDate,//scheduledRequest.PCR11DayTestDate.ToString("yyyy-MM-dd 00:00:00.0"),
+                    //PCR11DaySampleDate = pcr11DaySampleDate,//scheduledRequest.PCR11DaySampleDate.ToString("yyyy-MM-dd 00:00:00.0"),
+                    //PCR11DayResult = scheduledRequest.PCR11DayResult,
                     ModifiedBy = scheduledRequest.ModifiedBy,
                     ModifiedOn = DateTime.Today.ToString("yyyy-MM-dd 00:00:00.0")
                 };

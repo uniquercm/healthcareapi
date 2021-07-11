@@ -83,5 +83,17 @@ namespace Web.Api.Controllers
             return _acknowledgementPresenter.ContentResult;
         }
 
+        /// <summary>
+        /// Modifying a Team Service Status
+        /// </summary>
+        /// <param name="request">Modifying Team Service Status Details</param>
+        /// <returns>Acknowledgement</returns>
+        [HttpPut("teamservicestatus")]
+        public async Task<ActionResult> EditTeamStatus([FromBody] Models.Request.TeamVisitDetails request)
+        {
+            await _drNurseCallFieldAllocationUseCases.Handle(_mapper.Map<TeamVisitDetails>(request), _acknowledgementPresenter);
+            return _acknowledgementPresenter.ContentResult;
+        }
+
     }
 }

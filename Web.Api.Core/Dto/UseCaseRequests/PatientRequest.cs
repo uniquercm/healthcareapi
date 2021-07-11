@@ -106,6 +106,10 @@ namespace Web.Api.Core.Dto.UseCaseRequests
         public DateTime PCRSampleDate { get; set; }
         public string PCRResult { get; set;}
 
+        public DateTime DischargeDate { get; set; }
+        public string DischargeRemarks { get; set; }
+        public string DischargeStatus { get; set; }
+
         public DateTime TrackerScheduleDate { get; set; }//tracker_schedule_date - datetime
         public DateTime TrackerAppliedDate { get; set; }//tracker_applied_date - datetime
         public DateTime StickerScheduleDate { get; set; }//sticker_schedule_date - datetime
@@ -114,12 +118,14 @@ namespace Web.Api.Core.Dto.UseCaseRequests
         public DateTime TrackerReplacedDate { get; set; }//tracker_replace_date - datatime
         public string TrackerReplaceNumber { get; set; }//tracker_replace_no - varchar(50)
         public string StickerTrackerResult { get; set; }//sticker_tracker_result - varchar(50)
+
         public int EnrolledCount { get; set; }//enrolled_count - int(25)
         public string EnrolledDetails { get; set; }//enrolled_details - int(25)
         public string StickerApplication { get; set; }//sticker_application - enum('No','Yes')
         public int TrackerApplication { get; set; }//tracker_application – int(10)
         public string StickerRemoval { get; set; }//sticker_removal - enum('No','Yes')
         public int TrackerRemoval { get; set; }//tracker_removal – int(10)
+
         public string ModifiedBy { get; set; } //modified_by
     }
 
