@@ -197,10 +197,12 @@ namespace Web.Api.Infrastructure.Data.Repositories
             try
             {
                 var tableName = $"HC_Staff_Patient.patient_obj p, " +
-                                $"HC_Treatment.scheduled_obj sc";
+                                $"HC_Treatment.scheduled_obj sc, " +
+                                $"HC_Master_Details.request_crm_obj rc";
 
                 var ColumAssign = $"sc.scheduled_id as ScheduledId, sc.patient_staff_id as PatientStaffId, " +
                                   $"sc.patient_id as PatientId, p.patient_name as PatientName, p.age as Age, " +
+                                  $"p.request_id as RequestId, rc.request_crm_name as RequestCrmName, " +
                                   $"sc.initial_pcr_test_date as PCRTestDate, sc.initial_pcr_test_result as PCRResult, " +
                                   $"sc.have_vaccine as HaveVaccine, " +
 
@@ -259,7 +261,8 @@ namespace Web.Api.Infrastructure.Data.Repositories
 
                 var whereCond = $" where sc.patient_id = p.patient_id" +
                                 $" and sc.status = 'Active'" +
-                                $" and p.status = 'Active'";
+                                $" and p.status = 'Active'"+
+                                $" and p.request_id = rc.request_crm_id";
 
                 if (!string.IsNullOrEmpty(companyId))
                     whereCond += " and p.company_id = '" + companyId + "'";

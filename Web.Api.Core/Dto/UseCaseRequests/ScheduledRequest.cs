@@ -60,8 +60,8 @@ namespace Web.Api.Core.Dto.UseCaseRequests
         public string CreatedBy { get; set; } //created_by
         public string ModifiedBy { get; set; } //modified_by
         public bool IsUpdate { get; set; }
-        public int RequestId { get; set; }//1-HQP, 2- HIP, 3- CRM
-        public string RequestCrmName { get; set; }
+        public int RequestId { get; set; }//request_id - int(10)
+        public string RequestCrmName { get; set; }//1-HQP, 2- HIP, 3- CRM
     }
     public class ScheduledDetails
     {
@@ -73,6 +73,8 @@ namespace Web.Api.Core.Dto.UseCaseRequests
         public string PatientId { get; set; }
         public string PatientName { get; set; }
         public int Age { get; set; }
+        public int RequestId { get; set; }//request_id - int(10)
+        public string RequestCrmName { get; set; }//1-HQP, 2- HIP, 3- CRM
         public PatientDetails PatientInformation { get; set; }
         public DateTime PCRTestDate { get; set; }//initial_pcr_test_date – datetime
         public string PCRResult { get; set; }//initial_pcr_test_result - enum('Negative','Positive')
