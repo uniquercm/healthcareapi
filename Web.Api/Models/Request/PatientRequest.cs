@@ -56,6 +56,10 @@ namespace Web.Api.Models.Request
         public DateTime PCRSampleDate { get; set; }
         public string PCRResult { get; set;}
 
+        public DateTime DischargeDate { get; set; }
+        public string DischargeRemarks { get; set; }
+        public string DischargeStatus { get; set; }
+
         public DateTime TrackerScheduleDate { get; set; }//tracker_schedule_date - datetime
         public DateTime TrackerAppliedDate { get; set; }//tracker_applied_date - datetime
         public DateTime StickerScheduleDate { get; set; }//sticker_schedule_date - datetime
