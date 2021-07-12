@@ -36,20 +36,25 @@ namespace Web.Api.Core.UseCases
         {
             AcknowledgementResponse acknowledgementResponse;
 
-            if(request.IsUpdate)//Edit a Scheduled
+            if(request.RequestId == 1 || request.RequestId == 2)
             {
-                if(await _scheduledRepository.EditScheduled(request))
-                    acknowledgementResponse = new AcknowledgementResponse(true, "Scheduled Successfully Modifyed");
-                else
-                    acknowledgementResponse = new AcknowledgementResponse(new[] { new Error("Error Occurred", "Error Occurred")}, false);
+                if(request.IsUpdate)//Edit a Scheduled
+                {
+                    if(await _scheduledRepository.EditScheduled(request))
+                        acknowledgementResponse = new AcknowledgementResponse(true, "Scheduled Successfully Modifyed");
+                    else
+                        acknowledgementResponse = new AcknowledgementResponse(new[] { new Error("Error Occurred", "Error Occurred")}, false);
+                }
+                else//Create a Scheduled
+                {
+                    if(await _scheduledRepository.CreateScheduled(request))
+                        acknowledgementResponse = new AcknowledgementResponse(true, "Scheduled Created Successfully");
+                    else
+                        acknowledgementResponse = new AcknowledgementResponse(new[] { new Error("Error Occurred", "Error Occurred")}, false);
+                }
             }
-            else//Create a Scheduled
-            {
-                if(await _scheduledRepository.CreateScheduled(request))
-                    acknowledgementResponse = new AcknowledgementResponse(true, "Scheduled Created Successfully");
-                else
-                    acknowledgementResponse = new AcknowledgementResponse(new[] { new Error("Error Occurred", "Error Occurred")}, false);
-            }
+            else
+                acknowledgementResponse = new AcknowledgementResponse(new[] { new Error("Error Occurred", "Invalid Request Id")}, false);
             outputPort.Handle(acknowledgementResponse);
             return true;
         }

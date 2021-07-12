@@ -702,6 +702,8 @@ namespace Web.Api.Infrastructure.Data.Repositories
 
                     scheduledRequest.TrackerScheduleDate = scheduledRequest.TreatmentFromDate.AddDays(1);
                 }
+                else
+                    return false;
 
                 scheduledRequest.StickerScheduleDate = scheduledRequest.DischargeDate;
 
@@ -1125,6 +1127,8 @@ namespace Web.Api.Infrastructure.Data.Repositories
 
                     scheduledRequest.TrackerScheduleDate = scheduledRequest.TreatmentFromDate.AddDays(1);
                 }
+                else
+                    return false;
 
                 scheduledRequest.StickerScheduleDate = scheduledRequest.DischargeDate;
 
