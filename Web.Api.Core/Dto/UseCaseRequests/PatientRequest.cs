@@ -93,6 +93,7 @@ namespace Web.Api.Core.Dto.UseCaseRequests
         public string ScheduledId { get; set; }
         public string Status { get; set; } //status - enum('Active','InActive')
         public string CreatedBy { get; set; } //created_by
+        public DateTime CreatedOn { get; set; } //created_on
         public string ModifiedBy { get; set; } //modified_by
     }
 

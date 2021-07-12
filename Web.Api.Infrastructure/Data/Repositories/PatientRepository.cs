@@ -48,7 +48,8 @@ namespace Web.Api.Infrastructure.Data.Repositories
                               $"p.reception_date as RecptionCallDate, p.reception_status as RecptionCallStatus, " +
                               $"p.reception_remarks as RecptionCallRemarks, " +
                               $"p.status as Status, " +
-                              $"p.created_by as CreatedBy, p.modified_by as ModifiedBy";
+                              $"p.created_by as CreatedBy, p.created_on as CreatedOn, " +
+                              $"p.modified_by as ModifiedBy";
 
                 var whereCond = " where p.company_id = co.company_id"  +
                                 $" and p.city_id = ci.city_id" +
