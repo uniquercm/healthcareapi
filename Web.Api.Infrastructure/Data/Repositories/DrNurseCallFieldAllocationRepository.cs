@@ -444,34 +444,34 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     ColumAssign += $"'4thday' as CallId, sc.4day_pcr_test_date as CallScheduledDate, " +
                                   $"sc.4day_pcr_test_sample_date as CalledDate, " +
                                   $"sc.4day_pcr_test_result as CallStatus, " +
-                                  $"sc.4day_pcr_team_user_name as PCR4DayTeamUserName, " +
-                                  $"sc.4day_pcr_team_status as PCR4DayTeamStatus, " +
-                                  $"sc.4day_pcr_team_remark as PCR4DayTeamRemark, " +
-                                  $"sc.4day_pcr_team_date as PCR4DayTeamStatusDate";
+                                  $"sc.4day_pcr_team_user_name as TeamUserName, " +
+                                  $"sc.4day_pcr_team_status as TeamStatus, " +
+                                  $"sc.4day_pcr_team_remark as TeamRemark, " +
+                                  $"sc.4day_pcr_team_date as TeamStatusDate";
                 else if(pcrDayNumber.Equals("6"))
                     ColumAssign += $"'6thday' as CallId, sc.6day_pcr_test_date as CallScheduledDate, " +
                                   $"sc.6day_pcr_test_sample_date as CalledDate, " +
                                   $"sc.6day_pcr_test_result as CallStatus, " +
-                                  $"sc.6day_pcr_team_user_name as PCR6DayTeamUserName, " +
-                                  $"sc.6day_pcr_team_status as PCR6DayTeamStatus, " +
-                                  $"sc.6day_pcr_team_remark as PCR6DayTeamRemark, " +
-                                  $"sc.6day_pcr_team_date as PCR6DayTeamStatusDate";
+                                  $"sc.6day_pcr_team_user_name as TeamUserName, " +
+                                  $"sc.6day_pcr_team_status as TeamStatus, " +
+                                  $"sc.6day_pcr_team_remark as TeamRemark, " +
+                                  $"sc.6day_pcr_team_date as TeamStatusDate";
                 else if(pcrDayNumber.Equals("8"))
                     ColumAssign += $"'8thday' as CallId, sc.8day_pcr_test_date as CallScheduledDate, " +
                                   $"sc.8day_pcr_test_sample_date as CalledDate, " +
                                   $"sc.8day_pcr_test_result as CallStatus, " +
-                                  $"sc.8day_pcr_team_user_name as PCR8DayTeamUserName, " +
-                                  $"sc.8day_pcr_team_status as PCR8DayTeamStatus, " +
-                                  $"sc.8day_pcr_team_remark as PCR8DayTeamRemark, " +
-                                  $"sc.8day_pcr_team_date as PCR8DayTeamStatusDate";
+                                  $"sc.8day_pcr_team_user_name as TeamUserName, " +
+                                  $"sc.8day_pcr_team_status as TeamStatus, " +
+                                  $"sc.8day_pcr_team_remark as TeamRemark, " +
+                                  $"sc.8day_pcr_team_date as TeamStatusDate";
                 else
                     ColumAssign += $"'11thday' as CallId, sc.11day_pcr_test_date as CallScheduledDate, " +
                                   $"sc.11day_pcr_test_sample_date as CalledDate, " +
                                   $"sc.11day_pcr_test_result as CallStatus, " +
-                                  $"sc.11day_pcr_team_user_name as PCR11DayTeamUserName, " +
-                                  $"sc.11day_pcr_team_status as PCR11DayTeamStatus, " +
-                                  $"sc.11day_pcr_team_remark as PCR11DayTeamRemark, " +
-                                  $"sc.11day_pcr_team_date as PCR11DayTeamStatusDate";
+                                  $"sc.11day_pcr_team_user_name as TeamUserName, " +
+                                  $"sc.11day_pcr_team_status as TeamStatus, " +
+                                  $"sc.11day_pcr_team_remark as TeamRemark, " +
+                                  $"sc.11day_pcr_team_date as TeamStatusDate";
 
                 var whereCond = $" where p.company_id = co.company_id" +
                                 $" and p.patient_id = sc.patient_id" +
@@ -600,18 +600,18 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     ColumAssign += $"'tracker' as CallId, sc.tracker_schedule_date as CallScheduledDate, " +
                                 $"sc.tracker_applied_date as CalledDate, sc.sticker_tracker_no as Remarks, " +
                                 $"sc.sticker_tracker_result as CallStatus, " +
-                                $"sc.tracker_team_user_name as TrackerTeamUserName, " +
-                                $"sc.tracker_team_status as TrackerTeamStatus, " +
-                                $"sc.tracker_team_remark as TrackerTeamRemark, " +
-                                $"sc.tracker_team_date as TrackerTeamStatusDate";
+                                $"sc.tracker_team_user_name as TeamUserName, " +
+                                $"sc.tracker_team_status as TeamStatus, " +
+                                $"sc.tracker_team_remark as TeamRemark, " +
+                                $"sc.tracker_team_date as TeamStatusDate";
                 else
                     ColumAssign += $"'sticker' as CallId, sc.sticker_schedule_date as CallScheduledDate, " +
                                 $"sc.sticker_removed_date as CalledDate, sc.sticker_tracker_no as Remarks, " +
                                 $"sc.sticker_tracker_result as CallStatus, " +
-                                $"sc.sticker_team_user_name as StickerTeamUserName, " +
-                                $"sc.sticker_team_status as StickerTeamStatus, " +
-                                $"sc.sticker_team_remark as StickerTeamRemark, " +
-                                $"sc.sticker_team_date as StickerTeamStatusDate";
+                                $"sc.sticker_team_user_name as TeamUserName, " +
+                                $"sc.sticker_team_status as TeamStatus, " +
+                                $"sc.sticker_team_remark as TeamRemark, " +
+                                $"sc.sticker_team_date as TeamStatusDate";
 
                 var whereCond = $" where p.company_id = co.company_id" +
                                 $" and p.patient_id = sc.patient_id" +
@@ -708,10 +708,10 @@ namespace Web.Api.Infrastructure.Data.Repositories
                                   $"'discharge' as CallId, sc.discharge_date as CallScheduledDate, " +
                                   $"sc.discharge_remarks as Remarks, " +
                                   $"sc.discharge_status as CallStatus, " +
-                                  $"sc.discharge_team_user_name as DischargeTeamUserName, " +
-                                  $"sc.discharge_team_status as DischargeTeamStatus, " +
-                                  $"sc.discharge_team_remark as DischargeTeamRemark, " +
-                                  $"sc.discharge_team_date as DischargeTeamStatusDate";
+                                  $"sc.discharge_team_user_name as TeamUserName, " +
+                                  $"sc.discharge_team_status as TeamStatus, " +
+                                  $"sc.discharge_team_remark as TeamRemark, " +
+                                  $"sc.discharge_team_date as TeamStatusDate";
 
                 var whereCond = $" where p.company_id = co.company_id" +
                                 $" and p.patient_id = sc.patient_id" +
