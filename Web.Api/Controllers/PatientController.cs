@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -62,11 +63,12 @@ namespace Web.Api.Controllers
         /// <param name="patientId">Patient Id (optional)</param>
         /// <param name="gMapLinkSatus"> Google Map Link (all, yes, no) (optional)</param>
         /// <param name="searchStatus"> Search Status (all, completed, pending, scheduled, notscheduled) (optional)</param>
+        /// <param name="areaNames">Multiple Area Name (all, )</param>
         /// <returns>Patient Details</returns>
         [HttpGet("patient")]
-        public async Task<ActionResult> GetPatientDetails(DateTime fromDate, DateTime toDate, string companyId = "", string patientId = "", string gMapLinkSatus = "all", string searchStatus = "all")
+        public async Task<ActionResult> GetPatientDetails(DateTime fromDate, DateTime toDate, string companyId = "", string patientId = "", string gMapLinkSatus = "all", string searchStatus = "all", string areaNames = "all")
         {
-            await _patientUseCases.Handle(new GetDetailsRequest(companyId, patientId, fromDate, toDate, gMapLinkSatus, searchStatus), _getDetailsPresenter);
+            await _patientUseCases.Handle(new GetDetailsRequest(companyId, patientId, fromDate, toDate, gMapLinkSatus, searchStatus, areaNames), _getDetailsPresenter);
             return _getDetailsPresenter.ContentResult;
         }
 

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Web.Api.Core.Dto.UseCaseResponses;
 using Web.Api.Core.Interfaces;
 
@@ -26,6 +27,7 @@ namespace Web.Api.Core.Dto.UseCaseRequests
         public string DateSearchType { get; set; }//schedule, allocated, reallocaed
         public string SearchStatus { get; set; }//all, completed, pending, scheduled, notscheduled
         public bool IsTeamFieldAllocation { get; set; }
+        public string AreaNames { get; set; }
 
         public GetDetailsRequest()
         {   }
@@ -51,7 +53,7 @@ namespace Web.Api.Core.Dto.UseCaseRequests
             PatientId = patientId;
             LableName = lableName;
         }
-        public GetDetailsRequest(string companyId, string patientId, DateTime scheduledFromDate, DateTime scheduledToDate, string lableName, string searchStatus)
+        public GetDetailsRequest(string companyId, string patientId, DateTime scheduledFromDate, DateTime scheduledToDate, string lableName, string searchStatus, string areaNames)
         {
             CompanyId = companyId;
             PatientId = patientId;
@@ -59,6 +61,7 @@ namespace Web.Api.Core.Dto.UseCaseRequests
             ScheduledToDate = scheduledToDate;
             LableName = lableName;
             SearchStatus = searchStatus;
+            AreaNames = areaNames; 
         }
         public GetDetailsRequest(string companyId, DateTime scheduledFromDate, DateTime scheduledToDate, string lableName, string callStatus, string teamUserName, string serviceName, string dateSearchType)
         {

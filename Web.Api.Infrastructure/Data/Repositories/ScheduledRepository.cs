@@ -410,7 +410,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                         if(isFieldAllocation)
                         {
                             List<PatientDetails> patientDetailsList = new List<PatientDetails>();
-                            patientDetailsList = await patientRepository.GetPatientDetails(companyId, singleScheduledDetails.PatientId, "all", new DateTime(01,01,01), new DateTime(01,01,01), "all");
+                            patientDetailsList = await patientRepository.GetPatientDetails(companyId, singleScheduledDetails.PatientId, "all", new DateTime(01,01,01), new DateTime(01,01,01), "all", "all");
                             if(patientDetailsList.Count > 0)
                                 singleScheduledDetails.PatientInformation = patientDetailsList[0];
                         }
@@ -694,7 +694,9 @@ namespace Web.Api.Infrastructure.Data.Repositories
                         scheduledRequest.Day7CallId = "";
                         scheduledRequest.Day9CallId = "";
 
-                        scheduledRequest.DischargeDate = scheduledRequest.TreatmentFromDate.AddDays(3);
+                        //Intial PCR Result - Negative & Vacclin - Yes means 4th day Discharge Date
+                        //scheduledRequest.DischargeDate = scheduledRequest.TreatmentFromDate.AddDays(3);
+                        scheduledRequest.DischargeDate = scheduledRequest.TreatmentToDate;
                     }
 
                     scheduledRequest.PCR4DayTestDate = scheduledRequest.TreatmentFromDate.AddDays(3);

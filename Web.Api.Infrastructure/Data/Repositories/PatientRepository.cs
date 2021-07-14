@@ -18,7 +18,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
         {
             _appDbContext = appDbContext;
         }
-        public async Task<List<PatientDetails>> GetPatientDetails(string companyId, string patientId, string gMapLinkSatus, DateTime assignedFromDate, DateTime assignedToDate, string searchStatus)
+        public async Task<List<PatientDetails>> GetPatientDetails(string companyId, string patientId, string gMapLinkSatus, DateTime assignedFromDate, DateTime assignedToDate, string searchStatus, string areaNames)
         {
             List<PatientDetails> retPatientDetailsList = new List<PatientDetails>();
             try
@@ -56,6 +56,23 @@ namespace Web.Api.Infrastructure.Data.Repositories
                                 $" and p.nationality_id = n.nationality_id" +
                                 $" and p.status = 'Active'" +
                                 $" and p.request_id = rc.request_crm_id";
+
+                if(!String.IsNullOrEmpty(areaNames) && areaNames != "all")
+                {
+                    string[] areaArray = areaNames.Replace("[","").Replace("]","").Replace("\"","").Split(',');
+
+                    for(int i = 0; i < areaArray.Count(); i++)
+                    {
+                        if(i == 0 && areaArray.Count() > 1)
+                            whereCond += " and (p.area = '" + areaArray[i] + "'";
+                        else if(i == 0)
+                            whereCond += " and p.area = '" + areaArray[i] + "'";
+                        else if(i == areaArray.Count()-1)
+                            whereCond += " or p.area = '" + areaArray[i] + "')";
+                        else 
+                            whereCond += " or p.area = '" + areaArray[i] + "'";
+                    }
+                }
 
                 if (!string.IsNullOrEmpty(companyId))
                     whereCond += " and p.company_id = '" + companyId + "'";
