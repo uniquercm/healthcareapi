@@ -696,7 +696,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
 
                         //Intial PCR Result - Negative & Vacclin - Yes means 4th day Discharge Date
                         //scheduledRequest.DischargeDate = scheduledRequest.TreatmentFromDate.AddDays(3);
-                        scheduledRequest.DischargeDate = scheduledRequest.TreatmentFromDate.AddDays(9);;
+                        scheduledRequest.DischargeDate = scheduledRequest.TreatmentFromDate.AddDays(9);
                     }
 
                     scheduledRequest.PCR4DayTestDate = scheduledRequest.TreatmentFromDate.AddDays(3);
@@ -1121,7 +1121,9 @@ namespace Web.Api.Infrastructure.Data.Repositories
                         scheduledRequest.Day7CallId = "";
                         scheduledRequest.Day9CallId = "";
 
-                        scheduledRequest.DischargeDate = scheduledRequest.TreatmentFromDate.AddDays(3);
+                        //Intial PCR Result - Negative & Vacclin - Yes means 4th day Discharge Date
+                        //scheduledRequest.DischargeDate = scheduledRequest.TreatmentFromDate.AddDays(3);
+                        scheduledRequest.DischargeDate = scheduledRequest.TreatmentFromDate.AddDays(9);
                     }
 
                     scheduledRequest.PCR4DayTestDate = scheduledRequest.TreatmentFromDate.AddDays(3);
