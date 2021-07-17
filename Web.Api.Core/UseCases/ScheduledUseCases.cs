@@ -38,19 +38,24 @@ namespace Web.Api.Core.UseCases
 
             if(request.RequestId == 1 || request.RequestId == 2)
             {
-                if(request.IsUpdate)//Edit a Scheduled
+                if(request.RequestId == 1 && request.PCRResult.Equals("positive"))
+                    acknowledgementResponse = new AcknowledgementResponse(new[] { new Error("Error Occurred", "Change the Request Id")}, false);
+                else
                 {
-                    if(await _scheduledRepository.EditScheduled(request))
-                        acknowledgementResponse = new AcknowledgementResponse(true, "Scheduled Successfully Modifyed");
-                    else
-                        acknowledgementResponse = new AcknowledgementResponse(new[] { new Error("Error Occurred", "Error Occurred")}, false);
-                }
-                else//Create a Scheduled
-                {
-                    if(await _scheduledRepository.CreateScheduled(request))
-                        acknowledgementResponse = new AcknowledgementResponse(true, "Scheduled Created Successfully");
-                    else
-                        acknowledgementResponse = new AcknowledgementResponse(new[] { new Error("Error Occurred", "Error Occurred")}, false);
+                    if(request.IsUpdate)//Edit a Scheduled
+                    {
+                        if(await _scheduledRepository.EditScheduled(request))
+                            acknowledgementResponse = new AcknowledgementResponse(true, "Scheduled Successfully Modifyed");
+                        else
+                            acknowledgementResponse = new AcknowledgementResponse(new[] { new Error("Error Occurred", "Error Occurred")}, false);
+                    }
+                    else//Create a Scheduled
+                    {
+                        if(await _scheduledRepository.CreateScheduled(request))
+                            acknowledgementResponse = new AcknowledgementResponse(true, "Scheduled Created Successfully");
+                        else
+                            acknowledgementResponse = new AcknowledgementResponse(new[] { new Error("Error Occurred", "Error Occurred")}, false);
+                    }
                 }
             }
             else

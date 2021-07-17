@@ -687,6 +687,9 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     }
                     else
                     {
+                        scheduledRequest.TreatmentType = "quarantine";
+                        if(scheduledRequest.TreatmentFromDate.ToString("yyyy-MM-dd") == "0001-01-01")
+                            scheduledRequest.TreatmentFromDate = scheduledRequest.PCRTestDate;
                         scheduledRequest.Day3CallId = "";
                         scheduledRequest.Day4CallId = "";
                         scheduledRequest.Day5CallId = "";
@@ -697,6 +700,8 @@ namespace Web.Api.Infrastructure.Data.Repositories
                         //Intial PCR Result - Negative & Vacclin - Yes means 4th day Discharge Date
                         //scheduledRequest.DischargeDate = scheduledRequest.TreatmentFromDate.AddDays(3);
                         scheduledRequest.DischargeDate = scheduledRequest.TreatmentFromDate.AddDays(9);
+                        if(scheduledRequest.TreatmentToDate.ToString("yyyy-MM-dd") == "0001-01-01")
+                            scheduledRequest.TreatmentToDate = scheduledRequest.DischargeDate;
                     }
 
                     scheduledRequest.PCR4DayTestDate = scheduledRequest.TreatmentFromDate.AddDays(3);
@@ -1114,6 +1119,9 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     }
                     else
                     {
+                        scheduledRequest.TreatmentType = "quarantine";
+                        if(scheduledRequest.TreatmentFromDate.ToString("yyyy-MM-dd") == "0001-01-01")
+                            scheduledRequest.TreatmentFromDate = scheduledRequest.PCRTestDate;
                         scheduledRequest.Day3CallId = "";
                         scheduledRequest.Day4CallId = "";
                         scheduledRequest.Day5CallId = "";
@@ -1124,6 +1132,8 @@ namespace Web.Api.Infrastructure.Data.Repositories
                         //Intial PCR Result - Negative & Vacclin - Yes means 4th day Discharge Date
                         //scheduledRequest.DischargeDate = scheduledRequest.TreatmentFromDate.AddDays(3);
                         scheduledRequest.DischargeDate = scheduledRequest.TreatmentFromDate.AddDays(9);
+                        if(scheduledRequest.TreatmentToDate.ToString("yyyy-MM-dd") == "0001-01-01")
+                            scheduledRequest.TreatmentToDate = scheduledRequest.DischargeDate;
                     }
 
                     scheduledRequest.PCR4DayTestDate = scheduledRequest.TreatmentFromDate.AddDays(3);
