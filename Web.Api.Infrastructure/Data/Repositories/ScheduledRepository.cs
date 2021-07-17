@@ -685,9 +685,10 @@ namespace Web.Api.Infrastructure.Data.Repositories
 
                         scheduledRequest.DischargeDate = scheduledRequest.TreatmentToDate;
                     }
-                    else
+                    else if(!String.IsNullOrEmpty(scheduledRequest.TreatmentType) && 
+                        scheduledRequest.TreatmentType.ToLower() == "quarantine")
                     {
-                        scheduledRequest.TreatmentType = "quarantine";
+                        //scheduledRequest.TreatmentType = "quarantine";
                         if(scheduledRequest.TreatmentFromDate.ToString("yyyy-MM-dd") == "0001-01-01")
                             scheduledRequest.TreatmentFromDate = scheduledRequest.PCRTestDate;
                         scheduledRequest.Day3CallId = "";
@@ -702,6 +703,16 @@ namespace Web.Api.Infrastructure.Data.Repositories
                         scheduledRequest.DischargeDate = scheduledRequest.TreatmentFromDate.AddDays(9);
                         if(scheduledRequest.TreatmentToDate.ToString("yyyy-MM-dd") == "0001-01-01")
                             scheduledRequest.TreatmentToDate = scheduledRequest.DischargeDate;
+                    }
+                    else
+                    {
+                        scheduledRequest.Day3CallId = "";
+                        scheduledRequest.Day4CallId = "";
+                        scheduledRequest.Day5CallId = "";
+                        scheduledRequest.Day6CallId = "";
+                        scheduledRequest.Day7CallId = "";
+                        scheduledRequest.Day9CallId = "";
+                        scheduledRequest.DischargeDate = scheduledRequest.PCRTestDate.AddDays(9);
                     }
 
                     scheduledRequest.PCR4DayTestDate = scheduledRequest.TreatmentFromDate.AddDays(3);
@@ -1117,9 +1128,10 @@ namespace Web.Api.Infrastructure.Data.Repositories
 
                         scheduledRequest.DischargeDate = scheduledRequest.TreatmentToDate;
                     }
-                    else
+                    else if(!String.IsNullOrEmpty(scheduledRequest.TreatmentType) && 
+                        scheduledRequest.TreatmentType.ToLower() == "quarantine")
                     {
-                        scheduledRequest.TreatmentType = "quarantine";
+                        //scheduledRequest.TreatmentType = "quarantine";
                         if(scheduledRequest.TreatmentFromDate.ToString("yyyy-MM-dd") == "0001-01-01")
                             scheduledRequest.TreatmentFromDate = scheduledRequest.PCRTestDate;
                         scheduledRequest.Day3CallId = "";
@@ -1134,6 +1146,16 @@ namespace Web.Api.Infrastructure.Data.Repositories
                         scheduledRequest.DischargeDate = scheduledRequest.TreatmentFromDate.AddDays(9);
                         if(scheduledRequest.TreatmentToDate.ToString("yyyy-MM-dd") == "0001-01-01")
                             scheduledRequest.TreatmentToDate = scheduledRequest.DischargeDate;
+                    }
+                    else
+                    {
+                        scheduledRequest.Day3CallId = "";
+                        scheduledRequest.Day4CallId = "";
+                        scheduledRequest.Day5CallId = "";
+                        scheduledRequest.Day6CallId = "";
+                        scheduledRequest.Day7CallId = "";
+                        scheduledRequest.Day9CallId = "";
+                        scheduledRequest.DischargeDate = scheduledRequest.PCRTestDate.AddDays(9);
                     }
 
                     scheduledRequest.PCR4DayTestDate = scheduledRequest.TreatmentFromDate.AddDays(3);
