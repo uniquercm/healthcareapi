@@ -15,6 +15,7 @@ namespace Web.Api.Models.Request
         public string CRMNo { get; set; }
         public string EIDNo { get; set; }
         public string MobileNo { get; set; }
+        public DateTime AssignedDate { get; set; }
         public DateTime RecptionCallDate { get; set; }
         public string RecptionCallStatus { get; set; }
         public string RecptionCallRemarks { get; set; }

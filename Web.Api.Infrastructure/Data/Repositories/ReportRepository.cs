@@ -33,6 +33,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                                   $"pa.company_id as CompanyId, co.company_name as CompanyName, " +
                                   $"pa.request_id as RequestId, rc.request_crm_name as RequestCrmName, " +
                                   $"pa.crm_no as CRMNo, pa.eid_no as EIDNo, pa.mobile_no as MobileNo, " +
+                                  $"pa.assigned_date as AssignedDate, " +
                                   $"pa.no_of_adults as AdultsCount, pa.no_of_childrens as ChildrensCount, " +
                                   $"pa.enrolled_count as EnrolledCount, pa.enrolled_details as EnrolledDetails, " +
                                   $"pa.reception_date as RecptionCallDate, pa.reception_status as RecptionCallStatus, pa.reception_remarks as RecptionCallRemarks, " +
