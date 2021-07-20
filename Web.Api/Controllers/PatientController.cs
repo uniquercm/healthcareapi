@@ -62,7 +62,7 @@ namespace Web.Api.Controllers
         /// <param name="companyId">Company Id (optional)</param>
         /// <param name="patientId">Patient Id (optional)</param>
         /// <param name="gMapLinkSatus"> Google Map Link (all, yes, no) (optional)</param>
-        /// <param name="searchStatus"> Search Status (all, completed, pending, scheduled, notscheduled) (optional)</param>
+        /// <param name="searchStatus"> Search Status (all, completed, pending, closed, scheduled, notscheduled) (optional)</param>
         /// <param name="areaNames">Multiple Area Name (all, )</param>
         /// <returns>Patient Details</returns>
         [HttpGet("patient")]

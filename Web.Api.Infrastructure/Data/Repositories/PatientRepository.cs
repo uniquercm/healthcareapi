@@ -90,10 +90,13 @@ namespace Web.Api.Infrastructure.Data.Repositories
 
                 if (!string.IsNullOrEmpty(searchStatus))
                 {
-                    if(searchStatus.Equals("completed"))
+                    whereCond += " and p.reception_status = '" + searchStatus + "'";
+                    /*if(searchStatus.Equals("completed"))
                         whereCond += " and p.reception_status = 'completed'";
                     else if(searchStatus.Equals("pending"))
                         whereCond += " and p.reception_status = 'pending'";
+                    else if(searchStatus.Equals("closed"))
+                        whereCond += " and p.reception_status = 'closed'";*/
                 }
 
                 string timeMin = " 00:00:00.0";
