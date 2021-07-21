@@ -90,7 +90,9 @@ namespace Web.Api.Infrastructure.Data.Repositories
 
                 if (!string.IsNullOrEmpty(searchStatus))
                 {
-                    if(!searchStatus.Equals("scheduled") && !searchStatus.Equals("notscheduled"))
+                    if(!searchStatus.Equals("scheduled") 
+                        && !searchStatus.Equals("notscheduled")
+                        && !searchStatus.Equals("all"))
                         whereCond += " and p.reception_status = '" + searchStatus + "'";
                     /*if(searchStatus.Equals("completed"))
                         whereCond += " and p.reception_status = 'completed'";
