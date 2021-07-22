@@ -16,7 +16,9 @@ namespace Web.Api.Models.Request
         public string RequestCrmName { get; set; }
         public string CRMNo { get; set; }
         public string EIDNo { get; set; }
-        public DateTime DateOfBirth { get; set; }
+        public string DateOfBirth { get; set; }//Thanam
+        //public DateTime DateOfBirth { get; set; }//Thanam
+        public DateTime DOB { get; set; }//Thanam
         public int Age { get; set; }
         public string Sex { get; set; }
         public string Address { get; set; }
@@ -25,7 +27,9 @@ namespace Web.Api.Models.Request
         public int CityId { get; set; }
         public int NationalityId { get; set; }
         public string NationalityName { get; set; }
-        public DateTime AssignedDate { get; set; }
+        public string AssignedDate { get; set; }//Thanam
+        //public DateTime AssignedDate { get; set; }//Thanam
+        public DateTime AssignDate { get; set; }//Thanam
         public string MobileNo { get; set; }
         public string GoogleMapLink { get; set; }
         public int AdultsCount { get; set; }

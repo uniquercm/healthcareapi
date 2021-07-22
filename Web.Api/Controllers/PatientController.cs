@@ -71,6 +71,11 @@ namespace Web.Api.Controllers
             await _patientUseCases.Handle(new GetDetailsRequest(companyId, patientId, fromDate, toDate, gMapLinkSatus, searchStatus, areaNames), _getDetailsPresenter);
             return _getDetailsPresenter.ContentResult;
         }
+        /*public async Task<ActionResult> GetPatientDetails(DateTime fromDate, DateTime toDate, string companyId = "", string patientId = "", string gMapLinkSatus = "all", string searchStatus = "all", string areaNames = "all")
+        {
+            await _patientUseCases.Handle(new GetDetailsRequest(companyId, patientId, fromDate, toDate, gMapLinkSatus, searchStatus, areaNames), _getDetailsPresenter);
+            return _getDetailsPresenter.ContentResult;
+        }*/
 
 
         /// <summary>
@@ -97,6 +102,11 @@ namespace Web.Api.Controllers
             await _patientUseCases.Handle(_mapper.Map<FilePatientRequest>(request), _acknowledgementPresenter);
             return _acknowledgementPresenter.ContentResult;
         }
+        /*public async Task<ActionResult> CreateListOfPatient([FromBody] Models.Request.FilePatientRequest request)
+        {
+            await _patientUseCases.Handle(_mapper.Map<FilePatientRequest>(request), _acknowledgementPresenter);
+            return _acknowledgementPresenter.ContentResult;
+        }*/
 
         /// <summary>
         /// Modifying a Patient
