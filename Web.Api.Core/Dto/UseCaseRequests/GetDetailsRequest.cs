@@ -104,7 +104,7 @@ namespace Web.Api.Core.Dto.UseCaseRequests
             ScheduledToDate = scheduledToDate;
             LableName = lableName;
         }
-        public GetDetailsRequest(string companyId, string patientId, string scheduledId, DateTime scheduledFromDate, DateTime scheduledToDate, string lableName, string fieldAllocationStatus, string serviceName, string serviceStatus, bool isTeamFieldAllocation)
+        public GetDetailsRequest(string companyId, string patientId, string scheduledId, DateTime scheduledFromDate, DateTime scheduledToDate, string lableName, string fieldAllocationStatus, string serviceName, string serviceStatus, bool isTeamFieldAllocation, string areaNames)
         {
             CompanyId = companyId;
             PatientId = patientId;
@@ -116,6 +116,7 @@ namespace Web.Api.Core.Dto.UseCaseRequests
             ServiceName = serviceName;
             ServiceStatus = serviceStatus;
             IsTeamFieldAllocation = isTeamFieldAllocation;
+            AreaNames = areaNames;
         }
         public GetDetailsRequest(string companyId, string patientId, string scheduledId, DateTime scheduledFromDate, DateTime scheduledToDate, string lableName, string extractData, string sendClaim)
         {

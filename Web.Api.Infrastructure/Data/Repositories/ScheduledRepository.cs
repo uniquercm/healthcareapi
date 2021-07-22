@@ -191,7 +191,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
         //     return retScheduledDetailsList;
         // }
 
-        public async Task<List<ScheduledDetails>> GetScheduledDetails(string companyId, string scheduledId, string patientId, bool isFieldAllocation, IPatientRepository patientRepository, DateTime scheduledFromDate, DateTime scheduledToDate, string searchAllowTeamType, string serviceName, string serviceStatus, bool isTeam)
+        public async Task<List<ScheduledDetails>> GetScheduledDetails(string companyId, string scheduledId, string patientId, bool isFieldAllocation, IPatientRepository patientRepository, DateTime scheduledFromDate, DateTime scheduledToDate, string searchAllowTeamType, string serviceName, string serviceStatus, bool isTeam, string areaNames)
         {
             List<ScheduledDetails> retScheduledDetailsList = new List<ScheduledDetails>();
             try
@@ -367,6 +367,23 @@ namespace Web.Api.Infrastructure.Data.Repositories
                         whereCond += " and sc.11day_pcr_test_result = '" + serviceStatus + "'";
                     else if(serviceName.Equals("discharge"))
                         whereCond += " and p.discharge_status = '" + serviceStatus + "'";
+                }
+
+                if(!String.IsNullOrEmpty(areaNames) && areaNames != "all")
+                {
+                    string[] areaArray = areaNames.Replace("[","").Replace("]","").Replace("\"","").Split(',');
+
+                    for(int i = 0; i < areaArray.Count(); i++)
+                    {
+                        if(i == 0 && areaArray.Count() > 1)
+                            whereCond += " and (p.area = '" + areaArray[i] + "'";
+                        else if(i == 0)
+                            whereCond += " and p.area = '" + areaArray[i] + "'";
+                        else if(i == areaArray.Count()-1)
+                            whereCond += " or p.area = '" + areaArray[i] + "')";
+                        else 
+                            whereCond += " or p.area = '" + areaArray[i] + "'";
+                    }
                 }
 
                 var orderCond = $" order by sc.created_on DESC ";
