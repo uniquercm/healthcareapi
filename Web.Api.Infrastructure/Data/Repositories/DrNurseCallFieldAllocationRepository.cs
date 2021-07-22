@@ -19,7 +19,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
             _appDbContext = appDbContext;
         }
 
-        public async Task<List<DrNurseCallDetails>> GetFieldAllowCallDetails(string companyId, string teamUserName, string callName, DateTime scheduledFromDate, DateTime scheduledToDate, string callStatus, string serviceName, string serviceStatus, string dateSearchType)
+        public async Task<List<DrNurseCallDetails>> GetFieldAllowCallDetails(string companyId, string teamUserName, string callName, DateTime scheduledFromDate, DateTime scheduledToDate, string callStatus, string serviceName, string serviceStatus, string dateSearchType, string areaNames)
         {
             List<DrNurseCallDetails> retDrNurseCallDetails = new List<DrNurseCallDetails>();
             List<DrNurseCallDetails> dayCallDetails = new List<DrNurseCallDetails>();
@@ -30,7 +30,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     /*comminted for 4 th PCR
                     if(serviceName.Equals("4pcr") || serviceName.Equals("all"))
                     {
-                        dayCallDetails = await GetPCRCallDetails(companyId, teamUserName, "4", scheduledFromDate, scheduledToDate, callStatus, serviceStatus, dateSearchType);
+                        dayCallDetails = await GetPCRCallDetails(companyId, teamUserName, "4", scheduledFromDate, scheduledToDate, callStatus, serviceStatus, dateSearchType, areaNames);
                         if(retDrNurseCallDetails.Count > 0)
                         {
                             foreach(DrNurseCallDetails singleDrNurseCallDetails in dayCallDetails)
@@ -62,7 +62,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     {
                         if(serviceName.Equals("tracker") || serviceName.Equals("all"))
                         {
-                            dayCallDetails = await GetTrackerStickerCallDetails(companyId, teamUserName, true, scheduledFromDate, scheduledToDate, callStatus, serviceStatus, dateSearchType);
+                            dayCallDetails = await GetTrackerStickerCallDetails(companyId, teamUserName, true, scheduledFromDate, scheduledToDate, callStatus, serviceStatus, dateSearchType, areaNames);
                             if(retDrNurseCallDetails.Count > 0)
                             {
                                 foreach(DrNurseCallDetails singleDrNurseCallDetails in dayCallDetails)
@@ -74,7 +74,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
 
                         if(serviceName.Equals("6pcr") || serviceName.Equals("all"))
                         {
-                            dayCallDetails = await GetPCRCallDetails(companyId, teamUserName, "6", scheduledFromDate, scheduledToDate, callStatus, serviceStatus, dateSearchType);
+                            dayCallDetails = await GetPCRCallDetails(companyId, teamUserName, "6", scheduledFromDate, scheduledToDate, callStatus, serviceStatus, dateSearchType, areaNames);
                             if(retDrNurseCallDetails.Count > 0)
                             {
                                 foreach(DrNurseCallDetails singleDrNurseCallDetails in dayCallDetails)
@@ -98,7 +98,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
 
                         if(serviceName.Equals("8pcr") || serviceName.Equals("eight") || serviceName.Equals("all"))
                         {
-                            dayCallDetails = await GetPCRCallDetails(companyId, teamUserName, "8", scheduledFromDate, scheduledToDate, callStatus, serviceStatus, dateSearchType);
+                            dayCallDetails = await GetPCRCallDetails(companyId, teamUserName, "8", scheduledFromDate, scheduledToDate, callStatus, serviceStatus, dateSearchType, areaNames);
                             if(retDrNurseCallDetails.Count > 0)
                             {
                                 foreach(DrNurseCallDetails singleDrNurseCallDetails in dayCallDetails)
@@ -122,7 +122,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
 
                         if(serviceName.Equals("11pcr") || serviceName.Equals("all"))
                         {
-                            dayCallDetails = await GetPCRCallDetails(companyId, teamUserName, "11", scheduledFromDate, scheduledToDate, callStatus, serviceStatus, dateSearchType);
+                            dayCallDetails = await GetPCRCallDetails(companyId, teamUserName, "11", scheduledFromDate, scheduledToDate, callStatus, serviceStatus, dateSearchType, areaNames);
                             if(retDrNurseCallDetails.Count > 0)
                             {
                                 foreach(DrNurseCallDetails singleDrNurseCallDetails in dayCallDetails)
@@ -146,7 +146,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
 
                         if(serviceName.Equals("sticker") || serviceName.Equals("all"))
                         {
-                            dayCallDetails = await GetTrackerStickerCallDetails(companyId, teamUserName, false, scheduledFromDate, scheduledToDate, callStatus, serviceStatus, dateSearchType);
+                            dayCallDetails = await GetTrackerStickerCallDetails(companyId, teamUserName, false, scheduledFromDate, scheduledToDate, callStatus, serviceStatus, dateSearchType, areaNames);
                             if(retDrNurseCallDetails.Count > 0)
                             {
                                 foreach(DrNurseCallDetails singleDrNurseCallDetails in dayCallDetails)
@@ -170,7 +170,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
 
                         if(serviceName.Equals("discharge") || serviceName.Equals("all"))
                         {
-                            dayCallDetails = await GetDischargeCallDetails(companyId, teamUserName, scheduledFromDate, scheduledToDate, callStatus, serviceStatus, dateSearchType);
+                            dayCallDetails = await GetDischargeCallDetails(companyId, teamUserName, scheduledFromDate, scheduledToDate, callStatus, serviceStatus, dateSearchType, areaNames);
                             if(retDrNurseCallDetails.Count > 0)
                             {
                                 foreach(DrNurseCallDetails singleDrNurseCallDetails in dayCallDetails)
@@ -195,7 +195,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                         }
                         /*if(serviceName.Equals("team") || serviceName.Equals("all"))
                         {
-                            dayCallDetails = await GetTeamFieldAllowCallDetails(companyId, teamUserName, scheduledFromDate, scheduledToDate, callStatus, serviceStatus, serviceName);
+                            dayCallDetails = await GetTeamFieldAllowCallDetails(companyId, teamUserName, scheduledFromDate, scheduledToDate, callStatus, serviceStatus, serviceName, areaNames);
                             if(retDrNurseCallDetails.Count > 0)
                             {
                                 foreach(DrNurseCallDetails singleDrNurseCallDetails in dayCallDetails)
@@ -214,7 +214,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
             return retDrNurseCallDetails;
         }
 
-        public async Task<List<DrNurseCallDetails>> GetDrNurseCallDetails(string companyId, string teamUserName, string callName, DateTime scheduledFromDate, DateTime scheduledToDate, string callStatus, string serviceName)
+        public async Task<List<DrNurseCallDetails>> GetDrNurseCallDetails(string companyId, string teamUserName, string callName, DateTime scheduledFromDate, DateTime scheduledToDate, string callStatus, string serviceName, string areaNames)
         {
             List<DrNurseCallDetails> retDrNurseCallDetails = new List<DrNurseCallDetails>();
             try
@@ -247,6 +247,23 @@ namespace Web.Api.Infrastructure.Data.Repositories
                                 $" and p.status = 'Active'" +
                                 $" and sc.status = 'Active'" +
                                 $" and p.request_id = rc.request_crm_id";
+
+                if(!String.IsNullOrEmpty(areaNames) && areaNames != "all")
+                {
+                    string[] areaArray = areaNames.Replace("[","").Replace("]","").Replace("\"","").Split(',');
+
+                    for(int i = 0; i < areaArray.Count(); i++)
+                    {
+                        if(i == 0 && areaArray.Count() > 1)
+                            whereCond += " and (p.area = '" + areaArray[i] + "'";
+                        else if(i == 0)
+                            whereCond += " and p.area = '" + areaArray[i] + "'";
+                        else if(i == areaArray.Count()-1)
+                            whereCond += " or p.area = '" + areaArray[i] + "')";
+                        else 
+                            whereCond += " or p.area = '" + areaArray[i] + "'";
+                    }
+                }
 
                 string fromDate = scheduledFromDate.Date.ToString("dd-MM-yyyy");
                 if(fromDate == "01-01-0001")
@@ -319,7 +336,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
             }
             return retDrNurseCallDetails;
         }
-        public async Task<List<DrNurseCallDetails>> GetTeamFieldAllowCallDetails(string companyId, string teamUserName, DateTime scheduledFromDate, DateTime scheduledToDate, string callStatus, string serviceName)
+        public async Task<List<DrNurseCallDetails>> GetTeamFieldAllowCallDetails(string companyId, string teamUserName, DateTime scheduledFromDate, DateTime scheduledToDate, string callStatus, string serviceName, string areaNames)
         {
             List<DrNurseCallDetails> retDrNurseCallDetails = new List<DrNurseCallDetails>();
             try
@@ -352,6 +369,23 @@ namespace Web.Api.Infrastructure.Data.Repositories
                                 $" and p.status = 'Active'" +
                                 $" and sc.status = 'Active'" +
                                 $" and p.request_id = rc.request_crm_id";
+
+                if(!String.IsNullOrEmpty(areaNames) && areaNames != "all")
+                {
+                    string[] areaArray = areaNames.Replace("[","").Replace("]","").Replace("\"","").Split(',');
+
+                    for(int i = 0; i < areaArray.Count(); i++)
+                    {
+                        if(i == 0 && areaArray.Count() > 1)
+                            whereCond += " and (p.area = '" + areaArray[i] + "'";
+                        else if(i == 0)
+                            whereCond += " and p.area = '" + areaArray[i] + "'";
+                        else if(i == areaArray.Count()-1)
+                            whereCond += " or p.area = '" + areaArray[i] + "')";
+                        else 
+                            whereCond += " or p.area = '" + areaArray[i] + "'";
+                    }
+                }
 
                 string fromDate = scheduledFromDate.Date.ToString("dd-MM-yyyy");
                 if(fromDate == "01-01-0001")
@@ -419,7 +453,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
             }
             return retDrNurseCallDetails;
         }
-        public async Task<List<DrNurseCallDetails>> GetPCRCallDetails(string companyId, string teamUserName, string pcrDayNumber, DateTime scheduledFromDate, DateTime scheduledToDate, string callStatus, string serviceStatus, string dateSearchType)
+        public async Task<List<DrNurseCallDetails>> GetPCRCallDetails(string companyId, string teamUserName, string pcrDayNumber, DateTime scheduledFromDate, DateTime scheduledToDate, string callStatus, string serviceStatus, string dateSearchType, string areaNames)
         {
             List<DrNurseCallDetails> retDrNurseCallDetails = new List<DrNurseCallDetails>();
             try
@@ -480,6 +514,23 @@ namespace Web.Api.Infrastructure.Data.Repositories
                                 $" and p.status = 'Active'" +
                                 $" and sc.status = 'Active'" +
                                 $" and p.request_id = rc.request_crm_id";
+
+                if(!String.IsNullOrEmpty(areaNames) && areaNames != "all")
+                {
+                    string[] areaArray = areaNames.Replace("[","").Replace("]","").Replace("\"","").Split(',');
+
+                    for(int i = 0; i < areaArray.Count(); i++)
+                    {
+                        if(i == 0 && areaArray.Count() > 1)
+                            whereCond += " and (p.area = '" + areaArray[i] + "'";
+                        else if(i == 0)
+                            whereCond += " and p.area = '" + areaArray[i] + "'";
+                        else if(i == areaArray.Count()-1)
+                            whereCond += " or p.area = '" + areaArray[i] + "')";
+                        else 
+                            whereCond += " or p.area = '" + areaArray[i] + "'";
+                    }
+                }
 
                 string fromDate = scheduledFromDate.Date.ToString("dd-MM-yyyy");
                 if(fromDate == "01-01-0001")
@@ -568,7 +619,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
             }
             return retDrNurseCallDetails;
         }
-        public async Task<List<DrNurseCallDetails>> GetTrackerStickerCallDetails(string companyId, string teamUserName, bool isTracker, DateTime scheduledFromDate, DateTime scheduledToDate, string callStatus, string serviceStatus, string dateSearchType)
+        public async Task<List<DrNurseCallDetails>> GetTrackerStickerCallDetails(string companyId, string teamUserName, bool isTracker, DateTime scheduledFromDate, DateTime scheduledToDate, string callStatus, string serviceStatus, string dateSearchType, string areaNames)
         {
             List<DrNurseCallDetails> retDrNurseCallDetails = new List<DrNurseCallDetails>();
             try
@@ -620,6 +671,23 @@ namespace Web.Api.Infrastructure.Data.Repositories
                                 $" and p.status = 'Active'" +
                                 $" and sc.status = 'Active'" +
                                 $" and p.request_id = rc.request_crm_id";
+
+                if(!String.IsNullOrEmpty(areaNames) && areaNames != "all")
+                {
+                    string[] areaArray = areaNames.Replace("[","").Replace("]","").Replace("\"","").Split(',');
+
+                    for(int i = 0; i < areaArray.Count(); i++)
+                    {
+                        if(i == 0 && areaArray.Count() > 1)
+                            whereCond += " and (p.area = '" + areaArray[i] + "'";
+                        else if(i == 0)
+                            whereCond += " and p.area = '" + areaArray[i] + "'";
+                        else if(i == areaArray.Count()-1)
+                            whereCond += " or p.area = '" + areaArray[i] + "')";
+                        else 
+                            whereCond += " or p.area = '" + areaArray[i] + "'";
+                    }
+                }
 
                 string fromDate = scheduledFromDate.Date.ToString("dd-MM-yyyy");
                 if(fromDate == "01-01-0001")
@@ -685,7 +753,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
             }
             return retDrNurseCallDetails;
         }
-        public async Task<List<DrNurseCallDetails>> GetDischargeCallDetails(string companyId, string teamUserName, DateTime scheduledFromDate, DateTime scheduledToDate, string callStatus, string serviceStatus, string dateSearchType)
+        public async Task<List<DrNurseCallDetails>> GetDischargeCallDetails(string companyId, string teamUserName, DateTime scheduledFromDate, DateTime scheduledToDate, string callStatus, string serviceStatus, string dateSearchType, string areaNames)
         {
             List<DrNurseCallDetails> retDrNurseCallDetails = new List<DrNurseCallDetails>();
             try
@@ -720,6 +788,23 @@ namespace Web.Api.Infrastructure.Data.Repositories
                                 $" and p.status = 'Active'" +
                                 $" and sc.status = 'Active'" +
                                 $" and p.request_id = rc.request_crm_id";
+
+                if(!String.IsNullOrEmpty(areaNames) && areaNames != "all")
+                {
+                    string[] areaArray = areaNames.Replace("[","").Replace("]","").Replace("\"","").Split(',');
+
+                    for(int i = 0; i < areaArray.Count(); i++)
+                    {
+                        if(i == 0 && areaArray.Count() > 1)
+                            whereCond += " and (p.area = '" + areaArray[i] + "'";
+                        else if(i == 0)
+                            whereCond += " and p.area = '" + areaArray[i] + "'";
+                        else if(i == areaArray.Count()-1)
+                            whereCond += " or p.area = '" + areaArray[i] + "')";
+                        else 
+                            whereCond += " or p.area = '" + areaArray[i] + "'";
+                    }
+                }
 
                 string fromDate = scheduledFromDate.Date.ToString("dd-MM-yyyy");
                 if(fromDate == "01-01-0001")

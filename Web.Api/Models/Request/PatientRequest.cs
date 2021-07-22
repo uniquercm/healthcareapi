@@ -46,8 +46,14 @@ namespace Web.Api.Models.Request
         public string ModifiedBy { get; set; }
         public bool IsUpdate { get; set; }
         public bool IsReception { get; set; }
+        public List<FamilyPatientDetails> FamilyPatientDetailsList { get; set; }
     }
-    
+    public class FamilyPatientDetails
+    {
+        public string PatientId { get; set; }
+        public string PatientName { get; set; }
+        public string CRMNo { get; set; }
+    }
     public class ServicePlanRequest
     {
         public string PatientId { get; set; }//patient_id – varchar(128)

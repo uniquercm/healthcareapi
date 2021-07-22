@@ -63,7 +63,7 @@ namespace Web.Api.Core.Dto.UseCaseRequests
             SearchStatus = searchStatus;
             AreaNames = areaNames; 
         }
-        public GetDetailsRequest(string companyId, DateTime scheduledFromDate, DateTime scheduledToDate, string lableName, string callStatus, string teamUserName, string serviceName, string dateSearchType)
+        public GetDetailsRequest(string companyId, DateTime scheduledFromDate, DateTime scheduledToDate, string lableName, string callStatus, string teamUserName, string serviceName, string dateSearchType, string areaNames)
         {
             CompanyId = companyId;
             ScheduledFromDate = scheduledFromDate;
@@ -73,8 +73,9 @@ namespace Web.Api.Core.Dto.UseCaseRequests
             TeamUserName = teamUserName;
             ServiceName = serviceName;
             DateSearchType = dateSearchType;
+            AreaNames = areaNames;
         }
-        public GetDetailsRequest(string companyId, DateTime scheduledFromDate, DateTime scheduledToDate, string lableName, string callStatus, string teamUserName, string serviceName, string serviceStatus, string dateSearchType)
+        public GetDetailsRequest(string companyId, DateTime scheduledFromDate, DateTime scheduledToDate, string lableName, string callStatus, string teamUserName, string serviceName, string serviceStatus, string dateSearchType, string areaNames)
         {
             CompanyId = companyId;
             ScheduledFromDate = scheduledFromDate;
@@ -85,6 +86,7 @@ namespace Web.Api.Core.Dto.UseCaseRequests
             ServiceName = serviceName;
             ServiceStatus = serviceStatus;
             DateSearchType = dateSearchType;
+            AreaNames = areaNames;
         }
         public GetDetailsRequest(string id, string patientId, string staffId, string patientStaffId, string scheduledId, string lableName)
         {

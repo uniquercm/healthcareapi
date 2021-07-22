@@ -50,8 +50,15 @@ namespace Web.Api.Core.Dto.UseCaseRequests
         public bool IsUpdate { get; set; }
         public bool IsReception { get; set; }
         public string ErrorMsg { get; set; }
+        public List<FamilyPatientDetails> FamilyPatientDetailsList { get; set; }
     }
-    
+    public class FamilyPatientDetails
+    {
+        public string PatientId { get; set; }
+        public string PatientName { get; set; }
+        public string CRMNo { get; set; }
+    }
+
     public class PatientDetails
     {
         public string PatientId { get; set; }//patient_id – varchar(128)

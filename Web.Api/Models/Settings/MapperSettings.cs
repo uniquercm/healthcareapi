@@ -15,6 +15,7 @@ namespace Web.Api.Models.Settings
             CreateMap<Models.Request.CompanyRequest, CompanyRequest>();
             CreateMap<Models.Request.PatientRequest, PatientRequest>();
             CreateMap<Models.Request.FilePatientRequest, FilePatientRequest>();
+            CreateMap<Models.Request.FamilyPatientDetails, FamilyPatientDetails>();
             CreateMap<Models.Request.ServicePlanRequest, ServicePlanRequest>();
             CreateMap<Models.Request.ScheduledRequest, ScheduledRequest>();
             CreateMap<Models.Request.CallRequest, CallRequest>();

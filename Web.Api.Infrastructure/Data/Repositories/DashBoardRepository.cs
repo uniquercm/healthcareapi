@@ -275,13 +275,13 @@ namespace Web.Api.Infrastructure.Data.Repositories
             DoctorStatusDetails retDoctorStatusDetails = new DoctorStatusDetails();
             try
             {
-                List<DrNurseCallDetails> tmpDrNurseCallDetails = await drNurseCallFieldAllocationRepository.GetDrNurseCallDetails(companyId, "", "DrCall", DateTime.Today, DateTime.Today, "all", "all");
+                List<DrNurseCallDetails> tmpDrNurseCallDetails = await drNurseCallFieldAllocationRepository.GetDrNurseCallDetails(companyId, "", "DrCall", DateTime.Today, DateTime.Today, "all", "all", "all");
                 retDoctorStatusDetails.DoctorCallTotalCount = tmpDrNurseCallDetails.Count();
 
-                tmpDrNurseCallDetails = await drNurseCallFieldAllocationRepository.GetDrNurseCallDetails(companyId, "", "DrCall", DateTime.Today, DateTime.Today, "called", "all");
+                tmpDrNurseCallDetails = await drNurseCallFieldAllocationRepository.GetDrNurseCallDetails(companyId, "", "DrCall", DateTime.Today, DateTime.Today, "called", "all", "all");
                 retDoctorStatusDetails.DoctorCalledCount = tmpDrNurseCallDetails.Count();
 
-                tmpDrNurseCallDetails = await drNurseCallFieldAllocationRepository.GetDrNurseCallDetails(companyId, "", "DrCall", DateTime.Today, DateTime.Today, "pending", "all");
+                tmpDrNurseCallDetails = await drNurseCallFieldAllocationRepository.GetDrNurseCallDetails(companyId, "", "DrCall", DateTime.Today, DateTime.Today, "pending", "all", "all");
                 retDoctorStatusDetails.DoctorPendingCount = tmpDrNurseCallDetails.Count();
             }
             catch(Exception Err)
@@ -296,13 +296,13 @@ namespace Web.Api.Infrastructure.Data.Repositories
             NurseStatusDetails retNurseStatusDetails = new NurseStatusDetails();
             try
             {
-                List<DrNurseCallDetails> tmpDrNurseCallDetails = await drNurseCallFieldAllocationRepository.GetDrNurseCallDetails(companyId, "", "NurseCall", DateTime.Today, DateTime.Today, "all", "all");
+                List<DrNurseCallDetails> tmpDrNurseCallDetails = await drNurseCallFieldAllocationRepository.GetDrNurseCallDetails(companyId, "", "NurseCall", DateTime.Today, DateTime.Today, "all", "all", "all");
                 retNurseStatusDetails.NurseCallTotalCount = tmpDrNurseCallDetails.Count();
 
-                tmpDrNurseCallDetails = await drNurseCallFieldAllocationRepository.GetDrNurseCallDetails(companyId, "", "NurseCall", DateTime.Today, DateTime.Today, "called", "all");
+                tmpDrNurseCallDetails = await drNurseCallFieldAllocationRepository.GetDrNurseCallDetails(companyId, "", "NurseCall", DateTime.Today, DateTime.Today, "called", "all", "all");
                 retNurseStatusDetails.NurseCalledCount = tmpDrNurseCallDetails.Count();
 
-                tmpDrNurseCallDetails = await drNurseCallFieldAllocationRepository.GetDrNurseCallDetails(companyId, "", "NurseCall", DateTime.Today, DateTime.Today, "pending", "all");
+                tmpDrNurseCallDetails = await drNurseCallFieldAllocationRepository.GetDrNurseCallDetails(companyId, "", "NurseCall", DateTime.Today, DateTime.Today, "pending", "all", "all");
                 retNurseStatusDetails.NursePendingCount = tmpDrNurseCallDetails.Count();
             }
             catch(Exception Err)
@@ -338,16 +338,16 @@ namespace Web.Api.Infrastructure.Data.Repositories
 
                     foreach(TeamStatusDetails singleTeamStatusDetails in sqlSelResult.ToList())
                     {//called , pending, visited, notvisited
-                        List<DrNurseCallDetails> tmpDrNurseCallDetails = await drNurseCallFieldAllocationRepository.GetFieldAllowCallDetails(companyId, singleTeamStatusDetails.TeamUserName, "TeamCall", DateTime.Today, DateTime.Today, "all", "all", "all", "schedule");
+                        List<DrNurseCallDetails> tmpDrNurseCallDetails = await drNurseCallFieldAllocationRepository.GetFieldAllowCallDetails(companyId, singleTeamStatusDetails.TeamUserName, "TeamCall", DateTime.Today, DateTime.Today, "all", "all", "all", "schedule", "all");
                         singleTeamStatusDetails.AllocatedCount = tmpDrNurseCallDetails.Count();
 
-                        tmpDrNurseCallDetails = await drNurseCallFieldAllocationRepository.GetFieldAllowCallDetails(companyId, singleTeamStatusDetails.TeamUserName, "TeamCall", DateTime.Today, DateTime.Today, "pending", "all", "all", "schedule");
+                        tmpDrNurseCallDetails = await drNurseCallFieldAllocationRepository.GetFieldAllowCallDetails(companyId, singleTeamStatusDetails.TeamUserName, "TeamCall", DateTime.Today, DateTime.Today, "pending", "all", "all", "schedule", "all");
                         singleTeamStatusDetails.CallStatusPendingCount = tmpDrNurseCallDetails.Count();
 
-                        tmpDrNurseCallDetails = await drNurseCallFieldAllocationRepository.GetFieldAllowCallDetails(companyId, singleTeamStatusDetails.TeamUserName, "TeamCall", DateTime.Today, DateTime.Today, "visited", "all", "all", "schedule");
+                        tmpDrNurseCallDetails = await drNurseCallFieldAllocationRepository.GetFieldAllowCallDetails(companyId, singleTeamStatusDetails.TeamUserName, "TeamCall", DateTime.Today, DateTime.Today, "visited", "all", "all", "schedule", "all");
                         singleTeamStatusDetails.CallStatusVisitedCount = tmpDrNurseCallDetails.Count();
 
-                        tmpDrNurseCallDetails = await drNurseCallFieldAllocationRepository.GetFieldAllowCallDetails(companyId, singleTeamStatusDetails.TeamUserName, "TeamCall", DateTime.Today, DateTime.Today, "notvisited", "all", "all", "schedule");
+                        tmpDrNurseCallDetails = await drNurseCallFieldAllocationRepository.GetFieldAllowCallDetails(companyId, singleTeamStatusDetails.TeamUserName, "TeamCall", DateTime.Today, DateTime.Today, "notvisited", "all", "all", "schedule", "all");
                         singleTeamStatusDetails.CallStatusNotVisitedCount = tmpDrNurseCallDetails.Count();
 
                         retTeamStatusDetails.Add(singleTeamStatusDetails);

@@ -71,11 +71,6 @@ namespace Web.Api.Controllers
             await _patientUseCases.Handle(new GetDetailsRequest(companyId, patientId, fromDate, toDate, gMapLinkSatus, searchStatus, areaNames), _getDetailsPresenter);
             return _getDetailsPresenter.ContentResult;
         }
-        /*public async Task<ActionResult> GetPatientDetails(DateTime fromDate, DateTime toDate, string companyId = "", string patientId = "", string gMapLinkSatus = "all", string searchStatus = "all", string areaNames = "all")
-        {
-            await _patientUseCases.Handle(new GetDetailsRequest(companyId, patientId, fromDate, toDate, gMapLinkSatus, searchStatus, areaNames), _getDetailsPresenter);
-            return _getDetailsPresenter.ContentResult;
-        }*/
 
 
         /// <summary>
