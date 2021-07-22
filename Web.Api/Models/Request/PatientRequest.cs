@@ -18,7 +18,6 @@ namespace Web.Api.Models.Request
         public string EIDNo { get; set; }
         public string DateOfBirth { get; set; }//Thanam
         //public DateTime DateOfBirth { get; set; }//Thanam
-        public DateTime DOB { get; set; }//Thanam
         public int Age { get; set; }
         public string Sex { get; set; }
         public string Address { get; set; }
@@ -29,7 +28,6 @@ namespace Web.Api.Models.Request
         public string NationalityName { get; set; }
         public string AssignedDate { get; set; }//Thanam
         //public DateTime AssignedDate { get; set; }//Thanam
-        public DateTime AssignDate { get; set; }//Thanam
         public string MobileNo { get; set; }
         public string GoogleMapLink { get; set; }
         public int AdultsCount { get; set; }
