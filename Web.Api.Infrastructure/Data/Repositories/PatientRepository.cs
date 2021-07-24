@@ -429,6 +429,9 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 if(!String.IsNullOrEmpty(patientRequest.CRMNo))
                     crmNo = patientRequest.CRMNo.Trim();
 
+                if(String.IsNullOrEmpty(patientRequest.RecptionCallStatus))
+                    patientRequest.RecptionCallStatus = "pending";
+
                 object colValueParam = new
                 {
                     PatientId = patientRequest.PatientId,
@@ -538,6 +541,10 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 var crmNo = "";
                 if(!String.IsNullOrEmpty(patientRequest.CRMNo))
                     crmNo = patientRequest.CRMNo.Trim();
+
+                if(String.IsNullOrEmpty(patientRequest.RecptionCallStatus))
+                    patientRequest.RecptionCallStatus = "pending";
+
 
                 object colValueParam = new
                 {
