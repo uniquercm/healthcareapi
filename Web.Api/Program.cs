@@ -16,7 +16,7 @@ namespace Web.Api
                                 webBuilder
                                 .UseContentRoot(Directory.GetCurrentDirectory())
                                 .UseIISIntegration()
-                                .UseUrls("http://0.0.0.0:2004")
+                                .UseUrls("http://0.0.0.0:2003")
                                 //.UseUrls("http://0.0.0.0")
                                 //.UseUrls("https://api.uniquercm.org")
                                 .UseStartup<Startup>();
