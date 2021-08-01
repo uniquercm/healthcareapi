@@ -83,13 +83,22 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 if(sendClaimOnToDate != null)
                     sendingToDate = sendClaimOnToDate.ToString("yyyy-MM-dd");
 
+                /*In 30-7-2021 change the sending on search to assigned date
                 if(sendingFromDate != "0001-01-01" && sendingToDate != "0001-01-01")
                     whereCond += " and sc.claim_send_date between '" + sendingFromDate + minits +
                                 $" and '" + sendingToDate + minits;
                 else if(sendingFromDate != "0001-01-01")
                     whereCond += " and sc.claim_send_date = '" + sendingFromDate + minits;
                 else if(sendingToDate != "0001-01-01")
-                    whereCond += " and sc.claim_send_date = '" + sendingToDate + minits;
+                    whereCond += " and sc.claim_send_date = '" + sendingToDate + minits;*/
+                //pa.assigned_date
+                if(sendingFromDate != "0001-01-01" && sendingToDate != "0001-01-01")
+                    whereCond += " and pa.assigned_date between '" + sendingFromDate + minits +
+                                $" and '" + sendingToDate + minits;
+                else if(sendingFromDate != "0001-01-01")
+                    whereCond += " and pa.assigned_date = '" + sendingFromDate + minits;
+                else if(sendingToDate != "0001-01-01")
+                    whereCond += " and pa.assigned_date = '" + sendingToDate + minits;
 
                 if (!string.IsNullOrEmpty(extractData))
                 {
