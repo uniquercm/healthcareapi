@@ -16,6 +16,7 @@ namespace Web.Api.Core.Dto.UseCaseRequests
     {
         public string PatientId { get; set; }//patient_id – varchar(128)
         public string PatientName { get; set; }//patient_name – varchar(128)
+        public string PrimaryPatientId { get; set; }//primary_patient_id - varchar(128)
         public string CompanyId { get; set; }//company_id – varchar(128)
         public int RequestId { get; set; }//request_id - int(10)
         public string RequestCrmName { get; set; }
@@ -24,6 +25,7 @@ namespace Web.Api.Core.Dto.UseCaseRequests
         public DateTime DateOfBirth { get; set; }//date_of_birth – datetime
         public int Age { get; set; }//age – int(10)
         public string Sex { get; set; }//sex - varchar(25)
+        public string AddressId { get; set; }//address_id – varchar(128)
         public string Address { get; set; }//address - varchar(500)
         public string LandMark { get; set; }//landmark - varchar(128)
         public string Area { get; set; }//area – varchar(128)
@@ -63,6 +65,7 @@ namespace Web.Api.Core.Dto.UseCaseRequests
     {
         public string PatientId { get; set; }//patient_id – varchar(128)
         public string PatientName { get; set; }//patient_name – varchar(128)
+        public string PrimaryPatientId { get; set; }//primary_patient_id - varchar(128)
         public string CompanyId { get; set; }//company_id – varchar(128)
         public string CompanyName { get; set; }
         public int RequestId { get; set; }//request_id - int(10)
@@ -72,6 +75,7 @@ namespace Web.Api.Core.Dto.UseCaseRequests
         public DateTime DateOfBirth { get; set; }//date_of_birth – datetime
         public int Age { get; set; }//age – int(10)
         public string Sex { get; set; }//sex - varchar(25)
+        public string AddressId { get; set; }//address_id – varchar(128)
         public string Address { get; set; }//address - varchar(500)
         public string LandMark { get; set; }//landmark - varchar(128)
         public string Area { get; set; }//area – varchar(128)

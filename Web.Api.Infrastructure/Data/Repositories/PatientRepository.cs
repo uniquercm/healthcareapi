@@ -28,6 +28,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                                 $"HC_Master_Details.request_crm_obj rc";
 
                 var ColumAssign = $"p.patient_id as PatientId, p.patient_name as PatientName, " +
+                              $"p.primary_patient_id as PrimaryPatientId, " +
                               $"p.company_id as CompanyId, co.company_name as CompanyName, " +
                               $"p.request_id as RequestId, rc.request_crm_name as RequestCrmName, " +
                               $"p.crm_no as CRMNo, p.eid_no as EIDNo, " +
@@ -382,7 +383,8 @@ namespace Web.Api.Infrastructure.Data.Repositories
 
                 var tableName = $"HC_Staff_Patient.patient_obj";
 
-                var colName = $"patient_id, patient_name, company_id, request_id, crm_no, eid_no, " +
+                var colName = $"patient_id, patient_name, primary_patient_id, " +
+                              $"company_id, request_id, crm_no, eid_no, " +
                               $"date_of_birth, age, sex, address, landmark, area, city_id, nationality_id, " +
                               $"assigned_date, " +
                               $"mobile_no, google_map_link, no_of_adults, no_of_childrens, " +
@@ -392,7 +394,8 @@ namespace Web.Api.Infrastructure.Data.Repositories
                               $"reception_date, reception_status, reception_remarks, " +
                               $"created_by, created_on";
 
-                var colValueName = $"@PatientId, @PatientName, @CompanyId, @RequestId, @CRMNo, @EIDNo, " +
+                var colValueName = $"@PatientId, @PatientName, @PrimaryPatientId, " +
+                                   $"@CompanyId, @RequestId, @CRMNo, @EIDNo, " +
                                    $"@DateOfBirth, @Age, @Sex, @Address, @LandMark, @Area, @CityId, @NationalityId, " +
                                    $"@AssignedDate, " +
                                    $"@MobileNo, @GoogleMapLink, @AdultsCount, @ChildrensCount, " +
@@ -432,10 +435,14 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 if(String.IsNullOrEmpty(patientRequest.RecptionCallStatus))
                     patientRequest.RecptionCallStatus = "pending";
 
+                if(String.IsNullOrEmpty(patientRequest.PrimaryPatientId))
+                    patientRequest.PrimaryPatientId = patientRequest.PatientId;
+
                 object colValueParam = new
                 {
                     PatientId = patientRequest.PatientId,
                     PatientName = patientRequest.PatientName,
+                    PrimaryPatientId = patientRequest.PrimaryPatientId,
                     CompanyId = patientRequest.CompanyId,
                     RequestId = patientRequest.RequestId,
                     CRMNo = crmNo,
@@ -495,7 +502,8 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 bool sqlResult = true;
                 var tableName = $"HC_Staff_Patient.patient_obj";
 
-                var colName = $"patient_id = @PatientId, patient_name = @PatientName, company_id = @CompanyId, " +
+                var colName = $"patient_id = @PatientId, patient_name = @PatientName, " +
+                              $"primary_patient_id = @PrimaryPatientId, company_id = @CompanyId, " +
                               $"request_id = @RequestId, crm_no = @CRMNo, eid_no = @EIDNo, " +
                               $"date_of_birth = @DateOfBirth, age = @Age, sex = @Sex, address = @Address, " +
                               $"assigned_date = @AssignedDate, " +
@@ -545,11 +553,14 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 if(String.IsNullOrEmpty(patientRequest.RecptionCallStatus))
                     patientRequest.RecptionCallStatus = "pending";
 
+                if(String.IsNullOrEmpty(patientRequest.PrimaryPatientId))
+                    patientRequest.PrimaryPatientId = patientRequest.PatientId;
 
                 object colValueParam = new
                 {
                     PatientId = patientRequest.PatientId,
                     PatientName = patientRequest.PatientName,
+                    PrimaryPatientId = patientRequest.PrimaryPatientId,
                     CompanyId = patientRequest.CompanyId,
                     RequestId = patientRequest.RequestId,
                     CRMNo = patientRequest.CRMNo,

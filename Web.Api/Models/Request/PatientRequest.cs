@@ -11,6 +11,7 @@ namespace Web.Api.Models.Request
     {
         public string PatientId { get; set; }
         public string PatientName { get; set; }
+        public string PrimaryPatientId { get; set; }
         public string CompanyId { get; set; }
         public int RequestId { get; set; }
         public string RequestCrmName { get; set; }
@@ -20,6 +21,7 @@ namespace Web.Api.Models.Request
         //public DateTime DateOfBirth { get; set; }//Thanam
         public int Age { get; set; }
         public string Sex { get; set; }
+        public string AddressId { get; set; }
         public string Address { get; set; }
         public string LandMark { get; set; }
         public string Area { get; set; }
