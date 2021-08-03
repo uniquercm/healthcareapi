@@ -664,7 +664,12 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     scheduledRequest.TrackerScheduleDate = scheduledRequest.TreatmentFromDate;
                 }
                 else if(scheduledRequest.RequestId == 2)//HIP
-                {
+                {//waiting
+                    if(String.IsNullOrEmpty(scheduledRequest.PCRResult))
+                        scheduledRequest.PCRResult = "negative";
+                    else if(scheduledRequest.PCRResult.ToLower() == "waiting")
+                        scheduledRequest.PCRResult = "negative";
+
                     if(!String.IsNullOrEmpty(scheduledRequest.TreatmentType) && 
                         scheduledRequest.TreatmentType.ToLower() == "isolation")
                     {
