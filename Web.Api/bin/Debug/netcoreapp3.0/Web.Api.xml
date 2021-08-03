@@ -1,0 +1,312 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Web.Api</name>
+    </assembly>
+    <members>
+        <member name="M:Web.Api.Controllers.AuthController.Login(Web.Api.Models.Request.LoginRequest)">
+            <summary>
+            Login request
+            </summary>
+            <param name="request">Username and password should be given</param>
+            <returns>User details with Token</returns>
+        </member>
+        <member name="M:Web.Api.Controllers.DashBoardController.GetDashBoardDetails(System.String)">
+            <summary>
+            Getting a DashBoard Details
+            </summary>
+            <param name="companyId">Company Id (optional)</param>
+            <returns>Dash Board Details</returns>
+        </member>
+        <member name="M:Web.Api.Controllers.DrNurseCallFieldAllocationController.GetDrNurseCallFieldAllocationCallDetails(System.DateTime,System.DateTime,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            Getting a Doctor Nurse and Team Field Allocation Call Details
+            </summary>
+            <param name="fromDate">Scheduled From Date (optional)</param>
+            <param name="toDate">Scheduled To Date (optional)</param>
+            <param name="companyId">Company Id (optional)</param>
+            <param name="callName">Call Name (doctor, nurse, team, field) (optional)</param>
+            <param name="callStatus">Call Status(all, called, pending, visited, notvisited) (optional)</param>
+            <param name="teamUserName">Team User Name (optional)</param>
+            <param name="serviceName">Service Name(all, tracker, sticker, 4pcr, 8pcr, discharge) (optional)</param>
+            <param name="serviceStatus">Service Status(all, applied, removed, replaced, visited, notvisited, discharged, pending, others) (optional)</param>
+            <param name="dateSearchType">Date Search Type(schedule, allocated, reallocaed) (optional)</param>
+            <param name="areaNames">Multiple Area Name (all, )</param>
+            <returns>Doctor Nurse Team Field Allocation Call Details</returns>
+        </member>
+        <member name="M:Web.Api.Controllers.DrNurseCallFieldAllocationController.EditCall(Web.Api.Models.Request.CallRequest)">
+            <summary>
+            Modifying a Call
+            </summary>
+            <param name="request">Modifying Call Details</param>
+            <returns>Acknowledgement</returns>
+        </member>
+        <member name="M:Web.Api.Controllers.DrNurseCallFieldAllocationController.EditServicePlan(Web.Api.Models.Request.ServicePlanRequest)">
+            <summary>
+            Modifying a Service Plan
+            </summary>
+            <param name="request">Modifying Service Plan Details</param>
+            <returns>Acknowledgement</returns>
+        </member>
+        <member name="M:Web.Api.Controllers.DrNurseCallFieldAllocationController.EditTeamStatus(Web.Api.Models.Request.TeamVisitDetails)">
+            <summary>
+            Modifying a Team Service Status
+            </summary>
+            <param name="request">Modifying Team Service Status Details</param>
+            <returns>Acknowledgement</returns>
+        </member>
+        <member name="M:Web.Api.Controllers.HealthController.Health">
+            <summary>
+            Health Check
+            </summary>
+            <returns>User details with Token</returns>
+        </member>
+        <member name="M:Web.Api.Controllers.MasterController.GetMasterDetails(System.String)">
+            <summary>
+            Getting a Master Details
+            </summary>
+            <param name="companyId">Company Id (optional)</param>
+            <returns>Master Details</returns>
+        </member>
+        <member name="M:Web.Api.Controllers.MasterController.CreateCompanyMasterDetails(Web.Api.Models.Request.MasterRequest)">
+            <summary>
+            Creating a Company Master Details
+            </summary>
+            <param name="request">New Company Master Details</param>
+            <returns>Acknowledgement</returns>
+        </member>
+        <member name="M:Web.Api.Controllers.MasterController.EditCompanyMasterDetailsr(Web.Api.Models.Request.MasterRequest)">
+            <summary>
+            Modifying a Company Master Details
+            </summary>
+            <param name="request">Modifying Company Master Details</param>
+            <returns>Acknowledgement</returns>
+        </member>
+        <member name="M:Web.Api.Controllers.MasterController.GetCityDetails">
+            <summary>
+            Getting a City Details
+            </summary>
+            <returns>City Details</returns>
+        </member>
+        <member name="M:Web.Api.Controllers.MasterController.GetNationalityDetails">
+            <summary>
+            Getting a Nationality Details
+            </summary>
+            <returns>Nationality Details</returns>
+        </member>
+        <member name="M:Web.Api.Controllers.MasterController.GetSectionDetails">
+            <summary>
+            Getting a Section Details
+            </summary>
+            <returns>Section Details</returns>
+        </member>
+        <member name="M:Web.Api.Controllers.MasterController.GetRequestCRMDetails">
+            <summary>
+            Getting a RequestCRM Details
+            </summary>
+            <returns>RequestCRM Details</returns>
+        </member>
+        <member name="M:Web.Api.Controllers.MasterController.GetCompanyDetails(System.String)">
+            <summary>
+            Getting a Company Details
+            </summary>
+            <param name="companyId">Company Id (optional)</param>
+            <returns>Company Details</returns>
+        </member>
+        <member name="M:Web.Api.Controllers.MasterController.CreateCompany(Web.Api.Models.Request.CompanyRequest)">
+            <summary>
+            Creating a Company
+            </summary>
+            <param name="request">New Company Details</param>
+            <returns>Acknowledgement</returns>
+        </member>
+        <member name="M:Web.Api.Controllers.MasterController.EditCompany(Web.Api.Models.Request.CompanyRequest)">
+            <summary>
+            Modifying a Company
+            </summary>
+            <param name="request">Modifying Company Details</param>
+            <returns>Acknowledgement</returns>
+        </member>
+        <member name="M:Web.Api.Controllers.PatientController.GetPatientDetails(System.DateTime,System.DateTime,System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            Getting a Patient Details
+            </summary>
+            <param name="fromDate">Assigned From Date (optional)</param>
+            <param name="toDate">Assigned To Date (optional)</param>
+            <param name="companyId">Company Id (optional)</param>
+            <param name="patientId">Patient Id (optional)</param>
+            <param name="gMapLinkSatus"> Google Map Link (all, yes, no) (optional)</param>
+            <param name="searchStatus"> Search Status (all, completed, pending, closed, scheduled, notscheduled) (optional)</param>
+            <param name="areaNames">Multiple Area Name (all, )</param>
+            <returns>Patient Details</returns>
+        </member>
+        <member name="M:Web.Api.Controllers.PatientController.CreatePatient(Web.Api.Models.Request.PatientRequest)">
+            <summary>
+            Creating a Patient
+            </summary>
+            <param name="request">New Patient Details</param>
+            <returns>Acknowledgement</returns>
+        </member>
+        <member name="M:Web.Api.Controllers.PatientController.CreateListOfPatient(Web.Api.Models.Request.FilePatientRequest)">
+            <summary>
+            Creating a List Of Patient
+            </summary>
+            <param name="request">New Patient Details List</param>
+            <returns>Acknowledgement</returns>
+        </member>
+        <member name="M:Web.Api.Controllers.PatientController.EditPatient(Web.Api.Models.Request.PatientRequest)">
+            <summary>
+            Modifying a Patient
+            </summary>
+            <param name="request">Modifying Patient Details</param>
+            <returns>Acknowledgement</returns>
+        </member>
+        <member name="M:Web.Api.Controllers.PatientController.DeletePatient(Web.Api.Models.Request.DeleteRequest)">
+            <summary>
+            Deleting a Patient
+            </summary>
+            <param name="request">Delete Patient Details</param>
+            <returns>Acknowledgement</returns>
+        </member>
+        <member name="M:Web.Api.Controllers.PatientController.AgentNameAvailable(System.String,System.String,System.String)">
+            <summary>
+            CRM Number Availability
+            </summary>
+            <param name="crmNumber">CRM Number</param>
+            <param name="patientId">Patient Id (Optional)</param>
+            <param name="companyId">Company Id (Optional)</param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Api.Controllers.ReportController.GetScheduledDetails(System.DateTime,System.DateTime,System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            Getting a Report Details
+            </summary>
+            <param name="sendOnFromDate">SendOn From Date (optional)</param>
+            <param name="sendOnToDate">SendOn To Date (optional)</param>
+            <param name="companyId">Company Id (optional)</param>
+            <param name="patientId">Patient Id (optional)</param>
+            <param name="scheduledId">Scheduled Id (optional)</param>
+            <param name="extractData">Extract Data (all, yes, no) (optional)</param>
+            <param name="sendClaim">Send Claim (all, yes, no) (optional)</param>
+            <returns>Report Details</returns>
+        </member>
+        <member name="M:Web.Api.Controllers.ReportController.EditReportDetails(Web.Api.Models.Request.ReportDetails)">
+            <summary>
+            Modifying a Report Details
+            </summary>
+            <param name="request">Modifying Report Details</param>
+            <returns>Acknowledgement</returns>
+        </member>
+        <member name="M:Web.Api.Controllers.ScheduledController.GetScheduledDetails(System.DateTime,System.DateTime,System.String,System.String,System.String,System.Boolean,System.String,System.String,System.String,System.Boolean,System.String)">
+            <summary>
+            Getting a Scheduled Details
+            </summary>
+            <param name="fromDate">Scheduled From Date (optional)</param>
+            <param name="toDate">Scheduled To Date (optional)</param>
+            <param name="companyId">Company Id (optional)</param>
+            <param name="scheduledId">Scheduled Id (optional)</param>
+            <param name="patientId">Patient Id (optional)</param>
+            <param name="isFieldAllocation">Is Field Allocation (optional)</param>
+            <param name="fieldAllocationStatus"> Field Allocation Status(all, allowed, notallowed) (optional)</param>
+            <param name="serviceName">Service Name(all, tracker, sticker, 4pcr, 8pcr, discharge) (optional)</param>
+            <param name="serviceStatus">Service Status(all, applied, removed, replaced, visited, notvisited, discharged, pending, others) (optional)</param>
+            <param name="isTeam">Is Team Field Allocation (optional)</param>
+            <param name="areaNames">Multiple Area Name (all, )</param>
+            <returns>Scheduled Details</returns>
+        </member>
+        <member name="M:Web.Api.Controllers.ScheduledController.CreateScheduled(Web.Api.Models.Request.ScheduledRequest)">
+            <summary>
+            Creating a Scheduled
+            </summary>
+            <param name="request">New Scheduled Details</param>
+            <returns>Acknowledgement</returns>
+        </member>
+        <member name="M:Web.Api.Controllers.ScheduledController.EditScheduled(Web.Api.Models.Request.ScheduledRequest)">
+            <summary>
+            Modifying a Scheduled
+            </summary>
+            <param name="request">Modifying Scheduled Details</param>
+            <returns>Acknowledgement</returns>
+        </member>
+        <member name="M:Web.Api.Controllers.ScheduledController.GetCallDetails(System.String,System.String)">
+            <summary>
+            Getting a Call Details
+            </summary>
+            <param name="callId">Call Id (optional)</param>
+            <param name="scheduledId">Scheduled Id (optional)</param>
+            <returns>Call Details</returns>
+        </member>
+        <member name="M:Web.Api.Controllers.ScheduledController.CreateCall(Web.Api.Models.Request.CallRequest)">
+            <summary>
+            Creating a Call
+            </summary>
+            <param name="request">New Call Details</param>
+            <returns>Acknowledgement</returns>
+        </member>
+        <member name="M:Web.Api.Controllers.ScheduledController.EditCall(Web.Api.Models.Request.CallRequest)">
+            <summary>
+            Modifying a Call
+            </summary>
+            <param name="request">Modifying Call Details</param>
+            <returns>Acknowledgement</returns>
+        </member>
+        <member name="M:Web.Api.Controllers.ScheduledController.EditFieldAllocation(Web.Api.Models.Request.FieldAllocationRequest)">
+            <summary>
+            Modifying a Field Allocation
+            </summary>
+            <param name="request">Modifying Field Allocation Details</param>
+            <returns>Acknowledgement</returns>
+        </member>
+        <member name="M:Web.Api.Controllers.UserController.GetUserDetails(System.String,System.String,System.Int32)">
+            <summary>
+            Getting a User Details
+            </summary>
+            <param name="userId">User Id (optional)</param>
+            <param name="companyId">Company Id (optional)</param>
+            <param name="userType">User Type (optional)</param>
+            <returns>User Details</returns>
+        </member>
+        <member name="M:Web.Api.Controllers.UserController.GetAreaList">
+            <summary>
+            Getting a all Area
+            </summary>
+            <returns>List of Areas</returns>
+        </member>
+        <member name="M:Web.Api.Controllers.UserController.CreateArea(Web.Api.Models.Request.AreaRequest)">
+            <summary>
+            Creating a Area
+            </summary>
+            <param name="request">Area Details</param>
+            <returns>Acknowledgement</returns>
+        </member>
+        <member name="M:Web.Api.Controllers.UserController.CreateUser(Web.Api.Models.Request.UserRequest)">
+            <summary>
+            Creating a User
+            </summary>
+            <param name="request">New User Details</param>
+            <returns>Acknowledgement</returns>
+        </member>
+        <member name="M:Web.Api.Controllers.UserController.EditUser(Web.Api.Models.Request.UserRequest)">
+            <summary>
+            Modifying a User
+            </summary>
+            <param name="request">Modifying User Details</param>
+            <returns>Acknowledgement</returns>
+        </member>
+        <member name="M:Web.Api.Controllers.UserController.DeleteUser(Web.Api.Models.Request.DeleteRequest)">
+            <summary>
+            Deleting a User
+            </summary>
+            <param name="request">Delete User Details</param>
+            <returns>Acknowledgement</returns>
+        </member>
+        <member name="M:Web.Api.Controllers.UserController.UserNameAvailable(System.String,System.String)">
+            <summary>
+            User Name Availability
+            </summary>
+            <param name="userId">User Id (Optional)</param>
+            <param name="userName">User Name</param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

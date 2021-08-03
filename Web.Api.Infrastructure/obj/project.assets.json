@@ -8442,11 +8442,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "d:\\Dev\\HealthCare\\HealthCareAPI\\healthcareapi\\Web.Api.Infrastructure\\Web.Api.Infrastructure.csproj",
+      "projectUniqueName": "D:\\Dev\\HealthCare\\HealthCareAPI\\healthcareapi\\Web.Api.Infrastructure\\Web.Api.Infrastructure.csproj",
       "projectName": "Web.Api.Infrastructure",
-      "projectPath": "d:\\Dev\\HealthCare\\HealthCareAPI\\healthcareapi\\Web.Api.Infrastructure\\Web.Api.Infrastructure.csproj",
+      "projectPath": "D:\\Dev\\HealthCare\\HealthCareAPI\\healthcareapi\\Web.Api.Infrastructure\\Web.Api.Infrastructure.csproj",
       "packagesPath": "C:\\Users\\Thanam Durai Kumar\\.nuget\\packages\\",
-      "outputPath": "d:\\Dev\\HealthCare\\HealthCareAPI\\healthcareapi\\Web.Api.Infrastructure\\obj\\",
+      "outputPath": "D:\\Dev\\HealthCare\\HealthCareAPI\\healthcareapi\\Web.Api.Infrastructure\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Thanam Durai Kumar\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -8463,8 +8463,8 @@
         "netcoreapp3.0": {
           "targetAlias": "netcoreapp3.0",
           "projectReferences": {
-            "d:\\Dev\\HealthCare\\HealthCareAPI\\healthcareapi\\Web.Api.Core\\Web.Api.Core.csproj": {
-              "projectPath": "d:\\Dev\\HealthCare\\HealthCareAPI\\healthcareapi\\Web.Api.Core\\Web.Api.Core.csproj"
+            "D:\\Dev\\HealthCare\\HealthCareAPI\\healthcareapi\\Web.Api.Core\\Web.Api.Core.csproj": {
+              "projectPath": "D:\\Dev\\HealthCare\\HealthCareAPI\\healthcareapi\\Web.Api.Core\\Web.Api.Core.csproj"
             }
           }
         }

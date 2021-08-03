@@ -629,6 +629,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 CallRequest callRequest = new CallRequest();
                 callRequest.ScheduledId = scheduledRequest.ScheduledId;
                 callRequest.EMRDone = "no";
+                callRequest.CallStatus = "pending";
                 callRequest.CreatedBy = scheduledRequest.CreatedBy;
 
                 callRequest.CallScheduledDate = scheduledRequest.TreatmentFromDate.AddDays(1);
@@ -650,6 +651,9 @@ namespace Web.Api.Infrastructure.Data.Repositories
                         scheduledRequest.DischargeDate = scheduledRequest.TreatmentFromDate.AddDays(11);
                     }
 
+                    if(String.IsNullOrEmpty(scheduledRequest.PCRResult))
+                        scheduledRequest.PCRResult = "waiting";
+
                     scheduledRequest.Day3CallId = "";
                     scheduledRequest.Day4CallId = "";
                     scheduledRequest.Day5CallId = "";
@@ -660,7 +664,12 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     scheduledRequest.TrackerScheduleDate = scheduledRequest.TreatmentFromDate;
                 }
                 else if(scheduledRequest.RequestId == 2)//HIP
-                {
+                {//waiting
+                    if(String.IsNullOrEmpty(scheduledRequest.PCRResult))
+                        scheduledRequest.PCRResult = "negative";
+                    else if(scheduledRequest.PCRResult.ToLower() == "waiting")
+                        scheduledRequest.PCRResult = "negative";
+
                     if(!String.IsNullOrEmpty(scheduledRequest.TreatmentType) && 
                         scheduledRequest.TreatmentType.ToLower() == "isolation")
                     {
@@ -1087,6 +1096,8 @@ namespace Web.Api.Infrastructure.Data.Repositories
 
                 CallRequest callRequest = new CallRequest();
                 callRequest.ModifiedBy = scheduledRequest.ModifiedBy;
+                if(String.IsNullOrEmpty(callRequest.CallStatus))
+                    callRequest.CallStatus = "pending";
 
                 callRequest.CallId = scheduledRequest.Day2CallId;
                 callRequest.CallScheduledDate = scheduledRequest.TreatmentFromDate.AddDays(1);
@@ -1104,6 +1115,9 @@ namespace Web.Api.Infrastructure.Data.Repositories
                         scheduledRequest.PCR11DayTestDate = scheduledRequest.TreatmentFromDate.AddDays(10);
                         scheduledRequest.DischargeDate = scheduledRequest.TreatmentFromDate.AddDays(11);
                     }
+
+                    if(String.IsNullOrEmpty(scheduledRequest.PCRResult))
+                        scheduledRequest.PCRResult = "waiting";
 
                     scheduledRequest.Day3CallId = "";
                     scheduledRequest.Day4CallId = "";
@@ -1174,6 +1188,9 @@ namespace Web.Api.Infrastructure.Data.Repositories
                         scheduledRequest.Day9CallId = "";
                         scheduledRequest.DischargeDate = scheduledRequest.PCRTestDate.AddDays(9);
                     }
+
+                    if(String.IsNullOrEmpty(scheduledRequest.PCRResult))
+                        scheduledRequest.PCRResult = "pending";
 
                     scheduledRequest.PCR4DayTestDate = scheduledRequest.TreatmentFromDate.AddDays(3);
                     scheduledRequest.PCR8DayTestDate = scheduledRequest.TreatmentFromDate.AddDays(7);
