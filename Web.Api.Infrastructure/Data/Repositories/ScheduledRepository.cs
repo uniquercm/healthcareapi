@@ -1068,6 +1068,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
             try
             {
                 bool sqlResult = true;
+                //List<CallDetails> retCallList = new List<CallDetails>();
                 var tableName = $"HC_Treatment.scheduled_obj";
 
                 var colName = $"scheduled_id = @ScheduledId, patient_staff_id = @PatientStaffId, " +
@@ -1089,6 +1090,11 @@ namespace Web.Api.Infrastructure.Data.Repositories
                               $"11day_pcr_test_date = @PCR11DayTestDate, " +
                               //$"11day_pcr_test_sample_date = @PCR11DaySampleDate, 11day_pcr_test_result = @PCR11DayResult, " +
 
+                              $"2day_call_id = @Day2CallId, 3day_call_id = @Day3CallId, " +
+                              $"4day_call_id = @Day4CallId, 5day_call_id = @Day5CallId, " +
+                              $"6day_call_id = @Day6CallId, 7day_call_id = @Day7CallId, " +
+                              $"9day_call_id = @Day9CallId, " +
+
                               $"modified_by = @ModifiedBy, modified_on = @ModifiedOn";
 
                 var whereCond = $" where scheduled_id = @ScheduledId";
@@ -1099,9 +1105,15 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 if(String.IsNullOrEmpty(callRequest.CallStatus))
                     callRequest.CallStatus = "pending";
 
+                //retCallList = new List<CallDetails>();
+                //retCallList =  await GetCallDetails(scheduledRequest.Day2CallId, scheduledRequest.ScheduledId);
+
                 callRequest.CallId = scheduledRequest.Day2CallId;
                 callRequest.CallScheduledDate = scheduledRequest.TreatmentFromDate.AddDays(1);
-                await EditCall(callRequest);
+                if(String.IsNullOrEmpty(callRequest.CallId))
+                    await CreateCall(callRequest);
+                else
+                    await EditCall(callRequest);
 
                 if(scheduledRequest.RequestId == 1)//HQP
                 {
@@ -1135,27 +1147,45 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     {
                         callRequest.CallId = scheduledRequest.Day3CallId;
                         callRequest.CallScheduledDate = scheduledRequest.TreatmentFromDate.AddDays(2);
-                        await EditCall(callRequest);
+                        if(String.IsNullOrEmpty(callRequest.CallId))
+                            await CreateCall(callRequest);
+                        else
+                            await EditCall(callRequest);
 
                         callRequest.CallId = scheduledRequest.Day4CallId;
                         callRequest.CallScheduledDate = scheduledRequest.TreatmentFromDate.AddDays(3);
-                        await EditCall(callRequest);
+                        if(String.IsNullOrEmpty(callRequest.CallId))
+                            await CreateCall(callRequest);
+                        else
+                            await EditCall(callRequest);
 
                         callRequest.CallId = scheduledRequest.Day5CallId;
                         callRequest.CallScheduledDate = scheduledRequest.TreatmentFromDate.AddDays(4);
-                        await EditCall(callRequest);
+                        if(String.IsNullOrEmpty(callRequest.CallId))
+                            await CreateCall(callRequest);
+                        else
+                            await EditCall(callRequest);
 
                         callRequest.CallId = scheduledRequest.Day6CallId;
                         callRequest.CallScheduledDate = scheduledRequest.TreatmentFromDate.AddDays(5);
-                        await EditCall(callRequest);
+                        if(String.IsNullOrEmpty(callRequest.CallId))
+                            await CreateCall(callRequest);
+                        else
+                            await EditCall(callRequest);
 
                         callRequest.CallId = scheduledRequest.Day7CallId;
                         callRequest.CallScheduledDate = scheduledRequest.TreatmentFromDate.AddDays(6);
-                        await EditCall(callRequest);
+                        if(String.IsNullOrEmpty(callRequest.CallId))
+                            await CreateCall(callRequest);
+                        else
+                            await EditCall(callRequest);
 
                         callRequest.CallId = scheduledRequest.Day9CallId;
                         callRequest.CallScheduledDate = scheduledRequest.TreatmentFromDate.AddDays(8);
-                        await EditCall(callRequest);
+                        if(String.IsNullOrEmpty(callRequest.CallId))
+                            await CreateCall(callRequest);
+                        else
+                            await EditCall(callRequest);
 
                         scheduledRequest.DischargeDate = scheduledRequest.TreatmentToDate;
                     }
@@ -1350,6 +1380,13 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     PCR11DayTestDate = pcr11DayTestDate,//scheduledRequest.PCR11DayTestDate.ToString("yyyy-MM-dd 00:00:00.0"),
                     //PCR11DaySampleDate = pcr11DaySampleDate,//scheduledRequest.PCR11DaySampleDate.ToString("yyyy-MM-dd 00:00:00.0"),
                     //PCR11DayResult = scheduledRequest.PCR11DayResult,
+                    Day2CallId = scheduledRequest.Day2CallId,
+                    Day3CallId = scheduledRequest.Day3CallId,
+                    Day4CallId = scheduledRequest.Day4CallId,
+                    Day5CallId = scheduledRequest.Day5CallId,
+                    Day6CallId = scheduledRequest.Day6CallId,
+                    Day7CallId = scheduledRequest.Day7CallId,
+                    Day9CallId = scheduledRequest.Day9CallId,
                     ModifiedBy = scheduledRequest.ModifiedBy,
                     ModifiedOn = DateTime.Today.ToString("yyyy-MM-dd 00:00:00.0")
                 };
