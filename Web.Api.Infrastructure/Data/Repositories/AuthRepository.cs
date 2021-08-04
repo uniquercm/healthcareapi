@@ -30,9 +30,9 @@ namespace Web.Api.Infrastructure.Data.Repositories
             {
                 var tableName = $"HC_Authentication.user_obj";
 
-                var whereCond = $" where ";
+                var whereCond = $" where status = 'Active'";
                 if(!string.IsNullOrEmpty(loginRequest.UserName))
-                    whereCond += "user_name = '" + loginRequest.UserName + "'";
+                    whereCond += " and user_name = '" + loginRequest.UserName + "'";
 
                 if(!string.IsNullOrEmpty(loginRequest.Password))
                 {
@@ -80,7 +80,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                                    $"u.user_type as UserType, u.company_id as CompanyId, " +
                                    $"c.company_name as CompanyName, u.area_list as AreaList";
 
-                var whereCond = $" where u.company_id = c.company_id";
+                var whereCond = $" where u.company_id = c.company_id and u.status = 'Active'";
                 if (!string.IsNullOrEmpty(userId))
                     whereCond += " and u.user_id = '" + userId + "'";
                 var sqlSelQuery = $"select " + ColumAssign + " from " + tableName + whereCond;
