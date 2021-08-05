@@ -648,7 +648,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                                 $"sc.tracker_replace_team_user_name as TrackerReplaceTeamUserName, " +
                                 $"sc.tracker_replace_team_status as TrackerReplaceTeamStatus, " +
                                 $"sc.tracker_replace_team_remark as TrackerReplaceTeamRemark, " +
-                                $"sc.tracker_replace_team_date as TrackerReplaceTeamStatusDate";
+                                $"sc.tracker_replace_team_date as TrackerReplaceTeamStatusDate, ";
 
                 if(isTracker)
                     ColumAssign += $"'tracker' as CallId, sc.tracker_schedule_date as CallScheduledDate, " +
