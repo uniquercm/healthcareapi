@@ -69,6 +69,8 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     retTodayPatientStatusDetails.TodayPatientRegNumber = sqlSelResult.Count();
 
                     cond = $" where pa.patient_id = sc.patient_id" +
+                           $" and pa.status = 'Active'" +
+                           $" and pa.reception_status != 'closed'" +
                            $" and ca.call_scheduled_date = '" + todayDate + "'" +
                            $" and ca.scheduled_id = sc.scheduled_id";
                     if (!string.IsNullOrEmpty(companyId))
@@ -79,7 +81,9 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     sqlSelResult = await connection.QueryAsync(sqlSelQuery);
                     retTodayPatientStatusDetails.TodayScheduledPatientNumber = sqlSelResult.Count();
 
-                    cond = $" where pa.patient_id = sc.patient_id" +  
+                    cond = $" where pa.patient_id = sc.patient_id" + 
+                           $" and pa.status = 'Active'" + 
+                           $" and pa.reception_status != 'closed'" +
                            $" and sc.4day_pcr_test_date = '" + todayDate + "'" +
                            $" or sc.8day_pcr_test_date = '" + todayDate + "'";
                     if (!string.IsNullOrEmpty(companyId))
@@ -112,46 +116,49 @@ namespace Web.Api.Infrastructure.Data.Repositories
 
                 using (var connection = _appDbContext.Connection)
                 {
-                    var sqlSelQuery = $"select * from " + tableName + whereCond;
+                    var cond = $" where status = 'Active' ";
+                    if (!string.IsNullOrEmpty(companyId))
+                        cond += " and company_id = '" + companyId + "'";
+                    var sqlSelQuery = $"select * from " + tableName + cond;
                     var sqlSelResult = await connection.QueryAsync(sqlSelQuery);
                     retAllUserTypeDetails.TotalUserTypeMemberNumber = sqlSelResult.Count();
 
-                    var cond = $" where user_type = 2";
+                    cond = $" where user_type = 2 and status = 'Active'";
                     if (!string.IsNullOrEmpty(companyId))
                         cond += " and company_id = '" + companyId + "'";
                     sqlSelQuery = $"select * from " + tableName + cond;
                     sqlSelResult = await connection.QueryAsync(sqlSelQuery);
                     retAllUserTypeDetails.TotalAdminUserNumber = sqlSelResult.Count();
 
-                    cond = $" where user_type = 3";
+                    cond = $" where user_type = 3 and status = 'Active'";
                     if (!string.IsNullOrEmpty(companyId))
                         cond += " and company_id = '" + companyId + "'";
                     sqlSelQuery = $"select * from " + tableName + cond;
                     sqlSelResult = await connection.QueryAsync(sqlSelQuery);
                     retAllUserTypeDetails.TotalDoctorUserNumber = sqlSelResult.Count();
 
-                    cond = $" where user_type = 4";
+                    cond = $" where user_type = 4 and status = 'Active'";
                     if (!string.IsNullOrEmpty(companyId))
                         cond += " and company_id = '" + companyId + "'";
                     sqlSelQuery = $"select * from " + tableName + cond;
                     sqlSelResult = await connection.QueryAsync(sqlSelQuery);
                     retAllUserTypeDetails.TotalManagerUserNumber = sqlSelResult.Count();
 
-                    cond = $" where user_type = 5";
+                    cond = $" where user_type = 5 and status = 'Active'";
                     if (!string.IsNullOrEmpty(companyId))
                         cond += " and company_id = '" + companyId + "'";
                     sqlSelQuery = $"select * from " + tableName + cond;
                     sqlSelResult = await connection.QueryAsync(sqlSelQuery);
                     retAllUserTypeDetails.TotalNurseUserNumber = sqlSelResult.Count();
 
-                    cond = $" where user_type = 6";
+                    cond = $" where user_type = 6 and status = 'Active'";
                     if (!string.IsNullOrEmpty(companyId))
                         cond += " and company_id = '" + companyId + "'";
                     sqlSelQuery = $"select * from " + tableName + cond;
                     sqlSelResult = await connection.QueryAsync(sqlSelQuery);
                     retAllUserTypeDetails.TotalReceptionistUserNumber = sqlSelResult.Count();
 
-                    cond = $" where user_type = 7";
+                    cond = $" where user_type = 7 and status = 'Active'";
                     if (!string.IsNullOrEmpty(companyId))
                         cond += " and company_id = '" + companyId + "'";
                     sqlSelQuery = $"select * from " + tableName + cond;
@@ -175,12 +182,12 @@ namespace Web.Api.Infrastructure.Data.Repositories
             PatientStatusDetails retPatientStatusDetails = new PatientStatusDetails();
             try
             {
-                var whereCond = "where status = 'Active'";
+                var whereCond = " where status = 'Active'";
 
                 string todayDate = DateTime.Today.ToString("yyyy-MM-dd 00:00:00.0");
 
                 if (!string.IsNullOrEmpty(companyId))
-                    whereCond = " and company_id = '" + companyId + "'";
+                    whereCond += " and company_id = '" + companyId + "'";
 
                 using (var connection = _appDbContext.Connection)
                 {
@@ -193,6 +200,8 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     retPatientStatusDetails.TotalEnrolledPatientNumber = sqlResult.FirstOrDefault();
 
                     var cond = $" where discharge_date < '" + todayDate + "'" + 
+                            $" and pa.reception_status != 'closed'" +
+                            $" and pa.status = 'Active'" +
                             $" and pa.patient_id = sc.patient_id";
                     if (!string.IsNullOrEmpty(companyId))
                         cond += " and pa.company_id = '" + companyId + "'";
@@ -204,6 +213,8 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     retPatientStatusDetails.ActivePatientNumber = retPatientStatusDetails.TotalPatientNumber - retPatientStatusDetails.DischargePatientNumber;
 
                     cond = $" where discharge_date >= '" + todayDate + "'" + 
+                            $" and pa.reception_status != 'closed'" +
+                            $" and pa.status = 'Active'" +
                             $" and pa.patient_id = sc.patient_id";
                     if (!string.IsNullOrEmpty(companyId))
                         cond += " and pa.company_id = '" + companyId + "'";
