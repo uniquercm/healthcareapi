@@ -58,7 +58,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                                 $" and p.status = 'Active'" +
                                 $" and p.request_id = rc.request_crm_id";
 
-                if(!String.IsNullOrEmpty(areaNames) && areaNames != "All")
+                if(!String.IsNullOrEmpty(areaNames) && areaNames.ToLower() != "all" )
                 {
                     string[] areaArray = areaNames.Replace("[","").Replace("]","").Replace("\"","").Split(',');
 
