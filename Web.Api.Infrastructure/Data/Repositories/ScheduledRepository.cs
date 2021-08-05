@@ -261,7 +261,8 @@ namespace Web.Api.Infrastructure.Data.Repositories
 
                 var whereCond = $" where sc.patient_id = p.patient_id" +
                                 $" and sc.status = 'Active'" +
-                                $" and p.status = 'Active'"+
+                                $" and p.status = 'Active'" +
+                                $" and p.reception_status != 'closed'" +
                                 $" and p.request_id = rc.request_crm_id";
 
                 if (!string.IsNullOrEmpty(companyId))

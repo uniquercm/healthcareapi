@@ -1,8 +1,8 @@
-#/Web.Api/bin
-#/Web.Api/obj
-#/Web.Api.Core/bin
-#/Web.Api.Core/obj
-#/Web.Api.Infrastructure/bin
-#/Web.Api.Infrastructure/obj
-#/.vscode/solution-explorer
+/Web.Api/bin
+/Web.Api/obj
+/Web.Api.Core/bin
+/Web.Api.Core/obj
+/Web.Api.Infrastructure/bin
+/Web.Api.Infrastructure/obj
+/.vscode/solution-explorer
 /Web.Api/Program.cs
