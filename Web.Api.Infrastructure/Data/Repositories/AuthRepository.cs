@@ -283,7 +283,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
             try
             {
                 bool sqlResult = true;
-                int areaId = areaRequest.AreaId -1;
+                int areaId = areaRequest.AreaId - 1;
                 if(areaId <= 0)
                     areaId = 1;
 
