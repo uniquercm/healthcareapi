@@ -1,9 +1,0 @@
-D:\Dev\HealthCare\HealthCareAPI\healthcareapi\Web.Api.Core\bin\Debug\netcoreapp3.0\Web.Api.Core.deps.json
-D:\Dev\HealthCare\HealthCareAPI\healthcareapi\Web.Api.Core\bin\Debug\netcoreapp3.0\Web.Api.Core.dll
-D:\Dev\HealthCare\HealthCareAPI\healthcareapi\Web.Api.Core\bin\Debug\netcoreapp3.0\Web.Api.Core.pdb
-D:\Dev\HealthCare\HealthCareAPI\healthcareapi\Web.Api.Core\obj\Debug\netcoreapp3.0\Web.Api.Core.csproj.AssemblyReference.cache
-D:\Dev\HealthCare\HealthCareAPI\healthcareapi\Web.Api.Core\obj\Debug\netcoreapp3.0\Web.Api.Core.AssemblyInfoInputs.cache
-D:\Dev\HealthCare\HealthCareAPI\healthcareapi\Web.Api.Core\obj\Debug\netcoreapp3.0\Web.Api.Core.AssemblyInfo.cs
-D:\Dev\HealthCare\HealthCareAPI\healthcareapi\Web.Api.Core\obj\Debug\netcoreapp3.0\Web.Api.Core.csproj.CoreCompileInputs.cache
-D:\Dev\HealthCare\HealthCareAPI\healthcareapi\Web.Api.Core\obj\Debug\netcoreapp3.0\Web.Api.Core.dll
-D:\Dev\HealthCare\HealthCareAPI\healthcareapi\Web.Api.Core\obj\Debug\netcoreapp3.0\Web.Api.Core.pdb

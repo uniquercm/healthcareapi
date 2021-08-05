@@ -368,6 +368,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                                 $" and p.nationality_id = n.nationality_id" +
                                 $" and p.status = 'Active'" +
                                 $" and sc.status = 'Active'" +
+                                $" and p.reception_status != 'closed'" +
                                 $" and p.request_id = rc.request_crm_id";
 
                 if(!String.IsNullOrEmpty(areaNames) && areaNames != "all")
@@ -513,6 +514,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                                 $" and p.nationality_id = n.nationality_id" +
                                 $" and p.status = 'Active'" +
                                 $" and sc.status = 'Active'" +
+                                $" and p.reception_status != 'closed'" +
                                 $" and p.request_id = rc.request_crm_id";
 
                 if(!String.IsNullOrEmpty(areaNames) && areaNames != "all")
@@ -670,6 +672,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                                 $" and p.nationality_id = n.nationality_id" +
                                 $" and p.status = 'Active'" +
                                 $" and sc.status = 'Active'" +
+                                $" and p.reception_status != 'closed'" +
                                 $" and p.request_id = rc.request_crm_id";
 
                 if(!String.IsNullOrEmpty(areaNames) && areaNames != "all")
@@ -787,6 +790,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                                 $" and p.nationality_id = n.nationality_id" +
                                 $" and p.status = 'Active'" +
                                 $" and sc.status = 'Active'" +
+                                $" and p.reception_status != 'closed'" +
                                 $" and p.request_id = rc.request_crm_id";
 
                 if(!String.IsNullOrEmpty(areaNames) && areaNames != "all")
@@ -893,6 +897,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                                 $" and p.nationality_id = n.nationality_id" +
                                 $" and p.status = 'Active'" +
                                 $" and sc.status = 'Active'" +
+                                $" and p.reception_status != 'closed'" +
                                 $" and p.request_id = rc.request_crm_id";
 
                 string fromDate = scheduledFromDate.Date.ToString("dd-MM-yyyy");
