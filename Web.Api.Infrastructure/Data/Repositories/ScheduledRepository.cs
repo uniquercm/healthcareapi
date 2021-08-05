@@ -370,7 +370,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                         whereCond += " and p.discharge_status = '" + serviceStatus + "'";
                 }
 
-                if(!String.IsNullOrEmpty(areaNames) && areaNames != "all")
+                if(!String.IsNullOrEmpty(areaNames) && areaNames != "All")
                 {
                     string[] areaArray = areaNames.Replace("[","").Replace("]","").Replace("\"","").Split(',');
 
