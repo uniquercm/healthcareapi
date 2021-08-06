@@ -84,6 +84,7 @@ namespace Web.Api.Core.Dto.UseCaseRequests
         public DateTime AllocatedDate { get; set; }//team_allocated_date - datetime
         public string ReAllocatedTeamName { get; set; }//reallocated_team_name - varchar(100)
         public DateTime ReAllocatedDate { get; set; }//team_reallocated_date - datetime
+        public DateTime TeamAllocatedDate { get; set; }
         public DateTime TrackerReplacedDate { get; set; }//tracker_replace_date - datatime
         public string TrackerReplaceNumber { get; set; }//tracker_replace_no - varchar(50)
         public string TrackerReplaceTeamUserName { get; set; }//tracker_replace_team_user_name - varchar(128)
