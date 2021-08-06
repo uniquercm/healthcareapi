@@ -80,6 +80,10 @@ namespace Web.Api.Core.Dto.UseCaseRequests
         public int NationalityId { get; set; }//nationality_id – int(10)
         public string NationalityName { get; set; }
         public string MobileNo { get; set; }//mobile_no - varchar(25)
+        public string AllocatedTeamName { get; set; }//allocated_team_name - varchar(100)
+        public DateTime AllocatedDate { get; set; }//team_allocated_date - datetime
+        public string ReAllocatedTeamName { get; set; }//reallocated_team_name - varchar(100)
+        public DateTime ReAllocatedDate { get; set; }//team_reallocated_date - datetime
         public DateTime TrackerReplacedDate { get; set; }//tracker_replace_date - datatime
         public string TrackerReplaceNumber { get; set; }//tracker_replace_no - varchar(50)
         public string TrackerReplaceTeamUserName { get; set; }//tracker_replace_team_user_name - varchar(128)
