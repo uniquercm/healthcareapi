@@ -63,19 +63,23 @@ namespace Web.Api.Infrastructure.Data.Repositories
                         if(serviceName.Equals("tracker") || serviceName.Equals("all"))
                         {
                             dayCallDetails = await GetTrackerStickerCallDetails(companyId, teamUserName, true, scheduledFromDate, scheduledToDate, callStatus, serviceStatus, dateSearchType, areaNames);
-                            if(retDrNurseCallDetails.Count > 0)
+                            ///if(retDrNurseCallDetails.Count > 0)
                             {
                                 foreach(DrNurseCallDetails singleDrNurseCallDetails in dayCallDetails)
+                                {
+                                    AssignAllocatedDate(teamUserName, singleDrNurseCallDetails);
+
                                     retDrNurseCallDetails.Add(singleDrNurseCallDetails);
+                                }
                             }
-                            else
-                                retDrNurseCallDetails = dayCallDetails;
+                            //else
+                                //retDrNurseCallDetails = dayCallDetails;
                         }
 
                         if(serviceName.Equals("6pcr") || serviceName.Equals("all"))
                         {
                             dayCallDetails = await GetPCRCallDetails(companyId, teamUserName, "6", scheduledFromDate, scheduledToDate, callStatus, serviceStatus, dateSearchType, areaNames);
-                            if(retDrNurseCallDetails.Count > 0)
+                            //if(retDrNurseCallDetails.Count > 0)
                             {
                                 foreach(DrNurseCallDetails singleDrNurseCallDetails in dayCallDetails)
                                 {
@@ -88,18 +92,19 @@ namespace Web.Api.Infrastructure.Data.Repositories
                                             break;
                                         }
                                     }
+                                    AssignAllocatedDate(teamUserName, singleDrNurseCallDetails);
                                     if(isAdd)
                                         retDrNurseCallDetails.Add(singleDrNurseCallDetails);
                                 }
                             }
-                            else
-                                retDrNurseCallDetails = dayCallDetails;
+                            //else
+                                //retDrNurseCallDetails = dayCallDetails;
                         }
 
                         if(serviceName.Equals("8pcr") || serviceName.Equals("eight") || serviceName.Equals("all"))
                         {
                             dayCallDetails = await GetPCRCallDetails(companyId, teamUserName, "8", scheduledFromDate, scheduledToDate, callStatus, serviceStatus, dateSearchType, areaNames);
-                            if(retDrNurseCallDetails.Count > 0)
+                            //if(retDrNurseCallDetails.Count > 0)
                             {
                                 foreach(DrNurseCallDetails singleDrNurseCallDetails in dayCallDetails)
                                 {
@@ -112,18 +117,19 @@ namespace Web.Api.Infrastructure.Data.Repositories
                                             break;
                                         }
                                     }
+                                    AssignAllocatedDate(teamUserName, singleDrNurseCallDetails);
                                     if(isAdd)
                                         retDrNurseCallDetails.Add(singleDrNurseCallDetails);
                                 }
                             }
-                            else
-                                retDrNurseCallDetails = dayCallDetails;
+                            //else
+                                //retDrNurseCallDetails = dayCallDetails;
                         }
 
                         if(serviceName.Equals("11pcr") || serviceName.Equals("all"))
                         {
                             dayCallDetails = await GetPCRCallDetails(companyId, teamUserName, "11", scheduledFromDate, scheduledToDate, callStatus, serviceStatus, dateSearchType, areaNames);
-                            if(retDrNurseCallDetails.Count > 0)
+                            //if(retDrNurseCallDetails.Count > 0)
                             {
                                 foreach(DrNurseCallDetails singleDrNurseCallDetails in dayCallDetails)
                                 {
@@ -136,18 +142,19 @@ namespace Web.Api.Infrastructure.Data.Repositories
                                             break;
                                         }
                                     }
+                                    AssignAllocatedDate(teamUserName, singleDrNurseCallDetails);
                                     if(isAdd)
                                         retDrNurseCallDetails.Add(singleDrNurseCallDetails);
                                 }
                             }
-                            else
-                                retDrNurseCallDetails = dayCallDetails;
+                            //else
+                                //retDrNurseCallDetails = dayCallDetails;
                         }
 
                         if(serviceName.Equals("sticker") || serviceName.Equals("all"))
                         {
                             dayCallDetails = await GetTrackerStickerCallDetails(companyId, teamUserName, false, scheduledFromDate, scheduledToDate, callStatus, serviceStatus, dateSearchType, areaNames);
-                            if(retDrNurseCallDetails.Count > 0)
+                            //if(retDrNurseCallDetails.Count > 0)
                             {
                                 foreach(DrNurseCallDetails singleDrNurseCallDetails in dayCallDetails)
                                 {
@@ -160,18 +167,19 @@ namespace Web.Api.Infrastructure.Data.Repositories
                                             break;
                                         }
                                     }
+                                    AssignAllocatedDate(teamUserName, singleDrNurseCallDetails);
                                     if(isAdd)
                                         retDrNurseCallDetails.Add(singleDrNurseCallDetails);
                                 }
                             }
-                            else
-                                retDrNurseCallDetails = dayCallDetails;
+                            //else
+                                //retDrNurseCallDetails = dayCallDetails;
                         }
 
                         if(serviceName.Equals("discharge") || serviceName.Equals("all"))
                         {
                             dayCallDetails = await GetDischargeCallDetails(companyId, teamUserName, scheduledFromDate, scheduledToDate, callStatus, serviceStatus, dateSearchType, areaNames);
-                            if(retDrNurseCallDetails.Count > 0)
+                            //if(retDrNurseCallDetails.Count > 0)
                             {
                                 foreach(DrNurseCallDetails singleDrNurseCallDetails in dayCallDetails)
                                 {
@@ -186,12 +194,13 @@ namespace Web.Api.Infrastructure.Data.Repositories
                                             break;
                                         }
                                     }
+                                    AssignAllocatedDate(teamUserName, singleDrNurseCallDetails);
                                     if(isAdd)
                                         retDrNurseCallDetails.Add(singleDrNurseCallDetails);
                                 }
                             }
-                            else
-                                retDrNurseCallDetails = dayCallDetails;
+                            //else
+                                //retDrNurseCallDetails = dayCallDetails;
                         }
                         /*if(serviceName.Equals("team") || serviceName.Equals("all"))
                         {
@@ -212,6 +221,31 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 var Error = Err.Message.ToString();
             }
             return retDrNurseCallDetails;
+        }
+
+        void AssignAllocatedDate(string teamUserName, DrNurseCallDetails singleDrNurseCallDetails)
+        {
+            try
+            {
+                if(!String.IsNullOrEmpty(teamUserName))
+                {
+                    if(!String.IsNullOrEmpty(singleDrNurseCallDetails.AllocatedTeamName))
+                    {
+                        if(teamUserName.ToLower().Equals(singleDrNurseCallDetails.AllocatedTeamName.ToLower()))
+                            singleDrNurseCallDetails.TeamAllocatedDate = singleDrNurseCallDetails.AllocatedDate;
+                    }
+                    if(!String.IsNullOrEmpty(singleDrNurseCallDetails.ReAllocatedTeamName))
+                    {
+                        if(teamUserName.ToLower().Equals(singleDrNurseCallDetails.ReAllocatedTeamName.ToLower()))
+                            singleDrNurseCallDetails.TeamAllocatedDate = singleDrNurseCallDetails.ReAllocatedDate;
+                    }
+                }
+            }
+            catch (Exception Err)
+            {
+                var Error = Err.Message.ToString();
+            }
+            //return retDrNurseCallDetails;
         }
 
         public async Task<List<DrNurseCallDetails>> GetDrNurseCallDetails(string companyId, string teamUserName, string callName, DateTime scheduledFromDate, DateTime scheduledToDate, string callStatus, string serviceName, string areaNames)
