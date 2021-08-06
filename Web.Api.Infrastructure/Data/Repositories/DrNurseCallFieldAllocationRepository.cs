@@ -354,6 +354,8 @@ namespace Web.Api.Infrastructure.Data.Repositories
                                   $"p.request_id as RequestId, rc.request_crm_name as RequestCrmName, " +
                                   $"p.crm_no as CRMNo, p.eid_no as EIDNo, " +
                                   $"p.area as Area, p.age as Age, " +
+                                  $"sc.allocated_team_name as AllocatedTeamName, sc.team_allocated_date as AllocatedDate, " +
+                                  $"sc.reallocated_team_name as ReAllocatedTeamName, sc.team_reallocated_date as ReAllocatedDate, " +
                                   $"p.city_id as CityId, ci.city_name as CityName, " +
                                   $"p.nationality_id as NationalityId, n.country_name as NationalityName, " +
                                   $"p.mobile_no as MobileNo, ca.call_id as CallId, " +
@@ -471,6 +473,8 @@ namespace Web.Api.Infrastructure.Data.Repositories
                                   $"p.request_id as RequestId, rc.request_crm_name as RequestCrmName, " +
                                   $"p.crm_no as CRMNo, p.eid_no as EIDNo, " +
                                   $"p.area as Area, p.age as Age, " +
+                                  $"sc.allocated_team_name as AllocatedTeamName, sc.team_allocated_date as AllocatedDate, " +
+                                  $"sc.reallocated_team_name as ReAllocatedTeamName, sc.team_reallocated_date as ReAllocatedDate, " +
                                   $"p.city_id as CityId, ci.city_name as CityName, " +
                                   $"p.nationality_id as NationalityId, n.country_name as NationalityName, " +
                                   $"p.mobile_no as MobileNo, sc.scheduled_id as ScheduledId, " +
@@ -638,6 +642,8 @@ namespace Web.Api.Infrastructure.Data.Repositories
                                   $"p.request_id as RequestId, rc.request_crm_name as RequestCrmName, " +
                                   $"p.crm_no as CRMNo, p.eid_no as EIDNo, " +
                                   $"p.area as Area, p.age as Age, " +
+                                  $"sc.allocated_team_name as AllocatedTeamName, sc.team_allocated_date as AllocatedDate, " +
+                                  $"sc.reallocated_team_name as ReAllocatedTeamName, sc.team_reallocated_date as ReAllocatedDate, " +
                                   $"p.city_id as CityId, ci.city_name as CityName, " +
                                   $"p.nationality_id as NationalityId, n.country_name as NationalityName, " +
                                   $"p.mobile_no as MobileNo, sc.scheduled_id as ScheduledId, " +
@@ -773,6 +779,8 @@ namespace Web.Api.Infrastructure.Data.Repositories
                                   $"p.request_id as RequestId, rc.request_crm_name as RequestCrmName, " +
                                   $"p.crm_no as CRMNo, p.eid_no as EIDNo, " +
                                   $"p.area as Area, p.age as Age, " +
+                                  $"sc.allocated_team_name as AllocatedTeamName, sc.team_allocated_date as AllocatedDate, " +
+                                  $"sc.reallocated_team_name as ReAllocatedTeamName, sc.team_reallocated_date as ReAllocatedDate, " +
                                   $"p.city_id as CityId, ci.city_name as CityName, " +
                                   $"p.nationality_id as NationalityId, n.country_name as NationalityName, " +
                                   $"p.mobile_no as MobileNo, sc.scheduled_id as ScheduledId, " +
@@ -884,6 +892,8 @@ namespace Web.Api.Infrastructure.Data.Repositories
                                   $"p.request_id as RequestId, rc.request_crm_name as RequestCrmName, " +
                                   $"p.crm_no as CRMNo, p.eid_no as EIDNo, " +
                                   $"p.area as Area, p.age as Age, " +
+                                  $"sc.allocated_team_name as AllocatedTeamName, sc.team_allocated_date as AllocatedDate, " +
+                                  $"sc.reallocated_team_name as ReAllocatedTeamName, sc.team_reallocated_date as ReAllocatedDate, " +
                                   $"p.city_id as CityId, ci.city_name as CityName, " +
                                   $"p.nationality_id as NationalityId, n.country_name as NationalityName, " +
                                   $"p.mobile_no as MobileNo, sc.scheduled_id as ScheduledId, " +
