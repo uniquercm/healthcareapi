@@ -495,7 +495,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 return sql.FirstOrDefault();
             }
         }
-        public async Task<bool> EditPatient(PatientRequest patientRequest)
+/*        public async Task<bool> EditPatient(PatientRequest patientRequest)
         {
             try
             {//reception_date
@@ -575,6 +575,170 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     NationalityId = patientRequest.NationalityId,
                     AssignedDate = assignedDate,
                     MobileNo = patientRequest.MobileNo,
+                    GoogleMapLink = patientRequest.GoogleMapLink,
+                    AdultsCount = patientRequest.AdultsCount,
+                    ChildrensCount = patientRequest.ChildrensCount,
+                    EnrolledCount = patientRequest.EnrolledCount,
+                    EnrolledDetails = patientRequest.EnrolledDetails,
+                    StickerApplication = patientRequest.StickerApplication,
+                    TrackerApplication = patientRequest.TrackerApplication,
+                    PCRCount = patientRequest.PCRCount,
+                    StickerRemoval = patientRequest.StickerRemoval,
+                    TrackerRemoval = patientRequest.TrackerRemoval,
+                    RecptionCallDate = recptionCallDate,
+                    RecptionCallStatus = patientRequest.RecptionCallStatus,
+                    RecptionCallRemarks = patientRequest.RecptionCallRemarks,
+                    ModifiedBy = patientRequest.ModifiedBy,
+                    ModifiedOn = DateTime.Today.ToString("yyyy-MM-dd 00:00:00.0")
+                };
+                using (var connection = _appDbContext.Connection)
+                {
+                    sqlResult = Convert.ToBoolean(await connection.ExecuteAsync(sqlUpdateQuery, colValueParam));
+                    return sqlResult;
+                }
+            }
+            catch (Exception Err)
+            {
+                var Error = Err.Message.ToString();
+                return false;
+            }
+        }
+*/
+        public async Task<bool> EditPatient(PatientRequest patientRequest)
+        {
+            try
+            {//reception_date
+                bool sqlResult = true;
+                if(patientRequest.IsReception)
+                    sqlResult = await EditReceptionPatient(patientRequest);
+                else
+                    sqlResult = await EditRegisterPatient(patientRequest);
+                return sqlResult;
+            }
+            catch (Exception Err)
+            {
+                var Error = Err.Message.ToString();
+                return false;
+            }
+        }
+
+        async Task<bool> EditRegisterPatient(PatientRequest patientRequest)
+        {
+            try
+            {//reception_date
+                bool sqlResult = true;
+                var tableName = $"HC_Staff_Patient.patient_obj";
+
+                var colName = $"patient_id = @PatientId, patient_name = @PatientName, " +
+                              $"primary_patient_id = @PrimaryPatientId, company_id = @CompanyId, " +
+                              $"request_id = @RequestId, crm_no = @CRMNo, eid_no = @EIDNo, " +
+                              $"date_of_birth = @DateOfBirth, age = @Age, sex = @Sex, " +
+                              $"assigned_date = @AssignedDate, " +
+                              $"nationality_id = @NationalityId, mobile_no = @MobileNo, " +
+                              $"modified_by = @ModifiedBy, modified_on = @ModifiedOn";
+
+                var whereCond = $" where patient_id = @PatientId";
+                var sqlUpdateQuery = $"UPDATE "+ tableName + " set " + colName + whereCond;
+
+                string dateOfBirth = "";
+                dateOfBirth = patientRequest.DateOfBirth.ToString("yyyy-MM-dd");
+                if(dateOfBirth == "0001-01-01")
+                    dateOfBirth = "";
+
+                string assignedDate = "";
+                assignedDate = patientRequest.AssignedDate.ToString("yyyy-MM-dd");
+                if(assignedDate == "0001-01-01")
+                    assignedDate = "";
+                else
+                    assignedDate = patientRequest.AssignedDate.ToString("yyyy-MM-dd 00:00:00.0");
+
+                var crmNo = "";
+                if(!String.IsNullOrEmpty(patientRequest.CRMNo))
+                    crmNo = patientRequest.CRMNo.Trim();
+
+                if(String.IsNullOrEmpty(patientRequest.PrimaryPatientId))
+                    patientRequest.PrimaryPatientId = patientRequest.PatientId;
+
+                object colValueParam = new
+                {
+                    PatientId = patientRequest.PatientId,
+                    PatientName = patientRequest.PatientName,
+                    PrimaryPatientId = patientRequest.PrimaryPatientId,
+                    CompanyId = patientRequest.CompanyId,
+                    RequestId = patientRequest.RequestId,
+                    CRMNo = patientRequest.CRMNo,
+                    EIDNo = patientRequest.EIDNo,
+                    DateOfBirth = patientRequest.DateOfBirth.ToString("yyyy-MM-dd 00:00:00.0"),
+                    Age = patientRequest.Age,
+                    Sex = patientRequest.Sex,
+                    NationalityId = patientRequest.NationalityId,
+                    AssignedDate = assignedDate,
+                    MobileNo = patientRequest.MobileNo,
+                    ModifiedBy = patientRequest.ModifiedBy,
+                    ModifiedOn = DateTime.Today.ToString("yyyy-MM-dd 00:00:00.0")
+                };
+                using (var connection = _appDbContext.Connection)
+                {
+                    sqlResult = Convert.ToBoolean(await connection.ExecuteAsync(sqlUpdateQuery, colValueParam));
+                    return sqlResult;
+                }
+            }
+            catch (Exception Err)
+            {
+                var Error = Err.Message.ToString();
+                return false;
+            }
+        }
+
+        async Task<bool> EditReceptionPatient(PatientRequest patientRequest)
+        {
+            try
+            {//reception_date
+                bool sqlResult = true;
+                var tableName = $"HC_Staff_Patient.patient_obj";
+
+                var colName = $"patient_id = @PatientId, address = @Address, " +
+                              $"landmark = @LandMark, area = @Area, city_id = @CityId, " +
+                              $"google_map_link = @GoogleMapLink, " +
+                              $"no_of_adults = @AdultsCount, no_of_childrens = @ChildrensCount, " +
+                              $"enrolled_count = @EnrolledCount, enrolled_details = @EnrolledDetails, " +
+                              $"pcr_count = @PCRCount, " +
+                              $"sticker_application = @StickerApplication, tracker_application = @TrackerApplication, " +
+                              $"sticker_removal = @StickerRemoval, tracker_removal = @TrackerRemoval, " +
+                              $"reception_date = @RecptionCallDate, reception_status = @RecptionCallStatus, " +
+                              $"reception_remarks = @RecptionCallRemarks, " +
+                              $"modified_by = @ModifiedBy, modified_on = @ModifiedOn";
+
+                var whereCond = $" where patient_id = @PatientId";
+                var sqlUpdateQuery = $"UPDATE "+ tableName + " set " + colName + whereCond;
+
+                string recptionCallDate = patientRequest.RecptionCallDate.ToString("yyyy-MM-dd");
+                if(patientRequest.IsReception && recptionCallDate == "0001-01-01")
+                {
+                    if(patientRequest.RecptionCallStatus.ToLower() == "completed")
+                        recptionCallDate = DateTime.Today.ToString("yyyy-MM-dd 00:00:00.0");
+                }
+
+                if(recptionCallDate == "0001-01-01")
+                    recptionCallDate = "";
+
+                if(String.IsNullOrEmpty(patientRequest.GoogleMapLink))
+                    patientRequest.GoogleMapLink = "";
+
+                if(String.IsNullOrEmpty(patientRequest.RecptionCallStatus))
+                    patientRequest.RecptionCallStatus = "pending";
+
+                if(String.IsNullOrEmpty(patientRequest.PrimaryPatientId))
+                    patientRequest.PrimaryPatientId = patientRequest.PatientId;
+
+                object colValueParam = new
+                {
+                    PatientId = patientRequest.PatientId,
+                    PrimaryPatientId = patientRequest.PrimaryPatientId,
+                    Address = patientRequest.Address,
+                    LandMark = patientRequest.LandMark,
+                    Area = patientRequest.Area,
+                    CityId = patientRequest.CityId,
                     GoogleMapLink = patientRequest.GoogleMapLink,
                     AdultsCount = patientRequest.AdultsCount,
                     ChildrensCount = patientRequest.ChildrensCount,
