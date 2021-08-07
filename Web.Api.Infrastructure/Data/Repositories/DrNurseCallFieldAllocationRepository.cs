@@ -19,6 +19,203 @@ namespace Web.Api.Infrastructure.Data.Repositories
             _appDbContext = appDbContext;
         }
 
+        // public async Task<List<DrNurseCallDetails>> GetFieldAllowCallDetails(string companyId, string teamUserName, string callName, DateTime scheduledFromDate, DateTime scheduledToDate, string callStatus, string serviceName, string serviceStatus, string dateSearchType, string areaNames)
+        // {
+        //     List<DrNurseCallDetails> retDrNurseCallDetails = new List<DrNurseCallDetails>();
+        //     List<DrNurseCallDetails> dayCallDetails = new List<DrNurseCallDetails>();
+        //     try
+        //     {//all, tracker, sticker, 4pcr, 8pcr, discharge
+        //         if(!String.IsNullOrEmpty(serviceName))
+        //         {
+        //             /*comminted for 4 th PCR
+        //             if(serviceName.Equals("4pcr") || serviceName.Equals("all"))
+        //             {
+        //                 dayCallDetails = await GetPCRCallDetails(companyId, teamUserName, "4", scheduledFromDate, scheduledToDate, callStatus, serviceStatus, dateSearchType, areaNames);
+        //                 if(retDrNurseCallDetails.Count > 0)
+        //                 {
+        //                     foreach(DrNurseCallDetails singleDrNurseCallDetails in dayCallDetails)
+        //                         retDrNurseCallDetails.Add(singleDrNurseCallDetails);
+        //                 }
+        //                 else
+        //                     retDrNurseCallDetails = dayCallDetails;
+        //             }*/
+
+        //             string fromDate = scheduledFromDate.Date.ToString("yyyy-MM-dd");
+        //             string toDate = scheduledToDate.Date.ToString("yyyy-MM-dd");
+        //             if(fromDate == "0001-01-01" && toDate == "0001-01-01")
+        //             {
+        //                 scheduledFromDate = DateTime.Today;
+        //                 fromDate = scheduledFromDate.Date.ToString("yyyy-MM-dd");
+        //             }
+        //             if(fromDate != "0001-01-01" || toDate != "0001-01-01")
+        //             {
+        //                 if(fromDate == "0001-01-01")
+        //                     fromDate = toDate;
+                        
+        //                 if(toDate == "0001-01-01")
+        //                     scheduledToDate = scheduledFromDate;
+        //             }
+
+        //             if(dateSearchType.Equals("allocated") && serviceName.Equals("all") && serviceStatus.Equals("all"))
+        //                 retDrNurseCallDetails = await GetAllocatedDateDetails(companyId, teamUserName, scheduledFromDate, scheduledToDate);
+        //             else
+        //             {
+        //                 if(serviceName.Equals("tracker") || serviceName.Equals("all"))
+        //                 {
+        //                     dayCallDetails = await GetTrackerStickerCallDetails(companyId, teamUserName, true, scheduledFromDate, scheduledToDate, callStatus, serviceStatus, dateSearchType, areaNames);
+        //                     if(retDrNurseCallDetails.Count > 0)
+        //                     {
+        //                         foreach(DrNurseCallDetails singleDrNurseCallDetails in dayCallDetails)
+        //                         {
+        //                             retDrNurseCallDetails.Add(singleDrNurseCallDetails);
+        //                         }
+        //                     }
+        //                     else
+        //                         retDrNurseCallDetails = dayCallDetails;
+        //                 }
+
+        //                 if(serviceName.Equals("6pcr") || serviceName.Equals("all"))
+        //                 {
+        //                     dayCallDetails = await GetPCRCallDetails(companyId, teamUserName, "6", scheduledFromDate, scheduledToDate, callStatus, serviceStatus, dateSearchType, areaNames);
+        //                     if(retDrNurseCallDetails.Count > 0)
+        //                     {
+        //                         foreach(DrNurseCallDetails singleDrNurseCallDetails in dayCallDetails)
+        //                         {
+        //                             bool isAdd = true;
+        //                             foreach(DrNurseCallDetails addedListSingDrNurCallDet in retDrNurseCallDetails)
+        //                             {
+        //                                 if(singleDrNurseCallDetails.CRMNo.Trim().Equals(addedListSingDrNurCallDet.CRMNo.Trim()))
+        //                                 {
+        //                                     isAdd = false;
+        //                                     break;
+        //                                 }
+        //                             }
+        //                             if(isAdd)
+        //                                 retDrNurseCallDetails.Add(singleDrNurseCallDetails);
+        //                         }
+        //                     }
+        //                     else
+        //                         retDrNurseCallDetails = dayCallDetails;
+        //                 }
+
+        //                 if(serviceName.Equals("8pcr") || serviceName.Equals("eight") || serviceName.Equals("all"))
+        //                 {
+        //                     dayCallDetails = await GetPCRCallDetails(companyId, teamUserName, "8", scheduledFromDate, scheduledToDate, callStatus, serviceStatus, dateSearchType, areaNames);
+        //                     if(retDrNurseCallDetails.Count > 0)
+        //                     {
+        //                         foreach(DrNurseCallDetails singleDrNurseCallDetails in dayCallDetails)
+        //                         {
+        //                             bool isAdd = true;
+        //                             foreach(DrNurseCallDetails addedListSingDrNurCallDet in retDrNurseCallDetails)
+        //                             {
+        //                                 if(singleDrNurseCallDetails.CRMNo.Trim().Equals(addedListSingDrNurCallDet.CRMNo.Trim()))
+        //                                 {
+        //                                     isAdd = false;
+        //                                     break;
+        //                                 }
+        //                             }
+        //                             if(isAdd)
+        //                                 retDrNurseCallDetails.Add(singleDrNurseCallDetails);
+        //                         }
+        //                     }
+        //                     else
+        //                         retDrNurseCallDetails = dayCallDetails;
+        //                 }
+
+        //                 if(serviceName.Equals("11pcr") || serviceName.Equals("all"))
+        //                 {
+        //                     dayCallDetails = await GetPCRCallDetails(companyId, teamUserName, "11", scheduledFromDate, scheduledToDate, callStatus, serviceStatus, dateSearchType, areaNames);
+        //                     if(retDrNurseCallDetails.Count > 0)
+        //                     {
+        //                         foreach(DrNurseCallDetails singleDrNurseCallDetails in dayCallDetails)
+        //                         {
+        //                             bool isAdd = true;
+        //                             foreach(DrNurseCallDetails addedListSingDrNurCallDet in retDrNurseCallDetails)
+        //                             {
+        //                                 if(singleDrNurseCallDetails.CRMNo.Trim().Equals(addedListSingDrNurCallDet.CRMNo.Trim()))
+        //                                 {
+        //                                     isAdd = false;
+        //                                     break;
+        //                                 }
+        //                             }
+        //                             if(isAdd)
+        //                                 retDrNurseCallDetails.Add(singleDrNurseCallDetails);
+        //                         }
+        //                     }
+        //                     else
+        //                         retDrNurseCallDetails = dayCallDetails;
+        //                 }
+
+        //                 if(serviceName.Equals("sticker") || serviceName.Equals("all"))
+        //                 {
+        //                     dayCallDetails = await GetTrackerStickerCallDetails(companyId, teamUserName, false, scheduledFromDate, scheduledToDate, callStatus, serviceStatus, dateSearchType, areaNames);
+        //                     if(retDrNurseCallDetails.Count > 0)
+        //                     {
+        //                         foreach(DrNurseCallDetails singleDrNurseCallDetails in dayCallDetails)
+        //                         {
+        //                             bool isAdd = true;
+        //                             foreach(DrNurseCallDetails addedListSingDrNurCallDet in retDrNurseCallDetails)
+        //                             {
+        //                                 if(singleDrNurseCallDetails.CRMNo.Trim().Equals(addedListSingDrNurCallDet.CRMNo.Trim()))
+        //                                 {
+        //                                     isAdd = false;
+        //                                     break;
+        //                                 }
+        //                             }
+        //                             if(isAdd)
+        //                                 retDrNurseCallDetails.Add(singleDrNurseCallDetails);
+        //                         }
+        //                     }
+        //                     else
+        //                         retDrNurseCallDetails = dayCallDetails;
+        //                 }
+
+        //                 if(serviceName.Equals("discharge") || serviceName.Equals("all"))
+        //                 {
+        //                     dayCallDetails = await GetDischargeCallDetails(companyId, teamUserName, scheduledFromDate, scheduledToDate, callStatus, serviceStatus, dateSearchType, areaNames);
+        //                     if(retDrNurseCallDetails.Count > 0)
+        //                     {
+        //                         foreach(DrNurseCallDetails singleDrNurseCallDetails in dayCallDetails)
+        //                         {
+        //                             bool isAdd = true;
+        //                             foreach(DrNurseCallDetails addedListSingDrNurCallDet in retDrNurseCallDetails)
+        //                             {
+        //                                 if(singleDrNurseCallDetails.CRMNo.Trim().Equals(addedListSingDrNurCallDet.CRMNo.Trim()))
+        //                                 {
+        //                                     if(addedListSingDrNurCallDet.CallId.Equals("sticker"))
+        //                                         addedListSingDrNurCallDet.ShowDischage = true;
+        //                                     isAdd = false;
+        //                                     break;
+        //                                 }
+        //                             }
+        //                             if(isAdd)
+        //                                 retDrNurseCallDetails.Add(singleDrNurseCallDetails);
+        //                         }
+        //                     }
+        //                     else
+        //                         retDrNurseCallDetails = dayCallDetails;
+        //                 }
+        //                 /*if(serviceName.Equals("team") || serviceName.Equals("all"))
+        //                 {
+        //                     dayCallDetails = await GetTeamFieldAllowCallDetails(companyId, teamUserName, scheduledFromDate, scheduledToDate, callStatus, serviceStatus, serviceName, areaNames);
+        //                     if(retDrNurseCallDetails.Count > 0)
+        //                     {
+        //                         foreach(DrNurseCallDetails singleDrNurseCallDetails in dayCallDetails)
+        //                             retDrNurseCallDetails.Add(singleDrNurseCallDetails);
+        //                     }
+        //                     else
+        //                         retDrNurseCallDetails = dayCallDetails;
+        //                 }*/
+        //             }
+        //         }
+        //     }
+        //     catch (Exception Err)
+        //     {
+        //         var Error = Err.Message.ToString();
+        //     }
+        //     return retDrNurseCallDetails;
+        // }
+
         public async Task<List<DrNurseCallDetails>> GetFieldAllowCallDetails(string companyId, string teamUserName, string callName, DateTime scheduledFromDate, DateTime scheduledToDate, string callStatus, string serviceName, string serviceStatus, string dateSearchType, string areaNames)
         {
             List<DrNurseCallDetails> retDrNurseCallDetails = new List<DrNurseCallDetails>();
@@ -27,19 +224,6 @@ namespace Web.Api.Infrastructure.Data.Repositories
             {//all, tracker, sticker, 4pcr, 8pcr, discharge
                 if(!String.IsNullOrEmpty(serviceName))
                 {
-                    /*comminted for 4 th PCR
-                    if(serviceName.Equals("4pcr") || serviceName.Equals("all"))
-                    {
-                        dayCallDetails = await GetPCRCallDetails(companyId, teamUserName, "4", scheduledFromDate, scheduledToDate, callStatus, serviceStatus, dateSearchType, areaNames);
-                        if(retDrNurseCallDetails.Count > 0)
-                        {
-                            foreach(DrNurseCallDetails singleDrNurseCallDetails in dayCallDetails)
-                                retDrNurseCallDetails.Add(singleDrNurseCallDetails);
-                        }
-                        else
-                            retDrNurseCallDetails = dayCallDetails;
-                    }*/
-
                     string fromDate = scheduledFromDate.Date.ToString("yyyy-MM-dd");
                     string toDate = scheduledToDate.Date.ToString("yyyy-MM-dd");
                     if(fromDate == "0001-01-01" && toDate == "0001-01-01")
@@ -63,156 +247,62 @@ namespace Web.Api.Infrastructure.Data.Repositories
                         if(serviceName.Equals("tracker") || serviceName.Equals("all"))
                         {
                             dayCallDetails = await GetTrackerStickerCallDetails(companyId, teamUserName, true, scheduledFromDate, scheduledToDate, callStatus, serviceStatus, dateSearchType, areaNames);
-                            ///if(retDrNurseCallDetails.Count > 0)
+                            foreach(DrNurseCallDetails singleDrNurseCallDetails in dayCallDetails)
                             {
-                                foreach(DrNurseCallDetails singleDrNurseCallDetails in dayCallDetails)
-                                {
-                                    AssignAllocatedDate(teamUserName, singleDrNurseCallDetails);
-
-                                    retDrNurseCallDetails.Add(singleDrNurseCallDetails);
-                                }
+                                AssignAllocatedDate(teamUserName, singleDrNurseCallDetails);
+                                retDrNurseCallDetails.Add(singleDrNurseCallDetails);
                             }
-                            //else
-                                //retDrNurseCallDetails = dayCallDetails;
                         }
 
                         if(serviceName.Equals("6pcr") || serviceName.Equals("all"))
                         {
                             dayCallDetails = await GetPCRCallDetails(companyId, teamUserName, "6", scheduledFromDate, scheduledToDate, callStatus, serviceStatus, dateSearchType, areaNames);
-                            //if(retDrNurseCallDetails.Count > 0)
+                            foreach(DrNurseCallDetails singleDrNurseCallDetails in dayCallDetails)
                             {
-                                foreach(DrNurseCallDetails singleDrNurseCallDetails in dayCallDetails)
-                                {
-                                    bool isAdd = true;
-                                    foreach(DrNurseCallDetails addedListSingDrNurCallDet in retDrNurseCallDetails)
-                                    {
-                                        if(singleDrNurseCallDetails.CRMNo.Trim().Equals(addedListSingDrNurCallDet.CRMNo.Trim()))
-                                        {
-                                            isAdd = false;
-                                            break;
-                                        }
-                                    }
-                                    AssignAllocatedDate(teamUserName, singleDrNurseCallDetails);
-                                    if(isAdd)
-                                        retDrNurseCallDetails.Add(singleDrNurseCallDetails);
-                                }
+                                AssignAllocatedDate(teamUserName, singleDrNurseCallDetails);
+                                retDrNurseCallDetails.Add(singleDrNurseCallDetails);
                             }
-                            //else
-                                //retDrNurseCallDetails = dayCallDetails;
                         }
 
                         if(serviceName.Equals("8pcr") || serviceName.Equals("eight") || serviceName.Equals("all"))
                         {
                             dayCallDetails = await GetPCRCallDetails(companyId, teamUserName, "8", scheduledFromDate, scheduledToDate, callStatus, serviceStatus, dateSearchType, areaNames);
-                            //if(retDrNurseCallDetails.Count > 0)
+                            foreach(DrNurseCallDetails singleDrNurseCallDetails in dayCallDetails)
                             {
-                                foreach(DrNurseCallDetails singleDrNurseCallDetails in dayCallDetails)
-                                {
-                                    bool isAdd = true;
-                                    foreach(DrNurseCallDetails addedListSingDrNurCallDet in retDrNurseCallDetails)
-                                    {
-                                        if(singleDrNurseCallDetails.CRMNo.Trim().Equals(addedListSingDrNurCallDet.CRMNo.Trim()))
-                                        {
-                                            isAdd = false;
-                                            break;
-                                        }
-                                    }
-                                    AssignAllocatedDate(teamUserName, singleDrNurseCallDetails);
-                                    if(isAdd)
-                                        retDrNurseCallDetails.Add(singleDrNurseCallDetails);
-                                }
+                                AssignAllocatedDate(teamUserName, singleDrNurseCallDetails);
+                                retDrNurseCallDetails.Add(singleDrNurseCallDetails);
                             }
-                            //else
-                                //retDrNurseCallDetails = dayCallDetails;
                         }
 
                         if(serviceName.Equals("11pcr") || serviceName.Equals("all"))
                         {
                             dayCallDetails = await GetPCRCallDetails(companyId, teamUserName, "11", scheduledFromDate, scheduledToDate, callStatus, serviceStatus, dateSearchType, areaNames);
-                            //if(retDrNurseCallDetails.Count > 0)
+                            foreach(DrNurseCallDetails singleDrNurseCallDetails in dayCallDetails)
                             {
-                                foreach(DrNurseCallDetails singleDrNurseCallDetails in dayCallDetails)
-                                {
-                                    bool isAdd = true;
-                                    foreach(DrNurseCallDetails addedListSingDrNurCallDet in retDrNurseCallDetails)
-                                    {
-                                        if(singleDrNurseCallDetails.CRMNo.Trim().Equals(addedListSingDrNurCallDet.CRMNo.Trim()))
-                                        {
-                                            isAdd = false;
-                                            break;
-                                        }
-                                    }
-                                    AssignAllocatedDate(teamUserName, singleDrNurseCallDetails);
-                                    if(isAdd)
-                                        retDrNurseCallDetails.Add(singleDrNurseCallDetails);
-                                }
+                                AssignAllocatedDate(teamUserName, singleDrNurseCallDetails);
+                                retDrNurseCallDetails.Add(singleDrNurseCallDetails);
                             }
-                            //else
-                                //retDrNurseCallDetails = dayCallDetails;
                         }
 
                         if(serviceName.Equals("sticker") || serviceName.Equals("all"))
                         {
                             dayCallDetails = await GetTrackerStickerCallDetails(companyId, teamUserName, false, scheduledFromDate, scheduledToDate, callStatus, serviceStatus, dateSearchType, areaNames);
-                            //if(retDrNurseCallDetails.Count > 0)
+                            foreach(DrNurseCallDetails singleDrNurseCallDetails in dayCallDetails)
                             {
-                                foreach(DrNurseCallDetails singleDrNurseCallDetails in dayCallDetails)
-                                {
-                                    bool isAdd = true;
-                                    foreach(DrNurseCallDetails addedListSingDrNurCallDet in retDrNurseCallDetails)
-                                    {
-                                        if(singleDrNurseCallDetails.CRMNo.Trim().Equals(addedListSingDrNurCallDet.CRMNo.Trim()))
-                                        {
-                                            isAdd = false;
-                                            break;
-                                        }
-                                    }
-                                    AssignAllocatedDate(teamUserName, singleDrNurseCallDetails);
-                                    if(isAdd)
-                                        retDrNurseCallDetails.Add(singleDrNurseCallDetails);
-                                }
+                                AssignAllocatedDate(teamUserName, singleDrNurseCallDetails);
+                                retDrNurseCallDetails.Add(singleDrNurseCallDetails);
                             }
-                            //else
-                                //retDrNurseCallDetails = dayCallDetails;
                         }
 
                         if(serviceName.Equals("discharge") || serviceName.Equals("all"))
                         {
                             dayCallDetails = await GetDischargeCallDetails(companyId, teamUserName, scheduledFromDate, scheduledToDate, callStatus, serviceStatus, dateSearchType, areaNames);
-                            //if(retDrNurseCallDetails.Count > 0)
+                            foreach(DrNurseCallDetails singleDrNurseCallDetails in dayCallDetails)
                             {
-                                foreach(DrNurseCallDetails singleDrNurseCallDetails in dayCallDetails)
-                                {
-                                    bool isAdd = true;
-                                    foreach(DrNurseCallDetails addedListSingDrNurCallDet in retDrNurseCallDetails)
-                                    {
-                                        if(singleDrNurseCallDetails.CRMNo.Trim().Equals(addedListSingDrNurCallDet.CRMNo.Trim()))
-                                        {
-                                            if(addedListSingDrNurCallDet.CallId.Equals("sticker"))
-                                                addedListSingDrNurCallDet.ShowDischage = true;
-                                            isAdd = false;
-                                            break;
-                                        }
-                                    }
-                                    AssignAllocatedDate(teamUserName, singleDrNurseCallDetails);
-                                    if(isAdd)
-                                        retDrNurseCallDetails.Add(singleDrNurseCallDetails);
-                                }
+                                AssignAllocatedDate(teamUserName, singleDrNurseCallDetails);
+                                retDrNurseCallDetails.Add(singleDrNurseCallDetails);
                             }
-                            //else
-                                //retDrNurseCallDetails = dayCallDetails;
                         }
-                        /*if(serviceName.Equals("team") || serviceName.Equals("all"))
-                        {
-                            dayCallDetails = await GetTeamFieldAllowCallDetails(companyId, teamUserName, scheduledFromDate, scheduledToDate, callStatus, serviceStatus, serviceName, areaNames);
-                            if(retDrNurseCallDetails.Count > 0)
-                            {
-                                foreach(DrNurseCallDetails singleDrNurseCallDetails in dayCallDetails)
-                                    retDrNurseCallDetails.Add(singleDrNurseCallDetails);
-                            }
-                            else
-                                retDrNurseCallDetails = dayCallDetails;
-                        }*/
                     }
                 }
             }
@@ -245,7 +335,6 @@ namespace Web.Api.Infrastructure.Data.Repositories
             {
                 var Error = Err.Message.ToString();
             }
-            //return retDrNurseCallDetails;
         }
 
         public async Task<List<DrNurseCallDetails>> GetDrNurseCallDetails(string companyId, string teamUserName, string callName, DateTime scheduledFromDate, DateTime scheduledToDate, string callStatus, string serviceName, string areaNames)

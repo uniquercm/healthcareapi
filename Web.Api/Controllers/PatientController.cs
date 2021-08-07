@@ -136,7 +136,7 @@ namespace Web.Api.Controllers
         /// <param name="companyId">Company Id (Optional)</param>
         /// <returns></returns>
         [HttpGet("patient-crmno-available")]
-        public async Task<ActionResult> AgentNameAvailable(string crmNumber, string patientId = "", string companyId = "")
+        public async Task<ActionResult> PatientCRMNumberAvailable(string crmNumber, string patientId = "", string companyId = "")
         {
             await _patientUseCases.Handle(new AvailabilityRequest(crmNumber, patientId, companyId), _availabilityPresenter);
             return _availabilityPresenter.ContentResult;
