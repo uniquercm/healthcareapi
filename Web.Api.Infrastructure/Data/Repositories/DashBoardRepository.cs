@@ -323,7 +323,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
             return retNurseStatusDetails;
         }
 
-        async Task<List<TeamStatusDetails>> GetTeamDetails(string companyId, IDrNurseCallFieldAllocationRepository drNurseCallFieldAllocationRepository)
+/*        async Task<List<TeamStatusDetails>> GetTeamDetails(string companyId, IDrNurseCallFieldAllocationRepository drNurseCallFieldAllocationRepository)
         {
             List<TeamStatusDetails> retTeamStatusDetails = new List<TeamStatusDetails>();
             try
@@ -359,6 +359,55 @@ namespace Web.Api.Infrastructure.Data.Repositories
                         singleTeamStatusDetails.CallStatusVisitedCount = tmpDrNurseCallDetails.Count();
 
                         tmpDrNurseCallDetails = await drNurseCallFieldAllocationRepository.GetFieldAllowCallDetails(companyId, singleTeamStatusDetails.TeamUserName, "TeamCall", DateTime.Today, DateTime.Today, "notvisited", "all", "all", "schedule", "all");
+                        singleTeamStatusDetails.CallStatusNotVisitedCount = tmpDrNurseCallDetails.Count();
+
+                        retTeamStatusDetails.Add(singleTeamStatusDetails);
+                    }
+                }
+            }
+            catch (Exception Err)
+            {
+                var Error = Err.Message.ToString();
+            }
+            return retTeamStatusDetails;
+        }
+*/
+        async Task<List<TeamStatusDetails>> GetTeamDetails(string companyId, IDrNurseCallFieldAllocationRepository drNurseCallFieldAllocationRepository)
+        {
+            List<TeamStatusDetails> retTeamStatusDetails = new List<TeamStatusDetails>();
+            try
+            {
+                var tableName = $"HC_Authentication.user_obj u, HC_Master_Details.company_obj co";
+
+                var ColumAssign = $"u.company_id as CompanyId, co.company_name as CompanyName, " +
+                                  $"u.full_name as TeamName, u.user_name as TeamUserName";
+
+                var whereCond = $" where u.user_type = 7 and u.company_id = co.company_id" +
+                                $" and u.status = 'Active'" +
+                                $" and co.status = 'Active'";
+
+                string todayDate = DateTime.Today.ToString("yyyy-MM-dd 00:00:00.0");
+
+                if (!string.IsNullOrEmpty(companyId))
+                    whereCond += " and u.company_id = '" + companyId + "'";
+
+                using (var connection = _appDbContext.Connection)
+                {
+                    var sqlSelQuery = $"select " + ColumAssign + " from " + tableName + whereCond;
+                    var sqlSelResult = await connection.QueryAsync<TeamStatusDetails>(sqlSelQuery);
+
+                    foreach(TeamStatusDetails singleTeamStatusDetails in sqlSelResult.ToList())
+                    {//called , pending, visited, notvisited
+                        List<DrNurseCallDetails> tmpDrNurseCallDetails = await drNurseCallFieldAllocationRepository.GetDashBoardDetails(companyId, singleTeamStatusDetails.TeamUserName, true, "all");
+                        singleTeamStatusDetails.AllocatedCount = tmpDrNurseCallDetails.Count();
+
+                        tmpDrNurseCallDetails = await drNurseCallFieldAllocationRepository.GetDashBoardDetails(companyId, singleTeamStatusDetails.TeamUserName, false, "pending");
+                        singleTeamStatusDetails.CallStatusPendingCount = tmpDrNurseCallDetails.Count();
+
+                        tmpDrNurseCallDetails = await drNurseCallFieldAllocationRepository.GetDashBoardDetails(companyId, singleTeamStatusDetails.TeamUserName, false, "visited");
+                        singleTeamStatusDetails.CallStatusVisitedCount = tmpDrNurseCallDetails.Count();
+
+                        tmpDrNurseCallDetails = await drNurseCallFieldAllocationRepository.GetDashBoardDetails(companyId, singleTeamStatusDetails.TeamUserName, false, "notvisited");
                         singleTeamStatusDetails.CallStatusNotVisitedCount = tmpDrNurseCallDetails.Count();
 
                         retTeamStatusDetails.Add(singleTeamStatusDetails);

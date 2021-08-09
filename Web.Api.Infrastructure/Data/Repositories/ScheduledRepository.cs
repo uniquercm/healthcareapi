@@ -1502,7 +1502,16 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     if(String.IsNullOrEmpty(singleFieldAllocationDetails.AllocatedTeamName))
                         allocatedDate = "";
                     else
-                        allocatedDate = DateTime.Today.ToString("yyyy-MM-dd 00:00:00.0");
+                    {
+                        //allocatedDate = DateTime.Today.ToString("yyyy-MM-dd 00:00:00.0");
+                        if(singleFieldAllocationDetails.AllocatedDate == null)
+                            singleFieldAllocationDetails.AllocatedDate = DateTime.Today;
+                        allocatedDate = singleFieldAllocationDetails.AllocatedDate.ToString("yyyy-MM-dd");
+                        if( allocatedDate == "0001-01-01")
+                            allocatedDate = DateTime.Today.ToString("yyyy-MM-dd 00:00:00.0");
+                        else
+                            allocatedDate = singleFieldAllocationDetails.AllocatedDate.ToString("yyyy-MM-dd 00:00:00.0");
+                    }
 
                     string reAllocatedDate;
                     /*if(singleFieldAllocationDetails.ReAllocatedDate == null)
@@ -1518,7 +1527,16 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     if(String.IsNullOrEmpty(singleFieldAllocationDetails.ReAllocatedTeamName))
                         reAllocatedDate = "";
                     else
-                        reAllocatedDate = DateTime.Today.ToString("yyyy-MM-dd 00:00:00.0");
+                    {
+                        //reAllocatedDate = DateTime.Today.ToString("yyyy-MM-dd 00:00:00.0");
+                        if(singleFieldAllocationDetails.ReAllocatedDate == null)
+                            singleFieldAllocationDetails.ReAllocatedDate = DateTime.Today;
+                        reAllocatedDate = singleFieldAllocationDetails.ReAllocatedDate.ToString("yyyy-MM-dd");
+                        if( reAllocatedDate == "0001-01-01")
+                            reAllocatedDate = DateTime.Today.ToString("yyyy-MM-dd 00:00:00.0");
+                        else
+                            reAllocatedDate = singleFieldAllocationDetails.ReAllocatedDate.ToString("yyyy-MM-dd 00:00:00.0");
+                    }
 
                     object colValueParam = new
                     {
