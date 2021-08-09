@@ -1500,7 +1500,10 @@ namespace Web.Api.Infrastructure.Data.Repositories
                             allocatedDate = singleFieldAllocationDetails.AllocatedDate.ToString("yyyy-MM-dd 00:00:00.0");
                     }*/
                     if(String.IsNullOrEmpty(singleFieldAllocationDetails.AllocatedTeamName))
+                    {
                         allocatedDate = "";
+                        singleFieldAllocationDetails.AllocatedTeamName = "";
+                    }
                     else
                     {
                         //allocatedDate = DateTime.Today.ToString("yyyy-MM-dd 00:00:00.0");
@@ -1525,7 +1528,10 @@ namespace Web.Api.Infrastructure.Data.Repositories
                             reAllocatedDate = singleFieldAllocationDetails.ReAllocatedDate.ToString("yyyy-MM-dd 00:00:00.0");
                     }*/
                     if(String.IsNullOrEmpty(singleFieldAllocationDetails.ReAllocatedTeamName))
+                    {
                         reAllocatedDate = "";
+                        singleFieldAllocationDetails.ReAllocatedTeamName = "";
+                    }
                     else
                     {
                         //reAllocatedDate = DateTime.Today.ToString("yyyy-MM-dd 00:00:00.0");
