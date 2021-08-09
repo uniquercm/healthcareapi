@@ -38,7 +38,9 @@ namespace Web.Api.Models.Request
         public string ScheduledId { get; set; }
         public string PatientId { get; set; }
         public string AllocatedTeamName { get; set; }
+        public DateTime AllocatedDate { get; set; }
         public string ReAllocatedTeamName { get; set; }
+        public DateTime ReAllocatedDate { get; set; }
         public string ModifiedBy { get; set; }
     }
 
