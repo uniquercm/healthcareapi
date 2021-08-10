@@ -276,11 +276,11 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 
                 if(searchAllowTeamType.ToLower().Equals("allowed"))
                     whereCond += " and ((sc.allocated_team_name != null or sc.reallocated_team_name != null) " + 
-                                 " or (sc.allocated_team_name != ' ' and sc.reallocated_team_name != ' ')) " + 
+                                 " or (sc.allocated_team_name != ' ' and sc.reallocated_team_name != ' ') " + 
                                  " or (sc.allocated_team_name != '' or sc.reallocated_team_name != '')) ";
                 else if(searchAllowTeamType.ToLower().Equals("notallowed"))
                     whereCond += " and ((sc.allocated_team_name = null and sc.reallocated_team_name = null) " +
-                                 " or (sc.allocated_team_name = ' ' and sc.reallocated_team_name = ' ')) " + 
+                                 " or (sc.allocated_team_name = ' ' and sc.reallocated_team_name = ' ') " + 
                                  " or (sc.allocated_team_name = '' and sc.reallocated_team_name = '')) ";
 
                 string fromDate = scheduledFromDate.Date.ToString("yyyy-MM-dd");
