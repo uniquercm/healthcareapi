@@ -1119,7 +1119,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     whereCond += $" or sc.sticker_team_date = '" + fromDate + "'";
                     whereCond += $" or sc.tracker_replace_team_date = '" + fromDate + "'";
                     //Team PCR Date
-                    whereCond += $" or sc.4day_pcr_team_date = '" + fromDate + "'";
+                    //whereCond += $" or sc.4day_pcr_team_date = '" + fromDate + "'";
                     whereCond += $" or sc.6day_pcr_team_date = '" + fromDate + "'";
                     whereCond += $" or sc.8day_pcr_team_date = '" + fromDate + "'";
                     whereCond += $" or sc.11day_pcr_team_date = '" + fromDate + "'";
@@ -1133,7 +1133,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                         whereCond += " or sc.sticker_team_status = '" + callStatus + "'";
                         whereCond += " or sc.tracker_replace_team_status = '" + callStatus + "'";
                     //Team PCR Date
-                        whereCond += " or sc.4day_pcr_team_status = '" + callStatus + "'";
+                        //whereCond += " or sc.4day_pcr_team_status = '" + callStatus + "'";
                         whereCond += " or sc.6day_pcr_team_status = '" + callStatus + "'";
                         whereCond += " or sc.8day_pcr_team_status = '" + callStatus + "'";
                         whereCond += " or sc.11day_pcr_team_status = '" + callStatus + "'";
