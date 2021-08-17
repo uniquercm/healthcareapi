@@ -398,16 +398,19 @@ namespace Web.Api.Infrastructure.Data.Repositories
 
                     foreach(TeamStatusDetails singleTeamStatusDetails in sqlSelResult.ToList())
                     {//called , pending, visited, notvisited
-                        List<DrNurseCallDetails> tmpDrNurseCallDetails = await drNurseCallFieldAllocationRepository.GetDashBoardDetails(companyId, singleTeamStatusDetails.TeamUserName, true, "all");
+                        List<DrNurseCallDetails> tmpDrNurseCallDetails = await drNurseCallFieldAllocationRepository.GetDashBoardDetails(companyId, singleTeamStatusDetails.TeamUserName, "allow", "all");
                         singleTeamStatusDetails.AllocatedCount = tmpDrNurseCallDetails.Count();
 
-                        tmpDrNurseCallDetails = await drNurseCallFieldAllocationRepository.GetDashBoardDetails(companyId, singleTeamStatusDetails.TeamUserName, false, "pending");
+                        tmpDrNurseCallDetails = await drNurseCallFieldAllocationRepository.GetDashBoardDetails(companyId, singleTeamStatusDetails.TeamUserName, "auto", "all");
+                        singleTeamStatusDetails.PreviousAutomaticAllocatedCount = tmpDrNurseCallDetails.Count();
+
+                        tmpDrNurseCallDetails = await drNurseCallFieldAllocationRepository.GetDashBoardDetails(companyId, singleTeamStatusDetails.TeamUserName, "service", "pending");
                         singleTeamStatusDetails.CallStatusPendingCount = tmpDrNurseCallDetails.Count();
 
-                        tmpDrNurseCallDetails = await drNurseCallFieldAllocationRepository.GetDashBoardDetails(companyId, singleTeamStatusDetails.TeamUserName, false, "visited");
+                        tmpDrNurseCallDetails = await drNurseCallFieldAllocationRepository.GetDashBoardDetails(companyId, singleTeamStatusDetails.TeamUserName, "service", "visited");
                         singleTeamStatusDetails.CallStatusVisitedCount = tmpDrNurseCallDetails.Count();
 
-                        tmpDrNurseCallDetails = await drNurseCallFieldAllocationRepository.GetDashBoardDetails(companyId, singleTeamStatusDetails.TeamUserName, false, "notvisited");
+                        tmpDrNurseCallDetails = await drNurseCallFieldAllocationRepository.GetDashBoardDetails(companyId, singleTeamStatusDetails.TeamUserName, "service", "notvisited");
                         singleTeamStatusDetails.CallStatusNotVisitedCount = tmpDrNurseCallDetails.Count();
 
                         retTeamStatusDetails.Add(singleTeamStatusDetails);

@@ -15,7 +15,7 @@ namespace Web.Api.Core.Interfaces.Gateways.Repositories
         Task<List<DrNurseCallDetails>> GetDischargeCallDetails(string companyId, string teamUserName, DateTime scheduledFromDate, DateTime scheduledToDate, string callStatus, string serviceStatus, string dateSearchType, string areaNames);
         Task<List<DrNurseCallDetails>> GetAllocatedDateDetails(string companyId, string teamUserName, DateTime scheduledFromDate, DateTime scheduledToDate);
 
-        Task<List<DrNurseCallDetails>> GetDashBoardDetails(string companyId, string teamUserName, bool isTemAllocatedDate, string callStatus);
+        Task<List<DrNurseCallDetails>> GetDashBoardDetails(string companyId, string teamUserName, string searchCondType, string callStatus);
 
         Task<bool> EditPCRCall(CallRequest callRequest);
         Task<bool> EditStickerTrackerDischargeCall(CallRequest callRequest);
