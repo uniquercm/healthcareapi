@@ -131,6 +131,7 @@ namespace Web.Api.Core.Dto.UseCaseRequests
         public string CompanyName { get; set; }
         public string TeamName { get; set; }
         public string TeamUserName{ get; set; }
+        public int PreviousAutomaticAllocatedCount { get; set; }
         public int AllocatedCount { get; set; }
         //public int CallStatusCalledCount { get; set; }
         public int CallStatusVisitedCount { get; set; }

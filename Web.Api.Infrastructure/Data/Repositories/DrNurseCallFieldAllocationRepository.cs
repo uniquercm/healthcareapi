@@ -1077,7 +1077,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
 
 
 //********************************************GET DASHBOARD DETAILS*****************************************************************************************************************************************
-        public async Task<List<DrNurseCallDetails>> GetDashBoardDetails(string companyId, string teamUserName, bool isTemAllocatedDate, string callStatus)
+        public async Task<List<DrNurseCallDetails>> GetDashBoardDetails(string companyId, string teamUserName, string searchCondType, string callStatus)
         {
             List<DrNurseCallDetails> retDrNurseCallDetails = new List<DrNurseCallDetails>();
             try
@@ -1109,11 +1109,20 @@ namespace Web.Api.Infrastructure.Data.Repositories
                                  " or (sc.allocated_team_name != '' and sc.reallocated_team_name = '" + teamUserName + "'))";
 
 
+                //string fromDate = DateTime.Today.AddDays(-1).Date.ToString("yyyy-MM-dd 00:00:00.0");
                 string fromDate = DateTime.Today.Date.ToString("yyyy-MM-dd 00:00:00.0");
 
-                if(isTemAllocatedDate)
-                    whereCond += $" and sc.team_allocated_date = '" + fromDate + "'";
-                else
+                if(searchCondType.Equals("allow"))
+                {
+                    whereCond += $" and (sc.team_allocated_date = '" + fromDate + "'";
+                    whereCond += $" or sc.team_reallocated_date = '" + fromDate + "')";
+                }
+                else if(searchCondType.Equals("auto"))
+                {
+                    whereCond += $" and (sc.team_allocated_date != '" + fromDate + "'";
+                    whereCond += $" and sc.team_reallocated_date != '" + fromDate + "')";
+                }
+                else//service
                 {
                     whereCond += $" and (sc.tracker_team_date = '" + fromDate + "'";
                     whereCond += $" or sc.sticker_team_date = '" + fromDate + "'";
