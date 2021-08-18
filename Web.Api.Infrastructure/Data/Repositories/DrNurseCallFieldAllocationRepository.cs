@@ -274,6 +274,16 @@ namespace Web.Api.Infrastructure.Data.Repositories
                             }
                         }
 
+                        if(serviceName.Equals("9pcr") || serviceName.Equals("all"))
+                        {
+                            dayCallDetails = await GetPCRCallDetails(companyId, teamUserName, "9", scheduledFromDate, scheduledToDate, callStatus, serviceStatus, dateSearchType, areaNames);
+                            foreach(DrNurseCallDetails singleDrNurseCallDetails in dayCallDetails)
+                            {
+                                AssignAllocatedDate(teamUserName, singleDrNurseCallDetails);
+                                retDrNurseCallDetails.Add(singleDrNurseCallDetails);
+                            }
+                        }
+
                         if(serviceName.Equals("11pcr") || serviceName.Equals("all"))
                         {
                             dayCallDetails = await GetPCRCallDetails(companyId, teamUserName, "11", scheduledFromDate, scheduledToDate, callStatus, serviceStatus, dateSearchType, areaNames);
@@ -627,6 +637,14 @@ namespace Web.Api.Infrastructure.Data.Repositories
                                   $"sc.8day_pcr_team_status as TeamStatus, " +
                                   $"sc.8day_pcr_team_remark as TeamRemark, " +
                                   $"sc.8day_pcr_team_date as TeamStatusDate";
+                else if(pcrDayNumber.Equals("9"))
+                    ColumAssign += $"'9thday' as CallId, sc.9day_pcr_test_date as CallScheduledDate, " +
+                                  $"sc.9day_pcr_test_sample_date as CalledDate, " +
+                                  $"sc.9day_pcr_test_result as CallStatus, " +
+                                  $"sc.9day_pcr_team_user_name as TeamUserName, " +
+                                  $"sc.9day_pcr_team_status as TeamStatus, " +
+                                  $"sc.9day_pcr_team_remark as TeamRemark, " +
+                                  $"sc.9day_pcr_team_date as TeamStatusDate";
                 else
                     ColumAssign += $"'11thday' as CallId, sc.11day_pcr_test_date as CallScheduledDate, " +
                                   $"sc.11day_pcr_test_sample_date as CalledDate, " +
@@ -683,6 +701,8 @@ namespace Web.Api.Infrastructure.Data.Repositories
                         whereCond += $" and sc.6day_pcr_test_date between '" + fromDate + "' and '" + toDate + "'";
                     else if(pcrDayNumber.Equals("8"))
                         whereCond += $" and sc.8day_pcr_test_date between '" + fromDate + "' and '" + toDate + "'";
+                    else if(pcrDayNumber.Equals("9"))
+                        whereCond += $" and sc.9day_pcr_test_date between '" + fromDate + "' and '" + toDate + "'";
                     else
                         whereCond += $" and sc.11day_pcr_test_date between '" + fromDate + "' and '" + toDate + "'";
                 }
@@ -692,6 +712,8 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     whereCond += $" and sc.6day_pcr_test_date = '" + fromDate + "'";
                 else if(pcrDayNumber.Equals("8"))
                     whereCond += $" and sc.8day_pcr_test_date = '" + fromDate + "'";
+                else if(pcrDayNumber.Equals("9"))
+                    whereCond += $" and sc.9day_pcr_test_date = '" + fromDate + "'";
                 else
                     whereCond += $" and sc.11day_pcr_test_date = '" + fromDate + "'";
 
@@ -718,6 +740,8 @@ namespace Web.Api.Infrastructure.Data.Repositories
                         whereCond += " and sc.6day_pcr_test_result = '" + serviceStatus + "'";
                     else if(pcrDayNumber.Equals("8"))
                         whereCond += " and sc.8day_pcr_test_result = '" + serviceStatus + "'";
+                    else if(pcrDayNumber.Equals("9"))
+                        whereCond += " and sc.9day_pcr_test_result = '" + serviceStatus + "'";
                     else
                         whereCond += " and sc.11day_pcr_test_result = '" + serviceStatus + "'";
                 }
@@ -730,6 +754,8 @@ namespace Web.Api.Infrastructure.Data.Repositories
                         whereCond += " and sc.6day_pcr_team_status = '" + callStatus + "'";
                     else if(pcrDayNumber.Equals("8"))
                         whereCond += " and sc.8day_pcr_team_status = '" + callStatus + "'";
+                    else if(pcrDayNumber.Equals("9"))
+                        whereCond += " and sc.9day_pcr_team_status = '" + callStatus + "'";
                     else
                         whereCond += " and sc.11day_pcr_team_status = '" + callStatus + "'";
                 }
@@ -1131,7 +1157,8 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     //whereCond += $" or sc.4day_pcr_team_date = '" + fromDate + "'";
                     whereCond += $" or sc.6day_pcr_team_date = '" + fromDate + "'";
                     whereCond += $" or sc.8day_pcr_team_date = '" + fromDate + "'";
-                    whereCond += $" or sc.11day_pcr_team_date = '" + fromDate + "'";
+                    whereCond += $" or sc.9day_pcr_team_date = '" + fromDate + "'";
+                    //whereCond += $" or sc.11day_pcr_team_date = '" + fromDate + "'";
                     //Team Discharge Date
                     whereCond += $" or sc.discharge_team_date = '" + fromDate + "'";
                     whereCond += ")";
@@ -1145,7 +1172,8 @@ namespace Web.Api.Infrastructure.Data.Repositories
                         //whereCond += " or sc.4day_pcr_team_status = '" + callStatus + "'";
                         whereCond += " or sc.6day_pcr_team_status = '" + callStatus + "'";
                         whereCond += " or sc.8day_pcr_team_status = '" + callStatus + "'";
-                        whereCond += " or sc.11day_pcr_team_status = '" + callStatus + "'";
+                        whereCond += " or sc.9day_pcr_team_status = '" + callStatus + "'";
+                        //whereCond += " or sc.11day_pcr_team_status = '" + callStatus + "'";
                     //Team Discharge Date
                         whereCond += " or sc.discharge_status = '" + callStatus + "'";
                         whereCond += ")";
@@ -1207,6 +1235,15 @@ namespace Web.Api.Infrastructure.Data.Repositories
                                    $"8day_pcr_team_status = @TeamStatus, " +
                                    $"8day_pcr_team_remark = @TeamRemark, " +
                                    $"8day_pcr_team_date = @TeamStatusDate";
+                    }
+                    else if(callRequest.CallId.ToLower().Equals("9thday"))
+                    {
+                        colName += $", 9day_pcr_test_sample_date = @CalledDate, " +
+                                   $"9day_pcr_test_result = @CallStatus, " +
+                                   $"9day_pcr_team_user_name = @TeamUserName, " +
+                                   $"9day_pcr_team_status = @TeamStatus, " +
+                                   $"9day_pcr_team_remark = @TeamRemark, " +
+                                   $"9day_pcr_team_date = @TeamStatusDate";
                     }
                     else if(callRequest.CallId.ToLower().Equals("11thday"))
                     {
@@ -1634,6 +1671,11 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     colName += $", 8day_pcr_test_sample_date = @PCRSampleDate, " +
                                 $"8day_pcr_test_result = @PCRResult";
                 }
+                else if(servicePlanRequest.ServiceName.ToLower().Equals("9thday"))
+                {
+                    colName += $", 9day_pcr_test_sample_date = @PCRSampleDate, " +
+                                $"9day_pcr_test_result = @PCRResult";
+                }
                 else if(servicePlanRequest.ServiceName.ToLower().Equals("11thday"))
                 {
                     colName += $", 11day_pcr_test_sample_date = @PCRSampleDate, " +
@@ -1710,6 +1752,13 @@ namespace Web.Api.Infrastructure.Data.Repositories
                                    $"8day_pcr_team_status = @TeamStatus, " +
                                    $"8day_pcr_team_remark = @TeamRemark, " +
                                    $"8day_pcr_team_date = @TeamStatusDate";
+                    }
+                    else if(teamVisitDetails.ServiceName.ToLower().Equals("9thday"))
+                    {
+                        colName += $", 9day_pcr_team_user_name = @TeamUserName, " +
+                                   $"9day_pcr_team_status = @TeamStatus, " +
+                                   $"9day_pcr_team_remark = @TeamRemark, " +
+                                   $"9day_pcr_team_date = @TeamStatusDate";
                     }
                     else if(teamVisitDetails.ServiceName.ToLower().Equals("11thday"))
                     {

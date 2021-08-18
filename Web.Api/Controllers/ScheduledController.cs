@@ -40,7 +40,7 @@ namespace Web.Api.Controllers
         /// <param name="patientId">Patient Id (optional)</param>
         /// <param name="isFieldAllocation">Is Field Allocation (optional)</param>
         /// <param name="fieldAllocationStatus"> Field Allocation Status(all, allowed, notallowed) (optional)</param>
-        /// <param name="serviceName">Service Name(all, tracker, sticker, 4pcr, 8pcr, discharge) (optional)</param>
+        /// <param name="serviceName">Service Name(all, tracker, sticker, 4pcr, 6pcr, 8pcr, 9pcr, 11pcr, discharge) (optional)</param>
         /// <param name="serviceStatus">Service Status(all, applied, removed, replaced, visited, notvisited, discharged, pending, others) (optional)</param>
         /// <param name="isTeam">Is Team Field Allocation (optional)</param>
         /// <param name="areaNames">Multiple Area Name (all, )</param>

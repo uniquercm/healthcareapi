@@ -36,6 +36,9 @@ namespace Web.Api.Core.Dto.UseCaseRequests
         public DateTime PCR8DayTestDate { get; set; }//8day_pcr_test_date – datetime
         public DateTime PCR8DaySampleDate { get; set; }//8day_pcr_test_sample_date – datetime
         public string PCR8DayResult { get; set; }//8day_pcr_test_result - varchar(100) enum('Negative','Positive')
+        public DateTime PCR9DayTestDate { get; set; }//9day_pcr_test_date - datetime
+        public DateTime PCR9DaySampleDate { get; set; }//9day_pcr_test_sample_date – datetime
+        public string PCR9DayResult { get; set; }//9day_pcr_test_result - varchar(100) enum('Negative','Positive')
         public DateTime PCR11DayTestDate { get; set; }//11day_pcr_test_date - datetime
         public DateTime PCR11DaySampleDate { get; set; }//11day_pcr_test_sample_date – datetime
         public string PCR11DayResult { get; set; }//11day_pcr_test_result - varchar(100) enum('Negative','Positive')
@@ -120,6 +123,14 @@ namespace Web.Api.Core.Dto.UseCaseRequests
         public string PCR8DayTeamStatus { get; set; }//8day_pcr_team_status - varchar(100) - enum('visited','notvisited','pending')
         public string PCR8DayTeamRemark { get; set; }//8day_pcr_team_remark - varchar(256)
         public DateTime PCR8DayTeamStatusDate { get; set; }//8day_pcr_team_date - datetime
+
+        public DateTime PCR9DayTestDate { get; set; }//9day_pcr_test_date – datetime
+        public DateTime PCR9DaySampleDate { get; set; }//9day_pcr_test_sample_date – datetime
+        public string PCR9DayResult { get; set; }//9day_pcr_test_result - enum('Negative','Positive')
+        public string PCR9DayTeamUserName { get; set; }//9day_pcr_team_user_name - varchar(128)
+        public string PCR9DayTeamStatus { get; set; }//9day_pcr_team_status - varchar(100) - enum('visited','notvisited','pending')
+        public string PCR9DayTeamRemark { get; set; }//9day_pcr_team_remark - varchar(256)
+        public DateTime PCR9DayTeamStatusDate { get; set; }//9day_pcr_team_date - datetime
 
         public DateTime PCR11DayTestDate { get; set; }//11day_pcr_test_date – datetime
         public DateTime PCR11DaySampleDate { get; set; }//11day_pcr_test_sample_date – datetime
