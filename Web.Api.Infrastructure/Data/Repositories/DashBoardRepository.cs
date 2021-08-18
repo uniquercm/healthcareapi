@@ -398,6 +398,10 @@ namespace Web.Api.Infrastructure.Data.Repositories
 
                     foreach(TeamStatusDetails singleTeamStatusDetails in sqlSelResult.ToList())
                     {//called , pending, visited, notvisited
+                        if(singleTeamStatusDetails.TeamUserName.ToLower().Equals("bhteam10"))
+                        {
+                            var test = "";
+                        }
                         List<DrNurseCallDetails> tmpDrNurseCallDetails = await drNurseCallFieldAllocationRepository.GetDashBoardDetails(companyId, singleTeamStatusDetails.TeamUserName, "allow", "all");
                         singleTeamStatusDetails.AllocatedCount = tmpDrNurseCallDetails.Count();
 
