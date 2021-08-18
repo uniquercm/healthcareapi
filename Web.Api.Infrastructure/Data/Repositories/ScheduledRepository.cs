@@ -674,6 +674,9 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     if(String.IsNullOrEmpty(scheduledRequest.PCRResult))
                         scheduledRequest.PCRResult = "waiting";
 
+                    if(String.IsNullOrEmpty(scheduledRequest.TreatmentType))
+                        scheduledRequest.TreatmentType = "quarantine";
+
                     scheduledRequest.Day3CallId = "";
                     scheduledRequest.Day4CallId = "";
                     scheduledRequest.Day5CallId = "";
@@ -1182,6 +1185,9 @@ namespace Web.Api.Infrastructure.Data.Repositories
 
                     if(String.IsNullOrEmpty(scheduledRequest.PCRResult))
                         scheduledRequest.PCRResult = "waiting";
+
+                    if(String.IsNullOrEmpty(scheduledRequest.TreatmentType))
+                        scheduledRequest.TreatmentType = "quarantine";
 
                     scheduledRequest.Day3CallId = "";
                     scheduledRequest.Day4CallId = "";
