@@ -1183,7 +1183,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     }
                 }
 
-                if(searchCondType.Equals("auto") || callStatus.Equals("notvisited"))
+                if(searchCondType.Equals("allow") || searchCondType.Equals("auto") || callStatus.Equals("notvisited"))
                 {
                     whereCond += $" and (sc.tracker_schedule_date = '" + fromDate + "'";
                     whereCond += $" or sc.sticker_schedule_date = '" + fromDate + "'";
