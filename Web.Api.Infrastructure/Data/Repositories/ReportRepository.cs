@@ -44,6 +44,8 @@ namespace Web.Api.Infrastructure.Data.Repositories
                                   $"sc.6day_pcr_test_result as PCR6DayResult, " +
                                   $"sc.8day_pcr_test_date as PCR8DayTestDate, sc.8day_pcr_test_sample_date as PCR8DaySampleDate, " +
                                   $"sc.8day_pcr_test_result as PCR8DayResult, " +
+                                  $"sc.9day_pcr_test_date as PCR9DayTestDate, sc.9day_pcr_test_sample_date as PCR9DaySampleDate, " +
+                                  $"sc.9day_pcr_test_result as PCR9DayResult, " +
                                   $"sc.11day_pcr_test_date as PCR11DayTestDate, sc.11day_pcr_test_sample_date as PCR11DaySampleDate, " +
                                   $"sc.11day_pcr_test_result as PCR11DayResult, " +
                                   $"sc.3day_call_id as Day3CallId, sc.4day_call_id as Day4CallId, " +
