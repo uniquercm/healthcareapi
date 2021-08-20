@@ -18,7 +18,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
         {
             _appDbContext = appDbContext;
         }
-        public async Task<List<ReportDetails>> GetReportDetails(string companyId, string patientId, string scheduledId, string extractData, string sendClaim, DateTime sendClaimOnFromDate, DateTime sendClaimOnToDate)
+        public async Task<List<ReportDetails>> GetReportDetails(string companyId, string patientId, string scheduledId, string extractData, string sendClaim, DateTime sendClaimOnFromDate, DateTime sendClaimOnToDate, string areaNames)
         {
             List<ReportDetails> retReportDetailsList = new List<ReportDetails>();
             try
@@ -26,6 +26,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 var tableName = $"HC_Master_Details.company_obj co, " +
                                 $"HC_Master_Details.request_crm_obj rc, " +
                                 $"HC_Staff_Patient.patient_obj pa, " +
+                                $"HC_Master_Details.city_obj ci, " +
                                 $"HC_Treatment.scheduled_obj sc";
 
                 var ColumAssign = $"sc.scheduled_id as ScheduledId, " +
@@ -33,7 +34,8 @@ namespace Web.Api.Infrastructure.Data.Repositories
                                   $"pa.company_id as CompanyId, co.company_name as CompanyName, " +
                                   $"pa.request_id as RequestId, rc.request_crm_name as RequestCrmName, " +
                                   $"pa.crm_no as CRMNo, pa.eid_no as EIDNo, pa.mobile_no as MobileNo, " +
-                                  $"pa.assigned_date as AssignedDate, " +
+                                  $"pa.assigned_date as AssignedDate, pa.area as Area, " +
+                                  $"pa.city_id as CityId, ci.city_name as CityName, " +
                                   $"pa.no_of_adults as AdultsCount, pa.no_of_childrens as ChildrensCount, " +
                                   $"pa.enrolled_count as EnrolledCount, pa.enrolled_details as EnrolledDetails, " +
                                   $"pa.reception_date as RecptionCallDate, pa.reception_status as RecptionCallStatus, pa.reception_remarks as RecptionCallRemarks, " +
@@ -57,6 +59,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
 
                 var whereCond = $" where sc.patient_id = pa.patient_id" +
                                 $" and pa.company_id = co.company_id" +
+                                $" and pa.city_id = ci.city_id" +
                                 $" and pa.request_id = rc.request_crm_id" +
                                 $" and pa.status = 'Active'" +
                                 $" and sc.status = 'Active'";
@@ -80,6 +83,8 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 string sendingFromDate = "0001-01-01";
                 if(sendClaimOnFromDate != null)
                     sendingFromDate = sendClaimOnFromDate.ToString("yyyy-MM-dd");
+                if(sendingFromDate == "0001-01-01")
+                    sendingFromDate = DateTime.Today.ToString("yyyy-MM-dd");
 
                 string sendingToDate = "0001-01-01";
                 if(sendClaimOnToDate != null)
@@ -108,14 +113,38 @@ namespace Web.Api.Infrastructure.Data.Repositories
                         whereCond += " and sc.have_treatement_extract = '" + extractData + "'";
                 }
 
+                if(!String.IsNullOrEmpty(areaNames) && areaNames.ToLower() != "all")
+                {
+                    string[] areaArray = areaNames.Replace("[","").Replace("]","").Replace("\"","").Split(',');
+
+                    for(int i = 0; i < areaArray.Count(); i++)
+                    {
+                        if(i == 0 && areaArray.Count() > 1)
+                            whereCond += " and (pa.area = '" + areaArray[i] + "'";
+                        else if(i == 0)
+                            whereCond += " and pa.area = '" + areaArray[i] + "'";
+                        else if(i == areaArray.Count()-1)
+                            whereCond += " or pa.area = '" + areaArray[i] + "')";
+                        else 
+                            whereCond += " or pa.area = '" + areaArray[i] + "'";
+                    }
+                }
+
                 var orderCond = $" order by sc.created_on DESC ";
 
                 var sqlSelQuery = $"select " + ColumAssign + " from " + tableName + whereCond + orderCond;
                 using (var connection = _appDbContext.Connection)
                 {
                     var sqlSelResult = await connection.QueryAsync<ReportDetails>(sqlSelQuery);
+                    //int forcount = 0;
                     foreach(ReportDetails singleReportDetails in sqlSelResult.ToList())
                     {
+                        /*if(forcount == 53)
+                        {
+                            var countted = "";
+                        }
+                        forcount += 1;*/
+                        try{
                         if(!String.IsNullOrEmpty(singleReportDetails.EnrolledDetails))
                         {
                             singleReportDetails.EnrolledDetails = singleReportDetails.EnrolledDetails.Replace("[","");
@@ -125,40 +154,59 @@ namespace Web.Api.Infrastructure.Data.Repositories
 
                         CallDetails callDetails = new CallDetails();
                         callDetails = await GetCallDetails(singleReportDetails.Day2CallId, singleReportDetails.ScheduledId);
+                        if(callDetails == null)
+                            callDetails = new CallDetails();
                         singleReportDetails.DrCallStatus = callDetails.CallStatus;
                         singleReportDetails.DrCallRemarks = callDetails.Remarks;
 
                         callDetails = new CallDetails();
                         callDetails = await GetCallDetails(singleReportDetails.Day3CallId, singleReportDetails.ScheduledId);
+                        if(callDetails == null)
+                            callDetails = new CallDetails();
                         singleReportDetails.Day3CallStatus = callDetails.CallStatus;
                         singleReportDetails.Day3CallRemarks = callDetails.Remarks;
 
                         callDetails = new CallDetails();
                         callDetails = await GetCallDetails(singleReportDetails.Day4CallId, singleReportDetails.ScheduledId);
+                        if(callDetails == null)
+                            callDetails = new CallDetails();
                         singleReportDetails.Day4CallStatus = callDetails.CallStatus;
                         singleReportDetails.Day4CallRemarks = callDetails.Remarks;
 
                         callDetails = new CallDetails();
                         callDetails = await GetCallDetails(singleReportDetails.Day5CallId, singleReportDetails.ScheduledId);
+                        if(callDetails == null)
+                            callDetails = new CallDetails();
                         singleReportDetails.Day5CallStatus = callDetails.CallStatus;
                         singleReportDetails.Day5CallRemarks = callDetails.Remarks;
 
                         callDetails = new CallDetails();
                         callDetails = await GetCallDetails(singleReportDetails.Day6CallId, singleReportDetails.ScheduledId);
+                        if(callDetails == null)
+                            callDetails = new CallDetails();
                         singleReportDetails.Day6CallStatus = callDetails.CallStatus;
                         singleReportDetails.Day6CallRemarks = callDetails.Remarks;
 
                         callDetails = new CallDetails();
                         callDetails = await GetCallDetails(singleReportDetails.Day7CallId, singleReportDetails.ScheduledId);
+                        if(callDetails == null)
+                            callDetails = new CallDetails();
                         singleReportDetails.Day7CallStatus = callDetails.CallStatus;
                         singleReportDetails.Day7CallRemarks = callDetails.Remarks;
 
                         callDetails = new CallDetails();
                         callDetails = await GetCallDetails(singleReportDetails.Day9CallId, singleReportDetails.ScheduledId);
+                        if(callDetails == null)
+                            callDetails = new CallDetails();
                         singleReportDetails.Day9CallStatus = callDetails.CallStatus;
                         singleReportDetails.Day9CallRemarks = callDetails.Remarks;
 
                         retReportDetailsList.Add(singleReportDetails);
+                        }
+                        catch(Exception Erro)
+                        {
+                            var error = Erro.Message.ToString();
+                        }
                     }
                 }
             }

@@ -120,7 +120,7 @@ namespace Web.Api.Core.Dto.UseCaseRequests
             IsTeamFieldAllocation = isTeamFieldAllocation;
             AreaNames = areaNames;
         }
-        public GetDetailsRequest(string companyId, string patientId, string scheduledId, DateTime scheduledFromDate, DateTime scheduledToDate, string lableName, string extractData, string sendClaim)
+        public GetDetailsRequest(string companyId, string patientId, string scheduledId, DateTime scheduledFromDate, DateTime scheduledToDate, string lableName, string extractData, string sendClaim, string areaNames)
         {
             CompanyId = companyId;
             PatientId = patientId;
@@ -130,6 +130,7 @@ namespace Web.Api.Core.Dto.UseCaseRequests
             LableName = lableName;
             ExtractData = extractData;
             SendClaim = sendClaim;
+            AreaNames = areaNames;
         }
 
     }

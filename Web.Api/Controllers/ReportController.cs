@@ -35,11 +35,12 @@ namespace Web.Api.Controllers
         /// <param name="scheduledId">Scheduled Id (optional)</param>
         /// <param name="extractData">Extract Data (all, yes, no) (optional)</param>
         /// <param name="sendClaim">Send Claim (all, yes, no) (optional)</param>
+        /// <param name="areaNames">Multiple Area Name (all, )</param>
         /// <returns>Report Details</returns>
         [HttpGet("report")]
-        public async Task<ActionResult> GetScheduledDetails(DateTime sendOnFromDate, DateTime sendOnToDate, string companyId = "", string patientId = "", string scheduledId = "", string extractData = "all", string sendClaim = "all")
+        public async Task<ActionResult> GetScheduledDetails(DateTime sendOnFromDate, DateTime sendOnToDate, string companyId = "", string patientId = "", string scheduledId = "", string extractData = "all", string sendClaim = "all", string areaNames = "all")
         {
-            await _reportUseCases.Handle(new GetDetailsRequest(companyId, patientId, scheduledId, sendOnFromDate, sendOnToDate, "", extractData, sendClaim), _getDetailsPresenter);
+            await _reportUseCases.Handle(new GetDetailsRequest(companyId, patientId, scheduledId, sendOnFromDate, sendOnToDate, "", extractData, sendClaim, areaNames), _getDetailsPresenter);
             return _getDetailsPresenter.ContentResult;
         }
 
