@@ -14,7 +14,6 @@ namespace Web.Api.Core.UseCases
         public PatientUseCases(IPatientRepository patientRepository)
         {
             _patientRepository = patientRepository;
-           
         }
 
         public async Task<bool> Handle(GetDetailsRequest request, IOutputPort<GetDetailsResponse> outputPort)
