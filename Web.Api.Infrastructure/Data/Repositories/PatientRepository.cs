@@ -438,6 +438,9 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 if(String.IsNullOrEmpty(patientRequest.PrimaryPatientId))
                     patientRequest.PrimaryPatientId = patientRequest.PatientId;
 
+                if(String.IsNullOrEmpty(patientRequest.MobileNo))
+                    patientRequest.MobileNo = "";
+
                 object colValueParam = new
                 {
                     PatientId = patientRequest.PatientId,
@@ -658,6 +661,9 @@ namespace Web.Api.Infrastructure.Data.Repositories
 
                 if(String.IsNullOrEmpty(patientRequest.PrimaryPatientId))
                     patientRequest.PrimaryPatientId = patientRequest.PatientId;
+
+                if(String.IsNullOrEmpty(patientRequest.MobileNo))
+                    patientRequest.MobileNo = "";
 
                 object colValueParam = new
                 {

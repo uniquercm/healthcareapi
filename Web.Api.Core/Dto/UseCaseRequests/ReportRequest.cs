@@ -17,6 +17,9 @@ namespace Web.Api.Core.Dto.UseCaseRequests
         public string CRMNo { get; set; }//crm_no	- varchar(128)
         public string EIDNo { get; set; }//eid_no - varchar(128)
         public string MobileNo { get; set; }//mobile_no - varchar(25)
+        public string Area { get; set; }//area – varchar(128)
+        public int CityId { get; set; }//city_id - int(10)
+        public string CityName { get; set; }
         public DateTime AssignedDate { get; set; }//assigned_date - datetime
         public int EnrolledCount { get; set; }//enrolled_count - int(25)
         public string EnrolledDetails { get; set; }//enrolled_details - varchar(500)
@@ -36,6 +39,9 @@ namespace Web.Api.Core.Dto.UseCaseRequests
         public DateTime PCR8DayTestDate { get; set; }//8day_pcr_test_date - datetime
         public DateTime PCR8DaySampleDate { get; set; }//8day_pcr_test_sample_date – datetime
         public string PCR8DayResult { get; set; }//8day_pcr_test_result - enum('Negative','Positive')
+        public DateTime PCR9DayTestDate { get; set; }//9day_pcr_test_date - datetime
+        public DateTime PCR9DaySampleDate { get; set; }//9day_pcr_test_sample_date – datetime
+        public string PCR9DayResult { get; set; }//9day_pcr_test_result - varchar(100) enum('Negative','Positive')
         public DateTime PCR11DayTestDate { get; set; }//11day_pcr_test_date - datetime
         public DateTime PCR11DaySampleDate { get; set; }//11day_pcr_test_sample_date – datetime
         public string PCR11DayResult { get; set; }//11day_pcr_test_result - varchar(100) enum('Negative','Positive')

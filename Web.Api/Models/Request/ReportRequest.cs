@@ -25,9 +25,18 @@ namespace Web.Api.Models.Request
         public DateTime PCR4DayTestDate { get; set; }
         public DateTime PCR4DaySampleDate { get; set; }
         public string PCR4DayResult { get; set; }
+        public DateTime PCR6DayTestDate { get; set; }
+        public DateTime PCR6DaySampleDate { get; set; }
+        public string PCR6DayResult { get; set; }
         public DateTime PCR8DayTestDate { get; set; }
         public DateTime PCR8DaySampleDate { get; set; }
         public string PCR8DayResult { get; set; }
+        public DateTime PCR9DayTestDate { get; set; }
+        public DateTime PCR9DaySampleDate { get; set; }
+        public string PCR9DayResult { get; set; }
+        public DateTime PCR11DayTestDate { get; set; }
+        public DateTime PCR11DaySampleDate { get; set; }
+        public string PCR11DayResult { get; set; }
         public string Day3CallId { get; set; }
         public string Day3CallStatus { get; set; }
         public string Day3CallRemarks { get; set; }

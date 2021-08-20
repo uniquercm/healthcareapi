@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -82,6 +82,29 @@ namespace Web.Api.Controllers
         public async Task<ActionResult> CreatePatient([FromBody] Models.Request.PatientRequest request)
         {
             request.IsUpdate = false;
+            /*Web.Api.Core.Dto.UseCaseRequests.PatientRequest corePatRequest = new PatientRequest();
+            corePatRequest.PatientName = request.PatientName;
+            corePatRequest.CompanyId = request.CompanyId;
+            corePatRequest.RequestId = request.RequestId;
+            corePatRequest.DateOfBirth = Convert.ToDateTime(request.DateOfBirth);
+            corePatRequest.Age = request.Age;
+            corePatRequest.Sex = request.Sex;
+            corePatRequest.Address = request.Address;
+            corePatRequest.LandMark = request.LandMark;
+            corePatRequest.Area = request.Area;
+            corePatRequest.CityId = request.CityId;
+            corePatRequest.NationalityId = request.NationalityId;
+            corePatRequest.MobileNo = request.MobileNo;
+            corePatRequest.GoogleMapLink = request.GoogleMapLink;
+            corePatRequest.AdultsCount = request.AdultsCount;
+            corePatRequest.ChildrensCount = request.ChildrensCount;
+            corePatRequest.StickerApplication = request.StickerApplication;
+            corePatRequest.TrackerApplication = request.TrackerApplication;
+            corePatRequest.StickerRemoval = request.StickerRemoval;
+            corePatRequest.TrackerRemoval = request.TrackerRemoval;
+            corePatRequest.CreatedBy = request.CreatedBy;
+            corePatRequest.AssignedDate = Convert.ToDateTime(request.AssignedDate);
+            await _patientUseCases.Handle(corePatRequest, _acknowledgementPresenter);*/
             await _patientUseCases.Handle(_mapper.Map<PatientRequest>(request), _acknowledgementPresenter);
             return _acknowledgementPresenter.ContentResult;
         }
@@ -94,6 +117,38 @@ namespace Web.Api.Controllers
         [HttpPost("patient-file")]
         public async Task<ActionResult> CreateListOfPatient([FromBody] Models.Request.FilePatientRequest request)
         {
+            /*Web.Api.Core.Dto.UseCaseRequests.FilePatientRequest coreFilePatientRequest = new FilePatientRequest();
+            foreach(Models.Request.PatientRequest singleCorePatRequest in request.PatientRequestList)
+            {
+                try{
+                Web.Api.Core.Dto.UseCaseRequests.PatientRequest corePatRequest = new PatientRequest();
+                corePatRequest.PatientName = singleCorePatRequest.PatientName;
+                corePatRequest.CompanyId = singleCorePatRequest.CompanyId;
+                corePatRequest.RequestId = singleCorePatRequest.RequestId;
+                corePatRequest.DateOfBirth = Convert.ToDateTime(singleCorePatRequest.DateOfBirth);
+                corePatRequest.Age = singleCorePatRequest.Age;
+                corePatRequest.Sex = singleCorePatRequest.Sex;
+                corePatRequest.Address = singleCorePatRequest.Address;
+                corePatRequest.LandMark = singleCorePatRequest.LandMark;
+                corePatRequest.Area = singleCorePatRequest.Area;
+                corePatRequest.CityId = singleCorePatRequest.CityId;
+                corePatRequest.NationalityId = singleCorePatRequest.NationalityId;
+                corePatRequest.MobileNo = singleCorePatRequest.MobileNo;
+                corePatRequest.GoogleMapLink = singleCorePatRequest.GoogleMapLink;
+                corePatRequest.AdultsCount = singleCorePatRequest.AdultsCount;
+                corePatRequest.ChildrensCount = singleCorePatRequest.ChildrensCount;
+                corePatRequest.StickerApplication = singleCorePatRequest.StickerApplication;
+                corePatRequest.TrackerApplication = singleCorePatRequest.TrackerApplication;
+                corePatRequest.StickerRemoval = singleCorePatRequest.StickerRemoval;
+                corePatRequest.TrackerRemoval = singleCorePatRequest.TrackerRemoval;
+                corePatRequest.CreatedBy = singleCorePatRequest.CreatedBy;
+                corePatRequest.AssignedDate = Convert.ToDateTime(singleCorePatRequest.AssignedDate);
+                coreFilePatientRequest.PatientRequestList.Add(corePatRequest);
+                }
+                catch(Exception Err)
+                {var Error = Err.Message.ToString();}
+            }
+            await _patientUseCases.Handle(coreFilePatientRequest, _acknowledgementPresenter);*/
             await _patientUseCases.Handle(_mapper.Map<FilePatientRequest>(request), _acknowledgementPresenter);
             return _acknowledgementPresenter.ContentResult;
         }
@@ -112,6 +167,29 @@ namespace Web.Api.Controllers
         public async Task<ActionResult> EditPatient([FromBody] Models.Request.PatientRequest request)
         {
             request.IsUpdate = true;
+            /*Web.Api.Core.Dto.UseCaseRequests.PatientRequest corePatRequest = new PatientRequest();
+            corePatRequest.PatientName = request.PatientName;
+            corePatRequest.CompanyId = request.CompanyId;
+            corePatRequest.RequestId = request.RequestId;
+            corePatRequest.DateOfBirth = Convert.ToDateTime(request.DateOfBirth);
+            corePatRequest.Age = request.Age;
+            corePatRequest.Sex = request.Sex;
+            corePatRequest.Address = request.Address;
+            corePatRequest.LandMark = request.LandMark;
+            corePatRequest.Area = request.Area;
+            corePatRequest.CityId = request.CityId;
+            corePatRequest.NationalityId = request.NationalityId;
+            corePatRequest.MobileNo = request.MobileNo;
+            corePatRequest.GoogleMapLink = request.GoogleMapLink;
+            corePatRequest.AdultsCount = request.AdultsCount;
+            corePatRequest.ChildrensCount = request.ChildrensCount;
+            corePatRequest.StickerApplication = request.StickerApplication;
+            corePatRequest.TrackerApplication = request.TrackerApplication;
+            corePatRequest.StickerRemoval = request.StickerRemoval;
+            corePatRequest.TrackerRemoval = request.TrackerRemoval;
+            corePatRequest.ModifiedBy = request.ModifiedBy;
+            corePatRequest.AssignedDate = Convert.ToDateTime(request.AssignedDate);
+            await _patientUseCases.Handle(corePatRequest, _acknowledgementPresenter);*/
             await _patientUseCases.Handle(_mapper.Map<PatientRequest>(request), _acknowledgementPresenter);
             return _acknowledgementPresenter.ContentResult;
         }

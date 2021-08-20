@@ -19,7 +19,7 @@ namespace Web.Api.Core.UseCases
         public async Task<bool> Handle(GetDetailsRequest request, IOutputPort<GetDetailsResponse> outputPort)
         {
             GetDetailsResponse getDetailsResponse;
-            getDetailsResponse = new GetDetailsResponse(await _reportRepository.GetReportDetails(request.CompanyId, request.PatientId, request.ScheduledId, request.ExtractData, request.SendClaim, request.ScheduledFromDate, request.ScheduledToDate), true, "Data Fetched Successfully");
+            getDetailsResponse = new GetDetailsResponse(await _reportRepository.GetReportDetails(request.CompanyId, request.PatientId, request.ScheduledId, request.ExtractData, request.SendClaim, request.ScheduledFromDate, request.ScheduledToDate, request.AreaNames), true, "Data Fetched Successfully");
             outputPort.Handle(getDetailsResponse);
             return true;
         }
