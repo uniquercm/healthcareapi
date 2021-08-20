@@ -82,7 +82,7 @@ namespace Web.Api.Controllers
         public async Task<ActionResult> CreatePatient([FromBody] Models.Request.PatientRequest request)
         {
             request.IsUpdate = false;
-            Web.Api.Core.Dto.UseCaseRequests.PatientRequest corePatRequest = new PatientRequest();
+            /*Web.Api.Core.Dto.UseCaseRequests.PatientRequest corePatRequest = new PatientRequest();
             corePatRequest.PatientName = request.PatientName;
             corePatRequest.CompanyId = request.CompanyId;
             corePatRequest.RequestId = request.RequestId;
@@ -104,8 +104,8 @@ namespace Web.Api.Controllers
             corePatRequest.TrackerRemoval = request.TrackerRemoval;
             corePatRequest.CreatedBy = request.CreatedBy;
             corePatRequest.AssignedDate = Convert.ToDateTime(request.AssignedDate);
-            await _patientUseCases.Handle(corePatRequest, _acknowledgementPresenter);
-            //await _patientUseCases.Handle(_mapper.Map<PatientRequest>(request), _acknowledgementPresenter);
+            await _patientUseCases.Handle(corePatRequest, _acknowledgementPresenter);*/
+            await _patientUseCases.Handle(_mapper.Map<PatientRequest>(request), _acknowledgementPresenter);
             return _acknowledgementPresenter.ContentResult;
         }
 
@@ -117,7 +117,7 @@ namespace Web.Api.Controllers
         [HttpPost("patient-file")]
         public async Task<ActionResult> CreateListOfPatient([FromBody] Models.Request.FilePatientRequest request)
         {
-            Web.Api.Core.Dto.UseCaseRequests.FilePatientRequest coreFilePatientRequest = new FilePatientRequest();
+            /*Web.Api.Core.Dto.UseCaseRequests.FilePatientRequest coreFilePatientRequest = new FilePatientRequest();
             foreach(Models.Request.PatientRequest singleCorePatRequest in request.PatientRequestList)
             {
                 try{
@@ -148,8 +148,8 @@ namespace Web.Api.Controllers
                 catch(Exception Err)
                 {var Error = Err.Message.ToString();}
             }
-            await _patientUseCases.Handle(coreFilePatientRequest, _acknowledgementPresenter);
-            //await _patientUseCases.Handle(_mapper.Map<FilePatientRequest>(request), _acknowledgementPresenter);
+            await _patientUseCases.Handle(coreFilePatientRequest, _acknowledgementPresenter);*/
+            await _patientUseCases.Handle(_mapper.Map<FilePatientRequest>(request), _acknowledgementPresenter);
             return _acknowledgementPresenter.ContentResult;
         }
         /*public async Task<ActionResult> CreateListOfPatient([FromBody] Models.Request.FilePatientRequest request)
@@ -167,7 +167,7 @@ namespace Web.Api.Controllers
         public async Task<ActionResult> EditPatient([FromBody] Models.Request.PatientRequest request)
         {
             request.IsUpdate = true;
-            Web.Api.Core.Dto.UseCaseRequests.PatientRequest corePatRequest = new PatientRequest();
+            /*Web.Api.Core.Dto.UseCaseRequests.PatientRequest corePatRequest = new PatientRequest();
             corePatRequest.PatientName = request.PatientName;
             corePatRequest.CompanyId = request.CompanyId;
             corePatRequest.RequestId = request.RequestId;
@@ -189,8 +189,8 @@ namespace Web.Api.Controllers
             corePatRequest.TrackerRemoval = request.TrackerRemoval;
             corePatRequest.ModifiedBy = request.ModifiedBy;
             corePatRequest.AssignedDate = Convert.ToDateTime(request.AssignedDate);
-            await _patientUseCases.Handle(corePatRequest, _acknowledgementPresenter);
-            //await _patientUseCases.Handle(_mapper.Map<PatientRequest>(request), _acknowledgementPresenter);
+            await _patientUseCases.Handle(corePatRequest, _acknowledgementPresenter);*/
+            await _patientUseCases.Handle(_mapper.Map<PatientRequest>(request), _acknowledgementPresenter);
             return _acknowledgementPresenter.ContentResult;
         }
 
