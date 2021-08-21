@@ -10,5 +10,6 @@ namespace Web.Api.Core.Interfaces.Gateways.Repositories
         Task<List<ReportDetails>> GetReportDetails(string companyId, string patientId, string scheduledId, string extractData, string sendClaim, DateTime sendClaimOnFromDate, DateTime sendClaimOnToDate, string areaNames);
         Task<CallDetails> GetCallDetails(string callId, string scheduledId);
         Task<bool> EditReportDetails(ReportDetails reportDetails);
+        Task<List<DrNurseCallDetails>> GetTeamReportDetails(string companyId, string teamUserName, DateTime scheduledFromDate, DateTime scheduledToDate, IDrNurseCallFieldAllocationRepository drNurseCallFieldAllocationRepository);
     }
 }

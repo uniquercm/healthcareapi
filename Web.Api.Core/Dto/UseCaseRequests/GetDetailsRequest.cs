@@ -133,5 +133,13 @@ namespace Web.Api.Core.Dto.UseCaseRequests
             AreaNames = areaNames;
         }
 
+        public GetDetailsRequest(DateTime scheduledFromDate, DateTime scheduledToDate, string companyId, string teamUserName, bool isTeamFieldAllocation)
+        {
+            ScheduledFromDate = scheduledFromDate;
+            ScheduledToDate = scheduledToDate;
+            CompanyId = companyId;
+            TeamUserName = teamUserName;
+            IsTeamFieldAllocation = isTeamFieldAllocation;
+        }
     }
 }

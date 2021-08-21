@@ -38,7 +38,7 @@ namespace Web.Api.Controllers
         /// <param name="areaNames">Multiple Area Name (all, )</param>
         /// <returns>Report Details</returns>
         [HttpGet("report")]
-        public async Task<ActionResult> GetScheduledDetails(DateTime sendOnFromDate, DateTime sendOnToDate, string companyId = "", string patientId = "", string scheduledId = "", string extractData = "all", string sendClaim = "all", string areaNames = "all")
+        public async Task<ActionResult> GetReportDetails(DateTime sendOnFromDate, DateTime sendOnToDate, string companyId = "", string patientId = "", string scheduledId = "", string extractData = "all", string sendClaim = "all", string areaNames = "all")
         {
             await _reportUseCases.Handle(new GetDetailsRequest(companyId, patientId, scheduledId, sendOnFromDate, sendOnToDate, "", extractData, sendClaim, areaNames), _getDetailsPresenter);
             return _getDetailsPresenter.ContentResult;
@@ -54,6 +54,21 @@ namespace Web.Api.Controllers
         {
             await _reportUseCases.Handle(_mapper.Map<ReportDetails>(request), _acknowledgementPresenter);
             return _acknowledgementPresenter.ContentResult;
+        }
+
+        /// <summary>
+        /// Getting a Team Field Allocation Report Details
+        /// </summary>
+        /// <param name="scheduledFromDate">Scheduled From Date (optional)</param>
+        /// <param name="scheduledToDate">Scheduled To Date (optional)</param>
+        /// <param name="companyId">Company Id (optional)</param>
+        /// <param name="teamUserName">Team User Name (optional)</param>
+        /// <returns>Team Field Allocation Report Details</returns>
+        [HttpGet("team-report")]
+        public async Task<ActionResult> GetTeamReportDetails(DateTime scheduledFromDate, DateTime scheduledToDate, string companyId = "", string teamUserName = "")
+        {
+            await _reportUseCases.Handle(new GetDetailsRequest(scheduledFromDate, scheduledToDate, companyId, teamUserName, true), _getDetailsPresenter);
+            return _getDetailsPresenter.ContentResult;
         }
     }
 }

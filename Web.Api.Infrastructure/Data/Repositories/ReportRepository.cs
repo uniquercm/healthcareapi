@@ -14,6 +14,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
     internal sealed class ReportRepository : IReportRepository
     {
         private readonly AppDbContext _appDbContext;
+
         public ReportRepository(AppDbContext appDbContext)
         {
             _appDbContext = appDbContext;
@@ -311,5 +312,18 @@ namespace Web.Api.Infrastructure.Data.Repositories
             }
         }
 
+        public async Task<List<DrNurseCallDetails>> GetTeamReportDetails(string companyId, string teamUserName, DateTime scheduledFromDate, DateTime scheduledToDate, IDrNurseCallFieldAllocationRepository drNurseCallFieldAllocationRepository)
+        {
+            List<DrNurseCallDetails> retDrNurseCallDetails = new List<DrNurseCallDetails>();
+            try
+            {
+                retDrNurseCallDetails = await drNurseCallFieldAllocationRepository.GetFieldAllowCallDetails(companyId, teamUserName, "all", scheduledFromDate, scheduledToDate, "all", "all", "all", "schedule", "all");
+            }
+            catch (Exception Err)
+            {
+                var Error = Err.Message.ToString();
+            }
+            return retDrNurseCallDetails;
+        }
     }
 }
