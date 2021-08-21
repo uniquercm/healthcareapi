@@ -1106,7 +1106,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
         public async Task<List<DrNurseCallDetails>> GetDashBoardDetails(string companyId, string teamUserName, string searchCondType, string callStatus)
         {
             List<DrNurseCallDetails> retDrNurseCallDetails = new List<DrNurseCallDetails>();
-            var
+            //var
             try
             {//tracker, sticker, 4pcr, 8pcr, discharge
                 var tableName = $"HC_Staff_Patient.patient_obj p, " +
