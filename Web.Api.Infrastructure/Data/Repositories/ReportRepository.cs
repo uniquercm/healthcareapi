@@ -330,9 +330,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 else
                 {
                     foreach(TeamReportDetails singleDrNurseCallDetails in teamReportDetailsList)
-                    {
                         retTeamReportDetailsList.Add(singleDrNurseCallDetails);
-                    }
                 }
                 //sticker
                 teamReportDetailsList = await GetServiceTeamReportDetails(companyId, teamUserName, fromDate, toDate, "sticker");
@@ -341,9 +339,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 else
                 {
                     foreach(TeamReportDetails singleDrNurseCallDetails in teamReportDetailsList)
-                    {
                         retTeamReportDetailsList.Add(singleDrNurseCallDetails);
-                    }
                 }
                 //replace
                 teamReportDetailsList = await GetServiceTeamReportDetails(companyId, teamUserName, fromDate, toDate, "replace");
@@ -352,21 +348,17 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 else
                 {
                     foreach(TeamReportDetails singleDrNurseCallDetails in teamReportDetailsList)
-                    {
                         retTeamReportDetailsList.Add(singleDrNurseCallDetails);
-                    }
                 }
                 //4
-                teamReportDetailsList = await GetServiceTeamReportDetails(companyId, teamUserName, fromDate, toDate, "4");
+                /*teamReportDetailsList = await GetServiceTeamReportDetails(companyId, teamUserName, fromDate, toDate, "4");
                 if(retTeamReportDetailsList.Count() == 0)
                     retTeamReportDetailsList = teamReportDetailsList;
                 else
                 {
                     foreach(TeamReportDetails singleDrNurseCallDetails in teamReportDetailsList)
-                    {
                         retTeamReportDetailsList.Add(singleDrNurseCallDetails);
-                    }
-                }
+                }*/
                 //6
                 teamReportDetailsList = await GetServiceTeamReportDetails(companyId, teamUserName, fromDate, toDate, "6");
                 if(retTeamReportDetailsList.Count() == 0)
@@ -374,9 +366,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 else
                 {
                     foreach(TeamReportDetails singleDrNurseCallDetails in teamReportDetailsList)
-                    {
                         retTeamReportDetailsList.Add(singleDrNurseCallDetails);
-                    }
                 }
                 //8
                 teamReportDetailsList = await GetServiceTeamReportDetails(companyId, teamUserName, fromDate, toDate, "8");
@@ -385,9 +375,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 else
                 {
                     foreach(TeamReportDetails singleDrNurseCallDetails in teamReportDetailsList)
-                    {
                         retTeamReportDetailsList.Add(singleDrNurseCallDetails);
-                    }
                 }
                 //9
                 teamReportDetailsList = await GetServiceTeamReportDetails(companyId, teamUserName, fromDate, toDate, "9");
@@ -396,9 +384,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 else
                 {
                     foreach(TeamReportDetails singleDrNurseCallDetails in teamReportDetailsList)
-                    {
                         retTeamReportDetailsList.Add(singleDrNurseCallDetails);
-                    }
                 }
                 //11
                 teamReportDetailsList = await GetServiceTeamReportDetails(companyId, teamUserName, fromDate, toDate, "11");
@@ -407,9 +393,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 else
                 {
                     foreach(TeamReportDetails singleDrNurseCallDetails in teamReportDetailsList)
-                    {
                         retTeamReportDetailsList.Add(singleDrNurseCallDetails);
-                    }
                 }
                 //discharge
                 teamReportDetailsList = await GetServiceTeamReportDetails(companyId, teamUserName, fromDate, toDate, "discharge");
@@ -418,9 +402,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 else
                 {
                     foreach(TeamReportDetails singleDrNurseCallDetails in teamReportDetailsList)
-                    {
                         retTeamReportDetailsList.Add(singleDrNurseCallDetails);
-                    }
                 }
             }
             catch (Exception Err)
@@ -438,6 +420,8 @@ namespace Web.Api.Infrastructure.Data.Repositories
                 if(!String.IsNullOrEmpty(serviceName))
                 {
                     var dateWhereCondColumName = "";
+                    var teamWhereCondColumName = "";
+                    var schedateWhereCondColumName = "";
                     string minits = " 00:00:00.0";
                     var tableName = $"HC_Master_Details.company_obj co, " +
                                     $"HC_Master_Details.request_crm_obj rc, " +
@@ -467,6 +451,8 @@ namespace Web.Api.Infrastructure.Data.Repositories
                                     $"sc.tracker_team_remark as TeamRemark, " +
                                     $"sc.tracker_team_date as TeamVisitedDate";
                         dateWhereCondColumName = $"sc.tracker_team_date";
+                        schedateWhereCondColumName = $"sc.tracker_schedule_date";
+                        teamWhereCondColumName = $"sc.tracker_team_user_name";
                     }
                     else if(serviceName.Equals("sticker"))
                     {
@@ -476,6 +462,8 @@ namespace Web.Api.Infrastructure.Data.Repositories
                                     $"sc.sticker_team_remark as TeamRemark, " +
                                     $"sc.sticker_team_date as TeamVisitedDate";
                         dateWhereCondColumName = $"sc.sticker_team_date";
+                        schedateWhereCondColumName = $"sc.sticker_schedule_date";
+                        teamWhereCondColumName = $"sc.sticker_team_user_name";
                     }
                     else if(serviceName.Equals("replace"))//TrackerReplace
                     {
@@ -486,6 +474,8 @@ namespace Web.Api.Infrastructure.Data.Repositories
                                     $"sc.tracker_replace_team_remark as TeamRemark, " +
                                     $"sc.tracker_replace_team_date as TeamVisitedDate";
                         dateWhereCondColumName = $"sc.tracker_replace_team_date";
+                        schedateWhereCondColumName = $"sc.tracker_replace_date";
+                        teamWhereCondColumName = $"sc.tracker_replace_team_user_name";
                     }
                     else if(serviceName.Equals("4"))
                     {
@@ -495,6 +485,8 @@ namespace Web.Api.Infrastructure.Data.Repositories
                                     $"sc.4day_pcr_team_remark as TeamRemark, " +
                                     $"sc.4day_pcr_team_date as TeamVisitedDate";
                         dateWhereCondColumName = $"sc.4day_pcr_team_date";
+                        schedateWhereCondColumName = $"sc.4day_pcr_test_date";
+                        teamWhereCondColumName = $"sc.4day_pcr_team_user_name";
                     }
                     else if(serviceName.Equals("6"))
                     {
@@ -504,6 +496,8 @@ namespace Web.Api.Infrastructure.Data.Repositories
                                     $"sc.6day_pcr_team_remark as TeamRemark, " +
                                     $"sc.6day_pcr_team_date as TeamVisitedDate";
                         dateWhereCondColumName = $"sc.6day_pcr_team_date";
+                        schedateWhereCondColumName = $"sc.6day_pcr_test_date";
+                        teamWhereCondColumName = $"sc.6day_pcr_team_user_name";
                     }
                     else if(serviceName.Equals("8"))
                     {
@@ -513,6 +507,8 @@ namespace Web.Api.Infrastructure.Data.Repositories
                                     $"sc.8day_pcr_team_remark as TeamRemark, " +
                                     $"sc.8day_pcr_team_date as TeamVisitedDate";
                         dateWhereCondColumName = $"sc.8day_pcr_team_date";
+                        schedateWhereCondColumName = $"sc.8day_pcr_test_date";
+                        teamWhereCondColumName = $"sc.8day_pcr_team_user_name";
                     }
                     else if(serviceName.Equals("9"))
                     {
@@ -522,6 +518,8 @@ namespace Web.Api.Infrastructure.Data.Repositories
                                     $"sc.9day_pcr_team_remark as TeamRemark, " +
                                     $"sc.9day_pcr_team_date as TeamVisitedDate";
                         dateWhereCondColumName = $"sc.9day_pcr_team_date";
+                        schedateWhereCondColumName = $"sc.9day_pcr_test_date";
+                        teamWhereCondColumName = $"sc.9day_pcr_team_user_name";
                     }
                     else if(serviceName.Equals("11"))
                     {
@@ -531,6 +529,8 @@ namespace Web.Api.Infrastructure.Data.Repositories
                                     $"sc.11day_pcr_team_remark as TeamRemark, " +
                                     $"sc.11day_pcr_team_date as TeamVisitedDate";
                         dateWhereCondColumName = $"sc.11day_pcr_team_date";
+                        schedateWhereCondColumName = $"sc.11day_pcr_test_date";
+                        teamWhereCondColumName = $"sc.11day_pcr_team_user_name";
                     }
                     else if(serviceName.Equals("discharge"))
                     {
@@ -540,19 +540,28 @@ namespace Web.Api.Infrastructure.Data.Repositories
                                     $"sc.discharge_team_remark as TeamRemark, " +
                                     $"sc.discharge_team_date as TeamVisitedDate";
                         dateWhereCondColumName = $"sc.discharge_team_date";
+                        schedateWhereCondColumName = $"sc.discharge_date";
+                        teamWhereCondColumName = $"sc.discharge_team_user_name";
                     }
 
                     if(scheduledToDate == "0001-01-01")
-                        whereCond += $" and " + dateWhereCondColumName + " = '" + scheduledFromDate + minits + "'";
+                    {
+                        whereCond += $" and (" + dateWhereCondColumName + " = '" + scheduledFromDate + minits + "'" +
+                                     $" or " + schedateWhereCondColumName + " = '" + scheduledFromDate + minits + "')";
+                    }
                     else
-                        whereCond += $" and " +  dateWhereCondColumName + " between '" + scheduledFromDate + minits + "' and '" + scheduledToDate + minits + "'";
+                    {
+                        whereCond += $" and ((" +  dateWhereCondColumName + " between '" + scheduledFromDate + minits + "' and '" + scheduledToDate + minits + "')" +
+                                     $" or (" +  schedateWhereCondColumName + " between '" + scheduledFromDate + minits + "' and '" + scheduledToDate + minits + "'))";
+                    }
 
                     if (!string.IsNullOrEmpty(companyId))
                         whereCond += $" and pa.company_id = '" + companyId + "'";
 
                 if(!string.IsNullOrEmpty(teamUserName))
                     whereCond += " and ((sc.allocated_team_name = '" + teamUserName + "' and sc.reallocated_team_name = '')" +
-                                 " or (sc.allocated_team_name != '' and sc.reallocated_team_name = '" + teamUserName + "'))";
+                                 " or (sc.allocated_team_name != '' and sc.reallocated_team_name = '" + teamUserName + "')" +
+                                 " or " + teamWhereCondColumName + " = '" + teamUserName + "')";
 
                     var orderCond = $" order by pa.area ASC";
 
