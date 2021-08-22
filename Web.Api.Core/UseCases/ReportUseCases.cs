@@ -11,18 +11,16 @@ namespace Web.Api.Core.UseCases
     public sealed class ReportUseCases : IReportUseCases
     {
         private readonly IReportRepository _reportRepository;
-        private readonly IDrNurseCallFieldAllocationRepository _drNurseCallFieldAllocationRepository;
-        public ReportUseCases(IReportRepository reportRepository, IDrNurseCallFieldAllocationRepository drNurseCallFieldAllocationRepository)
+        public ReportUseCases(IReportRepository reportRepository)
         {
             _reportRepository = reportRepository;
-            _drNurseCallFieldAllocationRepository = drNurseCallFieldAllocationRepository;
         }
 
         public async Task<bool> Handle(GetDetailsRequest request, IOutputPort<GetDetailsResponse> outputPort)
         {
             GetDetailsResponse getDetailsResponse;
             if(request.IsTeamFieldAllocation)
-                getDetailsResponse = new GetDetailsResponse(await _reportRepository.GetTeamReportDetails(request.CompanyId, request.TeamUserName, request.ScheduledFromDate, request.ScheduledToDate, _drNurseCallFieldAllocationRepository), true, "Data Fetched Successfully");
+                getDetailsResponse = new GetDetailsResponse(await _reportRepository.GetTeamReportDetails(request.CompanyId, request.TeamUserName, request.ScheduledFromDate, request.ScheduledToDate), true, "Data Fetched Successfully");
             else
                 getDetailsResponse = new GetDetailsResponse(await _reportRepository.GetReportDetails(request.CompanyId, request.PatientId, request.ScheduledId, request.ExtractData, request.SendClaim, request.ScheduledFromDate, request.ScheduledToDate, request.AreaNames), true, "Data Fetched Successfully");
             outputPort.Handle(getDetailsResponse);

@@ -72,23 +72,31 @@ namespace Web.Api.Core.Dto.UseCaseRequests
         public string ModifiedBy { get; set; } //modified_by
     }
 
-    /*public class TeamReportDetails : IUseCaseRequest<AcknowledgementResponse>
+    public class TeamReportDetails : IUseCaseRequest<AcknowledgementResponse>
     {
         public string PatientId { get; set; }//patient_id – varchar(128)
         public string PatientName { get; set; }//patient_name – varchar(128)
-        public string CompanyId { get; set; }//company_id – varchar(128)
-        public string CompanyName { get; set; }
+        public int Age { get; set; }//age – int(10)
+        //public string CompanyId { get; set; }//company_id – varchar(128)
+        //public string CompanyName { get; set; }
         public int RequestId { get; set; }//request_id - int(10)
         public string RequestCrmName { get; set; }
         public string CRMNo { get; set; }//crm_no	- varchar(128)
         public string EIDNo { get; set; }//eid_no - varchar(128)
         public string MobileNo { get; set; }//mobile_no - varchar(25)
+        public int AdultsCount { get; set; }//no_of_adults – int(10)
+        public int ChildrensCount { get; set; }//no_of_childrens – int(10)
         public string Area { get; set; }//area – varchar(128)
-        public int CityId { get; set; }//city_id - int(10)
-        public string CityName { get; set; }
-        public DateTime AssignedDate { get; set; }//assigned_date - datetime
-        public int EnrolledCount { get; set; }//enrolled_count - int(25)
-        public string EnrolledDetails { get; set; }//enrolled_details - varchar(500)
-    }*/
+        public string AllocatedTeamName { get; set; }//allocated_team_name - varchar(100)
+        public DateTime AllocatedDate { get; set; }//team_allocated_date - datetime
+        public string ReAllocatedTeamName { get; set; }//reallocated_team_name - varchar(100)
+        public DateTime ReAllocatedDate { get; set; }//team_reallocated_date - datetime
+        public string ServiceName { get; set; }
+        public DateTime ServiceScheduleDate { get; set; }
+        public string VisitedTeamName { get; set; }
+        public string TeamStatus { get; set; }
+        public DateTime TeamVisitedDate { get; set; }
+        public string TeamRemark { get; set; }
+    }
 
 }

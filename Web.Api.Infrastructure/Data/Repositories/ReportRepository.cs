@@ -312,18 +312,263 @@ namespace Web.Api.Infrastructure.Data.Repositories
             }
         }
 
-        public async Task<List<DrNurseCallDetails>> GetTeamReportDetails(string companyId, string teamUserName, DateTime scheduledFromDate, DateTime scheduledToDate, IDrNurseCallFieldAllocationRepository drNurseCallFieldAllocationRepository)
+        public async Task<List<TeamReportDetails>> GetTeamReportDetails(string companyId, string teamUserName, DateTime scheduledFromDate, DateTime scheduledToDate)
         {
-            List<DrNurseCallDetails> retDrNurseCallDetails = new List<DrNurseCallDetails>();
+            List<TeamReportDetails> retTeamReportDetailsList = new List<TeamReportDetails>();
+            List<TeamReportDetails> teamReportDetailsList = new List<TeamReportDetails>();
             try
             {
-                retDrNurseCallDetails = await drNurseCallFieldAllocationRepository.GetFieldAllowCallDetails(companyId, teamUserName, "all", scheduledFromDate, scheduledToDate, "all", "all", "all", "schedule", "all");
+                string fromDate = scheduledFromDate.Date.ToString("yyyy-MM-dd");
+                string toDate = scheduledToDate.Date.ToString("yyyy-MM-dd");
+                if(fromDate == "0001-01-01")
+                    fromDate = DateTime.Today.Date.ToString("yyyy-MM-dd");
+
+                //tracker
+                teamReportDetailsList = await GetServiceTeamReportDetails(companyId, teamUserName, fromDate, toDate, "tracker");
+                if(retTeamReportDetailsList.Count() == 0)
+                    retTeamReportDetailsList = teamReportDetailsList;
+                else
+                {
+                    foreach(TeamReportDetails singleDrNurseCallDetails in teamReportDetailsList)
+                    {
+                        retTeamReportDetailsList.Add(singleDrNurseCallDetails);
+                    }
+                }
+                //sticker
+                teamReportDetailsList = await GetServiceTeamReportDetails(companyId, teamUserName, fromDate, toDate, "sticker");
+                if(retTeamReportDetailsList.Count() == 0)
+                    retTeamReportDetailsList = teamReportDetailsList;
+                else
+                {
+                    foreach(TeamReportDetails singleDrNurseCallDetails in teamReportDetailsList)
+                    {
+                        retTeamReportDetailsList.Add(singleDrNurseCallDetails);
+                    }
+                }
+                //replace
+                teamReportDetailsList = await GetServiceTeamReportDetails(companyId, teamUserName, fromDate, toDate, "replace");
+                if(retTeamReportDetailsList.Count() == 0)
+                    retTeamReportDetailsList = teamReportDetailsList;
+                else
+                {
+                    foreach(TeamReportDetails singleDrNurseCallDetails in teamReportDetailsList)
+                    {
+                        retTeamReportDetailsList.Add(singleDrNurseCallDetails);
+                    }
+                }
+                //4
+                teamReportDetailsList = await GetServiceTeamReportDetails(companyId, teamUserName, fromDate, toDate, "4");
+                if(retTeamReportDetailsList.Count() == 0)
+                    retTeamReportDetailsList = teamReportDetailsList;
+                else
+                {
+                    foreach(TeamReportDetails singleDrNurseCallDetails in teamReportDetailsList)
+                    {
+                        retTeamReportDetailsList.Add(singleDrNurseCallDetails);
+                    }
+                }
+                //6
+                teamReportDetailsList = await GetServiceTeamReportDetails(companyId, teamUserName, fromDate, toDate, "6");
+                if(retTeamReportDetailsList.Count() == 0)
+                    retTeamReportDetailsList = teamReportDetailsList;
+                else
+                {
+                    foreach(TeamReportDetails singleDrNurseCallDetails in teamReportDetailsList)
+                    {
+                        retTeamReportDetailsList.Add(singleDrNurseCallDetails);
+                    }
+                }
+                //8
+                teamReportDetailsList = await GetServiceTeamReportDetails(companyId, teamUserName, fromDate, toDate, "8");
+                if(retTeamReportDetailsList.Count() == 0)
+                    retTeamReportDetailsList = teamReportDetailsList;
+                else
+                {
+                    foreach(TeamReportDetails singleDrNurseCallDetails in teamReportDetailsList)
+                    {
+                        retTeamReportDetailsList.Add(singleDrNurseCallDetails);
+                    }
+                }
+                //9
+                teamReportDetailsList = await GetServiceTeamReportDetails(companyId, teamUserName, fromDate, toDate, "9");
+                if(retTeamReportDetailsList.Count() == 0)
+                    retTeamReportDetailsList = teamReportDetailsList;
+                else
+                {
+                    foreach(TeamReportDetails singleDrNurseCallDetails in teamReportDetailsList)
+                    {
+                        retTeamReportDetailsList.Add(singleDrNurseCallDetails);
+                    }
+                }
+                //11
+                teamReportDetailsList = await GetServiceTeamReportDetails(companyId, teamUserName, fromDate, toDate, "11");
+                if(retTeamReportDetailsList.Count() == 0)
+                    retTeamReportDetailsList = teamReportDetailsList;
+                else
+                {
+                    foreach(TeamReportDetails singleDrNurseCallDetails in teamReportDetailsList)
+                    {
+                        retTeamReportDetailsList.Add(singleDrNurseCallDetails);
+                    }
+                }
+                //discharge
+                teamReportDetailsList = await GetServiceTeamReportDetails(companyId, teamUserName, fromDate, toDate, "discharge");
+                if(retTeamReportDetailsList.Count() == 0)
+                    retTeamReportDetailsList = teamReportDetailsList;
+                else
+                {
+                    foreach(TeamReportDetails singleDrNurseCallDetails in teamReportDetailsList)
+                    {
+                        retTeamReportDetailsList.Add(singleDrNurseCallDetails);
+                    }
+                }
             }
             catch (Exception Err)
             {
                 var Error = Err.Message.ToString();
             }
-            return retDrNurseCallDetails;
+            return retTeamReportDetailsList;
+        }
+
+        async Task<List<TeamReportDetails>> GetServiceTeamReportDetails(string companyId, string teamUserName, string scheduledFromDate, string scheduledToDate, string serviceName)
+        {
+            List<TeamReportDetails> retTeamReportDetailsList = new List<TeamReportDetails>();
+            try
+            {
+                if(!String.IsNullOrEmpty(serviceName))
+                {
+                    var dateWhereCondColumName = "";
+                    string minits = " 00:00:00.0";
+                    var tableName = $"HC_Master_Details.company_obj co, " +
+                                    $"HC_Master_Details.request_crm_obj rc, " +
+                                    $"HC_Staff_Patient.patient_obj pa, " +
+                                    $"HC_Treatment.scheduled_obj sc";
+
+                    var ColumAssign = $"pa.patient_id as PatientId, pa.patient_name as PatientName," +
+                                    $"pa.company_id as CompanyId, co.company_name as CompanyName, " +
+                                    $"pa.request_id as RequestId, rc.request_crm_name as RequestCrmName, " +
+                                    $"pa.crm_no as CRMNo, pa.eid_no as EIDNo, pa.mobile_no as MobileNo, " +
+                                    $"pa.no_of_adults as AdultsCount, pa.no_of_childrens as ChildrensCount, " +
+                                    $"pa.area as Area, " +
+                                    $"sc.allocated_team_name as AllocatedTeamName, sc.team_allocated_date as AllocatedDate, " +
+                                    $"sc.reallocated_team_name as ReAllocatedTeamName, sc.team_reallocated_date as ReAllocatedDate, " ;
+
+                    var whereCond = $" where sc.patient_id = pa.patient_id" +
+                                    $" and pa.company_id = co.company_id" +
+                                    $" and pa.request_id = rc.request_crm_id" +
+                                    $" and pa.status = 'Active'" +
+                                    $" and sc.status = 'Active'";
+
+                    if(serviceName.Equals("tracker"))
+                    {
+                        ColumAssign += $"'Tracker Application' as ServiceName, sc.tracker_schedule_date as ServiceScheduleDate, " +
+                                    $"sc.tracker_team_user_name as TeamUserName, " +
+                                    $"sc.tracker_team_status as TeamStatus, " +
+                                    $"sc.tracker_team_remark as TeamRemark, " +
+                                    $"sc.tracker_team_date as TeamVisitedDate";
+                        dateWhereCondColumName = $"sc.tracker_team_date";
+                    }
+                    else if(serviceName.Equals("sticker"))
+                    {
+                        ColumAssign += $"'Sticker Appplication' as ServiceName, sc.sticker_schedule_date as ServiceScheduleDate, " +
+                                    $"sc.sticker_team_user_name as TeamUserName, " +
+                                    $"sc.sticker_team_status as TeamStatus, " +
+                                    $"sc.sticker_team_remark as TeamRemark, " +
+                                    $"sc.sticker_team_date as TeamVisitedDate";
+                        dateWhereCondColumName = $"sc.sticker_team_date";
+                    }
+                    else if(serviceName.Equals("replace"))//TrackerReplace
+                    {
+                        ColumAssign +=  $"'Tracker/Sticker Replace' as ServiceName, " +
+                                    //$"sc.tracker_replace_date as TrackerReplacedDate, " +
+                                    $"sc.tracker_replace_team_user_name as TeamUserName, " +
+                                    $"sc.tracker_replace_team_status as TeamStatus, " +
+                                    $"sc.tracker_replace_team_remark as TeamRemark, " +
+                                    $"sc.tracker_replace_team_date as TeamVisitedDate";
+                        dateWhereCondColumName = $"sc.tracker_replace_team_date";
+                    }
+                    else if(serviceName.Equals("4"))
+                    {
+                        ColumAssign += $"'4th Day PCR' as ServiceName, sc.4day_pcr_test_date as ServiceScheduleDate, " +
+                                    $"sc.4day_pcr_team_user_name as VisitedTeamName, " +
+                                    $"sc.4day_pcr_team_status as TeamStatus, " +
+                                    $"sc.4day_pcr_team_remark as TeamRemark, " +
+                                    $"sc.4day_pcr_team_date as TeamVisitedDate";
+                        dateWhereCondColumName = $"sc.4day_pcr_team_date";
+                    }
+                    else if(serviceName.Equals("6"))
+                    {
+                        ColumAssign += $"'6th Day PCR' as ServiceName, sc.6day_pcr_test_date as ServiceScheduleDate, " +
+                                    $"sc.6day_pcr_team_user_name as TeamUserName, " +
+                                    $"sc.6day_pcr_team_status as TeamStatus, " +
+                                    $"sc.6day_pcr_team_remark as TeamRemark, " +
+                                    $"sc.6day_pcr_team_date as TeamVisitedDate";
+                        dateWhereCondColumName = $"sc.6day_pcr_team_date";
+                    }
+                    else if(serviceName.Equals("8"))
+                    {
+                        ColumAssign += $"'8th Day PCR' as ServiceName, sc.8day_pcr_test_date as ServiceScheduleDate, " +
+                                    $"sc.8day_pcr_team_user_name as TeamUserName, " +
+                                    $"sc.8day_pcr_team_status as TeamStatus, " +
+                                    $"sc.8day_pcr_team_remark as TeamRemark, " +
+                                    $"sc.8day_pcr_team_date as TeamVisitedDate";
+                        dateWhereCondColumName = $"sc.8day_pcr_team_date";
+                    }
+                    else if(serviceName.Equals("9"))
+                    {
+                        ColumAssign += $"'9th Day PCR' as ServiceName, sc.9day_pcr_test_date as ServiceScheduleDate, " +
+                                    $"sc.9day_pcr_team_user_name as TeamUserName, " +
+                                    $"sc.9day_pcr_team_status as TeamStatus, " +
+                                    $"sc.9day_pcr_team_remark as TeamRemark, " +
+                                    $"sc.9day_pcr_team_date as TeamVisitedDate";
+                        dateWhereCondColumName = $"sc.9day_pcr_team_date";
+                    }
+                    else if(serviceName.Equals("11"))
+                    {
+                        ColumAssign += $"'11th Day PCR' as ServiceName, sc.11day_pcr_test_date as ServiceScheduleDate, " +
+                                    $"sc.11day_pcr_team_user_name as TeamUserName, " +
+                                    $"sc.11day_pcr_team_status as TeamStatus, " +
+                                    $"sc.11day_pcr_team_remark as TeamRemark, " +
+                                    $"sc.11day_pcr_team_date as TeamVisitedDate";
+                        dateWhereCondColumName = $"sc.11day_pcr_team_date";
+                    }
+                    else if(serviceName.Equals("discharge"))
+                    {
+                        ColumAssign += $"'Discharge' as ServiceName, sc.discharge_date as ServiceScheduleDate, " +
+                                    $"sc.discharge_team_user_name as TeamUserName, " +
+                                    $"sc.discharge_team_status as TeamStatus, " +
+                                    $"sc.discharge_team_remark as TeamRemark, " +
+                                    $"sc.discharge_team_date as TeamVisitedDate";
+                        dateWhereCondColumName = $"sc.discharge_team_date";
+                    }
+
+                    if(scheduledToDate == "0001-01-01")
+                        whereCond += $" and " + dateWhereCondColumName + " = '" + scheduledFromDate + minits + "'";
+                    else
+                        whereCond += $" and " +  dateWhereCondColumName + " between '" + scheduledFromDate + minits + "' and '" + scheduledToDate + minits + "'";
+
+                    if (!string.IsNullOrEmpty(companyId))
+                        whereCond += $" and pa.company_id = '" + companyId + "'";
+
+                if(!string.IsNullOrEmpty(teamUserName))
+                    whereCond += " and ((sc.allocated_team_name = '" + teamUserName + "' and sc.reallocated_team_name = '')" +
+                                 " or (sc.allocated_team_name != '' and sc.reallocated_team_name = '" + teamUserName + "'))";
+
+                    var orderCond = $" order by pa.area ASC";
+
+                    var sqlSelQuery = $"select " + ColumAssign + " from " + tableName + whereCond + orderCond;
+                    using (var connection = _appDbContext.Connection)
+                    {
+                        var sqlSelResult = await connection.QueryAsync<TeamReportDetails>(sqlSelQuery);
+                        retTeamReportDetailsList = sqlSelResult.ToList();
+                    }
+                }
+            }
+            catch (Exception Err)
+            {
+                var Error = Err.Message.ToString();
+            }
+            return retTeamReportDetailsList;
         }
     }
 }
