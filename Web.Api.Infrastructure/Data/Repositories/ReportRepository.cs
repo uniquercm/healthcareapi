@@ -462,7 +462,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     if(serviceName.Equals("tracker"))
                     {
                         ColumAssign += $"'Tracker Application' as ServiceName, sc.tracker_schedule_date as ServiceScheduleDate, " +
-                                    $"sc.tracker_team_user_name as TeamUserName, " +
+                                    $"sc.tracker_team_user_name as VisitedTeamName, " +
                                     $"sc.tracker_team_status as TeamStatus, " +
                                     $"sc.tracker_team_remark as TeamRemark, " +
                                     $"sc.tracker_team_date as TeamVisitedDate";
@@ -471,7 +471,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     else if(serviceName.Equals("sticker"))
                     {
                         ColumAssign += $"'Sticker Appplication' as ServiceName, sc.sticker_schedule_date as ServiceScheduleDate, " +
-                                    $"sc.sticker_team_user_name as TeamUserName, " +
+                                    $"sc.sticker_team_user_name as VisitedTeamName, " +
                                     $"sc.sticker_team_status as TeamStatus, " +
                                     $"sc.sticker_team_remark as TeamRemark, " +
                                     $"sc.sticker_team_date as TeamVisitedDate";
@@ -481,7 +481,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     {
                         ColumAssign +=  $"'Tracker/Sticker Replace' as ServiceName, " +
                                     //$"sc.tracker_replace_date as TrackerReplacedDate, " +
-                                    $"sc.tracker_replace_team_user_name as TeamUserName, " +
+                                    $"sc.tracker_replace_team_user_name as VisitedTeamName, " +
                                     $"sc.tracker_replace_team_status as TeamStatus, " +
                                     $"sc.tracker_replace_team_remark as TeamRemark, " +
                                     $"sc.tracker_replace_team_date as TeamVisitedDate";
@@ -499,7 +499,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     else if(serviceName.Equals("6"))
                     {
                         ColumAssign += $"'6th Day PCR' as ServiceName, sc.6day_pcr_test_date as ServiceScheduleDate, " +
-                                    $"sc.6day_pcr_team_user_name as TeamUserName, " +
+                                    $"sc.6day_pcr_team_user_name as VisitedTeamName, " +
                                     $"sc.6day_pcr_team_status as TeamStatus, " +
                                     $"sc.6day_pcr_team_remark as TeamRemark, " +
                                     $"sc.6day_pcr_team_date as TeamVisitedDate";
@@ -508,7 +508,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     else if(serviceName.Equals("8"))
                     {
                         ColumAssign += $"'8th Day PCR' as ServiceName, sc.8day_pcr_test_date as ServiceScheduleDate, " +
-                                    $"sc.8day_pcr_team_user_name as TeamUserName, " +
+                                    $"sc.8day_pcr_team_user_name as VisitedTeamName, " +
                                     $"sc.8day_pcr_team_status as TeamStatus, " +
                                     $"sc.8day_pcr_team_remark as TeamRemark, " +
                                     $"sc.8day_pcr_team_date as TeamVisitedDate";
@@ -517,7 +517,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     else if(serviceName.Equals("9"))
                     {
                         ColumAssign += $"'9th Day PCR' as ServiceName, sc.9day_pcr_test_date as ServiceScheduleDate, " +
-                                    $"sc.9day_pcr_team_user_name as TeamUserName, " +
+                                    $"sc.9day_pcr_team_user_name as VisitedTeamName, " +
                                     $"sc.9day_pcr_team_status as TeamStatus, " +
                                     $"sc.9day_pcr_team_remark as TeamRemark, " +
                                     $"sc.9day_pcr_team_date as TeamVisitedDate";
@@ -526,7 +526,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     else if(serviceName.Equals("11"))
                     {
                         ColumAssign += $"'11th Day PCR' as ServiceName, sc.11day_pcr_test_date as ServiceScheduleDate, " +
-                                    $"sc.11day_pcr_team_user_name as TeamUserName, " +
+                                    $"sc.11day_pcr_team_user_name as VisitedTeamName, " +
                                     $"sc.11day_pcr_team_status as TeamStatus, " +
                                     $"sc.11day_pcr_team_remark as TeamRemark, " +
                                     $"sc.11day_pcr_team_date as TeamVisitedDate";
@@ -535,7 +535,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     else if(serviceName.Equals("discharge"))
                     {
                         ColumAssign += $"'Discharge' as ServiceName, sc.discharge_date as ServiceScheduleDate, " +
-                                    $"sc.discharge_team_user_name as TeamUserName, " +
+                                    $"sc.discharge_team_user_name as VisitedTeamName, " +
                                     $"sc.discharge_team_status as TeamStatus, " +
                                     $"sc.discharge_team_remark as TeamRemark, " +
                                     $"sc.discharge_team_date as TeamVisitedDate";
