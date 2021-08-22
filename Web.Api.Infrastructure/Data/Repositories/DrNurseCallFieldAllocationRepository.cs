@@ -1106,6 +1106,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
         public async Task<List<DrNurseCallDetails>> GetDashBoardDetails(string companyId, string teamUserName, string searchCondType, string callStatus)
         {
             List<DrNurseCallDetails> retDrNurseCallDetails = new List<DrNurseCallDetails>();
+            //var
             try
             {//tracker, sticker, 4pcr, 8pcr, discharge
                 var tableName = $"HC_Staff_Patient.patient_obj p, " +
@@ -1178,7 +1179,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                         whereCond += " or sc.9day_pcr_team_status = '" + callStatus + "'";
                         whereCond += " or sc.11day_pcr_team_status = '" + callStatus + "'";
                     //Team Discharge Date
-                        whereCond += " or sc.discharge_status = '" + callStatus + "'";
+                        whereCond += " or sc.discharge_team_status = '" + callStatus + "'";
                         whereCond += ")";
                     }
                 }

@@ -71,4 +71,24 @@ namespace Web.Api.Core.Dto.UseCaseRequests
         public DateTime SendingClaimDate { get; set; }//claim_send_date - datetime
         public string ModifiedBy { get; set; } //modified_by
     }
+
+    /*public class TeamReportDetails : IUseCaseRequest<AcknowledgementResponse>
+    {
+        public string PatientId { get; set; }//patient_id – varchar(128)
+        public string PatientName { get; set; }//patient_name – varchar(128)
+        public string CompanyId { get; set; }//company_id – varchar(128)
+        public string CompanyName { get; set; }
+        public int RequestId { get; set; }//request_id - int(10)
+        public string RequestCrmName { get; set; }
+        public string CRMNo { get; set; }//crm_no	- varchar(128)
+        public string EIDNo { get; set; }//eid_no - varchar(128)
+        public string MobileNo { get; set; }//mobile_no - varchar(25)
+        public string Area { get; set; }//area – varchar(128)
+        public int CityId { get; set; }//city_id - int(10)
+        public string CityName { get; set; }
+        public DateTime AssignedDate { get; set; }//assigned_date - datetime
+        public int EnrolledCount { get; set; }//enrolled_count - int(25)
+        public string EnrolledDetails { get; set; }//enrolled_details - varchar(500)
+    }*/
+
 }
