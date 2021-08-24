@@ -59,13 +59,13 @@ namespace Web.Api.Controllers
         /// <summary>
         /// Getting a Team Field Allocation Report Details
         /// </summary>
+        /// <param name="companyId">Company Id</param>
+        /// <param name="teamUserName">Team User Name</param>
         /// <param name="scheduledFromDate">Scheduled From Date (optional)</param>
         /// <param name="scheduledToDate">Scheduled To Date (optional)</param>
-        /// <param name="companyId">Company Id (optional)</param>
-        /// <param name="teamUserName">Team User Name (optional)</param>
         /// <returns>Team Field Allocation Report Details</returns>
-        [HttpGet("team-report")]
-        public async Task<ActionResult> GetTeamReportDetails(DateTime scheduledFromDate, DateTime scheduledToDate, string companyId = "", string teamUserName = "")
+        [HttpGet("company/{companyId}/teamname/{teamUserName}/team-report")]
+        public async Task<ActionResult> GetTeamReportDetails(string companyId, string teamUserName, DateTime scheduledFromDate, DateTime scheduledToDate)
         {
             await _reportUseCases.Handle(new GetDetailsRequest(scheduledFromDate, scheduledToDate, companyId, teamUserName, true), _getDetailsPresenter);
             return _getDetailsPresenter.ContentResult;

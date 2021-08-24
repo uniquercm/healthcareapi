@@ -87,6 +87,8 @@ namespace Web.Api.Core.Dto.UseCaseRequests
         public int AdultsCount { get; set; }//no_of_adults – int(10)
         public int ChildrensCount { get; set; }//no_of_childrens – int(10)
         public string Area { get; set; }//area – varchar(128)
+        public int CityId { get; set; }//city_id - int(10)
+        public string CityName { get; set; }
         public string AllocatedTeamName { get; set; }//allocated_team_name - varchar(100)
         public DateTime AllocatedDate { get; set; }//team_allocated_date - datetime
         public string ReAllocatedTeamName { get; set; }//reallocated_team_name - varchar(100)

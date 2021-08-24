@@ -425,6 +425,7 @@ namespace Web.Api.Infrastructure.Data.Repositories
                     string minits = " 00:00:00.0";
                     var tableName = $"HC_Master_Details.company_obj co, " +
                                     $"HC_Master_Details.request_crm_obj rc, " +
+                                    $"HC_Master_Details.city_obj ci, " +
                                     $"HC_Staff_Patient.patient_obj pa, " +
                                     $"HC_Treatment.scheduled_obj sc";
 
@@ -434,11 +435,13 @@ namespace Web.Api.Infrastructure.Data.Repositories
                                     $"pa.crm_no as CRMNo, pa.eid_no as EIDNo, pa.mobile_no as MobileNo, " +
                                     $"pa.no_of_adults as AdultsCount, pa.no_of_childrens as ChildrensCount, " +
                                     $"pa.area as Area, " +
+                                    $"pa.city_id as CityId, ci.city_name as CityName, " +
                                     $"sc.allocated_team_name as AllocatedTeamName, sc.team_allocated_date as AllocatedDate, " +
                                     $"sc.reallocated_team_name as ReAllocatedTeamName, sc.team_reallocated_date as ReAllocatedDate, " ;
 
                     var whereCond = $" where sc.patient_id = pa.patient_id" +
                                     $" and pa.company_id = co.company_id" +
+                                    $" and pa.city_id = ci.city_id" +
                                     $" and pa.request_id = rc.request_crm_id" +
                                     $" and pa.status = 'Active'" +
                                     $" and sc.status = 'Active'";
